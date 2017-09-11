@@ -26,3 +26,5 @@ hs_err_pid*
 /HourRegistration.iml
 /target/
 /.idea/
+
+\.DS_Store
