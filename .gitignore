@@ -27,3 +27,8 @@ hs_err_pid*
 /target/
 /.idea/
 .DS_Store
+src/main/main\.iml
+
+src/test/test\.iml
+
+out/production/main/nl/webedu/hourregistration/view/MainView\.fxml
