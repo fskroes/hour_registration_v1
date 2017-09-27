@@ -1,7 +1,6 @@
 package nl.webedu.hourregistration.models;
 
 public class Employee {
-
     private String name;
     private Contract contract;
     private Department department;

@@ -3,7 +3,6 @@ package nl.webedu.hourregistration.models;
 import java.util.Date;
 
 public class Contract {
-
     private Date startDate; //Er zit ook een type Date bij voor SQL, misschien handig?
     private Date endDate;
     private int minHours;

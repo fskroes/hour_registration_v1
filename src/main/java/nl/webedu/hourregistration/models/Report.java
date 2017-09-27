@@ -3,7 +3,6 @@ package nl.webedu.hourregistration.models;
 import java.util.Date;
 
 public class Report {
-
     private int workDays;
     private int weekNumber;
     private Date reportDate;
