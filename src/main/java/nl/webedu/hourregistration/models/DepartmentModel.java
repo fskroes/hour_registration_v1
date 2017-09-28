@@ -1,5 +1,5 @@
 package nl.webedu.hourregistration.models;
 
-public enum Department {
+public enum DepartmentModel {
     EMPLOYEE, ADMINISTRATION, ADMIN
 }

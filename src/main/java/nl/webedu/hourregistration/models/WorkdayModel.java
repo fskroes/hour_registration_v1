@@ -2,16 +2,16 @@ package nl.webedu.hourregistration.models;
 
 import java.sql.Time;
 
-public class Workday {
+public class WorkdayModel {
     private int weekNumber;
     private int weekDay;
     private Time startTime;
     private Time endTime;
-    private Project project;
+    private ProjectModel project;
     private String category;
     private String description;
 
-    public Workday(int weekNumber, int weekDay, Time startTime, Time endTime, Project project, String category, String description) {
+    public WorkdayModel(int weekNumber, int weekDay, Time startTime, Time endTime, ProjectModel project, String category, String description) {
         this.weekNumber = weekNumber;
         this.weekDay = weekDay;
         this.startTime = startTime;
@@ -53,11 +53,11 @@ public class Workday {
         this.endTime = endTime;
     }
 
-    public Project getProject() {
+    public ProjectModel getProject() {
         return project;
     }
 
-    public void setProject(Project project) {
+    public void setProject(ProjectModel project) {
         this.project = project;
     }
 

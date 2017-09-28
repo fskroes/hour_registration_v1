@@ -2,12 +2,12 @@ package nl.webedu.hourregistration.models;
 
 import java.util.Date;
 
-public class Report {
+public class ReportModel {
     private int workDays;
     private int weekNumber;
     private Date reportDate;
 
-    public Report(int workDays, int weekNumber, Date reportDate) {
+    public ReportModel(int workDays, int weekNumber, Date reportDate) {
         this.workDays = workDays;
         this.weekNumber = weekNumber;
         this.reportDate = reportDate;

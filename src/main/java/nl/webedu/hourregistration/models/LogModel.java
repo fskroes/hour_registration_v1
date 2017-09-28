@@ -2,22 +2,22 @@ package nl.webedu.hourregistration.models;
 
 import java.util.Date;
 
-public class Log {
-    private Employee employee;
+public class LogModel {
+    private EmployeeModel employee;
     private Date date;
     private String description;
 
-    public Log(Employee employee, Date date, String description) {
+    public LogModel(EmployeeModel employee, Date date, String description) {
         this.employee = employee;
         this.date = date;
         this.description = description;
     }
 
-    public Employee getEmployee() {
+    public EmployeeModel getEmployee() {
         return employee;
     }
 
-    public void setEmployee(Employee employee) {
+    public void setEmployee(EmployeeModel employee) {
         this.employee = employee;
     }
 

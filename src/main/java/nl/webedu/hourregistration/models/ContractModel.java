@@ -2,13 +2,13 @@ package nl.webedu.hourregistration.models;
 
 import java.util.Date;
 
-public class Contract {
+public class ContractModel {
     private Date startDate; //Er zit ook een type Date bij voor SQL, misschien handig?
     private Date endDate;
     private int minHours;
     private int maxHours;
 
-    public Contract(Date startDate, Date endDate, int minHours, int maxHours) {
+    public ContractModel(Date startDate, Date endDate, int minHours, int maxHours) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.minHours = minHours;

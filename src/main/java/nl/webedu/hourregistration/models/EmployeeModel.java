@@ -1,16 +1,16 @@
 package nl.webedu.hourregistration.models;
 
-public class Employee {
+public class EmployeeModel {
     private String name;
-    private Contract contract;
-    private Department department;
+    private ContractModel contract;
+    private DepartmentModel department;
     private String email;
     private String password;
-    private Report report;
+    private ReportModel report;
     private boolean activeUser;
-    private Role rol;
+    private RoleModel rol;
 
-    public Employee(String name, Contract contract, Department department, String email, String password, Report report, boolean activeUser, Role rol) {
+    public EmployeeModel(String name, ContractModel contract, DepartmentModel department, String email, String password, ReportModel report, boolean activeUser, RoleModel rol) {
         this.name = name;
         this.contract = contract;
         this.department = department;
@@ -29,19 +29,19 @@ public class Employee {
         this.name = name;
     }
 
-    public Contract getContract() {
+    public ContractModel getContract() {
         return contract;
     }
 
-    public void setContract(Contract contract) {
+    public void setContract(ContractModel contract) {
         this.contract = contract;
     }
 
-    public Department getDepartment() {
+    public DepartmentModel getDepartment() {
         return department;
     }
 
-    public void setDepartment(Department department) {
+    public void setDepartment(DepartmentModel department) {
         this.department = department;
     }
 
@@ -61,11 +61,11 @@ public class Employee {
         this.password = password;
     }
 
-    public Report getReport() {
+    public ReportModel getReport() {
         return report;
     }
 
-    public void setReport(Report report) {
+    public void setReport(ReportModel report) {
         this.report = report;
     }
 
@@ -77,11 +77,11 @@ public class Employee {
         this.activeUser = activeUser;
     }
 
-    public Role getRol() {
+    public RoleModel getRol() {
         return rol;
     }
 
-    public void setRol(Role rol) {
+    public void setRol(RoleModel rol) {
         this.rol = rol;
     }
 }
