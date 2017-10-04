@@ -12,21 +12,23 @@ public class Employee {
     private Role role;
     private Contract contract;
     private List<Project> projects;
+    private List<Workday> workdays;
 
     /**
-     * Empty contructor, for test purposes mainly
+     * Empty contructor, for test purposes only
      */
     public Employee() {
 
     }
 
-    public Employee(int id, String email, String password, String firstname, String suffix, String lastname) {
+    public Employee(int id, String email, String password, String firstname, String suffix, String lastname, List<Workday> workdays) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.firstname = firstname;
         this.suffix = suffix;
         this.lastname = lastname;
+        this.workdays = workdays;
     }
 
     public int getId() {
@@ -102,11 +104,28 @@ public class Employee {
     }
 
     public void removeProject(Project project) {
-        this.projects.add(project);
+        this.projects.remove(project);
+    }
+
+    public List<Workday> getWorkdays() {
+        return new ArrayList<>(workdays);
+    }
+
+    public void setWorkdays(List<Workday> workdays) {
+        this.workdays = workdays;
+    }
+
+    public void addWorkday(Workday workday) {
+        this.workdays.add(workday);
+    }
+
+    public void removeWorkday(Workday workday) {
+        this.workdays.remove(workday);
     }
 
     @Override
     public String toString() {
         return firstname + " " + suffix + " " + lastname;
     }
+
 }
