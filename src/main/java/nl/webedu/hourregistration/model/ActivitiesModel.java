@@ -2,18 +2,18 @@ package nl.webedu.hourregistration.model;
 
 import java.util.Date;
 
-public class Activities {
+public class ActivitiesModel {
 
     private int id;
     private String category;
     private Date startTime, endTime;
     private int workdayId;
 
-    public Activities() {
+    public ActivitiesModel() {
 
     }
 
-    public Activities(int id, String category, Date startTime, Date endTime, int workdayId) {
+    public ActivitiesModel(int id, String category, Date startTime, Date endTime, int workdayId) {
         this.id = id;
         this.category = category;
         this.startTime = startTime;

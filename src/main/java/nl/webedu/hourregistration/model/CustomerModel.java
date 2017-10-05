@@ -1,16 +1,16 @@
 package nl.webedu.hourregistration.model;
 
-public class Customer {
+public class CustomerModel {
     private int id;
     private String businessName;
-    private Project project;
+    private ProjectModel projectModel;
 
-    public Customer() {
+    public CustomerModel() {
     }
 
-    public Customer(String businessName, Project project) {
+    public CustomerModel(String businessName, ProjectModel projectModel) {
         this.businessName = businessName;
-        this.project = project;
+        this.projectModel = projectModel;
     }
 
     public int getId() {
@@ -25,11 +25,11 @@ public class Customer {
         this.businessName = businessName;
     }
 
-    public Project getProject() {
-        return project;
+    public ProjectModel getProjectModel() {
+        return projectModel;
     }
 
-    public void setProject(Project project) {
-        this.project = project;
+    public void setProjectModel(ProjectModel projectModel) {
+        this.projectModel = projectModel;
     }
 }

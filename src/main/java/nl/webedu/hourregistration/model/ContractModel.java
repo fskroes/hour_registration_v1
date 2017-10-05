@@ -2,17 +2,17 @@ package nl.webedu.hourregistration.model;
 
 import java.util.Date;
 
-public class Contract {
+public class ContractModel {
     private int id;
     private Date startDate;
     private Date endDate;
     private int minHours;
     private int maxHours;
 
-    public Contract() {
+    public ContractModel() {
     }
 
-    public Contract(Date startDate, Date endDate, int minHours, int maxHours) {
+    public ContractModel(Date startDate, Date endDate, int minHours, int maxHours) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.minHours = minHours;

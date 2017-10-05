@@ -4,26 +4,26 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Workday {
+public class WorkdayModel {
 
     private int id;
     private Date date, startTime, endTime;
     private int weekNumber;
-    private List<Activities> activities;
-    private List<Employee> employees;
+    private List<ActivitiesModel> activities;
+    private List<EmployeeModel> employeeModels;
 
-    public Workday() {
+    public WorkdayModel() {
         
     }
 
-    public Workday(int id, Date date, Date startTime, Date endTime, int weekNumber, List<Activities> activities, List<Employee> employees) {
+    public WorkdayModel(int id, Date date, Date startTime, Date endTime, int weekNumber, List<ActivitiesModel> activities, List<EmployeeModel> employeeModels) {
         this.id = id;
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
         this.weekNumber = weekNumber;
         this.activities = activities;
-        this.employees = employees;
+        this.employeeModels = employeeModels;
     }
 
     public int getId() {
@@ -62,28 +62,28 @@ public class Workday {
         this.weekNumber = weekNumber;
     }
 
-    public List<Activities> getActivities() {
+    public List<ActivitiesModel> getActivities() {
         return activities;
     }
 
-    public void setActivities(List<Activities> activities) {
+    public void setActivities(List<ActivitiesModel> activities) {
         this.activities = activities;
     }
 
-    public List<Employee> getEmployees() {
-        return new ArrayList<>(employees);
+    public List<EmployeeModel> getEmployeeModels() {
+        return new ArrayList<>(employeeModels);
     }
 
-    public void setEmployees(List<Employee> employees) {
-        this.employees = employees;
+    public void setEmployeeModels(List<EmployeeModel> employeeModels) {
+        this.employeeModels = employeeModels;
     }
 
-    public void addEmployee(Employee employee) {
-        this.employees.add(employee);
+    public void addEmployee(EmployeeModel employeeModel) {
+        this.employeeModels.add(employeeModel);
     }
 
-    public void removeEmployee(Employee employee) {
-        this.employees.remove(employee);
+    public void removeEmployee(EmployeeModel employeeModel) {
+        this.employeeModels.remove(employeeModel);
     }
 
     @Override

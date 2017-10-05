@@ -1,34 +1,31 @@
 package nl.webedu.hourregistration.model;
 
-import nl.webedu.hourregistration.enumeration.Role;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class Employee {
+public class EmployeeModel {
 
     private int id;
     private String email, password, firstname, suffix, lastname;
-    private Role role;
-    private Contract contract;
-    private List<Project> projects;
-    private List<Workday> workdays;
+    private ContractModel contractModel;
+    private List<ProjectModel> projectModels;
+    private List<WorkdayModel> workdayModels;
 
     /**
      * Empty contructor, for test purposes only
      */
-    public Employee() {
+    public EmployeeModel() {
 
     }
 
-    public Employee(int id, String email, String password, String firstname, String suffix, String lastname, List<Workday> workdays) {
+    public EmployeeModel(int id, String email, String password, String firstname, String suffix, String lastname, List<WorkdayModel> workdayModels) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.firstname = firstname;
         this.suffix = suffix;
         this.lastname = lastname;
-        this.workdays = workdays;
+        this.workdayModels = workdayModels;
     }
 
     public int getId() {
@@ -75,52 +72,44 @@ public class Employee {
         this.lastname = lastname;
     }
 
-    public Role getRole() {
-        return role;
+    public ContractModel getContractModel() {
+        return contractModel;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setContractModel(ContractModel contractModel) {
+        this.contractModel = contractModel;
     }
 
-    public Contract getContract() {
-        return contract;
+    public List<ProjectModel> getProjectModels() {
+        return new ArrayList<>(projectModels);
     }
 
-    public void setContract(Contract contract) {
-        this.contract = contract;
+    public void setProjectModels(List<ProjectModel> projectModels) {
+        this.projectModels = projectModels;
     }
 
-    public List<Project> getProjects() {
-        return new ArrayList<>(projects);
+    public void addProject(ProjectModel projectModel) {
+        this.projectModels.add(projectModel);
     }
 
-    public void setProjects(List<Project> projects) {
-        this.projects = projects;
+    public void removeProject(ProjectModel projectModel) {
+        this.projectModels.remove(projectModel);
     }
 
-    public void addProject(Project project) {
-        this.projects.add(project);
+    public List<WorkdayModel> getWorkdayModels() {
+        return new ArrayList<>(workdayModels);
     }
 
-    public void removeProject(Project project) {
-        this.projects.remove(project);
+    public void setWorkdayModels(List<WorkdayModel> workdayModels) {
+        this.workdayModels = workdayModels;
     }
 
-    public List<Workday> getWorkdays() {
-        return new ArrayList<>(workdays);
+    public void addWorkday(WorkdayModel workdayModel) {
+        this.workdayModels.add(workdayModel);
     }
 
-    public void setWorkdays(List<Workday> workdays) {
-        this.workdays = workdays;
-    }
-
-    public void addWorkday(Workday workday) {
-        this.workdays.add(workday);
-    }
-
-    public void removeWorkday(Workday workday) {
-        this.workdays.remove(workday);
+    public void removeWorkday(WorkdayModel workdayModel) {
+        this.workdayModels.remove(workdayModel);
     }
 
     @Override

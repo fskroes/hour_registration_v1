@@ -1,14 +1,13 @@
 package nl.webedu.hourregistration.model;
 
-public class UserAuthentication {
+import java.io.Serializable;
+
+public class UserAuthenticationModel implements Serializable {
 
     private String email;
     private String password;
 
-    public UserAuthentication() {
-    }
-
-    public UserAuthentication(String email, String password) {
+    public UserAuthenticationModel(String email, String password) {
         this.email = email;
         this.password = password;
     }
@@ -23,7 +22,7 @@ public class UserAuthentication {
 
     public String getPassword() {
         return password;
-    }
+    } // TODO TEST PURPUSE
 
     public void setPassword(String password) {
         this.password = password;

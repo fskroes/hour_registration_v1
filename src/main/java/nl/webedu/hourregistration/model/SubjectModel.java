@@ -2,22 +2,22 @@ package nl.webedu.hourregistration.model;
 
 import java.util.Date;
 
-public class Subject {
+public class SubjectModel {
 
     private int id;
     private String onderwerpName;
     private Date startDate;
     private Date endDate;
-    private Project project;
+    private ProjectModel projectModel;
 
-    public Subject() {
+    public SubjectModel() {
     }
 
-    public Subject(String onderwerpName, Date startDate, Date endDate, Project project) {
+    public SubjectModel(String onderwerpName, Date startDate, Date endDate, ProjectModel projectModel) {
         this.onderwerpName = onderwerpName;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.project = project;
+        this.projectModel = projectModel;
     }
 
     public int getId() {
@@ -48,11 +48,11 @@ public class Subject {
         this.endDate = endDate;
     }
 
-    public Project getProject() {
-        return project;
+    public ProjectModel getProjectModel() {
+        return projectModel;
     }
 
-    public void setProject(Project project) {
-        this.project = project;
+    public void setProjectModel(ProjectModel projectModel) {
+        this.projectModel = projectModel;
     }
 }
