@@ -4,7 +4,7 @@ import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
-public class MariaDatabase extends Database<Connection> {
+public class MariaDatabaseExtension extends Database<Connection> {
 
     private final String hostname;
     private final String port;
@@ -12,12 +12,13 @@ public class MariaDatabase extends Database<Connection> {
     private final String user;
     private final String password;
 
-    MariaDatabase(String hostname, String port, String database, String user, String password) {
+    MariaDatabaseExtension(String hostname, String port, String database, String user, String password) {
         this.hostname = hostname;
         this.port = port;
         this.database = database;
         this.user = user;
         this.password = password;
+        type = DatabaseType.MARIADB;
     }
 
     @Override

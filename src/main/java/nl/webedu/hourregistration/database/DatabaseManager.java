@@ -1,6 +1,5 @@
 package nl.webedu.hourregistration.database;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 
 public class DatabaseManager {
@@ -20,7 +19,7 @@ public class DatabaseManager {
 
     public Database connectToDatabase(DatabaseType type) {
         if (type == DatabaseType.MARIADB) {
-            database = new MariaDatabase(
+            database = new MariaDatabaseExtension(
                     "127.0.0.1",
                     "3306",
                     "hour_registration",
@@ -29,6 +28,13 @@ public class DatabaseManager {
             try {
                 database.openConnection();
             } catch (SQLException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        } else if (type == DatabaseType.MONGODB) {
+            database = new MongoDatabaseExtension("mongodb://localhost");
+            try {
+                database.openConnection();
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
