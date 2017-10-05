@@ -1,11 +1,15 @@
-package nl.webedu.hourregistration.models;
+package nl.webedu.hourregistration.model;
 
 import java.util.Date;
 
 public class Log {
+
     private Employee employee;
     private Date date;
     private String description;
+
+    public Log() {
+    }
 
     public Log(Employee employee, Date date, String description) {
         this.employee = employee;

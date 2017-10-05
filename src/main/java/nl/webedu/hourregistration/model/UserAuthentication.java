@@ -1,8 +1,12 @@
-package nl.webedu.hourregistration.models;
+package nl.webedu.hourregistration.model;
 
 public class UserAuthentication {
+
     private String email;
     private String password;
+
+    public UserAuthentication() {
+    }
 
     public UserAuthentication(String email, String password) {
         this.email = email;
