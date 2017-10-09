@@ -1,5 +1,6 @@
-package nl.webedu.hourregistration.dao;
+package nl.webedu.hourregistration.mongoDao;
 
+import nl.webedu.hourregistration.daoInterfaces.IUserAuthenticationDAO;
 import nl.webedu.hourregistration.factory.MongoDAOFactory;
 import nl.webedu.hourregistration.model.UserAuthenticationModel;
 
