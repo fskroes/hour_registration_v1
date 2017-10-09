@@ -1,6 +1,6 @@
 package nl.webedu.hourregistration.factory;
 
-import nl.webedu.hourregistration.daoInterfaces.*;
+import nl.webedu.hourregistration.daointerfaces.*;
 
 public abstract class DAOFactory {
     public static final int MONGO = 1;

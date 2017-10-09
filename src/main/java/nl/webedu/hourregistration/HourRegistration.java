@@ -2,7 +2,7 @@ package nl.webedu.hourregistration;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import nl.webedu.hourregistration.daoInterfaces.IUserAuthenticationDAO;
+import nl.webedu.hourregistration.daointerfaces.IUserAuthenticationDAO;
 import nl.webedu.hourregistration.factory.DAOFactory;
 import nl.webedu.hourregistration.model.UserAuthenticationModel;
 
