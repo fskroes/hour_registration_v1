@@ -1,6 +1,6 @@
 package nl.webedu.hourregistration.factory;
 
-import nl.webedu.hourregistration.dao.*;
+import nl.webedu.hourregistration.daointerfaces.*;
 
 import java.sql.Connection;
 

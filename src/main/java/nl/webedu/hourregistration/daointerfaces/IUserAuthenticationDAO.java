@@ -1,4 +1,4 @@
-package nl.webedu.hourregistration.dao;
+package nl.webedu.hourregistration.daointerfaces;
 
 import nl.webedu.hourregistration.model.UserAuthenticationModel;
 
