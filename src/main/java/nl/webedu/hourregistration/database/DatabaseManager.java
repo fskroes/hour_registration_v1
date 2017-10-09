@@ -1,8 +1,8 @@
 package nl.webedu.hourregistration.database;
 
-import nl.webedu.hourregistration.factory.DAOFactory;
-import nl.webedu.hourregistration.factory.MariaDAOFactory;
-import nl.webedu.hourregistration.factory.MongoDAOFactory;
+import nl.webedu.hourregistration.dao.factory.DAOFactory;
+import nl.webedu.hourregistration.dao.factory.MariaDAOFactory;
+import nl.webedu.hourregistration.dao.factory.MongoDAOFactory;
 
 import java.sql.SQLException;
 
