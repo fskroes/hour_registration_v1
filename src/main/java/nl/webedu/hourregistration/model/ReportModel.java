@@ -3,26 +3,26 @@ package nl.webedu.hourregistration.model;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Report {
+public class ReportModel {
 
-    private ArrayList<Workday> workDays;
+    private ArrayList<WorkdayModel> workDays;
     private int weekNumber;
     private Date reportDate;
 
-    public Report() {
+    public ReportModel() {
     }
 
-    public Report(ArrayList<Workday> workDays, int weekNumber, Date reportDate) {
+    public ReportModel(ArrayList<WorkdayModel> workDays, int weekNumber, Date reportDate) {
         this.workDays = workDays;
         this.weekNumber = weekNumber;
         this.reportDate = reportDate;
     }
 
-    public ArrayList<Workday> getWorkDays() {
+    public ArrayList<WorkdayModel> getWorkDays() {
         return workDays;
     }
 
-    public void setWorkDays(ArrayList<Workday> workDays) {
+    public void setWorkDays(ArrayList<WorkdayModel> workDays) {
         this.workDays = workDays;
     }
 

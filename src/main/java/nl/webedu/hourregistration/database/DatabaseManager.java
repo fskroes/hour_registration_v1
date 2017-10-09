@@ -1,6 +1,9 @@
 package nl.webedu.hourregistration.database;
 
-import java.sql.Connection;
+import nl.webedu.hourregistration.factory.DAOFactory;
+import nl.webedu.hourregistration.factory.MariaDAOFactory;
+import nl.webedu.hourregistration.factory.MongoDAOFactory;
+
 import java.sql.SQLException;
 
 public class DatabaseManager {
@@ -8,6 +11,7 @@ public class DatabaseManager {
     private static DatabaseManager instance;
 
     private Database database;
+    private DAOFactory daoFactory;
 
     private DatabaseManager() {  }
 
@@ -18,9 +22,9 @@ public class DatabaseManager {
         return instance;
     }
 
-    public Database connectToDatabase(DatabaseType type) {
+    public void connectToDatabase(DatabaseType type) {
         if (type == DatabaseType.MARIADB) {
-            database = new MariaDatabase(
+            database = new MariaDatabaseExtension(
                     "127.0.0.1",
                     "3306",
                     "hour_registration",
@@ -31,11 +35,23 @@ public class DatabaseManager {
             } catch (SQLException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
+            daoFactory = MongoDAOFactory.getInstance();
+        } else if (type == DatabaseType.MONGODB) {
+            database = new MongoDatabaseExtension("mongodb://localhost");
+            try {
+                database.openConnection();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            daoFactory = new MariaDAOFactory();
         }
-        return null;
     }
 
     public Database getDatabase() {
         return database;
+    }
+
+    public DAOFactory getDaoFactory() {
+        return daoFactory;
     }
 }

@@ -2,23 +2,23 @@ package nl.webedu.hourregistration.model;
 
 import java.util.Date;
 
-public class Project {
+public class ProjectModel {
 
     private int id;
     private String name;
     private Date startDate;
     private Date endDate;
-    private Customer customer;
+    private CustomerModel customerModel;
     private String categorie;
 
-    public Project() {
+    public ProjectModel() {
     }
 
-    public Project(String name, Date startDate, Date endDate, Customer customer, String categorie) {
+    public ProjectModel(String name, Date startDate, Date endDate, CustomerModel customerModel, String categorie) {
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.customer = customer;
+        this.customerModel = customerModel;
         this.categorie = categorie;
     }
 
@@ -50,12 +50,12 @@ public class Project {
         this.endDate = endDate;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public CustomerModel getCustomerModel() {
+        return customerModel;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setCustomerModel(CustomerModel customerModel) {
+        this.customerModel = customerModel;
     }
 
     public String getCategorie() {
