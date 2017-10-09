@@ -1,6 +1,7 @@
-package nl.webedu.hourregistration.dao;
+package nl.webedu.hourregistration.mongodao;
 
 import com.mongodb.async.client.MongoClient;
+import nl.webedu.hourregistration.daointerfaces.IUserAuthenticationDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.model.UserAuthenticationModel;
 

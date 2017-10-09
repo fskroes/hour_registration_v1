@@ -1,6 +1,7 @@
 package nl.webedu.hourregistration.factory;
 
 import nl.webedu.hourregistration.daointerfaces.*;
+import nl.webedu.hourregistration.mongodao.MongoUserAuthenticationDAO;
 
 public class MongoDAOFactory extends DAOFactory {
 
