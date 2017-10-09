@@ -1,19 +1,28 @@
-package nl.webedu.hourregistration.mongodao;
+package nl.webedu.hourregistration.dao;
 
-import nl.webedu.hourregistration.daointerfaces.IUserAuthenticationDAO;
-import nl.webedu.hourregistration.factory.MongoDAOFactory;
+import com.mongodb.async.client.MongoClient;
+import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.model.UserAuthenticationModel;
 
 public class MongoUserAuthenticationDAO implements IUserAuthenticationDAO {
 
+    private static MongoUserAuthenticationDAO instance;
+
+    private MongoClient client = (MongoClient) DatabaseManager.getInstance().getDatabase();
+
     public MongoUserAuthenticationDAO() {
         // initialize
+    }
 
-        MongoDAOFactory.createConnection();
+    public static MongoUserAuthenticationDAO getInstance() {
+        if (instance == null)
+            instance = new MongoUserAuthenticationDAO();
+        return instance;
     }
 
     @Override
     public UserAuthenticationModel findUser() {
+
         return null;
     }
 

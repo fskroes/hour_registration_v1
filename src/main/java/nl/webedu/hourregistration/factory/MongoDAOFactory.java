@@ -2,28 +2,18 @@ package nl.webedu.hourregistration.factory;
 
 import nl.webedu.hourregistration.daointerfaces.*;
 
-import java.sql.Connection;
-
 public class MongoDAOFactory extends DAOFactory {
 
     private static final String DATABASE_SCHEME = "hour_registration";
+    private static MongoDAOFactory instance;
 
-    // method to create Mongo connections
-    public static Connection createConnection() {
-        // The following is the standard URI connection scheme:
-        // mongodb://[username:password@]host1[:port1][,host2[:port2],...[,hostN[:portN]]][/[database][?options]]
+    private MongoDAOFactory() {  }
 
-
-
-//        MongoCredential mongoCredential = MongoCredential.createCredential("root", "hour_registration", "root".toCharArray());
-//        com.mongodb.MongoClient mongoClient = new com.mongodb.MongoClient("localhost", 27017);
-
-//        MongoDatabase db = mongoClient.getDatabase(DATABASE_SCHEME);
-
-
-        return null;
+    public static MongoDAOFactory getInstance() {
+        if (instance == null)
+            instance = new MongoDAOFactory();
+        return instance;
     }
-
 
     @Override
     public IActivitiesDAO getActivitiesDAO() {
@@ -67,7 +57,7 @@ public class MongoDAOFactory extends DAOFactory {
 
     @Override
     public IUserAuthenticationDAO getUserAuthenticationDAO() {
-        return null;
+        return MongoUserAuthenticationDAO.getInstance();
     }
 
     @Override

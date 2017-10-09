@@ -2,8 +2,10 @@ package nl.webedu.hourregistration;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import nl.webedu.hourregistration.daointerfaces.IUserAuthenticationDAO;
-import nl.webedu.hourregistration.factory.DAOFactory;
+import nl.webedu.hourregistration.dao.IUserAuthenticationDAO;
+import nl.webedu.hourregistration.database.DatabaseManager;
+import nl.webedu.hourregistration.database.DatabaseType;
+import nl.webedu.hourregistration.factory.MongoDAOFactory;
 import nl.webedu.hourregistration.model.UserAuthenticationModel;
 
 public class HourRegistration extends Application {
@@ -15,7 +17,8 @@ public class HourRegistration extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         // create the required DAO Factory
-        DAOFactory mongoFactory = DAOFactory.getDAOFactory(DAOFactory.MONGO);
+        DatabaseManager.getInstance().connectToDatabase(DatabaseType.MONGODB);
+        MongoDAOFactory mongoFactory = (MongoDAOFactory) DatabaseManager.getInstance().getDaoFactory();
 
         // Create a DAO
         IUserAuthenticationDAO mongoUserAuthenticationDAO = mongoFactory.getUserAuthenticationDAO();
@@ -26,8 +29,6 @@ public class HourRegistration extends Application {
         // modify the values in the Transfer Object
         aModel.setEmail("");
         aModel.setPassword("");
-
-
 
     }
 }
