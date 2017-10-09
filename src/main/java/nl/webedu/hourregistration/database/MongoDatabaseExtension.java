@@ -1,6 +1,6 @@
 package nl.webedu.hourregistration.database;
 
-import com.mongodb.MongoClient;
+import com.mongodb.async.client.MongoClient;
 import com.mongodb.async.client.MongoClients;
 
 public class MongoDatabaseExtension extends Database<MongoClient> {
@@ -16,7 +16,7 @@ public class MongoDatabaseExtension extends Database<MongoClient> {
         if (checkConnection()) {
             return connection;
         }
-        connection = (MongoClient) MongoClients.create(connectionString);
+        connection = MongoClients.create(connectionString);
         return connection;
     }
 
