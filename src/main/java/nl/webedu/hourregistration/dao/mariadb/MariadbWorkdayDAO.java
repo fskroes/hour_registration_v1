@@ -38,7 +38,7 @@ public class MariadbWorkdayDAO implements IWorkdayDAO {
 
     @Override
     public WorkdayModel selectWorkdayByEmployee(int employeeId) {
-         WorkdayModel workday = client.selectObjectSingle(Workday, "SELECT * FROM report WHERE name = ?", "");
+         WorkdayModel workday = client.selectObjectSingle(Workday, "SELECT * FROM report WHERE id = ?", employeeId);
         return workday;
     }
 }

@@ -30,5 +30,7 @@ public class HourRegistration extends Application {
         aModel.setEmail("");
         aModel.setPassword("");
 
+
+
     }
 }

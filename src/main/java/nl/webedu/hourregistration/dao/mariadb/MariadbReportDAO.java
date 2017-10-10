@@ -35,7 +35,7 @@ public class MariadbReportDAO implements IReportDAO {
 
     @Override
     public ReportModel selectReportByCustomer(int customerId) {
-        ReportModel report = client.selectObjectSingle(Report, "SELECT * FROM report WHERE name = ?", "");
+        ReportModel report = client.selectObjectSingle(Report, "SELECT * FROM report WHERE id = ?", customerId);
         return report;
     };
 }
