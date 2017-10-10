@@ -9,5 +9,5 @@ public interface IReportDAO {
     public boolean deleteReport(int id);
     public ReportModel findReport(int id);
     public boolean updateReport(ReportModel Report);
-    public Collection selectReportByCustomer(int customerId);
+    public ReportModel selectReportByCustomer(int customerId);
 }
