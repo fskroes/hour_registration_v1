@@ -3,13 +3,18 @@ package nl.webedu.hourregistration.dao.mariadb;
 import nl.webedu.hourregistration.dao.IWorkdayDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.database.MariaDatabaseExtension;
+import nl.webedu.hourregistration.model.ReportModel;
 import nl.webedu.hourregistration.model.WorkdayModel;
 
 import java.util.Collection;
 
 public class MariadbWorkdayDAO implements IWorkdayDAO {
 
-    private MariaDatabaseExtension database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
+    private MariaDatabaseExtension client;
+
+    private MariadbWorkdayDAO() {
+        this.client = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase().getConnection();
+    }
 
     @Override
     public boolean insertWorkday(WorkdayModel Workday) {
@@ -32,7 +37,8 @@ public class MariadbWorkdayDAO implements IWorkdayDAO {
     }
 
     @Override
-    public Collection selectWorkdaysByEployee(int employeeId) {
-        return null;
+    public WorkdayModel selectWorkdayByEmployee(int employeeId) {
+         WorkdayModel workday = client.selectObjectSingle(Workday, "SELECT * FROM report WHERE name = ?", "");
+        return workday;
     }
 }

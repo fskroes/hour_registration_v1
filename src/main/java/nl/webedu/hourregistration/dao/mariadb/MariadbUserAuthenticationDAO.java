@@ -7,7 +7,11 @@ import nl.webedu.hourregistration.model.UserAuthenticationModel;
 
 public class MariadbUserAuthenticationDAO implements IUserAuthenticationDAO {
 
-    private MariaDatabaseExtension database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
+    private MariaDatabaseExtension client;
+
+    private MariadbUserAuthenticationDAO() {
+        this.client = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase().getConnection();
+    }
 
     @Override
     public UserAuthenticationModel findUser() {

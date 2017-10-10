@@ -7,7 +7,11 @@ import nl.webedu.hourregistration.model.ReportModel;
 
 public class MariadbReportDAO implements IReportDAO {
 
-    private MariaDatabaseExtension database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
+    private MariaDatabaseExtension client;
+
+    private MariadbReportDAO() {
+        this.client = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase().getConnection();
+    }
 
     @Override
     public boolean insertProject(ReportModel Report) {
@@ -31,7 +35,7 @@ public class MariadbReportDAO implements IReportDAO {
 
     @Override
     public ReportModel selectReportByCustomer(int customerId) {
-        ReportModel report = database.selectObjectSingle(Report, "SELECT * FROM report WHERE name = ?", "");
+        ReportModel report = client.selectObjectSingle(Report, "SELECT * FROM report WHERE name = ?", "");
         return report;
     };
 }

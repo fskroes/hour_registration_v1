@@ -9,5 +9,5 @@ public interface IWorkdayDAO {
     public boolean deleteWorkday(int id);
     public WorkdayModel findWorkday(int id);
     public boolean updateWorkday(WorkdayModel Workday);
-    public Collection selectWorkdaysByEployee(int employeeId);
+    public WorkdayModel selectWorkdayByEmployee(int employeeId);
 }

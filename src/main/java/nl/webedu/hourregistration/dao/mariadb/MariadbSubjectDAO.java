@@ -7,7 +7,11 @@ import nl.webedu.hourregistration.model.SubjectModel;
 
 public class MariadbSubjectDAO implements ISubjectDAO {
 
-    private MariaDatabaseExtension database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
+    private MariaDatabaseExtension client;
+
+    private MariadbSubjectDAO() {
+        this.client = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase().getConnection();
+    }
 
     @Override
     public boolean insertSubject(SubjectModel Subject) {
