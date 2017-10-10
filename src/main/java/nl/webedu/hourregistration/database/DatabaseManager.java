@@ -2,7 +2,6 @@ package nl.webedu.hourregistration.database;
 
 import com.mongodb.async.client.MongoCollection;
 import nl.webedu.hourregistration.dao.factory.DAOFactory;
-import nl.webedu.hourregistration.dao.factory.MariaDAOFactory;
 import nl.webedu.hourregistration.dao.factory.MongoDAOFactory;
 import org.bson.Document;
 
@@ -42,10 +41,12 @@ public class DatabaseManager {
             database = new MongoDatabaseExtension("mongodb://localhost");
             try {
                 database.openConnection();
+                System.out.println("Connected to MongoDB");
             } catch (Exception e) {
+                System.out.println("Error connecting to the MongoDB");
                 e.printStackTrace();
             }
-            daoFactory = new MariaDAOFactory();
+            daoFactory = MongoDAOFactory.getInstance();
         }
     }
 
