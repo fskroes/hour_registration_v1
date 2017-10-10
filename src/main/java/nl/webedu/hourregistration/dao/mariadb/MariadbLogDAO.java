@@ -1,16 +1,18 @@
 package nl.webedu.hourregistration.dao.mariadb;
 
 import nl.webedu.hourregistration.dao.ILogDAO;
+import nl.webedu.hourregistration.database.DatabaseManager;
+import nl.webedu.hourregistration.database.MariaDatabaseExtension;
 import nl.webedu.hourregistration.model.LogModel;
 
 import java.util.Collection;
 
 public class MariadbLogDAO implements ILogDAO {
 
-    String employeeID = "SELECT * FROM employee";
+    private MariaDatabaseExtension database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
 
     private MariadbLogDAO() {
-
+        this.database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
     }
 
     @Override
@@ -39,12 +41,12 @@ public class MariadbLogDAO implements ILogDAO {
 
     @Override
     public Collection selectLogByEmployee(int employeeId) {
-        return null;
+        LogModel log = database.selectObjectSingle(Log, "SELECT * FROM log WHERE employee = ?", "");
+        return log;
     }
-
     @Override
-    public Collection selectLogBySubject(int subjectId) {
-
-        return null;
+    public LogModel selectLogBySubject(int subjectId) {
+        LogModel log = database.selectObjectSingle(Log, "SELECT * FROM log WHERE subject = ?", "");
+        return log;
     }
 }

@@ -2,15 +2,17 @@ package nl.webedu.hourregistration.dao.mariadb;
 
 import nl.webedu.hourregistration.dao.ICustomerDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
+import nl.webedu.hourregistration.database.MariaDatabaseExtension;
 import nl.webedu.hourregistration.model.CustomerModel;
 
 import java.util.Collection;
 
 public class MariadbCustomerDAO implements ICustomerDAO {
 
+    private MariaDatabaseExtension database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
 
     private MariadbCustomerDAO() {
-
+        this.database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
     }
 
     @Override
@@ -38,8 +40,8 @@ public class MariadbCustomerDAO implements ICustomerDAO {
     }
 
     @Override
-    public Collection selectCustomersByProject(int projectId){
-
-        return null;
+    public CustomerModel selectCustomersByProject(int projectId){
+        CustomerModel customer = database.selectObjectSingle(Customer, "SELECT * FROM customer WHERE project = ?", "");
+        return customer;
     }
 }

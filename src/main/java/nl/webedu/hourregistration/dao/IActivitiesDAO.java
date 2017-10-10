@@ -10,5 +10,5 @@ public interface IActivitiesDAO {
     public boolean deleteActivitie(int id);
     public boolean updateActivitie(ActivitiesModel activitie);
     public Collection selectActivitiesByWorkday(int wordkdatId);
-    public Collection selectActivitiesByEmployee(int employeeId);
+    public ActivitiesModel selectActivitiesByEmployee(int employeeId);
 }

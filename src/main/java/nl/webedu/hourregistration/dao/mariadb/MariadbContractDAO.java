@@ -2,13 +2,16 @@ package nl.webedu.hourregistration.dao.mariadb;
 
 import nl.webedu.hourregistration.dao.IContractDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
+import nl.webedu.hourregistration.database.MariaDatabaseExtension;
 import nl.webedu.hourregistration.model.ContractModel;
 
 public class MariadbContractDAO implements IContractDAO {
 
+    private MariaDatabaseExtension database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
 
     private MariadbContractDAO() {
 
+        this.database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
     }
 
     @Override
@@ -34,8 +37,8 @@ public class MariadbContractDAO implements IContractDAO {
     }
     @Override
     public ContractModel selectContractByEmployee(int employeeId){
-
-        return null;
+        ContractModel contract = database.selectObjectSingle(Contract, "SELECT * FROM contract WHERE name = ?", "");
+        return contract;
     }
 
 }

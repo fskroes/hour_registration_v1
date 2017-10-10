@@ -2,15 +2,17 @@ package nl.webedu.hourregistration.dao.mariadb;
 
 import nl.webedu.hourregistration.dao.IEmployeeDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
+import nl.webedu.hourregistration.database.MariaDatabaseExtension;
 import nl.webedu.hourregistration.model.EmployeeModel;
 
 import java.util.Collection;
 
 public class MariadbEmployeeDAO implements IEmployeeDAO {
 
+    private MariaDatabaseExtension database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
 
     private MariadbEmployeeDAO() {
-
+        this.database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
     }
 
     @Override
@@ -38,8 +40,9 @@ public class MariadbEmployeeDAO implements IEmployeeDAO {
     }
 
     @Override
-    public Collection selectEmployeesByProject(int projectId){
+    public EmployeeModel selectEmployeesByProject(int projectId){
 
-        return null;
+        EmployeeModel employee = database.selectObjectSingle(Employee, "SELECT * FROM employee WHERE name = ?", "");
+        return employee;
     }
 }
