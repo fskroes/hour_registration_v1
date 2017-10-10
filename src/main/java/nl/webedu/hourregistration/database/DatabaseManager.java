@@ -1,8 +1,9 @@
 package nl.webedu.hourregistration.database;
 
+import com.mongodb.async.client.MongoCollection;
 import nl.webedu.hourregistration.dao.factory.DAOFactory;
-import nl.webedu.hourregistration.dao.factory.MariaDAOFactory;
 import nl.webedu.hourregistration.dao.factory.MongoDAOFactory;
+import org.bson.Document;
 
 import java.sql.SQLException;
 
@@ -25,11 +26,11 @@ public class DatabaseManager {
     public void connectToDatabase(DatabaseType type) {
         if (type == DatabaseType.MARIADB) {
             database = new MariaDatabaseExtension(
-                    "127.0.0.1",
+                    "80.208.224.30",
                     "3306",
                     "hour_registration",
                     "root",
-                    "root");
+                    "Chaud");
             try {
                 database.openConnection();
             } catch (SQLException | ClassNotFoundException e) {
@@ -37,13 +38,15 @@ public class DatabaseManager {
             }
             daoFactory = MongoDAOFactory.getInstance();
         } else if (type == DatabaseType.MONGODB) {
-            database = new MongoDatabaseExtension("mongodb://localhost");
+            database = new MongoDatabaseExtension("mongodb://80.208.224.30");
             try {
                 database.openConnection();
+                System.out.println("Connected to MongoDB");
             } catch (Exception e) {
+                System.out.println("Error connecting to the MongoDB");
                 e.printStackTrace();
             }
-            daoFactory = new MariaDAOFactory();
+            daoFactory = MongoDAOFactory.getInstance();
         }
     }
 
@@ -53,5 +56,9 @@ public class DatabaseManager {
 
     public DAOFactory getDaoFactory() {
         return daoFactory;
+    }
+
+    public MongoCollection<Document> getMongoCollection() {
+        return instance.getMongoCollection();
     }
 }

@@ -12,24 +12,14 @@ public class MariadbActivitiesDAO implements IActivitiesDAO {
     private MariaDatabaseExtension database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
 
     private MariadbActivitiesDAO() {
-
         this.database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
     }
 
     @Override
     public boolean insertActivitie(ActivitiesModel activitie) {
 
-        String insertActivitieSQL = "INSERT INTO DBUSER"
-                + "(USER_ID, USERNAME, CREATED_BY, CREATED_DATE) VALUES"
-                + "(?,?,?,?)";
+        return true;
 
-        PreparedStatement ps = dbConnection.prepareStatement(insertActivitiesSQL);
-        ps.setInt(1, 11);
-        ps.setString(2, "mkyong");
-        ps.setString(3, "system");
-        ps.setTimestamp(4, get());
-// execute insert SQL stetement
-        preparedStatement .executeUpdate();
     }
 
     @Override
@@ -46,20 +36,28 @@ public class MariadbActivitiesDAO implements IActivitiesDAO {
 
     @Override
     public boolean updateActivitie(ActivitiesModel activitie) {
+
         ActivitiesModel activities = database.selectObjectSingle(Activities, "UPDATE activities SET activitie = '' WHERE activitie = ?", activitie);
+
         return false;
     }
 
     @Override
+
     public ActivitiesModel selectActivitiesByWorkday(int wordkdatId) {
         ActivitiesModel activities = database.selectObjectSingle(Activities, "SELECT * FROM activities WHERE workday = ?", wordkdatId);
 
         return activities;
+
+    public Collection selectActivitiesByWorkday(int wordkdatId) {
+
     }
 
     @Override
     public ActivitiesModel selectActivitiesByEmployee(int employeeId) {
+
         ActivitiesModel activities = database.selectObjectSingle(Activities, "SELECT * FROM activities WHERE name = ?", employeeId);
         return activities;
+
     }
 }

@@ -35,13 +35,11 @@ public class MariadbCustomerDAO implements ICustomerDAO {
 
     @Override
     public boolean updateCustomer(CustomerModel customer){
-
-        return;
+        return false;
     }
 
     @Override
-    public CustomerModel selectCustomersByProject(int projectId){
-        CustomerModel customer = database.selectObjectSingle(Customer, "SELECT * FROM customer WHERE project = ?", "");
-        return customer;
+    public Collection selectCustomersByProject(int projectId){
+        return null;
     }
 }

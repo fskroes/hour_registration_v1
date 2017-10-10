@@ -44,8 +44,7 @@ public class MariadbContractDAO implements IContractDAO {
     }
     @Override
     public ContractModel selectContractByEmployee(int employeeId){
-        ContractModel contract = database.selectObjectSingle(Contract, "SELECT * FROM contract WHERE name = ?", "");
-        return contract;
+        return null;
     }
 
 }
