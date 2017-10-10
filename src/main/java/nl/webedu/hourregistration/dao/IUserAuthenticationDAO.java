@@ -4,6 +4,6 @@ import nl.webedu.hourregistration.model.UserAuthenticationModel;
 
 public interface IUserAuthenticationDAO {
     public UserAuthenticationModel findUser();
-    public UserAuthenticationModel registerUser(String username, String password);
-    public void authenticateUser();
+    public void registerUser(String username, String password);
+    public boolean authenticateUser();
 }
