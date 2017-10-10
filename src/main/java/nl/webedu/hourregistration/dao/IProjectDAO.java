@@ -9,5 +9,5 @@ public interface IProjectDAO {
     public boolean deleteProject(int id);
     public ProjectModel findProject(int id);
     public boolean updateProject(ProjectModel Project);
-    public Collection selectProjectByCustomer(int customerId);
+    public ProjectModel selectProjectByCustomer(int customerId);
 }

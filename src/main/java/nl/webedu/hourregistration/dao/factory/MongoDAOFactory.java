@@ -5,7 +5,6 @@ import nl.webedu.hourregistration.dao.mongodb.MongoUserAuthenticationDAO;
 
 public class MongoDAOFactory extends DAOFactory {
 
-    private static final String DATABASE_SCHEME = "hour_registration";
     private static MongoDAOFactory instance;
 
     private MongoDAOFactory() {  }

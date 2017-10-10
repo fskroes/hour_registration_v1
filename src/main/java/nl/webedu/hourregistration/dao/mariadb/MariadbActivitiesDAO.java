@@ -11,6 +11,7 @@ public class MariadbActivitiesDAO implements IActivitiesDAO {
     private mariaClient client;
 
     private MariadbActivitiesDAO() {
+
         this.client = (mariaClient) DatabaseManager.getInstance().getDatabase();
     }
 
