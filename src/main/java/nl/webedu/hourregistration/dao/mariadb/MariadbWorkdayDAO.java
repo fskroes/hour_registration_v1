@@ -5,7 +5,6 @@ import nl.webedu.hourregistration.model.WorkdayModel;
 import java.util.Collection;
 
 public class MariadbWorkdayDAO {
-
     public boolean insertWorkday(WorkdayModel Workday) {
         return false;
     }
