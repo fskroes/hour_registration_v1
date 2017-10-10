@@ -32,31 +32,32 @@ public class MariadbActivitiesDAO implements IActivitiesDAO {
 
     @Override
     public ActivitiesModel findActivitie(int id) {
-
-        return null;
+        ActivitiesModel activities = database.selectObjectSingle(Activities, "SELECT * FROM activities WHERE activitie = ?", id);
+        return activities;
     }
 
     @Override
     public boolean deleteActivitie(int id) {
-
+        ActivitiesModel activities = database.selectObjectSingle(Activities, "DELETE FROM activities WHERE activitie = ?", id);
         return false;
     }
 
     @Override
     public boolean updateActivitie(ActivitiesModel activitie) {
-
+        ActivitiesModel activities = database.selectObjectSingle(Activities, "UPDATE activities SET activitie = '' WHERE activitie = ?", activitie);
         return false;
     }
 
     @Override
     public ActivitiesModel selectActivitiesByWorkday(int wordkdatId) {
-        ActivitiesModel activities = database.selectObjectSingle(Activities, "SELECT * FROM activities WHERE workday = ?", "");
+        ActivitiesModel activities = database.selectObjectSingle(Activities, "SELECT * FROM activities WHERE workday = ?", wordkdatId);
+
         return activities;
     }
 
     @Override
     public ActivitiesModel selectActivitiesByEmployee(int employeeId) {
-        ActivitiesModel activities = database.selectObjectSingle(Activities, "SELECT * FROM activities WHERE name = ?", "");
+        ActivitiesModel activities = database.selectObjectSingle(Activities, "SELECT * FROM activities WHERE name = ?", employeeId);
         return activities;
     }
 }
