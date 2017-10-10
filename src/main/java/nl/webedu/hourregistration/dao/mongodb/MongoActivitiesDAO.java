@@ -1,11 +1,8 @@
 package nl.webedu.hourregistration.dao.mongodb;
 
-import com.mongodb.async.SingleResultCallback;
-import com.mongodb.async.client.MongoClient;
 import nl.webedu.hourregistration.dao.IActivitiesDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.model.ActivitiesModel;
-import org.bson.Document;
 
 import java.util.Collection;
 
