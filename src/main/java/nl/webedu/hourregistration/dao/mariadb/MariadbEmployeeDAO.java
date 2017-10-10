@@ -40,9 +40,7 @@ public class MariadbEmployeeDAO implements IEmployeeDAO {
     }
 
     @Override
-    public EmployeeModel selectEmployeesByProject(int projectId){
-
-        EmployeeModel employee = database.selectObjectSingle(Employee, "SELECT * FROM employee WHERE name = ?", "");
-        return employee;
+    public Collection selectEmployeesByProject(int projectId){
+        return null;
     }
 }

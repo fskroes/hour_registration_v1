@@ -12,21 +12,11 @@ public class MariadbActivitiesDAO implements IActivitiesDAO {
     private MariaDatabaseExtension database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
 
     private MariadbActivitiesDAO() {
-
         this.database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
     }
 
     @Override
     public boolean insertActivitie(ActivitiesModel activitie) {
-
-        Document query = new Document("category", activitie.getCategory())
-                .append("start_time",activitie.getStartTime())
-                .append("end_time",activitie.getEndTime())
-                .append("workdayId", activitie.getWorkdayId());
-
-        client.getDatabase("hour_registration").getCollection("activities")
-                .insertOne(query, (result, t) -> System.out.println("Documents inserted!"));
-
         return true;
     }
 
@@ -44,19 +34,16 @@ public class MariadbActivitiesDAO implements IActivitiesDAO {
 
     @Override
     public boolean updateActivitie(ActivitiesModel activitie) {
-
         return false;
     }
 
     @Override
-    public ActivitiesModel selectActivitiesByWorkday(int wordkdatId) {
-        ActivitiesModel activities = database.selectObjectSingle(Activities, "SELECT * FROM activities WHERE workday = ?", "");
-        return activities;
+    public Collection selectActivitiesByWorkday(int wordkdatId) {
+        return null;
     }
 
     @Override
     public ActivitiesModel selectActivitiesByEmployee(int employeeId) {
-        ActivitiesModel activities = database.selectObjectSingle(Activities, "SELECT * FROM activities WHERE name = ?", "");
-        return activities;
+        return null;
     }
 }

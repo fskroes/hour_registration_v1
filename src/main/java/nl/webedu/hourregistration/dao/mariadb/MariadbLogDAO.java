@@ -41,12 +41,11 @@ public class MariadbLogDAO implements ILogDAO {
 
     @Override
     public Collection selectLogByEmployee(int employeeId) {
-        LogModel log = database.selectObjectSingle(Log, "SELECT * FROM log WHERE employee = ?", "");
-        return log;
+        return null;
     }
+
     @Override
-    public LogModel selectLogBySubject(int subjectId) {
-        LogModel log = database.selectObjectSingle(Log, "SELECT * FROM log WHERE subject = ?", "");
-        return log;
+    public Collection selectLogBySubject(int subjectId) {
+        return null;
     }
 }
