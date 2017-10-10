@@ -6,36 +6,36 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.webedu.hourregistration.controller.UserAuthenticationController">
-   <children>
-      <VBox alignment="TOP_CENTER" layoutX="250.0" layoutY="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <Label alignment="TOP_CENTER" text="Registreer gebruiker">
-               <VBox.margin>
-                  <Insets bottom="24.0" />
-               </VBox.margin>
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <JFXTextField fx:id="txtEmail" labelFloat="true" maxWidth="-Infinity" prefWidth="300.0" promptText="Email">
-               <VBox.margin>
-                  <Insets bottom="24.0" />
-               </VBox.margin>
-            </JFXTextField>
-            <JFXTextField fx:id="txtPassword" labelFloat="true" maxWidth="-Infinity" prefWidth="300.0" promptText="Password">
-               <VBox.margin>
-                  <Insets bottom="24.0" />
-               </VBox.margin>
-            </JFXTextField>
-            <JFXButton fx:id="btnRegister" buttonType="RAISED" onAction="#signButtonHandler" text="Register User" />
-         </children>
-         <padding>
-            <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
-         </padding>
-      </VBox>
-   </children>
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="nl.webedu.hourregistration.controller.UserAuthenticationController">
    <padding>
-      <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
+      <Insets bottom="24.0" left="24.0" right="24.0" top="24.0"/>
    </padding>
+    <VBox alignment="TOP_CENTER" layoutX="250.0" layoutY="100.0" AnchorPane.bottomAnchor="0.0"
+          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <padding>
+            <Insets bottom="24.0" left="24.0" right="24.0" top="24.0"/>
+        </padding>
+        <Label alignment="TOP_CENTER" text="Registreer gebruiker">
+           <VBox.margin>
+               <Insets bottom="24.0"/>
+           </VBox.margin>
+           <font>
+               <Font size="24.0"/>
+           </font>
+        </Label>
+        <JFXTextField fx:id="txtEmail" labelFloat="true" maxWidth="-Infinity" prefWidth="300.0" promptText="Email">
+           <VBox.margin>
+               <Insets bottom="24.0"/>
+           </VBox.margin>
+        </JFXTextField>
+        <JFXPasswordField fx:id="txtPassword" labelFloat="true" maxWidth="-Infinity" prefWidth="300.0"
+                          promptText="Password">
+           <VBox.margin>
+               <Insets bottom="24.0"/>
+           </VBox.margin>
+        </JFXPasswordField>
+        <JFXButton fx:id="btnRegister" buttonType="RAISED" onAction="#onRegister" text="Register User"/>
+    </VBox>
 </AnchorPane>

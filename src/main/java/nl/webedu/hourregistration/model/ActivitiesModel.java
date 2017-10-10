@@ -1,24 +1,28 @@
 package nl.webedu.hourregistration.model;
 
+import nl.webedu.hourregistration.database.DatabaseRowMapper;
+import org.bson.Document;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
 
-public class ActivitiesModel {
+public class ActivitiesModel extends DatabaseRowMapper<ActivitiesModel> {
 
     private int id;
     private String category;
     private Date startTime, endTime;
-    private int workdayId;
+    private WorkdayModel workday;
 
     public ActivitiesModel() {
 
     }
 
-    public ActivitiesModel(int id, String category, Date startTime, Date endTime, int workdayId) {
+    public ActivitiesModel(int id, String category, Date startTime, Date endTime) {
         this.id = id;
         this.category = category;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.workdayId = workdayId;
     }
 
 
@@ -50,12 +54,34 @@ public class ActivitiesModel {
         this.endTime = endTime;
     }
 
-    public int getWorkdayId() {
-        return workdayId;
+    public WorkdayModel getWorkday() {
+        return workday;
+    }
+
+    public void setWorkday(WorkdayModel workday) {
+        this.workday = workday;
     }
 
     @Override
     public String toString() {
         return this.category;
+    }
+
+    @Override
+    public ActivitiesModel convertSQL(ResultSet set, int rowNum) throws SQLException {
+        this.id = set.getInt("activityID");
+        this.category = set.getString("category");
+        this.startTime = set.getDate("start_time");
+        this.endTime = set.getDate("end_time");
+        return this;
+    }
+
+    @Override
+    public ActivitiesModel convertMongo(Document set, int rowNum) {
+        this.id = set.getInteger("_id");
+        this.category = set.getString("category");
+        this.startTime = set.getDate("start_time");
+        this.endTime = set.getDate("end_time");
+        return this;
     }
 }

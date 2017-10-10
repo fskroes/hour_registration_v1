@@ -53,7 +53,7 @@ public class MariaDatabaseExtension extends Database<Connection> {
         }
     }
 
-    public <E> E selectObjectSingle(DatabaseParser<E> object, String query) throws SQLException {
+    public <E> E selectObjectSingle(DatabaseRowMapper<E> object, String query) throws SQLException {
         E result = null;
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -70,7 +70,7 @@ public class MariaDatabaseExtension extends Database<Connection> {
         return result;
     }
 
-    public <E> E selectObjectSingle(DatabaseParser<E> object, String query, String params) throws SQLException {
+    public <E> E selectObjectSingle(DatabaseRowMapper<E> object, String query, String params) throws SQLException {
         E result = null;
 
         try (PreparedStatement statement = prepareStatement(query, params)) {
@@ -87,7 +87,7 @@ public class MariaDatabaseExtension extends Database<Connection> {
         return result;
     }
 
-    public <E> List<E> selectObjectList(DatabaseParser<E> object, String query) throws SQLException {
+    public <E> List<E> selectObjectList(DatabaseRowMapper<E> object, String query) throws SQLException {
         List<E> result = new LinkedList<>();
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery();
@@ -101,7 +101,7 @@ public class MariaDatabaseExtension extends Database<Connection> {
         return result;
     }
 
-    public <E> List<E> selectObjectList(DatabaseParser<E> object, String query, Object... params) throws SQLException {
+    public <E> List<E> selectObjectList(DatabaseRowMapper<E> object, String query, Object... params) throws SQLException {
         List<E> result = new LinkedList<>();
         try (PreparedStatement statement = prepareStatement(query, params)) {
             ResultSet resultSet = statement.executeQuery();

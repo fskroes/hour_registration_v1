@@ -1,24 +1,33 @@
 package nl.webedu.hourregistration.model;
 
-import java.sql.Date;
+import nl.webedu.hourregistration.database.DatabaseRowMapper;
+import org.bson.Document;
 
-public class ProjectModel {
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Date;
+
+public class ProjectModel extends DatabaseRowMapper<ProjectModel> {
 
     private int id;
     private String name;
     private Date startDate;
     private Date endDate;
-    private CustomerModel customerModel;
     private String categorie;
+    private CustomerModel customerModel;
 
     public ProjectModel() {
     }
 
-    public ProjectModel(String name, Date startDate, Date endDate, CustomerModel customerModel, String categorie) {
+    public ProjectModel(int id, String name, Date startDate, Date endDate, String categorie) {
+        this(name, startDate, endDate, categorie);
+        this.id = id;
+    }
+
+    public ProjectModel(String name, Date startDate, Date endDate, String categorie) {
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.customerModel = customerModel;
         this.categorie = categorie;
     }
 
@@ -64,5 +73,25 @@ public class ProjectModel {
 
     public void setCategorie(String categorie) {
         this.categorie = categorie;
+    }
+
+    @Override
+    public ProjectModel convertSQL(ResultSet set, int rowNum) throws SQLException {
+        this.id = set.getInt("projectID");
+        this.name = set.getString("project_name");
+        this.startDate = set.getDate("start_date");
+        this.endDate = set.getDate("end_date");
+        this.categorie = set.getString("category");
+        return this;
+    }
+
+    @Override
+    public ProjectModel convertMongo(Document set, int rowNum) throws SQLException {
+        this.id = set.getInteger("_id");
+        this.name = set.getString("project_name");
+        this.startDate = set.getDate("start_date");
+        this.endDate = set.getDate("end_date");
+        this.categorie = set.getString("category");
+        return this;
     }
 }

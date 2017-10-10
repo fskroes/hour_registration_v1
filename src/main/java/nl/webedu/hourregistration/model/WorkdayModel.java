@@ -1,10 +1,17 @@
 package nl.webedu.hourregistration.model;
 
+import nl.webedu.hourregistration.database.DatabaseRowMapper;
+import org.bson.Document;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class WorkdayModel {
+public class WorkdayModel extends DatabaseRowMapper<WorkdayModel> {
+
+    // TODO: Fill in RowMappers
 
     private int id;
     private Date date, startTime, endTime;
@@ -91,4 +98,15 @@ public class WorkdayModel {
         return weekNumber + " " + date.toString();
     }
 
+    @Override
+    public WorkdayModel convertSQL(ResultSet set, int rowNum) throws SQLException {
+        // TODO: Setup MariaDB config
+        return this;
+    }
+
+    @Override
+    public WorkdayModel convertMongo(Document set, int rowNum) throws SQLException {
+        // TODO: Setup MongoDB config
+        return this;
+    }
 }

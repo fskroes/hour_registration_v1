@@ -3,10 +3,9 @@ package nl.webedu.hourregistration.dao.mariadb;
 import nl.webedu.hourregistration.dao.IWorkdayDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.database.MariaDatabaseExtension;
-import nl.webedu.hourregistration.model.ReportModel;
 import nl.webedu.hourregistration.model.WorkdayModel;
 
-import java.util.Collection;
+import java.sql.SQLException;
 
 public class MariadbWorkdayDAO implements IWorkdayDAO {
 
@@ -38,7 +37,12 @@ public class MariadbWorkdayDAO implements IWorkdayDAO {
 
     @Override
     public WorkdayModel selectWorkdayByEmployee(int employeeId) {
-         WorkdayModel workday = client.selectObjectSingle(Workday, "SELECT * FROM report WHERE id = ?", employeeId);
+        WorkdayModel workday = null;
+        try {
+            workday = client.selectObjectSingle(new WorkdayModel(), "SELECT * FROM report WHERE id = ?", employeeId + "");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return workday;
     }
 }

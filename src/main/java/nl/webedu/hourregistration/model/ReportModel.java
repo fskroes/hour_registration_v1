@@ -1,10 +1,18 @@
 package nl.webedu.hourregistration.model;
 
+import nl.webedu.hourregistration.database.DatabaseRowMapper;
+import org.bson.Document;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class ReportModel {
+public class ReportModel extends DatabaseRowMapper<ReportModel> {
 
+    // TODO: Fill in RowMappers
+
+    private int id;
     private ArrayList<WorkdayModel> workDays;
     private int weekNumber;
     private Date reportDate;
@@ -12,10 +20,19 @@ public class ReportModel {
     public ReportModel() {
     }
 
+    public ReportModel(int id, ArrayList<WorkdayModel> workDays, int weekNumber, Date reportDate) {
+        this(workDays, weekNumber, reportDate);
+        this.id = id;
+    }
+
     public ReportModel(ArrayList<WorkdayModel> workDays, int weekNumber, Date reportDate) {
         this.workDays = workDays;
         this.weekNumber = weekNumber;
         this.reportDate = reportDate;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public ArrayList<WorkdayModel> getWorkDays() {
@@ -40,5 +57,17 @@ public class ReportModel {
 
     public void setReportDate(Date reportDate) {
         this.reportDate = reportDate;
+    }
+
+    @Override
+    public ReportModel convertSQL(ResultSet set, int rowNum) throws SQLException {
+        // TODO: Setup MariaDB config
+        return this;
+    }
+
+    @Override
+    public ReportModel convertMongo(Document set, int rowNum) throws SQLException {
+        // TODO: Setup MongoDB config
+        return this;
     }
 }

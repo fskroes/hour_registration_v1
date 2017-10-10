@@ -6,6 +6,7 @@ import nl.webedu.hourregistration.database.MariaDatabaseExtension;
 import nl.webedu.hourregistration.model.ProjectModel;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -32,8 +33,8 @@ public class MariadbProjectDAO implements IProjectDAO {
             ps = client.getConnection().prepareStatement(sql);
 
             ps.setString(1, project.getName());
-            ps.setDate(2, project.getStartDate());
-            ps.setDate(3, project.getEndDate());
+            ps.setDate(2, (Date) project.getStartDate());
+            ps.setDate(3, (Date) project.getEndDate());
             ps.setObject(4, project.getCustomerModel());
             ps.setString(5, project.getCategorie());
 
@@ -79,7 +80,12 @@ public class MariadbProjectDAO implements IProjectDAO {
 
     @Override
     public ProjectModel selectProjectByCustomer(int customerId) {
-        ProjectModel project = client.selectObjectSingle(Project, "SELECT * FROM project WHERE id = ?", customerId);
+        ProjectModel project = null;
+        try {
+            project = client.selectObjectSingle(new ProjectModel(), "SELECT * FROM project WHERE id = ?", customerId + "");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return project;
     };
 }

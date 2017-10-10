@@ -1,8 +1,15 @@
 package nl.webedu.hourregistration.model;
 
+import nl.webedu.hourregistration.database.DatabaseRowMapper;
+import org.bson.Document;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
 
-public class SubjectModel {
+public class SubjectModel extends DatabaseRowMapper<SubjectModel> {
+
+    // TODO: Fill in RowMappers
 
     private int id;
     private String onderwerpName;
@@ -54,5 +61,17 @@ public class SubjectModel {
 
     public void setProjectModel(ProjectModel projectModel) {
         this.projectModel = projectModel;
+    }
+
+    @Override
+    public SubjectModel convertSQL(ResultSet set, int rowNum) throws SQLException {
+        // TODO: Setup MariaDB config
+        return this;
+    }
+
+    @Override
+    public SubjectModel convertMongo(Document set, int rowNum) throws SQLException {
+        // TODO: Setup MongoDB config
+        return this;
     }
 }

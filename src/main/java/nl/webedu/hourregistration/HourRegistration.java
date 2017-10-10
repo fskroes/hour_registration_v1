@@ -5,11 +5,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import nl.webedu.hourregistration.dao.IUserAuthenticationDAO;
-import nl.webedu.hourregistration.dao.factory.MongoDAOFactory;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.database.DatabaseType;
-import nl.webedu.hourregistration.model.UserAuthenticationModel;
 
 public class HourRegistration extends Application {
 
@@ -21,7 +18,7 @@ public class HourRegistration extends Application {
 
         DatabaseManager.getInstance().connectToDatabase(DatabaseType.MONGODB);
 
-        Parent root = FXMLLoader.load(getClass().getResource("/RegisterView.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/LoginView.fxml"));
         Scene scene = new Scene(root, 600, 400);
         primaryStage.setScene(scene);
         primaryStage.show();

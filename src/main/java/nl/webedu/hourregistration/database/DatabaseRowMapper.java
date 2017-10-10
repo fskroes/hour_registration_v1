@@ -5,7 +5,7 @@ import org.bson.Document;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public abstract class DatabaseParser<E> {
+public abstract class DatabaseRowMapper<E> {
 
     public abstract E convertSQL(ResultSet set, int rowNum) throws SQLException;
 

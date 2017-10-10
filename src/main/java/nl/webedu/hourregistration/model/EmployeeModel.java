@@ -1,12 +1,19 @@
 package nl.webedu.hourregistration.model;
 
+import nl.webedu.hourregistration.database.DatabaseRowMapper;
+import nl.webedu.hourregistration.enumeration.Role;
+import org.bson.Document;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmployeeModel {
+public class EmployeeModel extends DatabaseRowMapper<EmployeeModel> {
 
     private int id;
     private String email, password, firstname, suffix, lastname;
+    private Role role;
     private ContractModel contractModel;
     private List<ProjectModel> projectModels;
     private List<WorkdayModel> workdayModels;
@@ -18,14 +25,18 @@ public class EmployeeModel {
 
     }
 
-    public EmployeeModel(int id, String email, String password, String firstname, String suffix, String lastname, List<WorkdayModel> workdayModels) {
+    public EmployeeModel(int id, String email, String password, String firstname, String suffix, String lastname) {
+        this(email, password, firstname, suffix, lastname);
         this.id = id;
+    }
+
+    public EmployeeModel(String email, String password, String firstname, String suffix, String lastname) {
         this.email = email;
         this.password = password;
+        this.role = role;
         this.firstname = firstname;
         this.suffix = suffix;
         this.lastname = lastname;
-        this.workdayModels = workdayModels;
     }
 
     public int getId() {
@@ -70,6 +81,23 @@ public class EmployeeModel {
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public void setRole(int roleId) {
+        switch (roleId) {
+            case 1: this.role = Role.ADMIN;
+            case 2: this.role = Role.EMPLOYEE;
+            case 3: this.role = Role.MANAGER;
+
+        }
     }
 
     public ContractModel getContractModel() {
@@ -117,4 +145,27 @@ public class EmployeeModel {
         return firstname + " " + suffix + " " + lastname;
     }
 
+    @Override
+    public EmployeeModel convertSQL(ResultSet set, int rowNum) throws SQLException {
+        this.id = set.getInt("employeeID");
+        this.email = set.getString("email");
+        this.password = set.getString("password");
+        this.firstname = set.getString("firstname");
+        this.suffix = set.getString("suffix");
+        this.lastname = set.getString("lastname");
+        this.setRole(set.getInt("role"));
+        return this;
+    }
+
+    @Override
+    public EmployeeModel convertMongo(Document set, int rowNum) {
+        this.id = set.getInteger("employeeID");
+        this.email = set.getString("email");
+        this.password = set.getString("password");
+        this.firstname = set.getString("firstname");
+        this.suffix = set.getString("suffix");
+        this.lastname = set.getString("lastname");
+        this.setRole(set.getInteger("role"));
+        return this;
+    }
 }
