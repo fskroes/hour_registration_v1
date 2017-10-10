@@ -26,11 +26,11 @@ public class DatabaseManager {
     public void connectToDatabase(DatabaseType type) {
         if (type == DatabaseType.MARIADB) {
             database = new MariaDatabaseExtension(
-                    "127.0.0.1",
+                    "80.208.224.30",
                     "3306",
                     "hour_registration",
                     "root",
-                    "root");
+                    "Chaud");
             try {
                 database.openConnection();
             } catch (SQLException | ClassNotFoundException e) {
