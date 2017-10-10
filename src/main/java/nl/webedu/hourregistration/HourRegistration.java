@@ -17,18 +17,18 @@ public class HourRegistration extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         // create the required DAO Factory
-        DatabaseManager.getInstance().connectToDatabase(DatabaseType.MONGODB);
-        MongoDAOFactory mongoFactory = (MongoDAOFactory) DatabaseManager.getInstance().getDaoFactory();
-
-        // Create a DAO
-        IUserAuthenticationDAO mongoUserAuthenticationDAO = mongoFactory.getUserAuthenticationDAO();
-
-        // create a new Authentication model
-        UserAuthenticationModel aModel = mongoUserAuthenticationDAO.registerUser("root", "root");
-
-        // modify the values in the Transfer Object
-        aModel.setEmail("");
-        aModel.setPassword("");
+//        DatabaseManager.getInstance().connectToDatabase(DatabaseType.MONGODB);
+//        MongoDAOFactory mongoFactory = (MongoDAOFactory) DatabaseManager.getInstance().getDaoFactory();
+//
+//        // Create a DAO
+//        IUserAuthenticationDAO mongoUserAuthenticationDAO = mongoFactory.getUserAuthenticationDAO();
+//
+//        // create a new Authentication model
+//        UserAuthenticationModel aModel = mongoUserAuthenticationDAO.registerUser("root", "root");
+//
+//        // modify the values in the Transfer Object
+//        aModel.setEmail("");
+//        aModel.setPassword("");
 
     }
 }
