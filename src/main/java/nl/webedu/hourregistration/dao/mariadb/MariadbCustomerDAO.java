@@ -36,7 +36,7 @@ public class MariadbCustomerDAO implements ICustomerDAO {
     @Override
     public boolean updateCustomer(CustomerModel customer){
 
-        return false;
+        return;
     }
 
     @Override
