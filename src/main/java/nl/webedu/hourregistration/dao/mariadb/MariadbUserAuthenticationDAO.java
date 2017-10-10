@@ -16,15 +16,15 @@ public class MariadbUserAuthenticationDAO implements IUserAuthenticationDAO {
     @Override
     public UserAuthenticationModel findUser() {
         return null;
-    };
+    }
 
     @Override
-    public UserAuthenticationModel registerUser(String username, String password) {
-        return null;
-    };
+    public void registerUser(String username, String password) {
+
+    }
 
     @Override
-    public void authenticateUser() {
-
-    };
+    public boolean authenticateUser() {
+        return false;
+    }
 }

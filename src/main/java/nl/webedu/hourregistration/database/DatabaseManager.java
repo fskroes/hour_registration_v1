@@ -38,7 +38,7 @@ public class DatabaseManager {
             }
             daoFactory = MongoDAOFactory.getInstance();
         } else if (type == DatabaseType.MONGODB) {
-            database = new MongoDatabaseExtension("mongodb://localhost");
+            database = new MongoDatabaseExtension("mongodb://80.208.224.30");
             try {
                 database.openConnection();
                 System.out.println("Connected to MongoDB");

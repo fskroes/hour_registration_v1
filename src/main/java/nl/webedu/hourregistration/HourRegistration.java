@@ -1,6 +1,9 @@
 package nl.webedu.hourregistration;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 import nl.webedu.hourregistration.dao.IUserAuthenticationDAO;
 import nl.webedu.hourregistration.dao.factory.MongoDAOFactory;
@@ -15,6 +18,14 @@ public class HourRegistration extends Application {
     }
 
     public void start(Stage primaryStage) throws Exception {
+
+        DatabaseManager.getInstance().connectToDatabase(DatabaseType.MONGODB);
+        // MongoDAOFactory mongoFactory = (MongoDAOFactory) DatabaseManager.getInstance().getDaoFactory();
+
+        Parent root = FXMLLoader.load(getClass().getResource("/RegisterView.fxml"));
+        Scene scene = new Scene(root, 600, 400);
+        primaryStage.setScene(scene);
+        primaryStage.show();
 
         // create the required DAO Factory
 //        DatabaseManager.getInstance().connectToDatabase(DatabaseType.MONGODB);

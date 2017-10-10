@@ -35,7 +35,6 @@ public class MariadbProjectDAO implements IProjectDAO {
 
     @Override
     public ProjectModel selectProjectByCustomer(int customerId) {
-        ProjectModel project = client.selectObjectSingle(Project, "SELECT * FROM project WHERE name = ?", "");
-        return project;
+        return null;
     };
 }

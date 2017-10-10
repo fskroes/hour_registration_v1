@@ -18,7 +18,7 @@ public class MongoUserAuthenticationDAO implements IUserAuthenticationDAO {
     private MongoClient client;
 
     public MongoUserAuthenticationDAO() {
-        this.client = (MongoClient) DatabaseManager.getInstance().getDatabase();
+        this.client = (MongoClient) DatabaseManager.getInstance().getDatabase().getConnection();
     }
 
     public static MongoUserAuthenticationDAO getInstance() {
