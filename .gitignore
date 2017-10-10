@@ -31,3 +31,5 @@ src/main/main\.iml
 src/test/test\.iml
 
 out/production/main/nl/webedu/hourregistration/view/MainView\.fxml
+
+hour_registration\.iml
