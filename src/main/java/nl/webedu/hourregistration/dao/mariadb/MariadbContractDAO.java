@@ -16,8 +16,15 @@ public class MariadbContractDAO implements IContractDAO {
 
     @Override
     public boolean insertContract(ContractModel contract){
+        Document query = new Document("category", activitie.getCategory())
+                .append("start_time",activitie.getStartTime())
+                .append("end_time",activitie.getEndTime())
+                .append("workdayId", activitie.getWorkdayId());
 
-        return false;
+        client.getDatabase("hour_registration").getCollection("activities")
+                .insertOne(query, (result, t) -> System.out.println("Documents inserted!"));
+
+        return true;
     }
 
     @Override

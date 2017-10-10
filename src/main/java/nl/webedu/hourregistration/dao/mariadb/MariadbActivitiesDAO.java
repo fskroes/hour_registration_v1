@@ -19,15 +19,17 @@ public class MariadbActivitiesDAO implements IActivitiesDAO {
     @Override
     public boolean insertActivitie(ActivitiesModel activitie) {
 
-        Document query = new Document("category", activitie.getCategory())
-                .append("start_time",activitie.getStartTime())
-                .append("end_time",activitie.getEndTime())
-                .append("workdayId", activitie.getWorkdayId());
+        String insertActivitieSQL = "INSERT INTO DBUSER"
+                + "(USER_ID, USERNAME, CREATED_BY, CREATED_DATE) VALUES"
+                + "(?,?,?,?)";
 
-        client.getDatabase("hour_registration").getCollection("activities")
-                .insertOne(query, (result, t) -> System.out.println("Documents inserted!"));
-
-        return true;
+        PreparedStatement ps = dbConnection.prepareStatement(insertActivitiesSQL);
+        ps.setInt(1, 11);
+        ps.setString(2, "mkyong");
+        ps.setString(3, "system");
+        ps.setTimestamp(4, get());
+// execute insert SQL stetement
+        preparedStatement .executeUpdate();
     }
 
     @Override
