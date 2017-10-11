@@ -15,10 +15,10 @@ import java.util.List;
 public class MariadbCustomerDAO implements ICustomerDAO {
 
     private static MariadbCustomerDAO instance;
-    private MariaDatabaseExtension database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
+    private MariaDatabaseExtension client = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
 
     private MariadbCustomerDAO() {
-        this.database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
+        this.client = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
     }
 
     public static MariadbCustomerDAO getInstance() {
@@ -30,43 +30,24 @@ public class MariadbCustomerDAO implements ICustomerDAO {
 
     @Override
     public boolean insertCustomer(CustomerModel customer) {
-        Connection dbConnection = null;
-        PreparedStatement ps = null;
-
-        String insertSQL = "INSERT INTO customer"
-                + "(customerID, company_name, PROJECTMODEL) VALUES"
-                + "(?,?,?)";
         try {
-            dbConnection = database.getConnection();
-            ps = database.getConnection().prepareStatement(insertSQL);
+            String query = "INSERT INTO customer"
+                    + "(company_name, project_name) VALUES"
+                    + "(?,?)";
 
-            ps.setInt(1, customer.getId());
-            ps.setString(2, customer.getBusinessName());
-            ps.setObject(3, customer.getProjectModel());
+            PreparedStatement ps = client.openConnection().prepareStatement(query);
+            ps.setString(1, customer.getBusinessName());
+            ps.setString(2, customer.getProjectModel().getName());
+            ps.executeQuery();
+            ps.close();
+            client.closeConnecion();
+            System.out.println("Query: " + query + " = Succes");
 
-            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
 
-            System.out.println("Record toegevoegd");
-        }
-        catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        finally {
-            if (ps != null) {
-                try {
-                    ps.getConnection().close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            if (dbConnection != null) {
-                try {
-                    dbConnection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
         return true;
     }
@@ -82,7 +63,7 @@ public class MariadbCustomerDAO implements ICustomerDAO {
 
         CustomerModel customer = null;
         try {
-            customer = database.selectObjectSingle(new CustomerModel(), "SELECT * FROM customer WHERE customerID = ?", id);
+            customer = client.selectObjectSingle(new CustomerModel(), "SELECT * FROM customer WHERE customerID = ?", id);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -100,8 +81,8 @@ public class MariadbCustomerDAO implements ICustomerDAO {
                 + " WHERE customerID = ?";
 
         try {
-            dbConnection = database.getConnection();
-            ps = database.getConnection().prepareStatement(updateSQL);
+            dbConnection = client.getConnection();
+            ps = client.getConnection().prepareStatement(updateSQL);
 
             ps.setString(1, customer.getBusinessName());
 
@@ -135,7 +116,7 @@ public class MariadbCustomerDAO implements ICustomerDAO {
 
         List<CustomerModel> customer = null;
         try {
-            customer = database.selectObjectList(new CustomerModel(), "SELECT * FROM customer WHERE projectID = ?", projectId);
+            customer = client.selectObjectList(new CustomerModel(), "SELECT * FROM customer WHERE projectID = ?", projectId);
         } catch (SQLException e) {
             e.printStackTrace();
         }
