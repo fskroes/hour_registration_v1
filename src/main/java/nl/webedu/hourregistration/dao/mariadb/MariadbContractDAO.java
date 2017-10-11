@@ -38,7 +38,6 @@ public class MariadbContractDAO implements IContractDAO {
             ps.executeQuery();
             ps.close();
             client.closeConnecion();
-
             System.out.println("Query: " + query + " = Succes");
 
         } catch (SQLException e) {
