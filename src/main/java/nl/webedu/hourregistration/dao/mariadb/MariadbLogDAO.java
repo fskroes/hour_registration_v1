@@ -28,14 +28,14 @@ public class MariadbLogDAO implements ILogDAO {
 
     @Override
     public boolean insertLog(LogModel log) {
-        // TODO TABEL AANMAKEN!
         try {
             String query = "INSERT INTO log"
-                    + "() VALUES"
-                    + "(?,?,?,?)";
+                    + "(date, description) VALUES"
+                    + "(?,?)";
 
             PreparedStatement ps = client.openConnection().prepareStatement(query);
-            ps.setDate(2, (Date) log.getDate());
+            ps.setDate(1, (Date) log.getDate());
+            ps.setString(2, log.getDescription());
             ps.executeQuery();
             ps.close();
             client.closeConnecion();
