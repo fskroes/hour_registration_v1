@@ -5,15 +5,18 @@ import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.database.MariaDatabaseExtension;
 import nl.webedu.hourregistration.model.LogModel;
 
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Collection;
 
 public class MariadbLogDAO implements ILogDAO {
 
     private static MariadbLogDAO instance;
-    private MariaDatabaseExtension database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
+    private MariaDatabaseExtension client = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
 
     private MariadbLogDAO() {
-        this.database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
+        this.client = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
     }
 
     public static MariadbLogDAO getInstance() {
@@ -24,9 +27,27 @@ public class MariadbLogDAO implements ILogDAO {
     }
 
     @Override
-    public boolean insertLog(LogModel Log) {
+    public boolean insertLog(LogModel log) {
+        // TODO TABEL AANMAKEN!
+        try {
+            String query = "INSERT INTO log"
+                    + "() VALUES"
+                    + "(?,?,?,?)";
 
-        return false;
+            PreparedStatement ps = client.openConnection().prepareStatement(query);
+            ps.setDate(2, (Date) log.getDate());
+            ps.executeQuery();
+            ps.close();
+            client.closeConnecion();
+            System.out.println("Query: " + query + " = Succes");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 
     @Override
@@ -42,7 +63,7 @@ public class MariadbLogDAO implements ILogDAO {
     }
 
     @Override
-    public boolean updateLog(LogModel Log) {
+    public boolean updateLog(LogModel log) {
 
         return false;
     }
