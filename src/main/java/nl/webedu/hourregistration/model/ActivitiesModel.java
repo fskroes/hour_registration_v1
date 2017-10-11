@@ -12,17 +12,17 @@ public class ActivitiesModel extends DatabaseRowMapper<ActivitiesModel> {
     private int id;
     private String category;
     private Date startTime, endTime;
-    private WorkdayModel workday;
+    private int workdayId;
 
     public ActivitiesModel() {
 
     }
 
-    public ActivitiesModel(int id, String category, Date startTime, Date endTime) {
-        this.id = id;
+    public ActivitiesModel(String category, Date startTime, Date endTime, int workdayId) {
         this.category = category;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.workdayId = workdayId;
     }
 
 
@@ -54,17 +54,17 @@ public class ActivitiesModel extends DatabaseRowMapper<ActivitiesModel> {
         this.endTime = endTime;
     }
 
-    public WorkdayModel getWorkday() {
-        return workday;
+    public int getWorkdayId() {
+        return workdayId;
     }
 
-    public void setWorkday(WorkdayModel workday) {
-        this.workday = workday;
+    public void setWorkday(int workday) {
+        this.workdayId = workday;
     }
 
     @Override
     public String toString() {
-        return this.category;
+        return " id: "+id+ " categorie: " +category+ " stime: " +startTime+ " etime: " +endTime+ " wdayid: " +workdayId;
     }
 
     @Override

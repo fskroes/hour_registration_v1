@@ -37,7 +37,7 @@ public class MariadbActivitiesDAO implements IActivitiesDAO {
             ps.setString(2, activitie.getCategory());
             ps.setDate(3, (Date) activitie.getStartTime());
             ps.setDate(4, (Date) activitie.getEndTime());
-            ps.setObject(5, activitie.getWorkday());
+            ps.setObject(5, activitie.getWorkdayId());
 
             ps.executeUpdate();
 
@@ -101,7 +101,6 @@ public class MariadbActivitiesDAO implements IActivitiesDAO {
         return activities;
     }
 
-    @Override
     public ActivitiesModel selectActivitiesByEmployee(int employeeId) {
         ActivitiesModel activities = null;
         try {
