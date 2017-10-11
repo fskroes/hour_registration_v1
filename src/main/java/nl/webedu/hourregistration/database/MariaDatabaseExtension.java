@@ -70,7 +70,7 @@ public class MariaDatabaseExtension extends Database<Connection> {
         return result;
     }
 
-    public <E> E selectObjectSingle(DatabaseRowMapper<E> object, String query, String params) throws SQLException {
+    public <E> E selectObjectSingle(DatabaseRowMapper<E> object, String query, Object... params) throws SQLException {
         E result = null;
 
         try (PreparedStatement statement = prepareStatement(query, params)) {
