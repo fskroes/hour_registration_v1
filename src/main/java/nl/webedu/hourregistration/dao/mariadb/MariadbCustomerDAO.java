@@ -34,15 +34,14 @@ public class MariadbCustomerDAO implements ICustomerDAO {
         PreparedStatement ps = null;
 
         String insertSQL = "INSERT INTO customer"
-                + "(customerID, company_name, PROJECTMODEL) VALUES"
-                + "(?,?,?)";
+                + "(company_name, project_name) VALUES"
+                + "(?,?)";
         try {
             dbConnection = database.getConnection();
             ps = database.getConnection().prepareStatement(insertSQL);
 
-            ps.setInt(1, customer.getId());
-            ps.setString(2, customer.getBusinessName());
-            ps.setObject(3, customer.getProjectModel());
+            ps.setString(1, customer.getBusinessName());
+            ps.setObject(2, customer.getProjectModel());
 
             ps.executeUpdate();
 
@@ -72,9 +71,47 @@ public class MariadbCustomerDAO implements ICustomerDAO {
     }
 
     @Override
-    public boolean deleteCustomer(int id) {
+    public boolean deleteCustomer(CustomerModel customer) {
 
-        return false;
+        Connection dbConnection = null;
+        PreparedStatement ps = null;
+
+        String delSQL = "DELETE customer"
+                + " WHERE customerID = ?";
+
+        try {
+            dbConnection = database.getConnection();
+            ps = database.getConnection().prepareStatement(delSQL);
+
+            ps.setInt(1, customer.getId());
+
+            ps.executeUpdate();
+
+            System.out.println("Record deleted");
+        }
+
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        finally {
+            if (ps != null) {
+                try {
+                    ps.getConnection().close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (dbConnection != null) {
+                try {
+                    dbConnection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return true;
     }
 
     @Override

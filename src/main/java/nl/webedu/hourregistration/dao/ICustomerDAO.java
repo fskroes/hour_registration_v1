@@ -6,7 +6,7 @@ import java.util.Collection;
 
 public interface ICustomerDAO {
     public boolean insertCustomer(CustomerModel customer);
-    public boolean deleteCustomer(int id);
+    public boolean deleteCustomer(CustomerModel customer);
     public CustomerModel findCustomer(int id);
     public boolean updateCustomer(CustomerModel customer);
     public Collection<CustomerModel> selectCustomersByProject(int projectId);

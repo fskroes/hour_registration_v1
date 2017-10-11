@@ -30,7 +30,6 @@ public class MariadbActivitiesDAO implements IActivitiesDAO {
 
     @Override
     public boolean insertActivitie(ActivitiesModel activitie) {
-
         Connection dbConnection = null;
         PreparedStatement ps = null;
 
@@ -98,7 +97,7 @@ public class MariadbActivitiesDAO implements IActivitiesDAO {
             dbConnection = database.getConnection();
             ps = database.getConnection().prepareStatement(deleteSQL);
 
-            ps.setInt(1, activitie.getId());
+            ps.setInt(1, activitie.getActivityId());
 
             ps.executeUpdate();
 
@@ -146,7 +145,7 @@ public class MariadbActivitiesDAO implements IActivitiesDAO {
             ps.setString(1, activitie.getCategory());
             ps.setDate(2, (Date) activitie.getStartTime());
             ps.setDate(3, (Date) activitie.getEndTime());
-            ps.setInt(4, activitie.getId());
+            ps.setInt(4, activitie.getActivityId());
 
             ps.executeUpdate();
 
