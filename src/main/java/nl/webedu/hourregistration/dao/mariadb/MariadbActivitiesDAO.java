@@ -14,10 +14,18 @@ import java.util.List;
 
 public class MariadbActivitiesDAO implements IActivitiesDAO {
 
+    private static MariadbActivitiesDAO instance;
     private MariaDatabaseExtension database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
 
     private MariadbActivitiesDAO() {
         this.database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
+    }
+
+    public static MariadbActivitiesDAO getInstance() {
+        if (instance == null) {
+            instance = new MariadbActivitiesDAO();
+        }
+        return instance;
     }
 
     @Override
