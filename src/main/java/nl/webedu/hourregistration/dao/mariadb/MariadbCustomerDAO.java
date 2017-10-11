@@ -14,10 +14,18 @@ import java.util.List;
 
 public class MariadbCustomerDAO implements ICustomerDAO {
 
+    private static MariadbCustomerDAO instance;
     private MariaDatabaseExtension database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
 
     private MariadbCustomerDAO() {
         this.database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
+    }
+
+    public static MariadbCustomerDAO getInstance() {
+        if (instance == null) {
+            instance = new MariadbCustomerDAO();
+        }
+        return instance;
     }
 
     @Override
@@ -88,18 +96,14 @@ public class MariadbCustomerDAO implements ICustomerDAO {
         PreparedStatement ps = null;
 
         String updateSQL = "UPDATE customer"
-                + " SET customerID = ?, company_name = ?,  = ?, fk_workdayID = ?"
-                + " WHERE activityID = ?";
+                + " SET company_name = ?"
+                + " WHERE customerID = ?";
 
         try {
             dbConnection = database.getConnection();
             ps = database.getConnection().prepareStatement(updateSQL);
 
-            ps.setString(1, customer.getCategory());
-            ps.setDate(2, (Date) activitie.getStartTime());
-            ps.setDate(3, (Date) activitie.getEndTime());
-            ps.setObject(4, activitie.getWorkday());
-            ps.setInt(5, activitie.getId());
+            ps.setString(1, customer.getBusinessName());
 
             ps.executeUpdate();
 

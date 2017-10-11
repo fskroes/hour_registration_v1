@@ -85,6 +85,7 @@ public class MariadbActivitiesDAO implements IActivitiesDAO {
     }
 
     @Override
+    //Is not done yet.
     public boolean deleteActivitie(ActivitiesModel activitie) {
 
         Connection dbConnection = null;
@@ -188,7 +189,6 @@ public class MariadbActivitiesDAO implements IActivitiesDAO {
     }
 
     @Override
-    //Moet een lijst laten zien. Deze is nog fout.
     public Collection<ActivitiesModel> selectActivitiesByEmployee(int employeeId) {
         List<ActivitiesModel> activities = null;
 
