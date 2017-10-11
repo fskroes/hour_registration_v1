@@ -27,7 +27,7 @@ public class MariaDatabaseExtension extends Database<Connection> {
             return connection;
         }
         try {
-            Class.forName("com.mariadb.jdbc.Driver");
+            Class.forName("org.mariadb.jdbc.Driver");
             connection = DriverManager.getConnection("jdbc:mariadb://"
                             + this.hostname + ":" + this.port + "/" + this.database + "?autoReconnect=true&useSSL=false",
                     this.user, this.password);
@@ -70,7 +70,7 @@ public class MariaDatabaseExtension extends Database<Connection> {
         return result;
     }
 
-    public <E> E selectObjectSingle(DatabaseRowMapper<E> object, String query, String params) throws SQLException {
+    public <E> E selectObjectSingle(DatabaseRowMapper<E> object, String query, Object... params) throws SQLException {
         E result = null;
 
         try (PreparedStatement statement = prepareStatement(query, params)) {

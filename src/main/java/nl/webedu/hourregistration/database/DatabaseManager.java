@@ -2,7 +2,9 @@ package nl.webedu.hourregistration.database;
 
 import com.mongodb.async.client.MongoCollection;
 import nl.webedu.hourregistration.dao.factory.DAOFactory;
+import nl.webedu.hourregistration.dao.factory.MariaDAOFactory;
 import nl.webedu.hourregistration.dao.factory.MongoDAOFactory;
+import nl.webedu.hourregistration.dao.mariadb.MariadbProjectDAO;
 import org.bson.Document;
 
 import java.sql.SQLException;
@@ -36,7 +38,7 @@ public class DatabaseManager {
             } catch (SQLException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
-            daoFactory = MongoDAOFactory.getInstance();
+            daoFactory = MariaDAOFactory.getInstance();
         } else if (type == DatabaseType.MONGODB) {
             database = new MongoDatabaseExtension("mongodb://80.208.224.30");
             try {
