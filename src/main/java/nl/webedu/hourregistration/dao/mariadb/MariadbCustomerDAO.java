@@ -9,10 +9,18 @@ import java.util.Collection;
 
 public class MariadbCustomerDAO implements ICustomerDAO {
 
+    private static MariadbCustomerDAO instance;
     private MariaDatabaseExtension database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
 
     private MariadbCustomerDAO() {
         this.database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
+    }
+
+    public static MariadbCustomerDAO getInstance() {
+        if (instance == null) {
+            instance = new MariadbCustomerDAO();
+        }
+        return instance;
     }
 
     @Override

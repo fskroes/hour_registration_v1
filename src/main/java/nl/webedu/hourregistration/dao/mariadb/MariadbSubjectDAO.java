@@ -7,10 +7,18 @@ import nl.webedu.hourregistration.model.SubjectModel;
 
 public class MariadbSubjectDAO implements ISubjectDAO {
 
+    private static MariadbSubjectDAO instance;
     private MariaDatabaseExtension client;
 
     private MariadbSubjectDAO() {
         this.client = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase().getConnection();
+    }
+
+    public static MariadbSubjectDAO getInstance() {
+        if (instance == null) {
+            instance = new MariadbSubjectDAO();
+        }
+        return instance;
     }
 
     @Override
