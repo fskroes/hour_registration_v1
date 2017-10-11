@@ -21,7 +21,7 @@ public class MariadbContractDAO implements IContractDAO {
     }
 
     @Override
-    public ContractModel findContract(int id){
+    public ContractModel findContract(String id){
 
         return null;
     }
