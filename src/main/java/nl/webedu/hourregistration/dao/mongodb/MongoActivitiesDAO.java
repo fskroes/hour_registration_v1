@@ -35,7 +35,7 @@ public class MongoActivitiesDAO implements IActivitiesDAO {
     }
 
     @Override
-    public boolean deleteActivitie(int id) {
+    public boolean deleteActivitie(ActivitiesModel activitie) {
         return false;
     }
 
@@ -50,7 +50,7 @@ public class MongoActivitiesDAO implements IActivitiesDAO {
     }
 
     @Override
-    public ActivitiesModel selectActivitiesByEmployee(int employeeId) {
+    public Collection<ActivitiesModel> selectActivitiesByEmployee(int employeeId) {
         return null;
     }
 }

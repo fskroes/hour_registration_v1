@@ -35,7 +35,6 @@ public class UserAuthenticationController {
     }
 
     public void onLogin(ActionEvent actionEvent) {
-
         if(mongoUserAuthenticationDAO.authenticateUser(txtEmail.getText(), txtPassword.getText())) {
             boolean x = mongoUserAuthenticationDAO.authenticateUser(txtEmail.getText(), txtPassword.getText());
             System.out.println(x);

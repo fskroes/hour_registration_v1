@@ -36,7 +36,7 @@ public class MariadbEmployeeDAO implements IEmployeeDAO {
 
             PreparedStatement ps = database.openConnection().prepareStatement(sql);
 
-            ps.setInt(1, employee.getId());
+            ps.setString(1, employee.getId());
             ps.setString(2, employee.getEmail());
             ps.setString(3, employee.getPassword());
             ps.setInt(4, employee.getRole().getIndex());
