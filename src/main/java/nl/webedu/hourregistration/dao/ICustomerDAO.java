@@ -9,5 +9,5 @@ public interface ICustomerDAO {
     public boolean deleteCustomer(int id);
     public CustomerModel findCustomer(int id);
     public boolean updateCustomer(CustomerModel customer);
-    public Collection selectCustomersByProject(int projectId);
+    public Collection<CustomerModel> selectCustomersByProject(int projectId);
 }
