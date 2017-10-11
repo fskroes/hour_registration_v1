@@ -9,10 +9,18 @@ import java.util.Collection;
 
 public class MariadbEmployeeDAO implements IEmployeeDAO {
 
+    private static MariadbEmployeeDAO instance;
     private MariaDatabaseExtension database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
 
     private MariadbEmployeeDAO() {
         this.database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
+    }
+
+    public static MariadbEmployeeDAO getInstance() {
+        if (instance == null) {
+            instance = new MariadbEmployeeDAO();
+        }
+        return instance;
     }
 
     @Override

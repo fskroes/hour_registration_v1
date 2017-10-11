@@ -9,10 +9,18 @@ import java.sql.SQLException;
 
 public class MariadbReportDAO implements IReportDAO {
 
+    private static MariadbReportDAO instance;
     private MariaDatabaseExtension client;
 
     private MariadbReportDAO() {
         this.client = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase().getConnection();
+    }
+
+    public static MariadbReportDAO getInstance() {
+        if (instance == null) {
+            instance = new MariadbReportDAO();
+        }
+        return instance;
     }
 
     @Override

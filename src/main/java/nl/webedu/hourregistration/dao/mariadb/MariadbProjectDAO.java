@@ -5,63 +5,57 @@ import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.database.MariaDatabaseExtension;
 import nl.webedu.hourregistration.model.ProjectModel;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class MariadbProjectDAO implements IProjectDAO {
 
+    private static MariadbProjectDAO instance;
     private MariaDatabaseExtension client;
 
     private MariadbProjectDAO() {
-        this.client = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase().getConnection();
+        this.client = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
+    }
+
+    public static MariadbProjectDAO getInstance() {
+        if (instance == null) {
+            instance = new MariadbProjectDAO();
+        }
+        return instance;
     }
 
     @Override
     public boolean insertProject(ProjectModel project) {
-
-        Connection dbConnection = null;
-        PreparedStatement ps = null;
-
-        String sql = "INSERT INTO project"
-                + "(NAME, STARTDATE, ENDDATE, CUSTOMERMODEL, CATEORIE) VALUES"
-                + "(?,?,?,?,?)";
+        PreparedStatement ps;
+        ResultSet rs;
 
         try {
-            dbConnection = client.getConnection();
-            ps = client.getConnection().prepareStatement(sql);
+            String sql = "INSERT INTO project"
+                    + "(project_name, start_date, end_time, category) VALUES"
+                    + "(?,?,?,?)";
 
-            ps.setString(1, project.getName());
-            ps.setDate(2, (Date) project.getStartDate());
-            ps.setDate(3, (Date) project.getEndDate());
-            ps.setObject(4, project.getCustomerModel());
-            ps.setString(5, project.getCategorie());
+            ps = client.openConnection().prepareStatement(sql);
 
-            ps.executeUpdate();
+            ps.setString(1, "PROJECTNAAMPJE");
+            ps.setDate(2, new  java.sql.Date(new java.util.Date().getTime()));
+            ps.setDate(3, new  java.sql.Date(new java.util.Date().getTime()));
+            ps.setString(4, "Category: test");
 
-            System.out.println("Record toegevoegd");
+            rs = ps.executeQuery();
+
+            ps.close();
+            client.closeConnecion();
+
+            System.out.println("De query geeft het volgende resultaat:\n");
+            System.out.println(rs);
+
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } finally {
-            if (ps != null) {
-                try {
-                    ps.getConnection().close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
+            e.printStackTrace();
 
-            if (dbConnection != null) {
-                try {
-                    dbConnection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
         return true;
-    };
+    }
 
     @Override
     public boolean deleteProject(int id) {

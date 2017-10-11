@@ -9,10 +9,18 @@ import java.util.Collection;
 
 public class MariadbLogDAO implements ILogDAO {
 
+    private static MariadbLogDAO instance;
     private MariaDatabaseExtension database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
 
     private MariadbLogDAO() {
         this.database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
+    }
+
+    public static MariadbLogDAO getInstance() {
+        if (instance == null) {
+            instance = new MariadbLogDAO();
+        }
+        return instance;
     }
 
     @Override
