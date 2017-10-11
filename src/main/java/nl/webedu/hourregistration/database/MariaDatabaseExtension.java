@@ -27,7 +27,7 @@ public class MariaDatabaseExtension extends Database<Connection> {
             return connection;
         }
         try {
-            Class.forName("com.mariadb.jdbc.Driver");
+            Class.forName("org.mariadb.jdbc.Driver");
             connection = DriverManager.getConnection("jdbc:mariadb://"
                             + this.hostname + ":" + this.port + "/" + this.database + "?autoReconnect=true&useSSL=false",
                     this.user, this.password);

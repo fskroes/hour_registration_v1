@@ -6,18 +6,15 @@ import java.sql.Connection;
 
 public class MariaDAOFactory extends DAOFactory {
 
-    public static final String DRIVER=
-            "com.mariadb.jdbc.Driver";
-    public static final String DBURL=
-            "jdbc:mariadb://localhost:1099/CoreJ2EEDB";
+    private static MariaDAOFactory instance;
 
+    private MariaDAOFactory() {  }
 
-    // method to create Cloudscape connections
-    public static Connection createConnection() {
-        // Use DRIVER and DBURL to create a connection
-        // Recommend connection pool implementation/usage
-
-        return null;
+    public static MariaDAOFactory getInstance() {
+        if (instance == null) {
+            instance = new MariaDAOFactory();
+        }
+        return instance;
     }
 
     @Override
