@@ -1,20 +1,17 @@
 package nl.webedu.hourregistration.dao.mongodb;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mongodb.Block;
 import com.mongodb.async.SingleResultCallback;
-import com.mongodb.async.client.FindIterable;
 import com.mongodb.async.client.MongoClient;
 import com.mongodb.async.client.MongoCollection;
 import nl.webedu.hourregistration.dao.IUserAuthenticationDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.model.UserAuthenticationModel;
-import org.bson.BsonDocument;
 import org.bson.Document;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
-import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
 import static nl.webedu.hourregistration.database.DatabaseUtil.DATABASE_NAME;
 import static nl.webedu.hourregistration.database.DatabaseUtil.EMPLOYEE_COLLECTION;
@@ -25,6 +22,8 @@ public class MongoUserAuthenticationDAO implements IUserAuthenticationDAO {
 
     private MongoClient client;
     private UserAuthenticationModel model;
+    private ObjectMapper mapper = new ObjectMapper();
+
 
     public MongoUserAuthenticationDAO() {
         this.client = (MongoClient) DatabaseManager.getInstance().getDatabase().getConnection();
@@ -51,54 +50,42 @@ public class MongoUserAuthenticationDAO implements IUserAuthenticationDAO {
         });
     }
 
+
     @Override
     public boolean authenticateUser(String email, String password) {
-        findUser(email, password);
-        if (email == model.getEmail()) {
+        model = null;
+        model = findUser(email, password);
+        if(model != null) {
             return true;
         }
-
         return false;
     }
 
     @Override
-    public void findUser(String email, String password) {
-        client.getDatabase(DATABASE_NAME).getCollection(EMPLOYEE_COLLECTION)
-                .find(eq(email, password)).forEach(printBlock, new SingleResultCallback<Void>() {
-            @Override
-            public void onResult(Void aVoid, Throwable throwable) {
+    public UserAuthenticationModel findUser(String email, String password) {
+        final UserAuthenticationModel[] lib = {new UserAuthenticationModel()};
 
-            }
+        MongoCollection<Document> collection = client.getDatabase(DATABASE_NAME).getCollection(EMPLOYEE_COLLECTION);
+        collection.find(eq("email", email))
+                .into(new ArrayList<Document>(), new SingleResultCallback<ArrayList<Document>>() {
+                @Override
+                public void onResult(ArrayList<Document> documents, Throwable throwable) {
+                    for (Document document : documents) {
+                        System.out.println(document.toJson());
+
+                        try {
+
+                            lib[0] = mapper.readValue(document.toJson(), UserAuthenticationModel.class);
+                            System.out.println(lib[0].get_id());
+                            System.out.println(lib[0].getEmail());
+                            System.out.println(lib[0].getPassword());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
         });
+
+        return lib[0];
     }
-
-    Block<Document> printBlock = new Block<Document>() {
-        @Override
-        public void apply(final Document document) {
-            System.out.println(document.toJson());
-
-            ObjectMapper mapper = new ObjectMapper();
-            model = null;
-            try {
-                model = mapper.readValue(document.toJson(), UserAuthenticationModel.class);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            System.out.println("model.toString: " + model.toString());
-            System.out.println("model email: " + model.getEmail());
-        }
-    };
-
-
-
-
-
-
-    SingleResultCallback<Document> printDocument = new SingleResultCallback<Document>() {
-        @Override
-        public void onResult(final Document document, final Throwable t) {
-            System.out.println(document.toJson());
-        }
-    };
 }

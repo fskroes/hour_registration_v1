@@ -3,6 +3,7 @@ package nl.webedu.hourregistration.dao.mariadb;
 import nl.webedu.hourregistration.dao.IUserAuthenticationDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.database.MariaDatabaseExtension;
+import nl.webedu.hourregistration.model.UserAuthenticationModel;
 
 public class MariadbUserAuthenticationDAO implements IUserAuthenticationDAO {
 
@@ -13,8 +14,9 @@ public class MariadbUserAuthenticationDAO implements IUserAuthenticationDAO {
     }
 
     @Override
-    public void findUser(String email, String password) {
+    public UserAuthenticationModel findUser(String email, String password) {
 
+        return null;
     }
 
     @Override

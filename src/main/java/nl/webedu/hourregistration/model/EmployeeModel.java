@@ -11,7 +11,7 @@ import java.util.List;
 
 public class EmployeeModel extends DatabaseRowMapper<EmployeeModel> {
 
-    private int id;
+    private String id;
     private String email, password, firstname, suffix, lastname;
     private Role role;
     private ContractModel contractModel;
@@ -25,7 +25,7 @@ public class EmployeeModel extends DatabaseRowMapper<EmployeeModel> {
 
     }
 
-    public EmployeeModel(int id, String email, String password, String firstname, String suffix, String lastname) {
+    public EmployeeModel(String id, String email, String password, String firstname, String suffix, String lastname) {
         this(email, password, firstname, suffix, lastname);
         this.id = id;
     }
@@ -39,7 +39,7 @@ public class EmployeeModel extends DatabaseRowMapper<EmployeeModel> {
         this.lastname = lastname;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -147,7 +147,7 @@ public class EmployeeModel extends DatabaseRowMapper<EmployeeModel> {
 
     @Override
     public EmployeeModel convertSQL(ResultSet set, int rowNum) throws SQLException {
-        this.id = set.getInt("employeeID");
+        this.id = String.valueOf(set.getInt("employeeID"));
         this.email = set.getString("email");
         this.password = set.getString("password");
         this.firstname = set.getString("firstname");
@@ -159,7 +159,7 @@ public class EmployeeModel extends DatabaseRowMapper<EmployeeModel> {
 
     @Override
     public EmployeeModel convertMongo(Document set, int rowNum) {
-        this.id = set.getInteger("employeeID");
+        this.id = set.getString("_id");
         this.email = set.getString("email");
         this.password = set.getString("password");
         this.firstname = set.getString("firstname");
