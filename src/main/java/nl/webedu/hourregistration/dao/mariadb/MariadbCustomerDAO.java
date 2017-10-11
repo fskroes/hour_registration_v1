@@ -53,9 +53,47 @@ public class MariadbCustomerDAO implements ICustomerDAO {
     }
 
     @Override
-    public boolean deleteCustomer(int id) {
+    public boolean deleteCustomer(CustomerModel customer) {
 
-        return false;
+        Connection dbConnection = null;
+        PreparedStatement ps = null;
+
+        String delSQL = "DELETE customer"
+                + " WHERE customerID = ?";
+
+        try {
+            dbConnection = client.getConnection();
+            ps = client.getConnection().prepareStatement(delSQL);
+
+            ps.setInt(1, customer.getId());
+
+            ps.executeUpdate();
+
+            System.out.println("Record deleted");
+        }
+
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        finally {
+            if (ps != null) {
+                try {
+                    ps.getConnection().close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (dbConnection != null) {
+                try {
+                    dbConnection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return true;
     }
 
     @Override

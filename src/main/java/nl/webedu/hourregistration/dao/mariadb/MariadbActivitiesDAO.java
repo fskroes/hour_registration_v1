@@ -30,7 +30,7 @@ public class MariadbActivitiesDAO implements IActivitiesDAO {
     }
 
     @Override
-    public boolean insertActivitie(ActivitiesModel activitie, WorkdayModel workday) {
+    public boolean insertActivitie(ActivitiesModel activitie) {
         try {
             String query = "INSERT INTO activity"
                     + "(category, start_time, end_time, fk_workdayID) VALUES"
@@ -40,7 +40,7 @@ public class MariadbActivitiesDAO implements IActivitiesDAO {
             ps.setString(1, activitie.getCategory());
             ps.setDate(2, (Date) activitie.getStartTime());
             ps.setDate(3, (Date) activitie.getEndTime());
-            ps.setInt(4, workday.getId());
+            ps.setInt(4, activitie.getWorkday().getId());
             ps.executeQuery();
             ps.close();
             client.closeConnecion();
@@ -81,7 +81,7 @@ public class MariadbActivitiesDAO implements IActivitiesDAO {
             dbConnection = client.getConnection();
             ps = client.getConnection().prepareStatement(deleteSQL);
 
-            ps.setInt(1, activitie.getId());
+            ps.setInt(1, activitie.getActivityId());
 
             ps.executeUpdate();
 
@@ -129,7 +129,7 @@ public class MariadbActivitiesDAO implements IActivitiesDAO {
             ps.setString(1, activitie.getCategory());
             ps.setDate(2, (Date) activitie.getStartTime());
             ps.setDate(3, (Date) activitie.getEndTime());
-            ps.setInt(4, activitie.getId());
+            ps.setInt(4, activitie.getActivityId());
 
             ps.executeUpdate();
 
