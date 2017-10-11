@@ -1,10 +1,15 @@
 package nl.webedu.hourregistration.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.io.Serializable;
 
 public class UserAuthenticationModel implements Serializable {
 
+    @JsonProperty("email")
     private String email;
+
+    @JsonProperty("password")
     private String password;
 
     public UserAuthenticationModel(String email, String password) {
@@ -19,10 +24,6 @@ public class UserAuthenticationModel implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
-
-    public String getPassword() {
-        return password;
-    } // TODO TEST PURPUSE
 
     public void setPassword(String password) {
         this.password = password;

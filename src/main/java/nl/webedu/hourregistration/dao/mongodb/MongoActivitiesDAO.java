@@ -31,7 +31,6 @@ public class MongoActivitiesDAO implements IActivitiesDAO {
 
     @Override
     public ActivitiesModel findActivitie(int id) {
-
         return null;
     }
 

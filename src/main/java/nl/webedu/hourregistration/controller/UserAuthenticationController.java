@@ -35,19 +35,24 @@ public class UserAuthenticationController {
     }
 
     public void onLogin(ActionEvent actionEvent) {
-        mongoUserAuthenticationDAO.authenticateUser();
-        Stage primaryStage = (Stage) root.getScene().getWindow();
-        primaryStage.hide();
-        Parent parent = null;
-        try {
-            parent = FXMLLoader.load(getClass().getResource("/MainView.fxml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        assert parent != null;
-        Scene scene = new Scene(parent, 1200, 800);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+
+
+//        if(mongoUserAuthenticationDAO.authenticateUser(txtEmail.getText(), txtPassword.getText())) {
+//            Stage primaryStage = (Stage) root.getScene().getWindow();
+//            primaryStage.hide();
+//            Parent parent = null;
+//            try {
+//                parent = FXMLLoader.load(getClass().getResource("/MainView.fxml"));
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            assert parent != null;
+//            Scene scene = new Scene(parent, 1200, 800);
+//            primaryStage.setScene(scene);
+//            primaryStage.show();
+//        }
+
+        System.out.println("Error while trying to sign in");
     }
 
     public void onRegister(ActionEvent actionEvent) {
