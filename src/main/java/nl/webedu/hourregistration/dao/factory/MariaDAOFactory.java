@@ -1,6 +1,9 @@
 package nl.webedu.hourregistration.dao.factory;
 
 import nl.webedu.hourregistration.dao.*;
+import nl.webedu.hourregistration.dao.mariadb.MariadbContractDAO;
+import nl.webedu.hourregistration.dao.mariadb.MariadbProjectDAO;
+import nl.webedu.hourregistration.dao.mongodb.MongoUserAuthenticationDAO;
 
 import java.sql.Connection;
 
@@ -24,7 +27,7 @@ public class MariaDAOFactory extends DAOFactory {
 
     @Override
     public IContractDAO getContractDAO() {
-        return null;
+        return MariadbContractDAO.getInstance();
     }
 
     @Override
@@ -44,7 +47,7 @@ public class MariaDAOFactory extends DAOFactory {
 
     @Override
     public IProjectDAO getProjectDAO() {
-        return null;
+        return MariadbProjectDAO.getInstance();
     }
 
     @Override
