@@ -42,7 +42,7 @@ public class MariadbCustomerDAO implements ICustomerDAO {
             ps.executeQuery();
             ps.close();
             database.closeConnecion();
-            System.out.println("Query: " + query + " = Succes");
+            System.out.println("Query: " + query + " = Success");
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -155,7 +155,7 @@ public class MariadbCustomerDAO implements ICustomerDAO {
         return true;
     }
 
-    public Collection<CustomerModel> selectCustomersByProject(int projectId) {
+    public Collection<CustomerModel> selectCustomersByProject(String projectId) {
 
         List<CustomerModel> customer = null;
         try {

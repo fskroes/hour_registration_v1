@@ -137,7 +137,7 @@ public class MariadbEmployeeDAO implements IEmployeeDAO {
     }
 
     @Override
-    public Collection<EmployeeModel> selectEmployeesByProject(int projectId) {
+    public Collection<EmployeeModel> selectEmployeesByProject(String projectId) {
         List<EmployeeModel> employee = null;
 
         try {

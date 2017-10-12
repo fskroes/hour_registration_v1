@@ -8,5 +8,5 @@ public interface IEmployeeDAO {
     public boolean deleteEmployee(String id);
     public EmployeeModel findEmployee(String id);
     public boolean updateEmployee(EmployeeModel employee);
-    public Collection selectEmployeesByProject(int projectId);
+    public Collection selectEmployeesByProject(String projectId);
 }

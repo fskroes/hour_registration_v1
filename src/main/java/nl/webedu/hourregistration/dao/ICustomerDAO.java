@@ -10,4 +10,5 @@ public interface ICustomerDAO {
     public boolean deleteCustomer(CustomerModel customer);
     public CustomerModel findCustomer(String id);
     public boolean updateCustomer(CustomerModel customer);
+    public Collection<CustomerModel> selectCustomersByProject(String projectId);
 }
