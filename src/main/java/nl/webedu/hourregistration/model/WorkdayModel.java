@@ -13,7 +13,7 @@ public class WorkdayModel extends DatabaseRowMapper<WorkdayModel> {
 
     // TODO: Fill in RowMappers
 
-    private int id;
+    private String id;
     private Date date, startTime, endTime;
     private int weekNumber;
     private List<ActivitiesModel> activities;
@@ -23,7 +23,7 @@ public class WorkdayModel extends DatabaseRowMapper<WorkdayModel> {
         
     }
 
-    public WorkdayModel(int id, Date date, Date startTime, Date endTime, int weekNumber, List<ActivitiesModel> activities, List<EmployeeModel> employeeModels) {
+    public WorkdayModel(String id, Date date, Date startTime, Date endTime, int weekNumber, List<ActivitiesModel> activities, List<EmployeeModel> employeeModels) {
         this.id = id;
         this.date = date;
         this.startTime = startTime;
@@ -33,7 +33,7 @@ public class WorkdayModel extends DatabaseRowMapper<WorkdayModel> {
         this.employeeModels = employeeModels;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 

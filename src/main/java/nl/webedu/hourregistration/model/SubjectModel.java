@@ -11,7 +11,7 @@ public class SubjectModel extends DatabaseRowMapper<SubjectModel> {
 
     // TODO: Fill in RowMappers
 
-    private int id;
+    private String id;
     private String onderwerpName;
     private Date startDate;
     private Date endDate;
@@ -27,7 +27,7 @@ public class SubjectModel extends DatabaseRowMapper<SubjectModel> {
         this.projectModel = projectModel;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 

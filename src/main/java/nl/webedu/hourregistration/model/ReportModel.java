@@ -12,7 +12,7 @@ public class ReportModel extends DatabaseRowMapper<ReportModel> {
 
     // TODO: Fill in RowMappers
 
-    private int id;
+    private String id;
     private ArrayList<WorkdayModel> workDays;
     private int weekNumber;
     private Date reportDate;
@@ -20,7 +20,7 @@ public class ReportModel extends DatabaseRowMapper<ReportModel> {
     public ReportModel() {
     }
 
-    public ReportModel(int id, ArrayList<WorkdayModel> workDays, int weekNumber, Date reportDate) {
+    public ReportModel(String id, ArrayList<WorkdayModel> workDays, int weekNumber, Date reportDate) {
         this(workDays, weekNumber, reportDate);
         this.id = id;
     }
@@ -31,7 +31,7 @@ public class ReportModel extends DatabaseRowMapper<ReportModel> {
         this.reportDate = reportDate;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 

@@ -6,8 +6,8 @@ import java.util.Collection;
 
 public interface IWorkdayDAO {
     public boolean insertWorkday(WorkdayModel Workday);
-    public boolean deleteWorkday(int id);
-    public WorkdayModel findWorkday(int id);
+    public boolean deleteWorkday(String id);
+    public WorkdayModel findWorkday(String id);
     public boolean updateWorkday(WorkdayModel Workday);
     public WorkdayModel selectWorkdayByEmployee(int employeeId);
 }

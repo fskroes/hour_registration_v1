@@ -20,6 +20,7 @@
 *.tar.gz
 *.rar
 
+
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
@@ -33,3 +34,5 @@ src/test/test\.iml
 out/production/main/nl/webedu/hourregistration/view/MainView\.fxml
 
 hour_registration\.iml
+HourRegistration\.iml
+

@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class LogModel {
 
-    private int id;
+    private String id;
     private EmployeeModel employeeModel;
     private Date date;
     private String description;
@@ -18,7 +18,7 @@ public class LogModel {
         this.description = description;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 

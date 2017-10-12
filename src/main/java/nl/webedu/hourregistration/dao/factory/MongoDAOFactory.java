@@ -1,6 +1,7 @@
 package nl.webedu.hourregistration.dao.factory;
 
 import nl.webedu.hourregistration.dao.*;
+import nl.webedu.hourregistration.dao.mongodb.MongoActivitiesDAO;
 import nl.webedu.hourregistration.dao.mongodb.MongoContractDAO;
 import nl.webedu.hourregistration.dao.mongodb.MongoUserAuthenticationDAO;
 
@@ -18,7 +19,7 @@ public class MongoDAOFactory extends DAOFactory {
 
     @Override
     public IActivitiesDAO getActivitiesDAO() {
-        return null;
+        return MongoActivitiesDAO.getInstance();
     }
 
     @Override

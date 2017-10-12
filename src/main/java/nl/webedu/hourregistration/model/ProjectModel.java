@@ -9,7 +9,7 @@ import java.util.Date;
 
 public class ProjectModel extends DatabaseRowMapper<ProjectModel> {
 
-    private int id;
+    private String id;
     private String name;
     private Date startDate;
     private Date endDate;
@@ -19,7 +19,7 @@ public class ProjectModel extends DatabaseRowMapper<ProjectModel> {
     public ProjectModel() {
     }
 
-    public ProjectModel(int id, String name, Date startDate, Date endDate, String categorie) {
+    public ProjectModel(String id, String name, Date startDate, Date endDate, String categorie) {
         this(name, startDate, endDate, categorie);
         this.id = id;
     }
@@ -31,7 +31,7 @@ public class ProjectModel extends DatabaseRowMapper<ProjectModel> {
         this.categorie = categorie;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -77,7 +77,7 @@ public class ProjectModel extends DatabaseRowMapper<ProjectModel> {
 
     @Override
     public ProjectModel convertSQL(ResultSet set, int rowNum) throws SQLException {
-        this.id = set.getInt("projectID");
+        this.id = String.valueOf("projectID");
         this.name = set.getString("project_name");
         this.startDate = set.getDate("start_date");
         this.endDate = set.getDate("end_date");
@@ -87,7 +87,7 @@ public class ProjectModel extends DatabaseRowMapper<ProjectModel> {
 
     @Override
     public ProjectModel convertMongo(Document set, int rowNum) throws SQLException {
-        this.id = set.getInteger("_id");
+        this.id = set.getString("_id");
         this.name = set.getString("project_name");
         this.startDate = set.getDate("start_date");
         this.endDate = set.getDate("end_date");
