@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -83,7 +84,7 @@ public class MariadbCustomerDAO implements ICustomerDAO {
             dbConnection = database.getConnection();
             ps = database.getConnection().prepareStatement(delSQL);
 
-            ps.setInt(1, customer.getId());
+            ps.setInt(1, Integer.parseInt(customer.getId()));
 
             ps.executeUpdate();
 
@@ -112,6 +113,16 @@ public class MariadbCustomerDAO implements ICustomerDAO {
             }
         }
         return true;
+    }
+
+    @Override
+    public ArrayList<CustomerModel> findCustomer(int id, String name) {
+        return null;
+    }
+
+    @Override
+    public CustomerModel findCustomer(String name) {
+        return null;
     }
 
     @Override

@@ -10,7 +10,9 @@ import java.io.Serializable;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserAuthenticationModel implements Serializable {
 
+    @JsonProperty("_id")
     private ObjectId _id;
+
     private String email;
     private String password;
 
@@ -27,7 +29,7 @@ public class UserAuthenticationModel implements Serializable {
 
 
     public UserAuthenticationModel() {
-
+        // empty constructor for init
     }
 
     public UserAuthenticationModel(String email, String password) {
