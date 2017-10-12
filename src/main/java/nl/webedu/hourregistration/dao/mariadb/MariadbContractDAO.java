@@ -6,14 +6,15 @@ import nl.webedu.hourregistration.database.MariaDatabaseExtension;
 import nl.webedu.hourregistration.model.ContractModel;
 
 import java.sql.*;
+import java.util.List;
 
 public class MariadbContractDAO implements IContractDAO {
 
     private static MariadbContractDAO instance;
-    private MariaDatabaseExtension client = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
+    private MariaDatabaseExtension database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
 
     private MariadbContractDAO() {
-        this.client = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
+        this.database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
     }
 
     public static MariadbContractDAO getInstance() {
@@ -30,14 +31,14 @@ public class MariadbContractDAO implements IContractDAO {
                     + "(max_hours, min_hours, start_time, end_time) VALUES"
                     + "(?,?,?,?)";
 
-            PreparedStatement ps = client.openConnection().prepareStatement(query);
+            PreparedStatement ps = database.openConnection().prepareStatement(query);
             ps.setInt(1, contract.getMaxHours());
             ps.setInt(2, contract.getMinHours());
             ps.setDate(3, (Date) contract.getStartTime());
             ps.setDate(4, (Date) contract.getEndTime());
             ps.executeQuery();
             ps.close();
-            client.closeConnecion();
+            database.closeConnecion();
             System.out.println("Query: " + query + " = Succes");
 
         } catch (SQLException e) {
@@ -65,8 +66,16 @@ public class MariadbContractDAO implements IContractDAO {
     }
 
     @Override
-    public ContractModel selectContractByEmployee(int employeeId){
-        return null;
-    }
+    public List<ContractModel> selectContractByEmployee(int employeeId){
+        List<ContractModel> contract = null;
 
+        try {
+            contract = database.selectObjectList(new ContractModel(), "SELECT * FROM contract WHERE employeeID = ?", employeeId);
+        }
+
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return contract;
+    }
 }
