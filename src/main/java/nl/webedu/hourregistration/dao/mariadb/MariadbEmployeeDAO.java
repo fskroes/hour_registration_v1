@@ -5,10 +5,7 @@ import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.database.MariaDatabaseExtension;
 import nl.webedu.hourregistration.model.EmployeeModel;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Collection;
 
 public class MariadbEmployeeDAO implements IEmployeeDAO {
@@ -31,18 +28,18 @@ public class MariadbEmployeeDAO implements IEmployeeDAO {
     public boolean insertEmployee(EmployeeModel employee){
         try {
             String sql = "INSERT INTO employee"
-                    +"(employeeID, email, password, role, firstname, suffix, lastname, active) VALUES"
-                    +"(?,?,?,?,?,?,?,TRUE)";
+                    +"(email, password, role, firstname, suffix, lastname, active) VALUES"
+                    +"(?,?,?,?,?,?,?)";
 
             PreparedStatement ps = database.openConnection().prepareStatement(sql);
 
-            ps.setString(1, employee.getId());
-            ps.setString(2, employee.getEmail());
-            ps.setString(3, employee.getPassword());
-            ps.setInt(4, employee.getRole().getIndex());
-            ps.setString(5, employee.getFirstname());
-            ps.setString(6, employee.getSuffix());
-            ps.setString(7, employee.getLastname());
+            ps.setString(1, employee.getEmail());
+            ps.setString(2, employee.getPassword());
+            ps.setInt(3, 1/*employee.getRole().getIndex()*/);
+            ps.setString(4, employee.getFirstname());
+            ps.setString(5, employee.getSuffix());
+            ps.setString(6, employee.getLastname());
+            ps.setBoolean(7, true);
 
             ps.executeUpdate();
             ps.close();
@@ -63,7 +60,7 @@ public class MariadbEmployeeDAO implements IEmployeeDAO {
     public boolean deleteEmployee(int id){
         try {
 
-            String sql = "UPDATE employee SET active=False WHERE employeeID = ?;";
+            String sql = "UPDATE employee SET active= FALSE WHERE employeeID = ?;";
 
             PreparedStatement ps = database.openConnection().prepareStatement(sql);
 
@@ -87,14 +84,51 @@ public class MariadbEmployeeDAO implements IEmployeeDAO {
 
     @Override
     public EmployeeModel findEmployee(int id){
+        EmployeeModel employee = null;
+        try {
+            employee = database.selectObjectSingle(
+                    new EmployeeModel(),
+                    "SELECT* FROM employee WHERE employeeID = ?;",
+                    id
+            );
+        } catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return employee;
 
-        return null;
     }
 
     @Override
-    public boolean updateEmployee(EmployeeModel customer){
+    public boolean updateEmployee(EmployeeModel employee){
+        try {
 
-        return false;
+            String sql = "UPDATE employee SET email = ?, password = ?, role = ?, firstname = ?," +
+                    "suffix = ?, lastname = ?  WHERE employeeID = ?;";
+
+            PreparedStatement ps = database.openConnection().prepareStatement(sql);
+
+            ps.setString(1, employee.getEmail());
+            ps.setString(2, employee.getPassword());
+            ps.setInt(3, 1/*employee.getRole().getIndex()*/);
+            ps.setString(4, employee.getFirstname());
+            ps.setString(5, employee.getSuffix());
+            ps.setString(6, employee.getLastname());
+            ps.setString(7, employee.getId());
+
+            ps.executeUpdate();
+            ps.close();
+            database.closeConnecion();
+
+            System.out.println("Record toegevoegd");
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+
+        }
+        return true;
     }
 
     @Override
