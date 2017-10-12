@@ -1,14 +1,13 @@
 package nl.webedu.hourregistration.dao.factory;
 
 import nl.webedu.hourregistration.dao.*;
-
-import java.sql.Connection;
+import nl.webedu.hourregistration.dao.mariadb.*;
 
 public class MariaDAOFactory extends DAOFactory {
 
     private static MariaDAOFactory instance;
 
-    private MariaDAOFactory() {  }
+    private MariaDAOFactory() {}
 
     public static MariaDAOFactory getInstance() {
         if (instance == null) {
@@ -19,51 +18,53 @@ public class MariaDAOFactory extends DAOFactory {
 
     @Override
     public IActivitiesDAO getActivitiesDAO() {
-        return null;
+
+        return MariadbActivitiesDAO.getInstance();
     }
 
     @Override
     public IContractDAO getContractDAO() {
-        return null;
+        return MariadbContractDAO.getInstance();
     }
 
     @Override
     public ICustomerDAO getCustomerDAO() {
-        return null;
+
+        return MariadbCustomerDAO.getInstance();
     }
 
     @Override
     public IEmployeeDAO getEmployeeDAO() {
-        return null;
+        return MariadbEmployeeDAO.getInstance();
     }
 
     @Override
     public ILogDAO getLogDAO() {
-        return null;
+        return MariadbLogDAO.getInstance();
     }
 
     @Override
     public IProjectDAO getProjectDAO() {
-        return null;
+        return MariadbProjectDAO.getInstance();
     }
 
     @Override
     public IReportDAO getReportDAO() {
-        return null;
+        return MariadbReportDAO.getInstance();
     }
 
     @Override
     public ISubjectDAO getSubjectDAO() {
-        return null;
+        return MariadbSubjectDAO.getInstance();
     }
 
     @Override
     public IUserAuthenticationDAO getUserAuthenticationDAO() {
-        return null;
+        return MariadbUserAuthenticationDAO.getInstance();
     }
 
     @Override
     public IWorkdayDAO getWorkdayDAO() {
-        return null;
+        return MariadbWorkdayDAO.getInstance();
     }
 }

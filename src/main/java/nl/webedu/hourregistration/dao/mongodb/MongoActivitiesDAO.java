@@ -53,7 +53,7 @@ public class MongoActivitiesDAO implements IActivitiesDAO {
     }
 
     @Override
-    public boolean deleteActivitie(int id) {
+    public boolean deleteActivitie(ActivitiesModel activitie) {
         return false;
     }
 
@@ -68,9 +68,9 @@ public class MongoActivitiesDAO implements IActivitiesDAO {
         ArrayList<ActivitiesModel> alActivitiesmodels = new ArrayList<>();
         client.getDatabase(DATABASE_NAME).getCollection(ACTIVITY_COLLECTION).find(
                 eq("workday_id", workdayId)).into(
-                        alActivitieDocuments,
+                alActivitieDocuments,
                 (documents, throwable) -> {
-                    for (Document d: alActivitieDocuments) {
+                    for (Document d : alActivitieDocuments) {
                         System.out.println("HIER2!!!!!!!!!!");
                         alActivitiesmodels.add(new ActivitiesModel(d.getString("category"),
                                 d.getDate("start_time"),
@@ -78,7 +78,6 @@ public class MongoActivitiesDAO implements IActivitiesDAO {
                                 d.getInteger("workday_id")));
                     }
                     completableFuture.complete(alActivitiesmodels);
-
                 });
         try {
             return completableFuture.get();

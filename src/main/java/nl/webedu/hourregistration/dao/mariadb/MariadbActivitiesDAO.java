@@ -14,30 +14,43 @@ import java.util.List;
 
 public class MariadbActivitiesDAO implements IActivitiesDAO {
 
+    private static MariadbActivitiesDAO instance;
     private MariaDatabaseExtension database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
 
     private MariadbActivitiesDAO() {
         this.database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
     }
 
+    public static MariadbActivitiesDAO getInstance() {
+        if (instance == null) {
+            instance = new MariadbActivitiesDAO();
+        }
+        return instance;
+    }
+
     @Override
     public boolean insertActivitie(ActivitiesModel activitie) {
-
         Connection dbConnection = null;
         PreparedStatement ps = null;
 
-        String sql = "INSERT INTO activity"
-                + "(activityID, category, start_time, end_time, fk_workdayID) VALUES"
-                + "(?,?,?,?,?)";
+        String insertSQL = "INSERT INTO activity"
+                + "(category, start_time, end_time) VALUES"
+                + "(?,?,?)";
         try {
             dbConnection = database.getConnection();
-            ps = database.getConnection().prepareStatement(sql);
+            ps = database.getConnection().prepareStatement(insertSQL);
 
+<<<<<<< HEAD
             ps.setInt(1, activitie.getId());
             ps.setString(2, activitie.getCategory());
             ps.setDate(3, (Date) activitie.getStartTime());
             ps.setDate(4, (Date) activitie.getEndTime());
             ps.setObject(5, activitie.getWorkdayId());
+=======
+            ps.setString(1, activitie.getCategory());
+            ps.setDate(2, (Date) activitie.getStartTime());
+            ps.setDate(3, (Date) activitie.getEndTime());
+>>>>>>> 35b83824e35d45810fb5e6a556960afcca1daa81
 
             ps.executeUpdate();
 
@@ -64,7 +77,7 @@ public class MariadbActivitiesDAO implements IActivitiesDAO {
             }
         }
         return true;
-    };
+    }
 
     @Override
     public ActivitiesModel findActivitie(int id) {
@@ -79,33 +92,123 @@ public class MariadbActivitiesDAO implements IActivitiesDAO {
     }
 
     @Override
-    public boolean deleteActivitie(int id) {
+    //Is not done yet.
+    public boolean deleteActivitie(ActivitiesModel activitie) {
 
-        return false;
+        Connection dbConnection = null;
+        PreparedStatement ps = null;
+
+        String deleteSQL = "DELETE activity"
+                + " WHERE activityID = ?";
+
+        try {
+            dbConnection = database.getConnection();
+            ps = database.getConnection().prepareStatement(deleteSQL);
+
+            ps.setInt(1, activitie.getActivityId());
+
+            ps.executeUpdate();
+
+            System.out.println("Record deleted");
+        }
+
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        finally {
+            if (ps != null) {
+                try {
+                    ps.getConnection().close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (dbConnection != null) {
+                try {
+                    dbConnection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return true;
     }
 
     @Override
     public boolean updateActivitie(ActivitiesModel activitie) {
-        return false;
+
+        Connection dbConnection = null;
+        PreparedStatement ps = null;
+
+        String updateSQL = "UPDATE activity"
+                + " SET category = ?, start_time = ?, end_time = ?"
+                + " WHERE activityID = ?";
+
+        try {
+            dbConnection = database.getConnection();
+            ps = database.getConnection().prepareStatement(updateSQL);
+
+            ps.setString(1, activitie.getCategory());
+            ps.setDate(2, (Date) activitie.getStartTime());
+            ps.setDate(3, (Date) activitie.getEndTime());
+            ps.setInt(4, activitie.getActivityId());
+
+            ps.executeUpdate();
+
+            System.out.println("Record geupdate");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (ps != null) {
+                try {
+                    ps.getConnection().close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (dbConnection != null) {
+                try {
+                    dbConnection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return true;
     }
 
     @Override
     public Collection<ActivitiesModel> selectActivitiesByWorkday(int wordkdatId) {
 
         List<ActivitiesModel> activities = null;
+
         try {
             activities = database.selectObjectList(new ActivitiesModel(), "SELECT * FROM activity WHERE activityID = ?", wordkdatId);
-        } catch (SQLException e) {
+        }
+
+        catch (SQLException e) {
             e.printStackTrace();
         }
         return activities;
     }
 
+<<<<<<< HEAD
     public ActivitiesModel selectActivitiesByEmployee(int employeeId) {
         ActivitiesModel activities = null;
+=======
+    @Override
+    public Collection<ActivitiesModel> selectActivitiesByEmployee(int employeeId) {
+        List<ActivitiesModel> activities = null;
+
+>>>>>>> 35b83824e35d45810fb5e6a556960afcca1daa81
         try {
-            activities = database.selectObjectSingle(new ActivitiesModel(), "SELECT * FROM activity WHERE activityID = ?", employeeId + "");
-        } catch (SQLException e) {
+            activities = database.selectObjectList(new ActivitiesModel(), "SELECT * FROM activity WHERE activityID = ?", employeeId);
+        }
+
+        catch (SQLException e) {
             e.printStackTrace();
         }
         return activities;
