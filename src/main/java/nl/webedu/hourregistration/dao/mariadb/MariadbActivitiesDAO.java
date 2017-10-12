@@ -61,7 +61,7 @@ public class MariadbActivitiesDAO implements IActivitiesDAO {
     }
 
     @Override
-    public ActivitiesModel findActivitie(int id) {
+    public ActivitiesModel findActivitie(String id) {
 
         ActivitiesModel activities = null;
         try {
