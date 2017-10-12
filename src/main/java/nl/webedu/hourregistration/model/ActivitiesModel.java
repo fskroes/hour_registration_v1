@@ -26,7 +26,8 @@ public class ActivitiesModel extends DatabaseRowMapper<ActivitiesModel> {
     }
 
 
-    public int getId() {
+
+    public int getActivityId() {
         return id;
     }
 

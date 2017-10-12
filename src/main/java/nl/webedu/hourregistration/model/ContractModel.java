@@ -19,8 +19,7 @@ public class ContractModel extends DatabaseRowMapper<ContractModel> {
     public ContractModel() {
     }
 
-    public ContractModel(int id, int minHours, int maxHours, Date startTime, Date endTime) {
-        this.id = id;
+    public ContractModel(int minHours, int maxHours, Date startTime, Date endTime) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.minHours = minHours;
@@ -65,23 +64,21 @@ public class ContractModel extends DatabaseRowMapper<ContractModel> {
 
     @Override
     public ContractModel convertSQL(ResultSet set, int rowNum) throws SQLException {
-        return new ContractModel(
-                set.getInt("contractID"),
-                set.getInt("min_hours"),
-                set.getInt("max_hours"),
-                set.getTime("start_time"),
-                set.getTime("end_time")
-        );
+        this.id = set.getInt("contractID");
+        this.minHours = set.getInt("min_hours");
+        this.maxHours = set.getInt("max_hours");
+        this.startTime = set.getTime("start_time");
+        this.endTime =set.getTime("end_time");
+        return this;
     }
 
     @Override
     public ContractModel convertMongo(Document set, int rowNum) {
-        return new ContractModel(
-                set.getInteger("_id"),
-                set.getInteger("min_hours"),
-                set.getInteger("max_hours"),
-                set.getDate("start_time"),
-                set.getDate("end_time")
-        );
+        this.id = set.getInteger("_id");
+        this.minHours = set.getInteger("min_hours");
+        this.maxHours = set.getInteger("max_hours");
+        this.startTime = set.getDate("start_time");
+        this.endTime =set.getDate("end_time");
+        return this;
     }
 }

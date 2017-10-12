@@ -9,10 +9,18 @@ import java.sql.SQLException;
 
 public class MariadbWorkdayDAO implements IWorkdayDAO {
 
+    private static MariadbWorkdayDAO instance;
     private MariaDatabaseExtension client;
 
     private MariadbWorkdayDAO() {
         this.client = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase().getConnection();
+    }
+
+    public static MariadbWorkdayDAO getInstance() {
+        if (instance == null) {
+            instance = new MariadbWorkdayDAO();
+        }
+        return instance;
     }
 
     @Override

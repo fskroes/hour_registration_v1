@@ -69,10 +69,10 @@ public class MongoActivitiesDAO implements IActivitiesDAO {
     }
 
     @Override
-    public boolean deleteActivitie(int id) {
+    public boolean deleteActivitie(ActivitiesModel activitie) {
         CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();
         Document query = new Document();
-        query.put("_id", id);
+        query.put("_id", activitie.getActivityId());
 
         client.getDatabase(DATABASE_NAME).getCollection(ACTIVITY_COLLECTION)
                 .deleteOne(query, (deleteResult, throwable) -> completableFuture.complete(true));
@@ -87,7 +87,7 @@ public class MongoActivitiesDAO implements IActivitiesDAO {
     @Override
     public boolean updateActivitie(ActivitiesModel activitie) {
         Document query = new Document();
-        query.put("workday_id", activitie.getId());
+        query.put("workday_id", activitie.getActivityId());
         client.getDatabase(DATABASE_NAME).getCollection(ACTIVITY_COLLECTION).updateOne(eq("workday_id", activitie.getWorkdayId())
                 , combine(set("category", activitie.getCategory()),
                         set("start_time", activitie.getStartTime()),
@@ -103,9 +103,10 @@ public class MongoActivitiesDAO implements IActivitiesDAO {
         ArrayList<ActivitiesModel> alActivitiesmodels = new ArrayList<>();
         client.getDatabase(DATABASE_NAME).getCollection(ACTIVITY_COLLECTION).find(
                 eq("workday_id", workdayId)).into(
-                        alActivitieDocuments,
+                alActivitieDocuments,
                 (documents, throwable) -> {
                     for (Document d: alActivitieDocuments) {
+
                         alActivitiesmodels.add(new ActivitiesModel(d.getString("category"),
                                 d.getDate("start_time"),
                                 d.getDate("end_time"),
