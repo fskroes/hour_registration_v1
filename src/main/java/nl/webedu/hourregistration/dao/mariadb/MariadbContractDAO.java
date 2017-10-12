@@ -25,6 +25,7 @@ public class MariadbContractDAO implements IContractDAO {
     }
 
     @Override
+
     public boolean insertContract(ContractModel contract) {
         try {
             String query = "INSERT INTO contract"
@@ -47,6 +48,7 @@ public class MariadbContractDAO implements IContractDAO {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+
         return true;
     }
 
