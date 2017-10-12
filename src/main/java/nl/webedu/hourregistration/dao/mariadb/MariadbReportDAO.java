@@ -50,7 +50,27 @@ public class MariadbReportDAO implements IReportDAO {
 
     @Override
     public boolean deleteReport(String id) {
-        return false;
+        try {
+            String sql = "DELETE report"
+                    + " WHERE reportID = ?";
+
+            PreparedStatement ps = client.openConnection().prepareStatement(sql);
+            ps.setString(1, id);
+
+
+            ps.executeUpdate();
+            ps.close();
+            client.closeConnecion();
+
+            System.out.println("Record toegevoegd");
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return true;
     };
 
     @Override

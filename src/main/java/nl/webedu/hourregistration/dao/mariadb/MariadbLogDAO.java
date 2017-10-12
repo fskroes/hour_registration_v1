@@ -53,8 +53,27 @@ public class MariadbLogDAO implements ILogDAO {
 
     @Override
     public boolean deleteLog(String id) {
+        try {
+            String sql = "DELETE log"
+                    + " WHERE logID = ?";
 
-        return false;
+            PreparedStatement ps = client.openConnection().prepareStatement(sql);
+            ps.setString(1, id);
+
+
+            ps.executeUpdate();
+            ps.close();
+            client.closeConnecion();
+
+            System.out.println("Record toegevoegd");
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 
     @Override

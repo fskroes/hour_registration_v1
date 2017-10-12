@@ -31,6 +31,7 @@ public class MariadbActivitiesDAO implements IActivitiesDAO {
 
     @Override
     public boolean insertActivitie(ActivitiesModel activitie) {
+
         try {
             String query = "INSERT INTO activity"
                     + "(category, start_time, end_time, fk_workdayID) VALUES"
@@ -57,10 +58,13 @@ public class MariadbActivitiesDAO implements IActivitiesDAO {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+
         return true;
+
     }
 
     @Override
+
     public ActivitiesModel findActivitie(String id) {
 
         ActivitiesModel activities = null;
@@ -69,124 +73,120 @@ public class MariadbActivitiesDAO implements IActivitiesDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return activities;
-    }
 
-    @Override
-    //Is not done yet.
-    public boolean deleteActivitie(ActivitiesModel activitie) {
-
-        Connection dbConnection = null;
-        PreparedStatement ps = null;
-
-        String deleteSQL = "DELETE activity"
-                + " WHERE activityID = ?";
-
-        try {
-            dbConnection = client.getConnection();
-            ps = client.getConnection().prepareStatement(deleteSQL);
-
-            ps.setString(1, activitie.getActivityId());
-
-            ps.executeUpdate();
-
-            System.out.println("Record deleted");
+            return activities;
         }
 
-        catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
+        @Override
 
-        finally {
-            if (ps != null) {
-                try {
-                    ps.getConnection().close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
+        //Is not done yet.
+        public boolean deleteActivitie (ActivitiesModel activitie){
+
+            Connection dbConnection = null;
+            PreparedStatement ps = null;
+
+            String deleteSQL = "DELETE activity"
+                    + " WHERE activityID = ?";
+
+            try {
+                dbConnection = client.getConnection();
+                ps = client.getConnection().prepareStatement(deleteSQL);
+
+                ps.setString(1, activitie.getActivityId());
+
+                ps.executeUpdate();
+
+                System.out.println("Record deleted");
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            } finally {
+                if (ps != null) {
+                    try {
+                        ps.getConnection().close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                if (dbConnection != null) {
+                    try {
+                        dbConnection.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
+            return true;
+        }
 
-            if (dbConnection != null) {
-                try {
-                    dbConnection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
+        @Override
+        public boolean updateActivitie (ActivitiesModel activitie){
+
+
+            Connection dbConnection = null;
+            PreparedStatement ps = null;
+
+            String updateSQL = "UPDATE activity"
+                    + " SET category = ?, start_time = ?, end_time = ?"
+                    + " WHERE activityID = ?";
+
+            try {
+                dbConnection = client.getConnection();
+                ps = client.getConnection().prepareStatement(updateSQL);
+
+                ps.setString(1, activitie.getCategory());
+                ps.setDate(2, (Date) activitie.getStartTime());
+                ps.setDate(3, (Date) activitie.getEndTime());
+                ps.setString(4, activitie.getActivityId());
+
+                ps.executeUpdate();
+
+                System.out.println("Record geupdate");
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            } finally {
+                if (ps != null) {
+                    try {
+                        ps.getConnection().close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                if (dbConnection != null) {
+                    try {
+                        dbConnection.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
+            return true;
         }
-        return true;
-    }
 
-    @Override
-    public boolean updateActivitie(ActivitiesModel activitie) {
+        @Override
+        public Collection<ActivitiesModel> selectActivitiesByWorkday ( int wordkdatId){
 
-        Connection dbConnection = null;
-        PreparedStatement ps = null;
+            List<ActivitiesModel> activities = null;
 
-        String updateSQL = "UPDATE activity"
-                + " SET category = ?, start_time = ?, end_time = ?"
-                + " WHERE activityID = ?";
-
-        try {
-            dbConnection = client.getConnection();
-            ps = client.getConnection().prepareStatement(updateSQL);
-
-            ps.setString(1, activitie.getCategory());
-            ps.setDate(2, (Date) activitie.getStartTime());
-            ps.setDate(3, (Date) activitie.getEndTime());
-            ps.setString(4, activitie.getActivityId());
-
-            ps.executeUpdate();
-
-            System.out.println("Record geupdate");
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } finally {
-            if (ps != null) {
-                try {
-                    ps.getConnection().close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+            try {
+                activities = client.selectObjectList(new ActivitiesModel(), "SELECT * FROM activity WHERE activityID = ?", wordkdatId);
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
+            return activities;
+        }
 
-            if (dbConnection != null) {
-                try {
-                    dbConnection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+        @Override
+        public Collection<ActivitiesModel> selectActivitiesByEmployee ( int employeeId){
+            List<ActivitiesModel> activities = null;
+
+            try {
+                activities = client.selectObjectList(new ActivitiesModel(), "SELECT * FROM activity WHERE activityID = ?", employeeId);
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
+            return activities;
         }
-        return true;
-    }
-
-    @Override
-    public Collection<ActivitiesModel> selectActivitiesByWorkday(int wordkdatId) {
-
-        List<ActivitiesModel> activities = null;
-
-        try {
-            activities = client.selectObjectList(new ActivitiesModel(), "SELECT * FROM activity WHERE activityID = ?", wordkdatId);
-        }
-
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return activities;
-    }
-
-    @Override
-    public Collection<ActivitiesModel> selectActivitiesByEmployee(int employeeId) {
-        List<ActivitiesModel> activities = null;
-
-        try {
-            activities = client.selectObjectList(new ActivitiesModel(), "SELECT * FROM activity WHERE activityID = ?", employeeId);
-        }
-
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return activities;
     }
 }

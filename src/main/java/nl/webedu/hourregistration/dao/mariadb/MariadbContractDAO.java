@@ -25,6 +25,7 @@ public class MariadbContractDAO implements IContractDAO {
     }
 
     @Override
+
     public boolean insertContract(ContractModel contract) {
         try {
             String query = "INSERT INTO contract"
@@ -47,6 +48,7 @@ public class MariadbContractDAO implements IContractDAO {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+
         return true;
     }
 
@@ -65,27 +67,28 @@ public class MariadbContractDAO implements IContractDAO {
     @Override
     public boolean deleteContract(String id){
         try {
-            String sql = "DELETE contract"
-                    + " WHERE conractID = ?";
-
-            PreparedStatement ps = database.openConnection().prepareStatement(sql);
-            ps.setString(1, id);
+        String sql = "DELETE contract"
+                + " WHERE conractID = ?";
 
 
-            ps.executeUpdate();
-            ps.close();
-            database.closeConnecion();
+        PreparedStatement ps = database.openConnection().prepareStatement(sql);
+        ps.setString(1, id);
 
-            System.out.println("Record toegevoegd");
 
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+        ps.executeUpdate();
+        ps.close();
+        database.closeConnecion();
 
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return true;
+        System.out.println("Record toegevoegd");
+
+    } catch (SQLException e) {
+        System.out.println(e.getMessage());
+
+    } catch (ClassNotFoundException e) {
+        e.printStackTrace();
     }
+        return true;
+}
 
     @Override
     public boolean updateContract(ContractModel contract){
