@@ -36,22 +36,18 @@ public class UserAuthenticationController {
 
     public void onLogin(ActionEvent actionEvent) {
         if(mongoUserAuthenticationDAO.authenticateUser(txtEmail.getText(), txtPassword.getText())) {
-            boolean x = mongoUserAuthenticationDAO.authenticateUser(txtEmail.getText(), txtPassword.getText());
-            System.out.println(x);
-            if(mongoUserAuthenticationDAO.authenticateUser(txtEmail.getText(), txtPassword.getText())) {
-                Stage primaryStage = (Stage) root.getScene().getWindow();
-                primaryStage.hide();
-                Parent parent = null;
-                try {
-                    parent = FXMLLoader.load(getClass().getResource("/MainView.fxml"));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                assert parent != null;
-                Scene scene = new Scene(parent, 1200, 800);
-                primaryStage.setScene(scene);
-                primaryStage.show();
+            Stage primaryStage = (Stage) root.getScene().getWindow();
+            primaryStage.hide();
+            Parent parent = null;
+            try {
+                parent = FXMLLoader.load(getClass().getResource("/MainView.fxml"));
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+            assert parent != null;
+            Scene scene = new Scene(parent, 1200, 800);
+            primaryStage.setScene(scene);
+            primaryStage.show();
         } else {
             System.out.println("Error while trying to sign in");
         }
