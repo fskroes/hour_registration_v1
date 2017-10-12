@@ -5,6 +5,10 @@ import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.database.MariaDatabaseExtension;
 import nl.webedu.hourregistration.model.SubjectModel;
 
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 public class MariadbSubjectDAO implements ISubjectDAO {
 
     private static MariadbSubjectDAO instance;
@@ -22,8 +26,28 @@ public class MariadbSubjectDAO implements ISubjectDAO {
     }
 
     @Override
-    public boolean insertSubject(SubjectModel Subject) {
-        return false;
+    public boolean insertSubject(SubjectModel subject) {
+        try {
+            String query = "INSERT INTO subject"
+                    + "(subject_name, start_date, end_date) VALUES"
+                    + "(?,?,?)";
+
+            PreparedStatement ps = client.openConnection().prepareStatement(query);
+            ps.setString(1, subject.getOnderwerpName());
+            ps.setDate(2, (Date) subject.getStartDate());
+            ps.setDate(3, (Date) subject.getEndDate());
+            ps.executeQuery();
+            ps.close();
+            client.closeConnecion();
+            System.out.println("Query: " + query + " = Succes");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return true;
     };
 
     @Override

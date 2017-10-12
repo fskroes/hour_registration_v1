@@ -9,24 +9,25 @@ import java.util.Date;
 
 public class ActivitiesModel extends DatabaseRowMapper<ActivitiesModel> {
 
-    private String id;
+    private int id;
     private String category;
     private Date startTime, endTime;
-    private WorkdayModel workday;
+    private int workdayId;
 
     public ActivitiesModel() {
 
     }
 
-    public ActivitiesModel(String id, String category, Date startTime, Date endTime) {
-        this.id = id;
+    public ActivitiesModel(String category, Date startTime, Date endTime, int workdayId) {
         this.category = category;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.workdayId = workdayId;
     }
 
 
-    public String getActivityId() {
+
+    public int getActivityId() {
         return id;
     }
 
@@ -54,22 +55,22 @@ public class ActivitiesModel extends DatabaseRowMapper<ActivitiesModel> {
         this.endTime = endTime;
     }
 
-    public WorkdayModel getWorkday() {
-        return workday;
+    public int getWorkdayId() {
+        return workdayId;
     }
 
-    public void setWorkday(WorkdayModel workday) {
-        this.workday = workday;
+    public void setWorkday(int workday) {
+        this.workdayId = workday;
     }
 
     @Override
     public String toString() {
-        return this.category;
+        return " id: "+id+ " categorie: " +category+ " stime: " +startTime+ " etime: " +endTime+ " wdayid: " +workdayId;
     }
 
     @Override
     public ActivitiesModel convertSQL(ResultSet set, int rowNum) throws SQLException {
-        this.id = String.valueOf("activityID");
+        this.id = set.getInt("activityID");
         this.category = set.getString("category");
         this.startTime = set.getDate("start_time");
         this.endTime = set.getDate("end_time");
@@ -78,7 +79,7 @@ public class ActivitiesModel extends DatabaseRowMapper<ActivitiesModel> {
 
     @Override
     public ActivitiesModel convertMongo(Document set, int rowNum) {
-        this.id = set.getString("_id");
+        this.id = set.getInteger("_id");
         this.category = set.getString("category");
         this.startTime = set.getDate("start_time");
         this.endTime = set.getDate("end_time");
