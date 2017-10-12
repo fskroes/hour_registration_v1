@@ -23,12 +23,12 @@ public class MongoEmployeeDAO implements IEmployeeDAO {
     }
 
     @Override
-    public boolean deleteEmployee(int id) {
+    public boolean deleteEmployee(String id) {
         return false;
     }
 
     @Override
-    public EmployeeModel findEmployee(int id) {
+    public EmployeeModel findEmployee(String id) {
         return null;
     }
 

@@ -48,7 +48,8 @@ public class CustomerModel extends DatabaseRowMapper<CustomerModel> {
 
     @Override
     public CustomerModel convertSQL(ResultSet set, int rowNum) throws SQLException {
-        this._id = set.getString("customerID");
+
+        this._id = String.valueOf("customerID");
         this.businessName = set.getString("company_name");
         return this;
     }

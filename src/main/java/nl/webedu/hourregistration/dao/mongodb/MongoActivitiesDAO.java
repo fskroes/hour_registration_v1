@@ -53,7 +53,7 @@ public class MongoActivitiesDAO implements IActivitiesDAO {
 
     //needs to be tested!!
     @Override
-    public ActivitiesModel findActivitie(int id) {
+    public ActivitiesModel findActivitie(String id) {
         CompletableFuture<ActivitiesModel> completableFuture = new CompletableFuture<>();
         ActivitiesModel ac = new ActivitiesModel();
         client.getDatabase(DATABASE_NAME).getCollection(ACTIVITY_COLLECTION).find(

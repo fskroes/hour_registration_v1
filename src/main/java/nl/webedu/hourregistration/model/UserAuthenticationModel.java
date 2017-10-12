@@ -13,6 +13,7 @@ public class UserAuthenticationModel implements Serializable {
     @JsonProperty("_id")
     private ObjectId _id;
 
+
     private String email;
     private String password;
 

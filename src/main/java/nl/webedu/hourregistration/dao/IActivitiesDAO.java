@@ -6,8 +6,8 @@ import java.util.Date;
 
 public interface IActivitiesDAO {
     public boolean insertActivitie(ActivitiesModel activitie);
-    public ActivitiesModel findActivitie(int id);
+    public ActivitiesModel findActivitie(String id);
     public boolean deleteActivitie(ActivitiesModel activitie);
     public boolean updateActivitie(ActivitiesModel activitie);
-    public Collection<ActivitiesModel> selectActivitiesByWorkday(int workdayId);
+    public Collection<ActivitiesModel> selectActivitiesByWorkday(int wordkdatId);
 }

@@ -10,7 +10,7 @@ import java.util.Date;
 
 public class ContractModel extends DatabaseRowMapper<ContractModel> {
 
-    private int id;
+    private String id;
     private int minHours;
     private int maxHours;
     private Date startTime;
@@ -26,7 +26,7 @@ public class ContractModel extends DatabaseRowMapper<ContractModel> {
         this.maxHours = maxHours;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -64,7 +64,7 @@ public class ContractModel extends DatabaseRowMapper<ContractModel> {
 
     @Override
     public ContractModel convertSQL(ResultSet set, int rowNum) throws SQLException {
-        this.id = set.getInt("contractID");
+        this.id = String.valueOf("contractID");
         this.minHours = set.getInt("min_hours");
         this.maxHours = set.getInt("max_hours");
         this.startTime = set.getTime("start_time");
@@ -74,7 +74,7 @@ public class ContractModel extends DatabaseRowMapper<ContractModel> {
 
     @Override
     public ContractModel convertMongo(Document set, int rowNum) {
-        this.id = set.getInteger("_id");
+        this.id = set.getString("_id");
         this.minHours = set.getInteger("min_hours");
         this.maxHours = set.getInteger("max_hours");
         this.startTime = set.getDate("start_time");

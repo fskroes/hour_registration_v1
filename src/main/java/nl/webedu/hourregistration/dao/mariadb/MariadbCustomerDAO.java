@@ -16,10 +16,10 @@ import java.util.List;
 public class MariadbCustomerDAO implements ICustomerDAO {
 
     private static MariadbCustomerDAO instance;
-    private MariaDatabaseExtension database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
+    private MariaDatabaseExtension client = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
 
     private MariadbCustomerDAO() {
-        this.database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
+        this.client = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
     }
 
     public static MariadbCustomerDAO getInstance() {
@@ -31,42 +31,24 @@ public class MariadbCustomerDAO implements ICustomerDAO {
 
     @Override
     public boolean insertCustomer(CustomerModel customer) {
-        Connection dbConnection = null;
-        PreparedStatement ps = null;
-
-        String insertSQL = "INSERT INTO customer"
-                + "(company_name, project_name) VALUES"
-                + "(?,?)";
         try {
-            dbConnection = database.getConnection();
-            ps = database.getConnection().prepareStatement(insertSQL);
+            String query = "INSERT INTO customer"
+                    + "(company_name, project_name) VALUES"
+                    + "(?,?)";
 
+            PreparedStatement ps = client.openConnection().prepareStatement(query);
             ps.setString(1, customer.getBusinessName());
-            ps.setObject(2, customer.getProjectModel());
+            ps.setString(2, customer.getProjectModel().getName());
+            ps.executeQuery();
+            ps.close();
+            client.closeConnecion();
+            System.out.println("Query: " + query + " = Succes");
 
-            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
 
-            System.out.println("Record toegevoegd");
-        }
-        catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        finally {
-            if (ps != null) {
-                try {
-                    ps.getConnection().close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            if (dbConnection != null) {
-                try {
-                    dbConnection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
         return true;
     }
@@ -81,10 +63,11 @@ public class MariadbCustomerDAO implements ICustomerDAO {
                 + " WHERE customerID = ?";
 
         try {
-            dbConnection = database.getConnection();
-            ps = database.getConnection().prepareStatement(delSQL);
+            dbConnection = client.getConnection();
+            ps = client.getConnection().prepareStatement(delSQL);
 
-            ps.setInt(1, Integer.parseInt(customer.getId()));
+            ps.setString(1, customer.getId());
+
 
             ps.executeUpdate();
 
@@ -116,18 +99,17 @@ public class MariadbCustomerDAO implements ICustomerDAO {
     }
 
     @Override
-    public CustomerModel findCustomer(int id) {
+    public CustomerModel findCustomer(String id) {
 
         CustomerModel customer = null;
         try {
-            customer = database.selectObjectSingle(new CustomerModel(), "SELECT * FROM customer WHERE customerID = ?", id);
+            customer = client.selectObjectSingle(new CustomerModel(), "SELECT * FROM customer WHERE customerID = ?", id);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return customer;
     }
 
-    @Override
     public ArrayList<CustomerModel> findCustomerByName(String name) {
         return null;
     }
@@ -143,8 +125,8 @@ public class MariadbCustomerDAO implements ICustomerDAO {
                 + " WHERE customerID = ?";
 
         try {
-            dbConnection = database.getConnection();
-            ps = database.getConnection().prepareStatement(updateSQL);
+            dbConnection = client.getConnection();
+            ps = client.getConnection().prepareStatement(updateSQL);
 
             ps.setString(1, customer.getBusinessName());
 
@@ -173,11 +155,11 @@ public class MariadbCustomerDAO implements ICustomerDAO {
         return true;
     }
 
-    public Collection selectCustomersByProject(int projectId) {
+    public Collection<CustomerModel> selectCustomersByProject(int projectId) {
 
         List<CustomerModel> customer = null;
         try {
-            customer = database.selectObjectList(new CustomerModel(), "SELECT * FROM customer WHERE projectID = ?", projectId);
+            customer = client.selectObjectList(new CustomerModel(), "SELECT * FROM customer WHERE projectID = ?", projectId);
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -76,7 +76,7 @@ public class MongoCustomerDAO implements ICustomerDAO {
     }
 
     @Override
-    public CustomerModel findCustomer(int id) {
+    public CustomerModel findCustomer(String id) {
         CompletableFuture<CustomerModel> completableFuture = new CompletableFuture<>();
         CustomerModel cm = new CustomerModel();
         client.getDatabase(DATABASE_NAME).getCollection(CUSTOMER_COLLECTION).find(
@@ -91,7 +91,6 @@ public class MongoCustomerDAO implements ICustomerDAO {
         }
     }
 
-    @Override
     public ArrayList<CustomerModel> findCustomerByName(String name) {
         CompletableFuture<ArrayList<CustomerModel>> completableFuture = new CompletableFuture<>();
         ArrayList<CustomerModel> alCustomers = new ArrayList<>();

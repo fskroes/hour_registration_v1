@@ -5,6 +5,8 @@ import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.database.MariaDatabaseExtension;
 import nl.webedu.hourregistration.model.ReportModel;
 
+import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class MariadbReportDAO implements IReportDAO {
@@ -24,17 +26,55 @@ public class MariadbReportDAO implements IReportDAO {
     }
 
     @Override
-    public boolean insertProject(ReportModel Report) {
-        return false;
+    public boolean insertReport(ReportModel report) {
+        try {
+            String query = "INSERT INTO report"
+                    + "(create_date, end_date, week_number) VALUES"
+                    + "(?,?,?)";
+
+            PreparedStatement ps = client.openConnection().prepareStatement(query);
+            // TODO ps invullen, tabel Report aanpassen op Model!
+            ps.executeQuery();
+            ps.close();
+            client.closeConnecion();
+            System.out.println("Query: " + query + " = Succes");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return true;
     };
 
     @Override
-    public boolean deleteReport(int id) {
-        return false;
+    public boolean deleteReport(String id) {
+        try {
+            String sql = "DELETE report"
+                    + " WHERE reportID = ?";
+
+            PreparedStatement ps = client.openConnection().prepareStatement(sql);
+            ps.setString(1, id);
+
+
+            ps.executeUpdate();
+            ps.close();
+            client.closeConnecion();
+
+            System.out.println("Record toegevoegd");
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return true;
     };
 
     @Override
-    public ReportModel findReport(int id) {
+    public ReportModel findReport(String id) {
         return null;
     };
 
@@ -44,7 +84,7 @@ public class MariadbReportDAO implements IReportDAO {
     };
 
     @Override
-    public ReportModel selectReportByCustomer(int customerId) {
+    public ReportModel selectReportByCustomer(String customerId) {
         ReportModel report = null;
         try {
             report = client.selectObjectSingle(new ReportModel(), "SELECT * FROM report WHERE id = ?", customerId + "");

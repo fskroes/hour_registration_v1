@@ -5,7 +5,11 @@ import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.database.MariaDatabaseExtension;
 import nl.webedu.hourregistration.model.LogModel;
 
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Collection;
+import java.util.List;
 
 public class MariadbLogDAO implements ILogDAO {
 
@@ -24,36 +28,88 @@ public class MariadbLogDAO implements ILogDAO {
     }
 
     @Override
-    public boolean insertLog(LogModel Log) {
+    public boolean insertLog(LogModel log) {
+        try {
+            String query = "INSERT INTO log"
+                    + "(date, description) VALUES"
+                    + "(?,?)";
 
-        return false;
+            PreparedStatement ps = database.openConnection().prepareStatement(query);
+            ps.setDate(1, (Date) log.getDate());
+            ps.setString(2, log.getDescription());
+            ps.executeQuery();
+            ps.close();
+            database.closeConnecion();
+            System.out.println("Query: " + query + " = Succes");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 
     @Override
-    public boolean deleteLog(int id) {
+    public boolean deleteLog(String id) {
+        try {
+            String sql = "DELETE log"
+                    + " WHERE logID = ?";
 
-        return false;
+            PreparedStatement ps = database.openConnection().prepareStatement(sql);
+            ps.setString(1, id);
+
+
+            ps.executeUpdate();
+            ps.close();
+            database.closeConnecion();
+
+            System.out.println("Record toegevoegd");
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 
     @Override
-    public LogModel findLog(int id) {
+    public LogModel findLog(String id) {
 
         return null;
     }
 
     @Override
-    public boolean updateLog(LogModel Log) {
+    public boolean updateLog(LogModel log) {
 
         return false;
     }
 
     @Override
-    public Collection selectLogByEmployee(int employeeId) {
-        return null;
-    }
+    public Collection<LogModel> selectLogByEmployee(int employeeId) {
 
+    List<LogModel> log = null;
+
+//        try {
+//        //log = database.selectObjectList(new LogModel(), "SELECT * FROM log WHERE subjectID = ?", employeeId);
+//    } catch (SQLException e) {
+//        e.printStackTrace();
+//    }
+        return log;
+}
     @Override
-    public Collection selectLogBySubject(int subjectId) {
-        return null;
+    public Collection<LogModel> selectLogBySubject(int subjectId) {
+
+        List<LogModel> log = null;
+
+//        try {
+//            //log = database.selectObjectList(new LogModel(), "SELECT * FROM log WHERE subjectID = ?", subjectId);
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+        return log;
     }
 }
