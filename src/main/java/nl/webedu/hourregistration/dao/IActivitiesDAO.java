@@ -9,5 +9,6 @@ public interface IActivitiesDAO {
     public ActivitiesModel findActivitie(int id);
     public boolean deleteActivitie(ActivitiesModel activitie);
     public boolean updateActivitie(ActivitiesModel activitie);
-    public Collection<ActivitiesModel> selectActivitiesByWorkday(int workdayId);
+    public Collection<ActivitiesModel> selectActivitiesByWorkday(int wordkdatId);
+    public Collection<ActivitiesModel> selectActivitiesByEmployee(int employeeId);
 }
