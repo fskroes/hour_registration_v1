@@ -9,14 +9,15 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.List;
 
 public class MariadbLogDAO implements ILogDAO {
 
     private static MariadbLogDAO instance;
-    private MariaDatabaseExtension client = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
+    private MariaDatabaseExtension database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
 
     private MariadbLogDAO() {
-        this.client = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
+        this.database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
     }
 
     public static MariadbLogDAO getInstance() {
@@ -33,12 +34,12 @@ public class MariadbLogDAO implements ILogDAO {
                     + "(date, description) VALUES"
                     + "(?,?)";
 
-            PreparedStatement ps = client.openConnection().prepareStatement(query);
+            PreparedStatement ps = database.openConnection().prepareStatement(query);
             ps.setDate(1, (Date) log.getDate());
             ps.setString(2, log.getDescription());
             ps.executeQuery();
             ps.close();
-            client.closeConnecion();
+            database.closeConnecion();
             System.out.println("Query: " + query + " = Succes");
 
         } catch (SQLException e) {
@@ -69,12 +70,27 @@ public class MariadbLogDAO implements ILogDAO {
     }
 
     @Override
-    public Collection selectLogByEmployee(int employeeId) {
-        return null;
-    }
+    public Collection<LogModel> selectLogByEmployee(int employeeId) {
 
+    List<LogModel> log = null;
+
+        try {
+        log = database.selectObjectList(new LogModel(), "SELECT * FROM log WHERE subjectID = ?", employeeId);
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+        return log;
+}
     @Override
-    public Collection selectLogBySubject(int subjectId) {
-        return null;
+    public Collection<LogModel> selectLogBySubject(int subjectId) {
+
+        List<LogModel> log = null;
+
+        try {
+            log = database.selectObjectList(new LogModel(), "SELECT * FROM log WHERE subjectID = ?", subjectId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return log;
     }
 }

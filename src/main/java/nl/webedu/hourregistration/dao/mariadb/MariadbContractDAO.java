@@ -39,7 +39,7 @@ public class MariadbContractDAO implements IContractDAO {
             ps.executeQuery();
             ps.close();
             database.closeConnecion();
-            System.out.println("Query: " + query + " = Succes");
+            System.out.println("Query: " + query + " = Success");
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -51,8 +51,15 @@ public class MariadbContractDAO implements IContractDAO {
     }
 
     @Override
-    public ContractModel findContract(String id){
-        return null;
+    public ContractModel findContract(String id) {
+
+        ContractModel contract = null;
+        try {
+            contract = database.selectObjectSingle(new ContractModel(), "SELECT * FROM contract WHERE contractID = ?", id + "");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return contract;
     }
 
     @Override
@@ -61,13 +68,13 @@ public class MariadbContractDAO implements IContractDAO {
             String sql = "DELETE contract"
                     + " WHERE conractID = ?";
 
-            PreparedStatement ps = client.openConnection().prepareStatement(sql);
+            PreparedStatement ps = database.openConnection().prepareStatement(sql);
             ps.setString(1, id);
 
 
             ps.executeUpdate();
             ps.close();
-            client.closeConnecion();
+            database.closeConnecion();
 
             System.out.println("Record toegevoegd");
 

@@ -150,7 +150,7 @@ public class MariadbCustomerDAO implements ICustomerDAO {
     }
 
     @Override
-    public Collection selectCustomersByProject(int projectId) {
+    public Collection<CustomerModel> selectCustomersByProject(int projectId) {
 
         List<CustomerModel> customer = null;
         try {

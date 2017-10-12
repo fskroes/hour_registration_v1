@@ -9,7 +9,7 @@ public interface ILogDAO {
     public boolean deleteLog(String id);
     public LogModel findLog(String id);
     public boolean updateLog(LogModel Log);
-    public Collection selectLogByEmployee(int employeeId);
-    public Collection selectLogBySubject(int subjectId);
+    public Collection<LogModel> selectLogByEmployee(int employeeId);
+    public Collection<LogModel> selectLogBySubject(int subjectId);
 
 }
