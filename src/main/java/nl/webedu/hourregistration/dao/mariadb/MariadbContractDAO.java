@@ -97,12 +97,11 @@ public class MariadbContractDAO implements IContractDAO {
 
     @Override
     public List<ContractModel> selectContractByEmployee(int employeeId){
-        List<ContractModel> contract = null;
 
+        List<ContractModel> contract = null;
         try {
             contract = database.selectObjectList(new ContractModel(), "SELECT * FROM contract WHERE employeeID = ?", employeeId);
         }
-
         catch (SQLException e) {
             e.printStackTrace();
         }

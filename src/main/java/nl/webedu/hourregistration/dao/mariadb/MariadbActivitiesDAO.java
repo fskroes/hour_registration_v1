@@ -4,7 +4,6 @@ import nl.webedu.hourregistration.dao.IActivitiesDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.database.MariaDatabaseExtension;
 import nl.webedu.hourregistration.model.ActivitiesModel;
-import nl.webedu.hourregistration.model.WorkdayModel;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -16,10 +15,10 @@ import java.util.List;
 public class MariadbActivitiesDAO implements IActivitiesDAO {
 
     private static MariadbActivitiesDAO instance;
-    private MariaDatabaseExtension client = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
+    private MariaDatabaseExtension database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
 
     private MariadbActivitiesDAO() {
-        this.client = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
+        this.database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
     }
 
     public static MariadbActivitiesDAO getInstance() {
@@ -38,19 +37,15 @@ public class MariadbActivitiesDAO implements IActivitiesDAO {
                     + "(category, start_time, end_time) VALUES"
                     + "(?,?,?)";
 
-            PreparedStatement ps = client.openConnection().prepareStatement(query);
+            PreparedStatement ps = database.openConnection().prepareStatement(query);
             ps.setString(1, activitie.getCategory());
             ps.setDate(2, (Date) activitie.getStartTime());
             ps.setDate(3, (Date) activitie.getEndTime());
-            ps.setInt(4, activitie.getWorkdayId());
+
             ps.executeQuery();
             ps.close();
-            client.closeConnecion();
-            System.out.println("Query: " + query + " = Succes");
-
-            ps.setString(1, activitie.getCategory());
-            ps.setDate(2, (Date) activitie.getStartTime());
-            ps.setDate(3, (Date) activitie.getEndTime());
+            database.closeConnecion();
+            System.out.println("Query: " + query + " = Success");
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -58,7 +53,6 @@ public class MariadbActivitiesDAO implements IActivitiesDAO {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-
         return true;
 
     }
@@ -68,7 +62,7 @@ public class MariadbActivitiesDAO implements IActivitiesDAO {
 
         ActivitiesModel activities = null;
         try {
-            activities = client.selectObjectSingle(new ActivitiesModel(), "SELECT * FROM activities WHERE activityID = ?", id + "");
+            activities = database.selectObjectSingle(new ActivitiesModel(), "SELECT * FROM activities WHERE activityID = ?", id + "");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -76,10 +70,7 @@ public class MariadbActivitiesDAO implements IActivitiesDAO {
         return activities;
     }
 
-
-
         @Override
-
         //Is not done yet.
         public boolean deleteActivitie (ActivitiesModel activitie){
 
@@ -90,8 +81,8 @@ public class MariadbActivitiesDAO implements IActivitiesDAO {
                     + " WHERE activityID = ?";
 
             try {
-                dbConnection = client.getConnection();
-                ps = client.getConnection().prepareStatement(deleteSQL);
+                dbConnection = database.getConnection();
+                ps = database.getConnection().prepareStatement(deleteSQL);
 
                 ps.setString(1, activitie.getActivityId());
 
@@ -132,8 +123,8 @@ public class MariadbActivitiesDAO implements IActivitiesDAO {
                     + " WHERE activityID = ?";
 
             try {
-                dbConnection = client.getConnection();
-                ps = client.getConnection().prepareStatement(updateSQL);
+                dbConnection = database.getConnection();
+                ps = database.getConnection().prepareStatement(updateSQL);
 
                 ps.setString(1, activitie.getCategory());
                 ps.setDate(2, (Date) activitie.getStartTime());
@@ -166,12 +157,12 @@ public class MariadbActivitiesDAO implements IActivitiesDAO {
         }
 
         @Override
-        public Collection<ActivitiesModel> selectActivitiesByWorkday ( int wordkdatId){
+        public Collection<ActivitiesModel> selectActivitiesByWorkday (String workdayId){
 
             List<ActivitiesModel> activities = null;
 
             try {
-                activities = client.selectObjectList(new ActivitiesModel(), "SELECT * FROM activity WHERE activityID = ?", wordkdatId);
+                activities = database.selectObjectList(new ActivitiesModel(), "SELECT * FROM activity WHERE workdayID = ?", workdayId);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -179,11 +170,11 @@ public class MariadbActivitiesDAO implements IActivitiesDAO {
         }
 
 
-        public Collection<ActivitiesModel> selectActivitiesByEmployee ( int employeeId){
+        public Collection<ActivitiesModel> selectActivitiesByEmployee (String employeeId){
             List<ActivitiesModel> activities = null;
 
             try {
-                activities = client.selectObjectList(new ActivitiesModel(), "SELECT * FROM activity WHERE activityID = ?", employeeId);
+                activities = database.selectObjectList(new ActivitiesModel(), "SELECT * FROM activity WHERE employeeID = ?", employeeId);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
