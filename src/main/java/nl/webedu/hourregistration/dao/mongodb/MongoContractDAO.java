@@ -1,4 +1,108 @@
 package nl.webedu.hourregistration.dao.mongodb;
 
-public class MongoContractDAO {
+import com.mongodb.async.client.MongoClient;
+import nl.webedu.hourregistration.dao.IContractDAO;
+import nl.webedu.hourregistration.database.DatabaseManager;
+import nl.webedu.hourregistration.database.DatabaseUtil;
+import nl.webedu.hourregistration.model.ContractModel;
+import org.bson.Document;
+import org.bson.types.ObjectId;
+
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+
+import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Updates.combine;
+import static com.mongodb.client.model.Updates.set;
+
+public class MongoContractDAO implements IContractDAO {
+
+    private static MongoContractDAO instance;
+    private MongoClient client = (MongoClient) DatabaseManager.getInstance().getDatabase().getConnection();
+
+    public static MongoContractDAO getInstance() {
+        if (instance == null) {
+            instance = new MongoContractDAO();
+        }
+        return instance;
+    }
+
+    @Override
+    public boolean insertContract(ContractModel contract) {
+        CompletableFuture<Boolean> queryTimer = new CompletableFuture<>();
+        Document doc = new Document("max_hours", contract.getMaxHours())
+                .append("min_hours", contract.getMinHours())
+                .append("start_time", contract.getStartTime())
+                .append("end_time", contract.getEndTime());
+        client.getDatabase(DatabaseUtil.DATABASE_NAME).getCollection(DatabaseUtil.CONTRACT_COLLECTION).insertOne(
+                doc,
+                (aVoid, throwable) -> {
+                    System.out.println("[DEBUG] {DATABASE} -> {MONGO} Inserted document " + doc.get("_id"));
+                    queryTimer.complete(true);
+
+                }
+        );
+        try {
+            return queryTimer.get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public ContractModel findContract(String id) {
+        CompletableFuture<ContractModel> queryTimer = new CompletableFuture<>();
+        client.getDatabase(DatabaseUtil.DATABASE_NAME).getCollection(DatabaseUtil.CONTRACT_COLLECTION).find(
+                eq("_id", new ObjectId("59dde9480c74011202d9fff9"))
+        ).forEach(
+                (document) -> queryTimer.complete(new ContractModel().convertMongo(document, 0)),
+                (aVoid, throwable) -> System.out.println("Found a record")
+        );
+        try {
+            return queryTimer.get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public boolean deleteContract(int id) {
+        CompletableFuture<Boolean> queryTimer = new CompletableFuture<>();
+        client.getDatabase(DatabaseUtil.DATABASE_NAME).getCollection(DatabaseUtil.CONTRACT_COLLECTION).deleteOne(
+                eq("_id", new ObjectId(String.valueOf(id))),
+                (deleteResult, throwable) -> {
+                    System.out.println("Deleted: " + deleteResult.getDeletedCount());
+                    queryTimer.complete(true);
+                }
+        );
+        try {
+            return queryTimer.get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public boolean updateContract(ContractModel contract) {
+        CompletableFuture<Boolean> queryTimer = new CompletableFuture<>();
+        client.getDatabase(DatabaseUtil.DATABASE_NAME).getCollection(DatabaseUtil.CONTRACT_COLLECTION).updateOne(
+                eq("_id", contract.getId()),
+                combine(set( "min_hours", contract.getMinHours()),
+                        set("max_hours", contract.getMaxHours()),
+                        set("start_time", contract.getStartTime()),
+                        set("end_time", contract.getEndTime())),
+                (updateResult, throwable) -> {
+                    System.out.println("Updated: " + updateResult.getModifiedCount());
+                });
+        return false;
+    }
+
+    @Override
+    public ContractModel selectContractByEmployee(int employeeId) {
+
+        return null;
+    }
 }
