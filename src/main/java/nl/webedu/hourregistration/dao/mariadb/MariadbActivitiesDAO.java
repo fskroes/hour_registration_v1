@@ -40,17 +40,10 @@ public class MariadbActivitiesDAO implements IActivitiesDAO {
             dbConnection = database.getConnection();
             ps = database.getConnection().prepareStatement(insertSQL);
 
-<<<<<<< HEAD
-            ps.setInt(1, activitie.getId());
-            ps.setString(2, activitie.getCategory());
-            ps.setDate(3, (Date) activitie.getStartTime());
-            ps.setDate(4, (Date) activitie.getEndTime());
-            ps.setObject(5, activitie.getWorkdayId());
-=======
+
             ps.setString(1, activitie.getCategory());
             ps.setDate(2, (Date) activitie.getStartTime());
             ps.setDate(3, (Date) activitie.getEndTime());
->>>>>>> 35b83824e35d45810fb5e6a556960afcca1daa81
 
             ps.executeUpdate();
 
@@ -195,15 +188,8 @@ public class MariadbActivitiesDAO implements IActivitiesDAO {
         return activities;
     }
 
-<<<<<<< HEAD
-    public ActivitiesModel selectActivitiesByEmployee(int employeeId) {
-        ActivitiesModel activities = null;
-=======
-    @Override
     public Collection<ActivitiesModel> selectActivitiesByEmployee(int employeeId) {
         List<ActivitiesModel> activities = null;
-
->>>>>>> 35b83824e35d45810fb5e6a556960afcca1daa81
         try {
             activities = database.selectObjectList(new ActivitiesModel(), "SELECT * FROM activity WHERE activityID = ?", employeeId);
         }

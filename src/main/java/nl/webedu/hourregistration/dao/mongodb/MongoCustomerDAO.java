@@ -12,10 +12,15 @@ import org.bson.Document;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Updates.combine;
+import static com.mongodb.client.model.Updates.set;
 import static nl.webedu.hourregistration.database.DatabaseUtil.CUSTOMER_COLLECTION;
 import static nl.webedu.hourregistration.database.DatabaseUtil.DATABASE_NAME;
+import static nl.webedu.hourregistration.database.DatabaseUtil.EMPLOYEE_COLLECTION;
 
 public class MongoCustomerDAO implements ICustomerDAO {
 
@@ -23,6 +28,8 @@ public class MongoCustomerDAO implements ICustomerDAO {
 
     private MongoClient client;
     private CustomerModel model;
+    ArrayList<Document> alCustomerDocuments = new ArrayList<>();
+
     private ObjectMapper mapper = new ObjectMapper();
 
 
@@ -39,57 +46,86 @@ public class MongoCustomerDAO implements ICustomerDAO {
 
     @Override
     public boolean insertCustomer(CustomerModel customer) {
-        return false;
+        CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();
+        Document query = new Document("business_name", customer.getBusinessName());
+
+        client.getDatabase(DATABASE_NAME).getCollection(CUSTOMER_COLLECTION)
+                .insertOne(query, (result, t) -> completableFuture.complete(true));
+        try {
+            return completableFuture.get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
     public boolean deleteCustomer(CustomerModel customer) {
-        return false;
+        CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();
+        Document query = new Document();
+        query.put("_id", customer.getId());
+
+        client.getDatabase(DATABASE_NAME).getCollection(CUSTOMER_COLLECTION)
+                .deleteOne(query, (deleteResult, throwable) -> completableFuture.complete(true));
+        try {
+            return completableFuture.get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
     public CustomerModel findCustomer(int id) {
-        return null;
+        CompletableFuture<CustomerModel> completableFuture = new CompletableFuture<>();
+        CustomerModel cm = new CustomerModel();
+        client.getDatabase(DATABASE_NAME).getCollection(CUSTOMER_COLLECTION).find(
+                eq("_id", id)).first((document, throwable) -> {
+            completableFuture.complete(cm.convertMongo(document, 0));
+        });
+        try {
+            return completableFuture.get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
-    public ArrayList<CustomerModel> findCustomer(int id, String customerName) {
-        model = new CustomerModel();
-        ArrayList<CustomerModel> models = new ArrayList<CustomerModel>();
-        MongoCollection<Document> collection = client.getDatabase(DATABASE_NAME).getCollection(CUSTOMER_COLLECTION);
-        collection.find(eq("customer_name", customerName))
-                .into(new ArrayList<Document>(), new SingleResultCallback<ArrayList<Document>>() {
-                    @Override
-                    public void onResult(ArrayList<Document> documents, Throwable throwable) {
-                        for (Document document : documents) {
-                            System.out.println(document.toJson());
-
-                            try {
-                                model = mapper.readValue(document.toJson(), CustomerModel.class);
-                                models.add(model);
-                                //
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
+    public ArrayList<CustomerModel> findCustomerByName(String name) {
+        CompletableFuture<ArrayList<CustomerModel>> completableFuture = new CompletableFuture<>();
+        ArrayList<CustomerModel> alCustomers = new ArrayList<>();
+        client.getDatabase(DATABASE_NAME).getCollection(CUSTOMER_COLLECTION).find(
+                eq("business_name", name)).into(
+                alCustomerDocuments,
+                (documents, throwable) -> {
+                    for (Document d: alCustomerDocuments) {
+                        alCustomers.add(new CustomerModel(d.getString("category")));
                     }
+                    completableFuture.complete(alCustomers);
                 });
-
-                return models;
-    }
-
-    @Override
-    public CustomerModel findCustomer(String name) {
-        return null;
+        try {
+            return completableFuture.get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
     public boolean updateCustomer(CustomerModel customer) {
-        return false;
-    }
-
-    @Override
-    public Collection<CustomerModel> selectCustomersByProject(int projectId) {
-        return null;
+        CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();
+        Document query = new Document();
+        query.put("_id", customer.getId());
+        client.getDatabase(DATABASE_NAME).getCollection(CUSTOMER_COLLECTION).updateOne(eq("_id", customer.getId())
+                , combine(set("business_name", customer.getBusinessName())), (updateResult, throwable) -> {
+                    completableFuture.complete(true);
+                });
+        try {
+            return completableFuture.get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

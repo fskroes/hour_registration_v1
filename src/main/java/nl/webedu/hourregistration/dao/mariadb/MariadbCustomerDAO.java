@@ -116,16 +116,6 @@ public class MariadbCustomerDAO implements ICustomerDAO {
     }
 
     @Override
-    public ArrayList<CustomerModel> findCustomer(int id, String name) {
-        return null;
-    }
-
-    @Override
-    public CustomerModel findCustomer(String name) {
-        return null;
-    }
-
-    @Override
     public CustomerModel findCustomer(int id) {
 
         CustomerModel customer = null;
@@ -135,6 +125,11 @@ public class MariadbCustomerDAO implements ICustomerDAO {
             e.printStackTrace();
         }
         return customer;
+    }
+
+    @Override
+    public ArrayList<CustomerModel> findCustomerByName(String name) {
+        return null;
     }
 
     @Override
@@ -178,7 +173,6 @@ public class MariadbCustomerDAO implements ICustomerDAO {
         return true;
     }
 
-    @Override
     public Collection selectCustomersByProject(int projectId) {
 
         List<CustomerModel> customer = null;

@@ -86,6 +86,7 @@ public class MongoActivitiesDAO implements IActivitiesDAO {
 
     @Override
     public boolean updateActivitie(ActivitiesModel activitie) {
+        CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();
         Document query = new Document();
         query.put("workday_id", activitie.getActivityId());
         client.getDatabase(DATABASE_NAME).getCollection(ACTIVITY_COLLECTION).updateOne(eq("workday_id", activitie.getWorkdayId())
@@ -93,8 +94,14 @@ public class MongoActivitiesDAO implements IActivitiesDAO {
                         set("start_time", activitie.getStartTime()),
                         set("end_time", activitie.getEndTime()),
                         set("workday_id", activitie.getWorkdayId())), (updateResult, throwable) -> {
+                    completableFuture.complete(true);
                 });
-        return false;
+        try {
+            return completableFuture.get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
