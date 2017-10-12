@@ -29,12 +29,12 @@ public class MariadbReportDAO implements IReportDAO {
     };
 
     @Override
-    public boolean deleteReport(int id) {
+    public boolean deleteReport(String id) {
         return false;
     };
 
     @Override
-    public ReportModel findReport(int id) {
+    public ReportModel findReport(String id) {
         return null;
     };
 
@@ -44,7 +44,7 @@ public class MariadbReportDAO implements IReportDAO {
     };
 
     @Override
-    public ReportModel selectReportByCustomer(int customerId) {
+    public ReportModel selectReportByCustomer(String customerId) {
         ReportModel report = null;
         try {
             report = client.selectObjectSingle(new ReportModel(), "SELECT * FROM report WHERE id = ?", customerId + "");

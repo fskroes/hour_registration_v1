@@ -30,13 +30,13 @@ public class MariadbLogDAO implements ILogDAO {
     }
 
     @Override
-    public boolean deleteLog(int id) {
+    public boolean deleteLog(String id) {
 
         return false;
     }
 
     @Override
-    public LogModel findLog(int id) {
+    public LogModel findLog(String id) {
 
         return null;
     }

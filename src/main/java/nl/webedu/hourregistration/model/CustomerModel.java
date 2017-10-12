@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public class CustomerModel extends DatabaseRowMapper<CustomerModel> {
 
-    private int id;
+    private String id;
     private String businessName;
     private ProjectModel projectModel;
 
@@ -20,12 +20,12 @@ public class CustomerModel extends DatabaseRowMapper<CustomerModel> {
         this.businessName = businessName;
     }
 
-    public CustomerModel(int id, String businessName) {
+    public CustomerModel(String id, String businessName) {
         this(businessName);
         this.id = id;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -47,14 +47,14 @@ public class CustomerModel extends DatabaseRowMapper<CustomerModel> {
 
     @Override
     public CustomerModel convertSQL(ResultSet set, int rowNum) throws SQLException {
-        this.id = set.getInt("customerID");
+        this.id = String.valueOf("customerID");
         this.businessName = set.getString("company_name");
         return this;
     }
 
     @Override
     public CustomerModel convertMongo(Document set, int rowNum) {
-        this.id = set.getInteger("_id");
+        this.id = set.getString("_id");
         this.businessName = set.getString("company_name");
         return this;
     }

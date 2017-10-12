@@ -29,12 +29,12 @@ public class MariadbWorkdayDAO implements IWorkdayDAO {
     }
 
     @Override
-    public boolean deleteWorkday(int id) {
+    public boolean deleteWorkday(String id) {
         return false;
     }
 
     @Override
-    public WorkdayModel findWorkday(int id) {
+    public WorkdayModel findWorkday(String id) {
         return null;
     }
 

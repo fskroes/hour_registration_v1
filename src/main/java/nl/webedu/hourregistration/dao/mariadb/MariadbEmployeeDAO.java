@@ -57,14 +57,14 @@ public class MariadbEmployeeDAO implements IEmployeeDAO {
     }
 
     @Override
-    public boolean deleteEmployee(int id){
+    public boolean deleteEmployee(String id){
         try {
 
             String sql = "UPDATE employee SET active= FALSE WHERE employeeID = ?;";
 
             PreparedStatement ps = database.openConnection().prepareStatement(sql);
 
-            ps.setInt(1, id);
+            ps.setString(1, id);
 
             ps.executeUpdate();
             ps.close();

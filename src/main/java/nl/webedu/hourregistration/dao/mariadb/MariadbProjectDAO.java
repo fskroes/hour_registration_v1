@@ -58,12 +58,12 @@ public class MariadbProjectDAO implements IProjectDAO {
     }
 
     @Override
-    public boolean deleteProject(int id) {
+    public boolean deleteProject(String id) {
         return false;
     };
 
     @Override
-    public ProjectModel findProject(int id) {
+    public ProjectModel findProject(String id) {
         return null;
     };
 
@@ -73,7 +73,7 @@ public class MariadbProjectDAO implements IProjectDAO {
     };
 
     @Override
-    public ProjectModel selectProjectByCustomer(int customerId) {
+    public ProjectModel selectProjectByCustomer(String customerId) {
         ProjectModel project = null;
         try {
             project = client.selectObjectSingle(new ProjectModel(), "SELECT * FROM project WHERE id = ?", customerId + "");

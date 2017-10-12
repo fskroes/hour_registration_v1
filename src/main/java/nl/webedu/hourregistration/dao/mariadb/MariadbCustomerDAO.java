@@ -83,7 +83,7 @@ public class MariadbCustomerDAO implements ICustomerDAO {
             dbConnection = database.getConnection();
             ps = database.getConnection().prepareStatement(delSQL);
 
-            ps.setInt(1, customer.getId());
+            ps.setString(1, customer.getId());
 
             ps.executeUpdate();
 
@@ -115,7 +115,7 @@ public class MariadbCustomerDAO implements ICustomerDAO {
     }
 
     @Override
-    public CustomerModel findCustomer(int id) {
+    public CustomerModel findCustomer(String id) {
 
         CustomerModel customer = null;
         try {

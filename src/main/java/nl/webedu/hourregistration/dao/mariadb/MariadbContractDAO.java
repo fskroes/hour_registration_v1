@@ -55,8 +55,28 @@ public class MariadbContractDAO implements IContractDAO {
     }
 
     @Override
-    public boolean deleteContract(int id){
-        return false;
+    public boolean deleteContract(String id){
+        try {
+            String sql = "DELETE contract"
+                    + " WHERE conractID = ?";
+
+            PreparedStatement ps = client.openConnection().prepareStatement(sql);
+            ps.setString(1, id);
+
+
+            ps.executeUpdate();
+            ps.close();
+            client.closeConnecion();
+
+            System.out.println("Record toegevoegd");
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 
     @Override

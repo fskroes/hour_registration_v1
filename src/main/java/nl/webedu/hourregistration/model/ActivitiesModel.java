@@ -9,7 +9,7 @@ import java.util.Date;
 
 public class ActivitiesModel extends DatabaseRowMapper<ActivitiesModel> {
 
-    private int id;
+    private String id;
     private String category;
     private Date startTime, endTime;
     private WorkdayModel workday;
@@ -18,7 +18,7 @@ public class ActivitiesModel extends DatabaseRowMapper<ActivitiesModel> {
 
     }
 
-    public ActivitiesModel(int id, String category, Date startTime, Date endTime) {
+    public ActivitiesModel(String id, String category, Date startTime, Date endTime) {
         this.id = id;
         this.category = category;
         this.startTime = startTime;
@@ -26,7 +26,7 @@ public class ActivitiesModel extends DatabaseRowMapper<ActivitiesModel> {
     }
 
 
-    public int getActivityId() {
+    public String getActivityId() {
         return id;
     }
 
@@ -69,7 +69,7 @@ public class ActivitiesModel extends DatabaseRowMapper<ActivitiesModel> {
 
     @Override
     public ActivitiesModel convertSQL(ResultSet set, int rowNum) throws SQLException {
-        this.id = set.getInt("activityID");
+        this.id = String.valueOf("activityID");
         this.category = set.getString("category");
         this.startTime = set.getDate("start_time");
         this.endTime = set.getDate("end_time");
@@ -78,7 +78,7 @@ public class ActivitiesModel extends DatabaseRowMapper<ActivitiesModel> {
 
     @Override
     public ActivitiesModel convertMongo(Document set, int rowNum) {
-        this.id = set.getInteger("_id");
+        this.id = set.getString("_id");
         this.category = set.getString("category");
         this.startTime = set.getDate("start_time");
         this.endTime = set.getDate("end_time");

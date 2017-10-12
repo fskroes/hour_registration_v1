@@ -27,12 +27,12 @@ public class MariadbSubjectDAO implements ISubjectDAO {
     };
 
     @Override
-    public SubjectModel findSubject(int id) {
+    public SubjectModel findSubject(String id) {
         return null;
     };
 
     @Override
-    public boolean deleteSubject(int id) {
+    public boolean deleteSubject(String id) {
         return false;
     };
 
