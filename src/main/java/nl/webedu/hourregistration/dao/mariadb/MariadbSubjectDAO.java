@@ -57,7 +57,27 @@ public class MariadbSubjectDAO implements ISubjectDAO {
 
     @Override
     public boolean deleteSubject(String id) {
-        return false;
+        try {
+            String sql = "DELETE subject"
+                    + " WHERE subjectID = ?";
+
+            PreparedStatement ps = client.openConnection().prepareStatement(sql);
+            ps.setString(1, id);
+
+
+            ps.executeUpdate();
+            ps.close();
+            client.closeConnecion();
+
+            System.out.println("Record toegevoegd");
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return true;
     };
 
     @Override

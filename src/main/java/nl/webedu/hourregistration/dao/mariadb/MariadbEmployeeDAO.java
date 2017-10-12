@@ -83,7 +83,7 @@ public class MariadbEmployeeDAO implements IEmployeeDAO {
     }
 
     @Override
-    public EmployeeModel findEmployee(int id){
+    public EmployeeModel findEmployee(String id){
         EmployeeModel employee = null;
         try {
             employee = database.selectObjectSingle(
