@@ -40,11 +40,16 @@ public class MariadbActivitiesDAO implements IActivitiesDAO {
             ps.setString(1, activitie.getCategory());
             ps.setDate(2, (Date) activitie.getStartTime());
             ps.setDate(3, (Date) activitie.getEndTime());
-            ps.setInt(4, activitie.getWorkday().getId());
+            ps.setInt(4, activitie.getWorkdayId());
             ps.executeQuery();
             ps.close();
             client.closeConnecion();
             System.out.println("Query: " + query + " = Succes");
+
+            ps.setString(1, activitie.getCategory());
+            ps.setDate(2, (Date) activitie.getStartTime());
+            ps.setDate(3, (Date) activitie.getEndTime());
+            ps.setObject(5, activitie.getWorkdayId());
 
         } catch (SQLException e) {
             e.printStackTrace();
