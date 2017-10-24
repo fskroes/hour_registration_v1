@@ -38,7 +38,7 @@ public class MongoEmployeeDAO implements IEmployeeDAO {
     }
 
     @Override
-    public Collection selectEmployeesByProject(int projectId) {
+    public Collection selectEmployeesByProject(String projectId) {
         return null;
     }
 }

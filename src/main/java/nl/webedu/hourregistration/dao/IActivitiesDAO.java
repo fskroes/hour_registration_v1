@@ -9,6 +9,4 @@ public interface IActivitiesDAO {
     public ActivitiesModel findActivitie(String id);
     public boolean deleteActivitie(ActivitiesModel activitie);
     public boolean updateActivitie(ActivitiesModel activitie);
-    public Collection<ActivitiesModel> selectActivitiesByWorkday(String workdayId);
-    public Collection<ActivitiesModel> selectActivitiesByEmployee ( String employeeId);
 }

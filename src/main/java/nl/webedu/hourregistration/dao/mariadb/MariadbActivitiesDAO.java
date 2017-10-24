@@ -155,29 +155,4 @@ public class MariadbActivitiesDAO implements IActivitiesDAO {
             }
             return true;
         }
-
-        @Override
-        public Collection<ActivitiesModel> selectActivitiesByWorkday (String workdayId){
-
-            List<ActivitiesModel> activities = null;
-
-            try {
-                activities = database.selectObjectList(new ActivitiesModel(), "SELECT * FROM activity WHERE workdayID = ?", workdayId);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            return activities;
-        }
-
-
-        public Collection<ActivitiesModel> selectActivitiesByEmployee (String employeeId){
-            List<ActivitiesModel> activities = null;
-
-            try {
-                activities = database.selectObjectList(new ActivitiesModel(), "SELECT * FROM activity WHERE employeeID = ?", employeeId);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            return activities;
-        }
 }

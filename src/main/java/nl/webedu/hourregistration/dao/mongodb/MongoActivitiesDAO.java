@@ -103,29 +103,4 @@ public class MongoActivitiesDAO implements IActivitiesDAO {
             return false;
         }
     }
-
-    @Override
-    public Collection selectActivitiesByWorkday(int workdayId) {
-        CompletableFuture<List<ActivitiesModel>> completableFuture = new CompletableFuture<>();
-        ArrayList<ActivitiesModel> alActivitiesmodels = new ArrayList<>();
-        client.getDatabase(DATABASE_NAME).getCollection(ACTIVITY_COLLECTION).find(
-                eq("workday_id", workdayId)).into(
-                alActivitieDocuments,
-                (documents, throwable) -> {
-                    for (Document d: alActivitieDocuments) {
-
-                        alActivitiesmodels.add(new ActivitiesModel(d.getString("category"),
-                                d.getDate("start_time"),
-                                d.getDate("end_time"),
-                                d.getInteger("workday_id")));
-                    }
-                    completableFuture.complete(alActivitiesmodels);
-                });
-        try {
-            return completableFuture.get();
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 }
