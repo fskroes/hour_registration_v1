@@ -71,11 +71,12 @@ public class MongoActivitiesDAO implements IActivitiesDAO {
         }
     }
 
+    @SuppressWarnings("Duplicates")
     @Override
-    public int deleteActivitie(ActivitiesModel activitie) {
+    public int deleteActivitie(ActivitiesModel activity) {
         CompletableFuture<Integer> completableFuture = new CompletableFuture<>();
         Document query = new Document();
-        query.put("_id", activitie.getId());
+        query.put("_id", activity.getId());
 
         client.getDatabase(DATABASE_NAME).getCollection(ACTIVITY_COLLECTION).deleteOne(
                 query,

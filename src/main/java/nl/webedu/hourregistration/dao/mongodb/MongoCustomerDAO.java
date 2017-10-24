@@ -5,10 +5,11 @@ import com.mongodb.async.client.MongoClient;
 import nl.webedu.hourregistration.dao.ICustomerDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.model.CustomerModel;
+import nl.webedu.hourregistration.model.ProjectModel;
 import org.bson.Document;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -55,19 +56,20 @@ public class MongoCustomerDAO implements ICustomerDAO {
         }
     }
 
+    @SuppressWarnings("Duplicates")
     @Override
-    public boolean deleteCustomer(CustomerModel customer) {
-        CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();
+    public int deleteCustomer(CustomerModel customer) {
+        CompletableFuture<Integer> completableFuture = new CompletableFuture<>();
         Document query = new Document();
         query.put("_id", customer.getId());
 
         client.getDatabase(DATABASE_NAME).getCollection(CUSTOMER_COLLECTION)
-                .deleteOne(query, (deleteResult, throwable) -> completableFuture.complete(true));
+                .deleteOne(query, (deleteResult, throwable) -> completableFuture.complete((int) deleteResult.getDeletedCount()));
         try {
             return completableFuture.get();
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
-            return false;
+            return 0;
         }
     }
 
@@ -108,24 +110,29 @@ public class MongoCustomerDAO implements ICustomerDAO {
     }
 
     @Override
-    public boolean updateCustomer(CustomerModel customer) {
-        CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();
+    public int updateCustomer(CustomerModel customer) {
+        CompletableFuture<Integer> completableFuture = new CompletableFuture<>();
         Document query = new Document();
         query.put("_id", customer.getId());
         client.getDatabase(DATABASE_NAME).getCollection(CUSTOMER_COLLECTION).updateOne(eq("_id", customer.getId())
                 , combine(set("business_name", customer.getBusinessName())), (updateResult, throwable) -> {
-                    completableFuture.complete(true);
+                    completableFuture.complete((int) updateResult.getModifiedCount());
                 });
         try {
             return completableFuture.get();
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
-            return false;
+            return 0;
         }
     }
 
     @Override
-    public Collection<CustomerModel> selectCustomersByProject(String projectId) {
+    public List<CustomerModel> selectAllCustomers() {
+        return null;
+    }
+
+    @Override
+    public List<CustomerModel> selectCustomersByProject(ProjectModel project) {
         return null;
     }
 }

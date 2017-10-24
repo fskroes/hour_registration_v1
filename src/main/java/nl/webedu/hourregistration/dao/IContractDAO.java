@@ -1,6 +1,7 @@
 package nl.webedu.hourregistration.dao;
 
 import nl.webedu.hourregistration.model.ContractModel;
+import nl.webedu.hourregistration.model.EmployeeModel;
 
 import java.util.List;
 
@@ -10,5 +11,5 @@ public interface IContractDAO {
     public int deleteContract(ContractModel contract);
     public int updateContract(ContractModel contract);
     public List<ContractModel> selectAllContracts();
-    public ContractModel selectContractByEmployee(String employeeId);
+    public ContractModel selectContractByEmployee(EmployeeModel employee);
 }

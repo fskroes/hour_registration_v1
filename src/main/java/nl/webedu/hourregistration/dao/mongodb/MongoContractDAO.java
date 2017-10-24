@@ -5,6 +5,7 @@ import nl.webedu.hourregistration.dao.IContractDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.database.DatabaseUtil;
 import nl.webedu.hourregistration.model.ContractModel;
+import nl.webedu.hourregistration.model.EmployeeModel;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
@@ -113,7 +114,7 @@ public class MongoContractDAO implements IContractDAO {
     }
 
     @Override
-    public ContractModel selectContractByEmployee(String employeeId) {
+    public ContractModel selectContractByEmployee(EmployeeModel employee) {
         return null;
     }
 }
