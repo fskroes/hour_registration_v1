@@ -9,5 +9,4 @@ public interface IProjectDAO {
     public boolean deleteProject(String id);
     public ProjectModel findProject(String id);
     public boolean updateProject(ProjectModel Project);
-    public ProjectModel selectProjectByCustomer(String customerId);
 }
