@@ -3,19 +3,19 @@ package nl.webedu.hourregistration.dao.mariadb;
 import nl.webedu.hourregistration.dao.IWorkdayDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.database.MariaDatabaseExtension;
+import nl.webedu.hourregistration.model.EmployeeModel;
 import nl.webedu.hourregistration.model.WorkdayModel;
 
-import java.sql.Date;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 
 public class MariadbWorkdayDAO implements IWorkdayDAO {
 
     private static MariadbWorkdayDAO instance;
-    private MariaDatabaseExtension client;
+    private MariaDatabaseExtension database;
 
     private MariadbWorkdayDAO() {
-        this.client = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase().getConnection();
+        this.database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase().getConnection();
     }
 
     public static MariadbWorkdayDAO getInstance() {
@@ -27,53 +27,35 @@ public class MariadbWorkdayDAO implements IWorkdayDAO {
 
     @Override
     public boolean insertWorkday(WorkdayModel workday) {
+        String querySQL = "INSERT INTO workday"
+                + "(date, week_number, start_time, end_time) VALUES"
+                + "(?,?,?,?)";
         try {
-            String query = "INSERT INTO workday"
-                    + "(date, week_number, start_time, end_time) VALUES"
-                    + "(?,?,?,?)";
-
-            PreparedStatement ps = client.openConnection().prepareStatement(query);
-            ps.setDate(1, (Date) workday.getDate());
-            ps.setInt(2, workday.getWeekNumber());
-            ps.setDate(3, (Date) workday.getStartTime());
-            ps.setDate(4, (Date) workday.getEndTime());
-            ps.executeQuery();
-            ps.close();
-            client.closeConnecion();
-            System.out.println("Query: " + query + " = Succes");
-
+            database.insertQuery(
+                    querySQL,
+                    workday.getDate(),
+                    workday.getWeekNumber(),
+                    workday.getStartTime(),
+                    workday.getEndTime()
+            );
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
-
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
-        return true;
+        return false;
     }
 
     @Override
-    public boolean deleteWorkday(String id) {
+    public int deleteWorkday(WorkdayModel workday) {
+        int result = 0;
+        String querySQL = "DELETE workday"
+                + " WHERE workdayID = ?";
         try {
-            String sql = "DELETE workday"
-                    + " WHERE workdayID = ?";
-
-            PreparedStatement ps = client.openConnection().prepareStatement(sql);
-            ps.setString(1, id);
-
-
-            ps.executeUpdate();
-            ps.close();
-            client.closeConnecion();
-
-            System.out.println("Record toegevoegd");
-
+            result = database.deleteQuery(querySQL, workday.getId());
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
-
-        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return true;
+        return result;
     }
 
     @Override
@@ -82,15 +64,26 @@ public class MariadbWorkdayDAO implements IWorkdayDAO {
     }
 
     @Override
-    public boolean updateWorkday(WorkdayModel Workday) {
-        return false;
+    public int updateWorkday(WorkdayModel Workday) {
+        return 0;
     }
 
     @Override
-    public WorkdayModel selectWorkdayByEmployee(int employeeId) {
+    public List<WorkdayModel> selectAllWorkdays() {
+        List<WorkdayModel> workday = null;
+        try {
+            workday = database.selectObjectList(new WorkdayModel(), "SELECT * FROM workday");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return workday;
+    }
+
+    @Override
+    public WorkdayModel selectWorkdayByEmployee(EmployeeModel employee) {
         WorkdayModel workday = null;
         try {
-            workday = client.selectObjectSingle(new WorkdayModel(), "SELECT * FROM report WHERE id = ?", employeeId + "");
+            workday = database.selectObjectSingle(new WorkdayModel(), "SELECT * FROM workday WHERE id = ?",  employee.getId());
         } catch (SQLException e) {
             e.printStackTrace();
         }

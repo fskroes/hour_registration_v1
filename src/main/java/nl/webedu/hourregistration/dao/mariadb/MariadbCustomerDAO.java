@@ -4,21 +4,18 @@ import nl.webedu.hourregistration.dao.ICustomerDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.database.MariaDatabaseExtension;
 import nl.webedu.hourregistration.model.CustomerModel;
+import nl.webedu.hourregistration.model.ProjectModel;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Collection;
 import java.util.List;
 
 public class MariadbCustomerDAO implements ICustomerDAO {
 
     private static MariadbCustomerDAO instance;
-    private MariaDatabaseExtension client = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
+    private MariaDatabaseExtension database;
 
     private MariadbCustomerDAO() {
-        this.client = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
+        this.database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
     }
 
     public static MariadbCustomerDAO getInstance() {
@@ -30,78 +27,36 @@ public class MariadbCustomerDAO implements ICustomerDAO {
 
     @Override
     public boolean insertCustomer(CustomerModel customer) {
+        String querySQL = "INSERT INTO customer"
+                + "(company_name) VALUES"
+                + "(?)";
         try {
-            String query = "INSERT INTO customer"
-                    + "(company_name, project_name) VALUES"
-                    + "(?,?)";
-
-            PreparedStatement ps = client.openConnection().prepareStatement(query);
-            ps.setString(1, customer.getBusinessName());
-            ps.setString(2, customer.getProjectModel().getName());
-            ps.executeQuery();
-            ps.close();
-            client.closeConnecion();
-            System.out.println("Query: " + query + " = Succes");
-
+            database.insertQuery(querySQL, customer.getBusinessName());
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
-
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
-        return true;
+        return false;
     }
 
     @Override
-    public boolean deleteCustomer(CustomerModel customer) {
-
-        Connection dbConnection = null;
-        PreparedStatement ps = null;
-
-        String delSQL = "DELETE customer"
+    public int deleteCustomer(CustomerModel customer) {
+        int result = 0;
+        String querySQL = "DELETE customer"
                 + " WHERE customerID = ?";
-
         try {
-            dbConnection = client.getConnection();
-            ps = client.getConnection().prepareStatement(delSQL);
-
-            ps.setString(1, customer.getId());
-
-            ps.executeUpdate();
-
-            System.out.println("Record deleted");
+            result = database.deleteQuery(querySQL, customer.getId());
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-
-        catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-
-        finally {
-            if (ps != null) {
-                try {
-                    ps.getConnection().close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            if (dbConnection != null) {
-                try {
-                    dbConnection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return true;
+        return result;
     }
 
     @Override
     public CustomerModel findCustomer(String id) {
-
         CustomerModel customer = null;
         try {
-            customer = client.selectObjectSingle(new CustomerModel(), "SELECT * FROM customer WHERE customerID = ?", id);
+            customer = database.selectObjectSingle(new CustomerModel(), "SELECT * FROM customer WHERE customerID = ?", id);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -109,52 +64,35 @@ public class MariadbCustomerDAO implements ICustomerDAO {
     }
 
     @Override
-    public boolean updateCustomer(CustomerModel customer) {
-
-        Connection dbConnection = null;
-        PreparedStatement ps = null;
-
-        String updateSQL = "UPDATE customer"
+    public int updateCustomer(CustomerModel customer) {
+        int result = 0;
+        String querySQL = "UPDATE customer"
                 + " SET company_name = ?"
                 + " WHERE customerID = ?";
-
         try {
-            dbConnection = client.getConnection();
-            ps = client.getConnection().prepareStatement(updateSQL);
-
-            ps.setString(1, customer.getBusinessName());
-
-            ps.executeUpdate();
-
-            System.out.println("Record geupdate");
+            result = database.updateQuery(querySQL, customer.getBusinessName(), customer.getId());
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } finally {
-            if (ps != null) {
-                try {
-                    ps.getConnection().close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            if (dbConnection != null) {
-                try {
-                    dbConnection.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
+            e.printStackTrace();
         }
-        return true;
+        return result;
     }
 
     @Override
-    public Collection selectCustomersByProject(int projectId) {
-
+    public List<CustomerModel> selectAllCustomers() {
         List<CustomerModel> customer = null;
         try {
-            customer = client.selectObjectList(new CustomerModel(), "SELECT * FROM customer WHERE projectID = ?", projectId);
+            customer = database.selectObjectList(new CustomerModel(), "SELECT * FROM customer");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return customer;
+    }
+
+    @Override
+    public List<CustomerModel> selectCustomersByProject(ProjectModel project) {
+        List<CustomerModel> customer = null;
+        try {
+            customer = database.selectObjectList(new CustomerModel(), "SELECT * FROM customer WHERE projectID = ?", project.getId());
         } catch (SQLException e) {
             e.printStackTrace();
         }

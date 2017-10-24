@@ -5,7 +5,7 @@ import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.database.MariaDatabaseExtension;
 import nl.webedu.hourregistration.model.ContractModel;
 
-import java.sql.*;
+import java.sql.SQLException;
 import java.util.List;
 
 public class MariadbContractDAO implements IContractDAO {
@@ -26,28 +26,16 @@ public class MariadbContractDAO implements IContractDAO {
 
     @Override
     public boolean insertContract(ContractModel contract) {
+        String querySQL = "INSERT INTO contract"
+                + "(max_hours, min_hours, start_time, end_time) VALUES"
+                + "(?,?,?,?)";
         try {
-            String query = "INSERT INTO contract"
-                    + "(max_hours, min_hours, start_time, end_time) VALUES"
-                    + "(?,?,?,?)";
-
-            PreparedStatement ps = database.openConnection().prepareStatement(query);
-            ps.setInt(1, contract.getMaxHours());
-            ps.setInt(2, contract.getMinHours());
-            ps.setDate(3, (Date) contract.getStartTime());
-            ps.setDate(4, (Date) contract.getEndTime());
-            ps.executeQuery();
-            ps.close();
-            database.closeConnecion();
-            System.out.println("Query: " + query + " = Succes");
-
+            database.insertQuery(querySQL, contract.getMaxHours(), contract.getMinHours(), contract.getStartTime(), contract.getEndTime());
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
-
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
-        return true;
+        return false;
     }
 
     @Override
@@ -56,44 +44,41 @@ public class MariadbContractDAO implements IContractDAO {
     }
 
     @Override
-    public boolean deleteContract(String id){
-        try {
-        String sql = "DELETE contract"
+    public int deleteContract(ContractModel contract){
+        int result = 0;
+        String querySQL = "DELETE contract"
                 + " WHERE conractID = ?";
-
-        PreparedStatement ps = database.openConnection().prepareStatement(sql);
-        ps.setString(1, id);
-
-
-        ps.executeUpdate();
-        ps.close();
-        database.closeConnecion();
-
-        System.out.println("Record toegevoegd");
-
-    } catch (SQLException e) {
-        System.out.println(e.getMessage());
-
-    } catch (ClassNotFoundException e) {
-        e.printStackTrace();
-    }
-        return true;
-}
-
-    @Override
-    public boolean updateContract(ContractModel contract){
-        return false;
+        try {
+            result = database.deleteQuery(querySQL, contract.getId());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     @Override
-    public List<ContractModel> selectContractByEmployee(int employeeId){
+    public int updateContract(ContractModel contract){
+        return 0;
+    }
+
+    @Override
+    public List<ContractModel> selectAllContracts() {
         List<ContractModel> contract = null;
+        try {
+            contract = database.selectObjectList(new ContractModel(), "SELECT * FROM contract");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return contract;
+    }
+
+    @Override
+    public ContractModel selectContractByEmployee(String employeeId){
+        ContractModel contract = null;
 
         try {
-            contract = database.selectObjectList(new ContractModel(), "SELECT * FROM contract WHERE employeeID = ?", employeeId);
-        }
-
-        catch (SQLException e) {
+            contract = database.selectObjectSingle(new ContractModel(), "SELECT * FROM contract WHERE employeeID = ?", employeeId);
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return contract;

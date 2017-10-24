@@ -8,6 +8,7 @@ import nl.webedu.hourregistration.model.ContractModel;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -68,13 +69,13 @@ public class MongoContractDAO implements IContractDAO {
     }
 
     @Override
-    public boolean deleteContract(int id) {
-        CompletableFuture<Boolean> queryTimer = new CompletableFuture<>();
+    public int deleteContract(ContractModel contract) {
+        CompletableFuture<Integer> queryTimer = new CompletableFuture<>();
         client.getDatabase(DatabaseUtil.DATABASE_NAME).getCollection(DatabaseUtil.CONTRACT_COLLECTION).deleteOne(
-                eq("_id", new ObjectId(String.valueOf(id))),
+                eq("_id", new ObjectId(String.valueOf(contract.getId()))),
                 (deleteResult, throwable) -> {
                     System.out.println("Deleted: " + deleteResult.getDeletedCount());
-                    queryTimer.complete(true);
+                    queryTimer.complete((int) deleteResult.getDeletedCount());
                 }
         );
         try {
@@ -82,12 +83,12 @@ public class MongoContractDAO implements IContractDAO {
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
-        return false;
+        return 0;
     }
 
     @Override
-    public boolean updateContract(ContractModel contract) {
-        CompletableFuture<Boolean> queryTimer = new CompletableFuture<>();
+    public int updateContract(ContractModel contract) {
+        CompletableFuture<Integer> queryTimer = new CompletableFuture<>();
         client.getDatabase(DatabaseUtil.DATABASE_NAME).getCollection(DatabaseUtil.CONTRACT_COLLECTION).updateOne(
                 eq("_id", contract.getId()),
                 combine(set( "min_hours", contract.getMinHours()),
@@ -96,13 +97,23 @@ public class MongoContractDAO implements IContractDAO {
                         set("end_time", contract.getEndTime())),
                 (updateResult, throwable) -> {
                     System.out.println("Updated: " + updateResult.getModifiedCount());
+                    queryTimer.complete((int) updateResult.getModifiedCount());
                 });
-        return false;
+        try {
+            return queryTimer.get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     @Override
-    public ContractModel selectContractByEmployee(int employeeId) {
+    public List<ContractModel> selectAllContracts() {
+        return null;
+    }
 
+    @Override
+    public ContractModel selectContractByEmployee(String employeeId) {
         return null;
     }
 }

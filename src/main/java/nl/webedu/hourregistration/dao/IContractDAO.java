@@ -7,7 +7,8 @@ import java.util.List;
 public interface IContractDAO {
     public boolean insertContract(ContractModel contract);
     public ContractModel findContract(String id);
-    public boolean deleteContract(String id);
-    public boolean updateContract(ContractModel contract);
-    public List<ContractModel> selectContractByEmployee(int employeeId);
+    public int deleteContract(ContractModel contract);
+    public int updateContract(ContractModel contract);
+    public List<ContractModel> selectAllContracts();
+    public ContractModel selectContractByEmployee(String employeeId);
 }

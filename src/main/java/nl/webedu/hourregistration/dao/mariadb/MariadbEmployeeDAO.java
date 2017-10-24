@@ -4,9 +4,11 @@ import nl.webedu.hourregistration.dao.IEmployeeDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.database.MariaDatabaseExtension;
 import nl.webedu.hourregistration.model.EmployeeModel;
+import nl.webedu.hourregistration.model.ProjectModel;
 
-import java.sql.*;
-import java.util.Collection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.List;
 
 public class MariadbEmployeeDAO implements IEmployeeDAO {
 
@@ -132,7 +134,7 @@ public class MariadbEmployeeDAO implements IEmployeeDAO {
     }
 
     @Override
-    public Collection selectEmployeesByProject(int projectId){
+    public List<EmployeeModel> selectEmployeesByProject(ProjectModel project){
         return null;
     }
 }

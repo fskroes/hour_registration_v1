@@ -1,14 +1,17 @@
 package nl.webedu.hourregistration.dao;
 
 import nl.webedu.hourregistration.model.ActivitiesModel;
-import java.util.Collection;
-import java.util.Date;
+import nl.webedu.hourregistration.model.EmployeeModel;
+import nl.webedu.hourregistration.model.WorkdayModel;
+
+import java.util.List;
 
 public interface IActivitiesDAO {
     public boolean insertActivitie(ActivitiesModel activitie);
     public ActivitiesModel findActivitie(String id);
-    public boolean deleteActivitie(ActivitiesModel activitie);
-    public boolean updateActivitie(ActivitiesModel activitie);
-    public Collection<ActivitiesModel> selectActivitiesByWorkday(int wordkdatId);
-    public Collection<ActivitiesModel> selectActivitiesByEmployee(int employeeId);
+    public int deleteActivitie(ActivitiesModel activitie);
+    public int updateActivitie(ActivitiesModel activitie);
+    public List<ActivitiesModel> selectAllActivities();
+    public List<ActivitiesModel> selectActivitiesByWorkday(WorkdayModel workday);
+    public List<ActivitiesModel> selectActivitiesByEmployee(EmployeeModel employee);
 }

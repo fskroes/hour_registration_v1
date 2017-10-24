@@ -8,10 +8,10 @@ import nl.webedu.hourregistration.model.UserAuthenticationModel;
 public class MariadbUserAuthenticationDAO implements IUserAuthenticationDAO {
 
     private static MariadbUserAuthenticationDAO instance;
-    private MariaDatabaseExtension client;
+    private MariaDatabaseExtension database;
 
     private MariadbUserAuthenticationDAO() {
-        this.client = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase().getConnection();
+        this.database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
     }
 
     public static MariadbUserAuthenticationDAO getInstance() {

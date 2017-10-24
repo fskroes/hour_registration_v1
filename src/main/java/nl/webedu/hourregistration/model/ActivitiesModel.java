@@ -25,9 +25,7 @@ public class ActivitiesModel extends DatabaseRowMapper<ActivitiesModel> {
         this.workdayId = workdayId;
     }
 
-
-
-    public String getActivityId() {
+    public String getId() {
         return id;
     }
 

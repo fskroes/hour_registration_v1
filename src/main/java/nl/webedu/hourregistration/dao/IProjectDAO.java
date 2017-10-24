@@ -1,13 +1,17 @@
 package nl.webedu.hourregistration.dao;
 
+import nl.webedu.hourregistration.model.CustomerModel;
+import nl.webedu.hourregistration.model.EmployeeModel;
 import nl.webedu.hourregistration.model.ProjectModel;
 
-import java.util.Collection;
+import java.util.List;
 
 public interface IProjectDAO {
-    public boolean insertProject(ProjectModel Project);
-    public boolean deleteProject(String id);
+    public boolean insertProject(ProjectModel project);
+    public int deleteProject(ProjectModel project);
     public ProjectModel findProject(String id);
-    public boolean updateProject(ProjectModel Project);
-    public ProjectModel selectProjectByCustomer(String customerId);
+    public int updateProject(ProjectModel project);
+    public List<ProjectModel> selectAllProjects();
+    public ProjectModel selectProjectByCustomer(CustomerModel customer);
+    public List<ProjectModel> selectProjectsByEmployee(EmployeeModel employee);
 }

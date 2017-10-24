@@ -3,19 +3,19 @@ package nl.webedu.hourregistration.dao.mariadb;
 import nl.webedu.hourregistration.dao.IReportDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.database.MariaDatabaseExtension;
+import nl.webedu.hourregistration.model.CustomerModel;
 import nl.webedu.hourregistration.model.ReportModel;
 
-import java.sql.Date;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 
 public class MariadbReportDAO implements IReportDAO {
 
     private static MariadbReportDAO instance;
-    private MariaDatabaseExtension client;
+    private MariaDatabaseExtension database;
 
     private MariadbReportDAO() {
-        this.client = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase().getConnection();
+        this.database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase().getConnection();
     }
 
     public static MariadbReportDAO getInstance() {
@@ -27,50 +27,30 @@ public class MariadbReportDAO implements IReportDAO {
 
     @Override
     public boolean insertReport(ReportModel report) {
+        String querySQL = "INSERT INTO report"
+                + "(create_date, end_date, week_number) VALUES"
+                + "(?,?,?)";
         try {
-            String query = "INSERT INTO report"
-                    + "(create_date, end_date, week_number) VALUES"
-                    + "(?,?,?)";
-
-            PreparedStatement ps = client.openConnection().prepareStatement(query);
-            // TODO ps invullen, tabel Report aanpassen op Model!
-            ps.executeQuery();
-            ps.close();
-            client.closeConnecion();
-            System.out.println("Query: " + query + " = Succes");
-
+            // TODO MODEL IS NOT IN SYNC WITH DATABASE!!!
+            database.insertQuery(querySQL, "MODEL IS NOT IN SYNC WITH DATABASE!");
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
-
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
-        return true;
-    };
+        return false;
+    }
 
     @Override
-    public boolean deleteReport(String id) {
+    public int deleteReport(ReportModel report) {
+        int result = 0;
+        String querySQL = "DELETE report"
+                + " WHERE reportID = ?";
         try {
-            String sql = "DELETE report"
-                    + " WHERE reportID = ?";
-
-            PreparedStatement ps = client.openConnection().prepareStatement(sql);
-            ps.setString(1, id);
-
-
-            ps.executeUpdate();
-            ps.close();
-            client.closeConnecion();
-
-            System.out.println("Record toegevoegd");
-
+            result = database.deleteQuery(querySQL, report.getId());
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
-
-        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return true;
+        return result;
     };
 
     @Override
@@ -79,18 +59,29 @@ public class MariadbReportDAO implements IReportDAO {
     };
 
     @Override
-    public boolean updateReport(ReportModel Report) {
-        return false;
-    };
+    public int updateReport(ReportModel report) {
+        return 0;
+    }
 
     @Override
-    public ReportModel selectReportByCustomer(String customerId) {
-        ReportModel report = null;
+    public List<ReportModel> selectAllReports() {
+        List<ReportModel> report = null;
         try {
-            report = client.selectObjectSingle(new ReportModel(), "SELECT * FROM report WHERE id = ?", customerId + "");
+            report = database.selectObjectList(new ReportModel(), "SELECT * FROM report");
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return report;
-    };
+    }
+
+    @Override
+    public ReportModel selectReportByCustomer(CustomerModel customer) {
+        ReportModel report = null;
+        try {
+            report = database.selectObjectSingle(new ReportModel(), "SELECT * FROM report WHERE id = ?", customer.getId());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return report;
+    }
 }
