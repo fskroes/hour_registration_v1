@@ -32,6 +32,14 @@ public class WorkdayModel extends DatabaseRowMapper<WorkdayModel> {
         this.activities = activities;
         this.employeeModels = employeeModels;
     }
+    public WorkdayModel(Date date, Date startTime, Date endTime, int weekNumber, List<ActivitiesModel> activities, List<EmployeeModel> employeeModels) {
+        this.date = date;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.weekNumber = weekNumber;
+        this.activities = activities;
+        this.employeeModels = employeeModels;
+    }
 
     public String getId() {
         return id;
@@ -105,7 +113,7 @@ public class WorkdayModel extends DatabaseRowMapper<WorkdayModel> {
     }
 
     @Override
-    public WorkdayModel convertMongo(Document set, int rowNum) throws SQLException {
+    public WorkdayModel convertMongo(Document set, int rowNum) {
         // TODO: Setup MongoDB config
         return this;
     }

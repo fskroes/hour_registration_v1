@@ -66,7 +66,7 @@ public class ReportModel extends DatabaseRowMapper<ReportModel> {
     }
 
     @Override
-    public ReportModel convertMongo(Document set, int rowNum) throws SQLException {
+    public ReportModel convertMongo(Document set, int rowNum) {
         // TODO: Setup MongoDB config
         return this;
     }
