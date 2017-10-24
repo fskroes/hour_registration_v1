@@ -106,11 +106,12 @@ public class MariadbLogDAO implements ILogDAO {
 
         List<LogModel> log = null;
 
-//        try {
-//            //log = database.selectObjectList(new LogModel(), "SELECT * FROM log WHERE subjectID = ?", subjectId);
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            log = database.selectObjectList(new LogModel(), "SELECT * FROM log WHERE subjectID = ?", subjectId);
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
         return log;
     }
 }
