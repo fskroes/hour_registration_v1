@@ -55,7 +55,14 @@ public class MariadbProjectDAO implements IProjectDAO {
 
     @Override
     public ProjectModel findProject(String id) {
-        return null;
+
+        ProjectModel project = null;
+        try {
+            project = database.selectObjectSingle(new ProjectModel(), "SELECT * FROM project WHERE projectID = ?", id + "");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return project;
     }
 
     @Override

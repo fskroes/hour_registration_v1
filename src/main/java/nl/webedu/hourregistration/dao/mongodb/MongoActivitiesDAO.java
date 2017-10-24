@@ -58,6 +58,7 @@ public class MongoActivitiesDAO implements IActivitiesDAO {
     public ActivitiesModel findActivitie(String id) {
         CompletableFuture<ActivitiesModel> completableFuture = new CompletableFuture<>();
         ActivitiesModel ac = new ActivitiesModel();
+
         client.getDatabase(DATABASE_NAME).getCollection(ACTIVITY_COLLECTION).find(
                 eq("_id", id)).first((document, throwable) -> {
                     completableFuture.complete(ac.convertMongo(document, 0));
@@ -89,7 +90,7 @@ public class MongoActivitiesDAO implements IActivitiesDAO {
 
     @Override
     public int updateActivitie(ActivitiesModel activity) {
-        CompletableFuture<Integer> queryTimer = new CompletableFuture<>();
+        CompletableFuture<Integer> completableFuture = new CompletableFuture<>();
         Document query = new Document();
         query.put("workday_id", activity.getId());
         client.getDatabase(DATABASE_NAME).getCollection(ACTIVITY_COLLECTION).updateOne(
@@ -99,10 +100,10 @@ public class MongoActivitiesDAO implements IActivitiesDAO {
                         set("end_time", activity.getEndTime()),
                         set("workday_id", activity.getWorkdayId())),
                 (updateResult, throwable) -> {
-                    queryTimer.complete((int) updateResult.getModifiedCount());
+                    completableFuture.complete((int) updateResult.getModifiedCount());
                 });
         try {
-            return queryTimer.get();
+            return completableFuture.get();
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
             return 0;

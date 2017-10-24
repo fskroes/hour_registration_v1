@@ -1,8 +1,13 @@
 package nl.webedu.hourregistration.model;
 
+import nl.webedu.hourregistration.database.DatabaseRowMapper;
+import org.bson.Document;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
 
-public class LogModel {
+public class LogModel extends DatabaseRowMapper<LogModel> {
 
     private String id;
     private EmployeeModel employeeModel;
@@ -44,5 +49,21 @@ public class LogModel {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public LogModel convertSQL(ResultSet set, int rowNum) throws SQLException {
+        this.id = String.valueOf("logID");
+        this.date = set.getDate("date");
+        this.description = set.getString("description");
+        return this;
+    }
+
+    @Override
+    public LogModel convertMongo(Document set, int rowNum) {
+        this.id = set.getString("_id");
+        this.date = set.getDate("date");
+        this.description = set.getString("description");
+        return this;
     }
 }

@@ -5,18 +5,20 @@ import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.database.MariaDatabaseExtension;
 import nl.webedu.hourregistration.model.LogModel;
 
+import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.List;
 
 public class MariadbLogDAO implements ILogDAO {
 
     private static MariadbLogDAO instance;
-    private MariaDatabaseExtension client = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
+    private MariaDatabaseExtension database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
 
     private MariadbLogDAO() {
-        this.client = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
+        this.database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
     }
 
     public static MariadbLogDAO getInstance() {
@@ -33,12 +35,12 @@ public class MariadbLogDAO implements ILogDAO {
                     + "(date, description) VALUES"
                     + "(?,?)";
 
-            PreparedStatement ps = client.openConnection().prepareStatement(query);
+            PreparedStatement ps = database.openConnection().prepareStatement(query);
             ps.setDate(1, (Date) log.getDate());
             ps.setString(2, log.getDescription());
             ps.executeQuery();
             ps.close();
-            client.closeConnecion();
+            database.closeConnecion();
             System.out.println("Query: " + query + " = Succes");
 
         } catch (SQLException e) {
@@ -56,13 +58,13 @@ public class MariadbLogDAO implements ILogDAO {
             String sql = "DELETE log"
                     + " WHERE logID = ?";
 
-            PreparedStatement ps = client.openConnection().prepareStatement(sql);
+            PreparedStatement ps = database.openConnection().prepareStatement(sql);
             ps.setString(1, id);
 
 
             ps.executeUpdate();
             ps.close();
-            client.closeConnecion();
+            database.closeConnecion();
 
             System.out.println("Record toegevoegd");
 
@@ -78,22 +80,83 @@ public class MariadbLogDAO implements ILogDAO {
     @Override
     public LogModel findLog(String id) {
 
-        return null;
+        LogModel log = null;
+        try {
+            log = database.selectObjectSingle(new LogModel(), "SELECT * FROM log WHERE logID = ?", id + "");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return log;
     }
 
     @Override
     public boolean updateLog(LogModel log) {
+        Connection dbConnection = null;
+        PreparedStatement ps = null;
 
-        return false;
+        String updateSQL = "UPDATE log"
+                + " SET date = ?, description = ?"
+                + " WHERE logID = ?";
+
+        try {
+            dbConnection = database.getConnection();
+            ps = database.getConnection().prepareStatement(updateSQL);
+
+            ps.setDate(1, (Date)log.getDate());
+            ps.setString(2, log.getDescription());
+
+            ps.executeUpdate();
+
+            System.out.println("Record geupdate");
+        }
+
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        finally {
+            if (ps != null) {
+                try {
+                    ps.getConnection().close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (dbConnection != null) {
+                try {
+                    dbConnection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return true;
     }
 
     @Override
-    public Collection selectLogByEmployee(int employeeId) {
-        return null;
-    }
+    public Collection<LogModel> selectLogByEmployee(int employeeId) {
 
+    List<LogModel> log = null;
+
+        try {
+            log = database.selectObjectList(new LogModel(), "SELECT * FROM contract WHERE employeeID = ?", employeeId);
+        }
+        catch (SQLException e) {
+        e.printStackTrace();
+    }
+        return log;
+}
     @Override
-    public Collection selectLogBySubject(int subjectId) {
-        return null;
+    public Collection<LogModel> selectLogBySubject(int subjectId) {
+
+        List<LogModel> log = null;
+
+        try {
+            log = database.selectObjectList(new LogModel(), "SELECT * FROM log WHERE subjectID = ?", subjectId);
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return log;
     }
 }

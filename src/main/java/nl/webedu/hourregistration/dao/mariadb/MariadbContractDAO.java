@@ -39,8 +39,15 @@ public class MariadbContractDAO implements IContractDAO {
     }
 
     @Override
-    public ContractModel findContract(String id){
-        return null;
+    public ContractModel findContract(String id) {
+
+        ContractModel contract = null;
+        try {
+            contract = database.selectObjectSingle(new ContractModel(), "SELECT * FROM contract WHERE contractID = ?", id + "");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return contract;
     }
 
     @Override
@@ -57,8 +64,48 @@ public class MariadbContractDAO implements IContractDAO {
     }
 
     @Override
-    public int updateContract(ContractModel contract){
-        return 0;
+    public boolean updateContract(ContractModel contract){
+
+        Connection dbConnection = null;
+        PreparedStatement ps = null;
+
+        String updateSQL = "UPDATE contract"
+                + " SET max_hours = ?, min_hours = ?, start_time = ?, end_time = ?"
+                + " WHERE activityID = ?";
+
+        try {
+            dbConnection = database.getConnection();
+            ps = database.getConnection().prepareStatement(updateSQL);
+
+            ps.setInt(1, contract.getMaxHours());
+            ps.setInt(2, contract.getMinHours());
+            ps.setDate(3, (Date) contract.getStartTime());
+            ps.setDate(4, (Date) contract.getEndTime());
+
+            ps.executeUpdate();
+
+            System.out.println("Record geüpdate");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        finally {
+            if (ps != null) {
+                try {
+                    ps.getConnection().close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (dbConnection != null) {
+                try {
+                    dbConnection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return true;
     }
 
     @Override

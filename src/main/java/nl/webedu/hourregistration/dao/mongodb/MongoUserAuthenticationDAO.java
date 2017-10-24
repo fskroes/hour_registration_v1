@@ -10,15 +10,12 @@ import nl.webedu.hourregistration.model.UserAuthenticationModel;
 import org.bson.Document;
 
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 import static com.mongodb.client.model.Filters.eq;
 import static nl.webedu.hourregistration.database.DatabaseUtil.DATABASE_NAME;
 import static nl.webedu.hourregistration.database.DatabaseUtil.EMPLOYEE_COLLECTION;
 import static nl.webedu.hourregistration.helpers.PasswordHashing.hashPassword;
-
-import java.security.SecureRandom;
 
 public class MongoUserAuthenticationDAO implements IUserAuthenticationDAO {
 
@@ -41,6 +38,12 @@ public class MongoUserAuthenticationDAO implements IUserAuthenticationDAO {
 
     @Override
     public void registerUser(String username, String password) {
+        model = findUser(username);
+        if(model == null) {
+            System.out.println("User already registered");
+            return;
+        }
+
         String hashedPassword = hashPassword(password);
 
         MongoCollection<Document> coll = client.getDatabase(DATABASE_NAME).getCollection(EMPLOYEE_COLLECTION);
@@ -61,7 +64,7 @@ public class MongoUserAuthenticationDAO implements IUserAuthenticationDAO {
     @Override
     public boolean authenticateUser(String email, String password) {
         model = null;
-        model = findUser(email, password);
+        model = findUser(email);
         if(model != null) {
             return true;
         }
@@ -69,7 +72,7 @@ public class MongoUserAuthenticationDAO implements IUserAuthenticationDAO {
     }
 
     @Override
-    public UserAuthenticationModel findUser(String email, String password) {
+    public UserAuthenticationModel findUser(String email) {
         final UserAuthenticationModel[] lib = {new UserAuthenticationModel()};
 
         MongoCollection<Document> collection = client.getDatabase(DATABASE_NAME).getCollection(EMPLOYEE_COLLECTION);

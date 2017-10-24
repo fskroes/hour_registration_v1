@@ -22,8 +22,7 @@ public class MariadbUserAuthenticationDAO implements IUserAuthenticationDAO {
     }
 
     @Override
-    public UserAuthenticationModel findUser(String email, String password) {
-
+    public UserAuthenticationModel findUser(String email) {
         return null;
     }
 
