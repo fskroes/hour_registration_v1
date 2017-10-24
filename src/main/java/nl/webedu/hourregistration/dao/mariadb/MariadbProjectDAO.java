@@ -55,7 +55,6 @@ public class MariadbProjectDAO implements IProjectDAO {
 
     @Override
     public ProjectModel findProject(String id) {
-
         ProjectModel project = null;
         try {
             project = database.selectObjectSingle(new ProjectModel(), "SELECT * FROM project WHERE projectID = ?", id + "");
@@ -67,7 +66,23 @@ public class MariadbProjectDAO implements IProjectDAO {
 
     @Override
     public int updateProject(ProjectModel project) {
-        return 0;
+        int result = 0;
+        String updateSQL = "UPDATE project"
+                + " SET project_name = ?, start_date = ?, end_time = ?, category = ?"
+                + " WHERE projectID = ?";
+        try {
+            database.updateQuery(
+                    updateSQL,
+                    project.getName(),
+                    project.getStartDate(),
+                    project.getEndDate(),
+                    project.getCategorie(),
+                    project.getId()
+                    );
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return result;
     }
 
     @Override
