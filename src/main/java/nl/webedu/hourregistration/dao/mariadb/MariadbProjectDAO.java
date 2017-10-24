@@ -88,8 +88,50 @@ public class MariadbProjectDAO implements IProjectDAO {
 
     @Override
     public boolean updateProject(ProjectModel project) {
-        return false;
-    };
+        Connection dbConnection = null;
+        PreparedStatement ps = null;
+
+        String updateSQL = "UPDATE project"
+                + " SET project_name = ?, start_date = ?, end_time = ?, category = ?"
+                + " WHERE projectID = ?";
+
+        try {
+            dbConnection = database.getConnection();
+            ps = database.getConnection().prepareStatement(updateSQL);
+
+            ps.setString(1, project.getName());
+            ps.setDate(2, (Date) project.getStartDate());
+            ps.setDate(3, (Date) project.getEndDate());
+            ps.setString(4, project.getCategorie());
+
+            ps.executeUpdate();
+
+            System.out.println("Record geupdate");
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        finally {
+            if (ps != null) {
+                try {
+                    ps.getConnection().close();
+                }
+                    catch (SQLException e) {
+                     e.printStackTrace();
+                }
+            }
+
+            if (dbConnection != null) {
+                try {
+                    dbConnection.close();
+                    }
+                    catch (SQLException e) {
+                     e.printStackTrace();
+                }
+            }
+        }
+        return true;
+    }
 
     @Override
     public ProjectModel selectProjectByCustomer(String customerId) {

@@ -91,7 +91,8 @@ public class MariadbActivitiesDAO implements IActivitiesDAO {
                 System.out.println("Record deleted");
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
-            } finally {
+            }
+            finally {
                 if (ps != null) {
                     try {
                         ps.getConnection().close();
