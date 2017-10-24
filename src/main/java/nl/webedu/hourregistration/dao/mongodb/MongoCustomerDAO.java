@@ -1,15 +1,12 @@
 package nl.webedu.hourregistration.dao.mongodb;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mongodb.async.SingleResultCallback;
 import com.mongodb.async.client.MongoClient;
-import com.mongodb.async.client.MongoCollection;
 import nl.webedu.hourregistration.dao.ICustomerDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.model.CustomerModel;
 import org.bson.Document;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.concurrent.CompletableFuture;
@@ -20,7 +17,6 @@ import static com.mongodb.client.model.Updates.combine;
 import static com.mongodb.client.model.Updates.set;
 import static nl.webedu.hourregistration.database.DatabaseUtil.CUSTOMER_COLLECTION;
 import static nl.webedu.hourregistration.database.DatabaseUtil.DATABASE_NAME;
-import static nl.webedu.hourregistration.database.DatabaseUtil.EMPLOYEE_COLLECTION;
 
 public class MongoCustomerDAO implements ICustomerDAO {
 
@@ -126,5 +122,10 @@ public class MongoCustomerDAO implements ICustomerDAO {
             e.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public Collection<CustomerModel> selectCustomersByProject(String projectId) {
+        return null;
     }
 }
