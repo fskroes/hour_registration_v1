@@ -38,7 +38,7 @@ public class MariadbProjectDAO implements IProjectDAO {
             ps.executeQuery();
             ps.close();
             database.closeConnecion();
-            System.out.println("Query: " + query + " = Succes");
+            System.out.println("Query: " + query + " = Success");
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -95,10 +95,10 @@ public class MariadbProjectDAO implements IProjectDAO {
     public ProjectModel selectProjectByCustomer(String customerId) {
         ProjectModel project = null;
         try {
-            project = database.selectObjectSingle(new ProjectModel(), "SELECT * FROM project WHERE id = ?", customerId + "");
+            project = database.selectObjectSingle(new ProjectModel(), "SELECT * FROM project WHERE  = ?", customerId + "");
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return project;
-    };
+    }
 }
