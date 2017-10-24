@@ -10,10 +10,10 @@ import java.sql.*;
 public class MariadbProjectDAO implements IProjectDAO {
 
     private static MariadbProjectDAO instance;
-    private MariaDatabaseExtension client;
+    private MariaDatabaseExtension database;
 
     private MariadbProjectDAO() {
-        this.client = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
+        this.database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
     }
 
     public static MariadbProjectDAO getInstance() {
@@ -30,14 +30,14 @@ public class MariadbProjectDAO implements IProjectDAO {
                     + "(project_name, start_date, end_time, category) VALUES"
                     + "(?,?,?,?)";
 
-            PreparedStatement ps = client.openConnection().prepareStatement(query);
+            PreparedStatement ps = database.openConnection().prepareStatement(query);
             ps.setString(1, project.getName());
             ps.setDate(2, (Date) project.getStartDate());
             ps.setDate(3, (Date) project.getEndDate());
             ps.setString(4, project.getCategorie());
             ps.executeQuery();
             ps.close();
-            client.closeConnecion();
+            database.closeConnecion();
             System.out.println("Query: " + query + " = Succes");
 
         } catch (SQLException e) {
@@ -55,13 +55,13 @@ public class MariadbProjectDAO implements IProjectDAO {
             String sql = "DELETE project"
                     + " WHERE projectID = ?";
 
-            PreparedStatement ps = client.openConnection().prepareStatement(sql);
+            PreparedStatement ps = database.openConnection().prepareStatement(sql);
             ps.setString(1, id);
 
 
             ps.executeUpdate();
             ps.close();
-            client.closeConnecion();
+            database.closeConnecion();
 
             System.out.println("Record toegevoegd");
 
@@ -76,8 +76,15 @@ public class MariadbProjectDAO implements IProjectDAO {
 
     @Override
     public ProjectModel findProject(String id) {
-        return null;
-    };
+
+        ProjectModel project = null;
+        try {
+            project = database.selectObjectSingle(new ProjectModel(), "SELECT * FROM project WHERE projectID = ?", id + "");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return project;
+    }
 
     @Override
     public boolean updateProject(ProjectModel project) {
@@ -88,7 +95,7 @@ public class MariadbProjectDAO implements IProjectDAO {
     public ProjectModel selectProjectByCustomer(String customerId) {
         ProjectModel project = null;
         try {
-            project = client.selectObjectSingle(new ProjectModel(), "SELECT * FROM project WHERE id = ?", customerId + "");
+            project = database.selectObjectSingle(new ProjectModel(), "SELECT * FROM project WHERE id = ?", customerId + "");
         } catch (SQLException e) {
             e.printStackTrace();
         }
