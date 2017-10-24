@@ -1,13 +1,15 @@
 package nl.webedu.hourregistration.dao;
 
+import nl.webedu.hourregistration.model.CustomerModel;
 import nl.webedu.hourregistration.model.ReportModel;
 
-import java.util.Collection;
+import java.util.List;
 
 public interface IReportDAO {
-    public boolean insertReport(ReportModel Report);
-    public boolean deleteReport(String id);
+    public boolean insertReport(ReportModel report);
+    public int deleteReport(ReportModel report);
     public ReportModel findReport(String id);
-    public boolean updateReport(ReportModel Report);
-    public ReportModel selectReportByCustomer(String customerId);
+    public int updateReport(ReportModel report);
+    public List<ReportModel> selectAllReports();
+    public ReportModel selectReportByCustomer(CustomerModel customer);
 }

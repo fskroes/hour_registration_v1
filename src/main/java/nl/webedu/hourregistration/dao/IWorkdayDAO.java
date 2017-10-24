@@ -1,12 +1,15 @@
 package nl.webedu.hourregistration.dao;
 
+import nl.webedu.hourregistration.model.EmployeeModel;
 import nl.webedu.hourregistration.model.WorkdayModel;
 
-import java.util.Collection;
+import java.util.List;
 
 public interface IWorkdayDAO {
     public boolean insertWorkday(WorkdayModel Workday);
-    public boolean deleteWorkday(String id);
+    public int deleteWorkday(WorkdayModel workday);
     public WorkdayModel findWorkday(String id);
-    public boolean updateWorkday(WorkdayModel Workday);
+    public int updateWorkday(WorkdayModel Workday);
+    public List<WorkdayModel> selectAllWorkdays();
+    public WorkdayModel selectWorkdayByEmployee(EmployeeModel employee);
 }

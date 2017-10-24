@@ -3,10 +3,12 @@ package nl.webedu.hourregistration.dao.mongodb;
 import com.mongodb.async.client.MongoClient;
 import nl.webedu.hourregistration.dao.IWorkdayDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
+import nl.webedu.hourregistration.model.EmployeeModel;
 import nl.webedu.hourregistration.model.WorkdayModel;
 import org.bson.Document;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -50,6 +52,10 @@ public class MongoWorkdayDAO implements IWorkdayDAO {
     }
 
     @Override
+    public int deleteWorkday(WorkdayModel workday) {
+        return 0;
+    }
+
     public boolean deleteWorkday(String id) {
         CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();
         Document query = new Document();
@@ -71,7 +77,17 @@ public class MongoWorkdayDAO implements IWorkdayDAO {
     }
 
     @Override
-    public boolean updateWorkday(WorkdayModel Workday) {
-        return false;
+    public int updateWorkday(WorkdayModel Workday) {
+        return 0;
+    }
+
+    @Override
+    public List<WorkdayModel> selectAllWorkdays() {
+        return null;
+    }
+
+    @Override
+    public WorkdayModel selectWorkdayByEmployee(EmployeeModel employee) {
+        return null;
     }
 }

@@ -4,12 +4,10 @@ import nl.webedu.hourregistration.dao.IActivitiesDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.database.MariaDatabaseExtension;
 import nl.webedu.hourregistration.model.ActivitiesModel;
+import nl.webedu.hourregistration.model.EmployeeModel;
+import nl.webedu.hourregistration.model.WorkdayModel;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Collection;
 import java.util.List;
 
 public class MariadbActivitiesDAO implements IActivitiesDAO {
@@ -29,130 +27,94 @@ public class MariadbActivitiesDAO implements IActivitiesDAO {
     }
 
     @Override
-    public boolean insertActivitie(ActivitiesModel activitie) {
+    public boolean insertActivitie(ActivitiesModel activity) {
+        int result = 0;
+        String insertSQL = "INSERT INTO activity"
+                + "(category, start_time, end_time, fk_workdayID) VALUES"
+                + "(?,?,?,?)";
 
         try {
-
-            String query = "INSERT INTO activity"
-                    + "(category, start_time, end_time) VALUES"
-                    + "(?,?,?)";
-
-            PreparedStatement ps = database.openConnection().prepareStatement(query);
-            ps.setString(1, activitie.getCategory());
-            ps.setDate(2, (Date) activitie.getStartTime());
-            ps.setDate(3, (Date) activitie.getEndTime());
-
-            ps.executeQuery();
-            ps.close();
-            database.closeConnecion();
-            System.out.println("Query: " + query + " = Success");
-
+            database.insertQuery(insertSQL, activity.getCategory(), activity.getStartTime(), activity.getEndTime(), activity.getWorkdayId());
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
-
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            return false;
         }
-        return true;
-
     }
 
     @Override
     public ActivitiesModel findActivitie(String id) {
-
         ActivitiesModel activities = null;
         try {
-            activities = database.selectObjectSingle(new ActivitiesModel(), "SELECT * FROM activities WHERE activityID = ?", id + "");
+            activities = database.selectObjectSingle(new ActivitiesModel(), "SELECT * FROM activities WHERE activityID = ?", id);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return activities;
     }
 
-        @Override
-        //Is not done yet.
-        public boolean deleteActivitie (ActivitiesModel activitie){
-
-            Connection dbConnection = null;
-            PreparedStatement ps = null;
-
-            String deleteSQL = "DELETE activity"
-                    + " WHERE activityID = ?";
-
-            try {
-                dbConnection = database.getConnection();
-                ps = database.getConnection().prepareStatement(deleteSQL);
-
-                ps.setString(1, activitie.getActivityId());
-
-                ps.executeUpdate();
-
-                System.out.println("Record deleted");
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-            } finally {
-                if (ps != null) {
-                    try {
-                        ps.getConnection().close();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                if (dbConnection != null) {
-                    try {
-                        dbConnection.close();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-            return true;
+    @Override
+    //Is not done yet.
+    public int deleteActivitie(ActivitiesModel activity) {
+        int result = 0;
+        String deleteSQL = "DELETE activity"
+                + " WHERE activityID = ?";
+        try {
+            result = database.updateQuery(deleteSQL, activity.getId());
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return result;
+    }
 
-        @Override
-        public boolean updateActivitie (ActivitiesModel activitie){
-
-
-            Connection dbConnection = null;
-            PreparedStatement ps = null;
-
-            String updateSQL = "UPDATE activity"
-                    + " SET category = ?, start_time = ?, end_time = ?"
-                    + " WHERE activityID = ?";
-
-            try {
-                dbConnection = database.getConnection();
-                ps = database.getConnection().prepareStatement(updateSQL);
-
-                ps.setString(1, activitie.getCategory());
-                ps.setDate(2, (Date) activitie.getStartTime());
-                ps.setDate(3, (Date) activitie.getEndTime());
-                ps.setString(4, activitie.getActivityId());
-
-                ps.executeUpdate();
-
-                System.out.println("Record geupdate");
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-            } finally {
-                if (ps != null) {
-                    try {
-                        ps.getConnection().close();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                if (dbConnection != null) {
-                    try {
-                        dbConnection.close();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-            return true;
+    @Override
+    public int updateActivitie(ActivitiesModel activity) {
+        int result = 0;
+        String updateSQL = "UPDATE activity" +
+                "SET category = ?, start_time = ?, end_time = ?" +
+                "WHERE activityID = ?";
+        try {
+            result = database.updateQuery(updateSQL,
+                    activity.getCategory(),
+                    activity.getStartTime(),
+                    activity.getEndTime(),
+                    activity.getId());
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return result;
+    }
+
+    @Override
+    public List<ActivitiesModel> selectAllActivities() {
+        List<ActivitiesModel> activities = null;
+        try {
+            activities = database.selectObjectList(new ActivitiesModel(), "SELECT * FROM activity");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return activities;
+    }
+
+    @Override
+    public List<ActivitiesModel> selectActivitiesByWorkday(WorkdayModel workday) {
+        List<ActivitiesModel> activities = null;
+        try {
+            activities = database.selectObjectList(new ActivitiesModel(), "SELECT * FROM activity WHERE activityID = ?", workday.getId());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return activities;
+    }
+
+    @Override
+    public List<ActivitiesModel> selectActivitiesByEmployee(EmployeeModel employee) {
+        List<ActivitiesModel> activities = null;
+        try {
+            activities = database.selectObjectList(new ActivitiesModel(), "SELECT * FROM activity WHERE activityID = ?", employee.getId());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return activities;
+    }
 }

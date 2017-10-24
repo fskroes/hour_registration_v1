@@ -125,14 +125,30 @@ public class MariaDatabaseExtension extends Database<Connection> {
         return stat.executeQuery();
     }
 
-    public int updateQuery(String sql) throws SQLException {
+    public int insertQuery(String sql) throws SQLException {
         PreparedStatement stat = connection.prepareStatement(sql);
         return stat.executeUpdate();
     }
 
-    public int updateQuery(String sql, Object... params) throws SQLException {
+    public int insertQuery(String sql, Object... params) throws SQLException {
         PreparedStatement stat = prepareStatement(sql, params);
         return stat.executeUpdate();
+    }
+
+    public int updateQuery(String sql) throws SQLException {
+        return insertQuery(sql);
+    }
+
+    public int updateQuery(String sql, Object... params) throws SQLException {
+        return insertQuery(sql, params);
+    }
+
+    public int deleteQuery(String sql) throws SQLException {
+        return insertQuery(sql);
+    }
+
+    public int deleteQuery(String sql, Object... params) throws SQLException {
+        return insertQuery(sql, params);
     }
 
     private PreparedStatement prepareStatement(String sql, Object... params) throws SQLException {

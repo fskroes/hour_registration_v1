@@ -5,6 +5,7 @@ import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.database.MariaDatabaseExtension;
 import nl.webedu.hourregistration.model.LogModel;
 
+import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -79,13 +80,57 @@ public class MariadbLogDAO implements ILogDAO {
     @Override
     public LogModel findLog(String id) {
 
-        return null;
+        LogModel log = null;
+        try {
+            log = database.selectObjectSingle(new LogModel(), "SELECT * FROM log WHERE logID = ?", id + "");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return log;
     }
 
     @Override
     public boolean updateLog(LogModel log) {
+        Connection dbConnection = null;
+        PreparedStatement ps = null;
 
-        return false;
+        String updateSQL = "UPDATE log"
+                + " SET date = ?, description = ?"
+                + " WHERE logID = ?";
+
+        try {
+            dbConnection = database.getConnection();
+            ps = database.getConnection().prepareStatement(updateSQL);
+
+            ps.setDate(1, (Date)log.getDate());
+            ps.setString(2, log.getDescription());
+
+            ps.executeUpdate();
+
+            System.out.println("Record geupdate");
+        }
+
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        finally {
+            if (ps != null) {
+                try {
+                    ps.getConnection().close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (dbConnection != null) {
+                try {
+                    dbConnection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return true;
     }
 
     @Override
