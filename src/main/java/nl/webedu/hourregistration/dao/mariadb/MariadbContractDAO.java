@@ -4,6 +4,7 @@ import nl.webedu.hourregistration.dao.IContractDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.database.MariaDatabaseExtension;
 import nl.webedu.hourregistration.model.ContractModel;
+import nl.webedu.hourregistration.model.EmployeeModel;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -43,7 +44,7 @@ public class MariadbContractDAO implements IContractDAO {
 
         ContractModel contract = null;
         try {
-            contract = database.selectObjectSingle(new ContractModel(), "SELECT * FROM contract WHERE contractID = ?", id + "");
+            contract = database.selectObjectSingle(new ContractModel(), "SELECT * FROM contract WHERE contractID = ?", id);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -94,11 +95,11 @@ public class MariadbContractDAO implements IContractDAO {
     }
 
     @Override
-    public ContractModel selectContractByEmployee(String employeeId){
+    public ContractModel selectContractByEmployee(EmployeeModel employee){
         ContractModel contract = null;
 
         try {
-            contract = database.selectObjectSingle(new ContractModel(), "SELECT * FROM contract WHERE employeeID = ?", employeeId);
+            contract = database.selectObjectSingle(new ContractModel(), "SELECT * FROM contract WHERE employeeID = ?", employee.getId());
         } catch (SQLException e) {
             e.printStackTrace();
         }
