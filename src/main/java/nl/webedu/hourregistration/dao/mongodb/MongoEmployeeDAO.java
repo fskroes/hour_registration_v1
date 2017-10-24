@@ -3,14 +3,9 @@ package nl.webedu.hourregistration.dao.mongodb;
 import com.mongodb.async.client.MongoClient;
 import nl.webedu.hourregistration.dao.IEmployeeDAO;
 import nl.webedu.hourregistration.model.EmployeeModel;
-import org.bson.Document;
+import nl.webedu.hourregistration.model.ProjectModel;
 
-import java.util.Collection;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-
-import static nl.webedu.hourregistration.database.DatabaseUtil.ACTIVITY_COLLECTION;
-import static nl.webedu.hourregistration.database.DatabaseUtil.DATABASE_NAME;
+import java.util.List;
 
 public class MongoEmployeeDAO implements IEmployeeDAO {
 
@@ -38,7 +33,7 @@ public class MongoEmployeeDAO implements IEmployeeDAO {
     }
 
     @Override
-    public Collection selectEmployeesByProject(String projectId) {
+    public List<EmployeeModel> selectEmployeesByProject(ProjectModel project) {
         return null;
     }
 }

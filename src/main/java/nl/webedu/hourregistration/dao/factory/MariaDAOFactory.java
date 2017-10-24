@@ -18,7 +18,6 @@ public class MariaDAOFactory extends DAOFactory {
 
     @Override
     public IActivitiesDAO getActivitiesDAO() {
-
         return MariadbActivitiesDAO.getInstance();
     }
 
@@ -29,7 +28,6 @@ public class MariaDAOFactory extends DAOFactory {
 
     @Override
     public ICustomerDAO getCustomerDAO() {
-
         return MariadbCustomerDAO.getInstance();
     }
 

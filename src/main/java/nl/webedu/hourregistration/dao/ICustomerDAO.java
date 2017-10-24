@@ -1,14 +1,15 @@
 package nl.webedu.hourregistration.dao;
 
 import nl.webedu.hourregistration.model.CustomerModel;
+import nl.webedu.hourregistration.model.ProjectModel;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 public interface ICustomerDAO {
     public boolean insertCustomer(CustomerModel customer);
-    public boolean deleteCustomer(CustomerModel customer);
+    public int deleteCustomer(CustomerModel customer);
     public CustomerModel findCustomer(String id);
-    public boolean updateCustomer(CustomerModel customer);
-    public Collection<CustomerModel> selectCustomersByProject(String projectId);
+    public int updateCustomer(CustomerModel customer);
+    public List<CustomerModel> selectAllCustomers();
+    public List<CustomerModel> selectCustomersByProject(ProjectModel project);
 }

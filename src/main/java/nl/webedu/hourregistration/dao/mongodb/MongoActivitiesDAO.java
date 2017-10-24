@@ -4,9 +4,11 @@ import com.mongodb.async.client.MongoClient;
 import nl.webedu.hourregistration.dao.IActivitiesDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.model.ActivitiesModel;
+import nl.webedu.hourregistration.model.EmployeeModel;
+import nl.webedu.hourregistration.model.WorkdayModel;
 import org.bson.Document;
+
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -14,8 +16,8 @@ import java.util.concurrent.ExecutionException;
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Updates.combine;
 import static com.mongodb.client.model.Updates.set;
-import static nl.webedu.hourregistration.database.DatabaseUtil.DATABASE_NAME;
 import static nl.webedu.hourregistration.database.DatabaseUtil.ACTIVITY_COLLECTION;
+import static nl.webedu.hourregistration.database.DatabaseUtil.DATABASE_NAME;
 
 public class MongoActivitiesDAO implements IActivitiesDAO {
 
@@ -69,39 +71,78 @@ public class MongoActivitiesDAO implements IActivitiesDAO {
         }
     }
 
+    @SuppressWarnings("Duplicates")
     @Override
-    public boolean deleteActivitie(ActivitiesModel activitie) {
-        CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();
+    public int deleteActivitie(ActivitiesModel activity) {
+        CompletableFuture<Integer> completableFuture = new CompletableFuture<>();
         Document query = new Document();
-        query.put("_id", activitie.getActivityId());
+        query.put("_id", activity.getId());
 
-        client.getDatabase(DATABASE_NAME).getCollection(ACTIVITY_COLLECTION)
-                .deleteOne(query, (deleteResult, throwable) -> completableFuture.complete(true));
+        client.getDatabase(DATABASE_NAME).getCollection(ACTIVITY_COLLECTION).deleteOne(
+                query,
+                (deleteResult, throwable) -> completableFuture.complete((int) deleteResult.getDeletedCount()));
         try {
             return completableFuture.get();
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
-            return false;
+            return 0;
         }
     }
 
     @Override
-    public boolean updateActivitie(ActivitiesModel activitie) {
-        CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();
+    public int updateActivitie(ActivitiesModel activity) {
+        CompletableFuture<Integer> completableFuture = new CompletableFuture<>();
         Document query = new Document();
-        query.put("workday_id", activitie.getActivityId());
-        client.getDatabase(DATABASE_NAME).getCollection(ACTIVITY_COLLECTION).updateOne(eq("workday_id", activitie.getWorkdayId())
-                , combine(set("category", activitie.getCategory()),
-                        set("start_time", activitie.getStartTime()),
-                        set("end_time", activitie.getEndTime()),
-                        set("workday_id", activitie.getWorkdayId())), (updateResult, throwable) -> {
-                    completableFuture.complete(true);
+        query.put("workday_id", activity.getId());
+        client.getDatabase(DATABASE_NAME).getCollection(ACTIVITY_COLLECTION).updateOne(
+                eq("workday_id", activity.getWorkdayId()),
+                combine(set("category", activity.getCategory()),
+                        set("start_time", activity.getStartTime()),
+                        set("end_time", activity.getEndTime()),
+                        set("workday_id", activity.getWorkdayId())),
+                (updateResult, throwable) -> {
+                    completableFuture.complete((int) updateResult.getModifiedCount());
                 });
         try {
             return completableFuture.get();
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
-            return false;
+            return 0;
         }
+    }
+
+    @Override
+    public List<ActivitiesModel> selectAllActivities() {
+        return null;
+    }
+
+    @Override
+    public List<ActivitiesModel> selectActivitiesByWorkday(WorkdayModel workday) {
+        CompletableFuture<List<ActivitiesModel>> completableFuture = new CompletableFuture<>();
+        ArrayList<ActivitiesModel> alActivitiesmodels = new ArrayList<>();
+        client.getDatabase(DATABASE_NAME).getCollection(ACTIVITY_COLLECTION).find(
+                eq("workday_id", workday.getId())).into(
+                alActivitieDocuments,
+                (documents, throwable) -> {
+                    for (Document d: alActivitieDocuments) {
+
+                        alActivitiesmodels.add(new ActivitiesModel(d.getString("category"),
+                                d.getDate("start_time"),
+                                d.getDate("end_time"),
+                                d.getInteger("workday_id")));
+                    }
+                    completableFuture.complete(alActivitiesmodels);
+                });
+        try {
+            return completableFuture.get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public List<ActivitiesModel> selectActivitiesByEmployee(EmployeeModel employee) {
+        return null;
     }
 }

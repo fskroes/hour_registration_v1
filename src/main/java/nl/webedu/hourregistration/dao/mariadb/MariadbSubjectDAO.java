@@ -3,19 +3,19 @@ package nl.webedu.hourregistration.dao.mariadb;
 import nl.webedu.hourregistration.dao.ISubjectDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.database.MariaDatabaseExtension;
+import nl.webedu.hourregistration.model.ProjectModel;
 import nl.webedu.hourregistration.model.SubjectModel;
 
-import java.sql.Date;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 
 public class MariadbSubjectDAO implements ISubjectDAO {
 
     private static MariadbSubjectDAO instance;
-    private MariaDatabaseExtension client;
+    private MariaDatabaseExtension database;
 
     private MariadbSubjectDAO() {
-        this.client = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase().getConnection();
+        this.database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase().getConnection();
     }
 
     public static MariadbSubjectDAO getInstance() {
@@ -27,28 +27,17 @@ public class MariadbSubjectDAO implements ISubjectDAO {
 
     @Override
     public boolean insertSubject(SubjectModel subject) {
+        String querySQL = "INSERT INTO subject"
+                + "(subject_name, start_date, end_date) VALUES"
+                + "(?,?,?)";
         try {
-            String query = "INSERT INTO subject"
-                    + "(subject_name, start_date, end_date) VALUES"
-                    + "(?,?,?)";
-
-            PreparedStatement ps = client.openConnection().prepareStatement(query);
-            ps.setString(1, subject.getOnderwerpName());
-            ps.setDate(2, (Date) subject.getStartDate());
-            ps.setDate(3, (Date) subject.getEndDate());
-            ps.executeQuery();
-            ps.close();
-            client.closeConnecion();
-            System.out.println("Query: " + query + " = Succes");
-
+            database.insertQuery(querySQL, subject.getOnderwerpName(), subject.getStartDate(), subject.getEndDate());
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
-
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
-        return true;
-    };
+        return false;
+    }
 
     @Override
     public SubjectModel findSubject(String id) {
@@ -56,32 +45,30 @@ public class MariadbSubjectDAO implements ISubjectDAO {
     };
 
     @Override
-    public boolean deleteSubject(String id) {
+    public int deleteSubject(SubjectModel subject) {
+        int result = 0;
+        String querySQL = "DELETE subject"
+                + " WHERE subjectID = ?";
         try {
-            String sql = "DELETE subject"
-                    + " WHERE subjectID = ?";
-
-            PreparedStatement ps = client.openConnection().prepareStatement(sql);
-            ps.setString(1, id);
-
-
-            ps.executeUpdate();
-            ps.close();
-            client.closeConnecion();
-
-            System.out.println("Record toegevoegd");
-
+            result = database.deleteQuery(querySQL, subject.getId());
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
-
-        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return true;
-    };
+        return result;
+    }
 
     @Override
-    public boolean updateSubject(SubjectModel Subject) {
-        return false;
-    };
+    public int updateSubject(SubjectModel subject) {
+        return 0;
+    }
+
+    @Override
+    public List<SubjectModel> selectAllSubject() {
+        return null;
+    }
+
+    @Override
+    public List<SubjectModel> selectSubjectByPorject(ProjectModel project) {
+        return null;
+    }
 }

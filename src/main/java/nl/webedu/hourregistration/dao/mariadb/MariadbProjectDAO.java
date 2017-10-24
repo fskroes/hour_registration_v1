@@ -3,9 +3,12 @@ package nl.webedu.hourregistration.dao.mariadb;
 import nl.webedu.hourregistration.dao.IProjectDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.database.MariaDatabaseExtension;
+import nl.webedu.hourregistration.model.CustomerModel;
+import nl.webedu.hourregistration.model.EmployeeModel;
 import nl.webedu.hourregistration.model.ProjectModel;
 
-import java.sql.*;
+import java.sql.SQLException;
+import java.util.List;
 
 public class MariadbProjectDAO implements IProjectDAO {
 
@@ -25,58 +28,33 @@ public class MariadbProjectDAO implements IProjectDAO {
 
     @Override
     public boolean insertProject(ProjectModel project) {
+        String querySQL = "INSERT INTO project"
+                + "(project_name, start_date, end_time, category) VALUES"
+                + "(?,?,?,?)";
         try {
-            String query = "INSERT INTO project"
-                    + "(project_name, start_date, end_time, category) VALUES"
-                    + "(?,?,?,?)";
-
-            PreparedStatement ps = database.openConnection().prepareStatement(query);
-            ps.setString(1, project.getName());
-            ps.setDate(2, (Date) project.getStartDate());
-            ps.setDate(3, (Date) project.getEndDate());
-            ps.setString(4, project.getCategorie());
-            ps.executeQuery();
-            ps.close();
-            database.closeConnecion();
-            System.out.println("Query: " + query + " = Success");
-
+            database.insertQuery(querySQL, project.getName(), project.getStartDate(), project.getEndDate(), project.getCategorie());
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
-
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
-        return true;
+        return false;
     }
 
     @Override
-    public boolean deleteProject(String id) {
+    public int deleteProject(ProjectModel project) {
+        int result = 0;
+        String querySQL = "DELETE project"
+                + " WHERE projectID = ?";
         try {
-            String sql = "DELETE project"
-                    + " WHERE projectID = ?";
-
-            PreparedStatement ps = database.openConnection().prepareStatement(sql);
-            ps.setString(1, id);
-
-
-            ps.executeUpdate();
-            ps.close();
-            database.closeConnecion();
-
-            System.out.println("Record toegevoegd");
-
+            result = database.deleteQuery(querySQL, project);
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
-
-        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return true;
-    };
+        return result;
+    }
 
     @Override
     public ProjectModel findProject(String id) {
-
         ProjectModel project = null;
         try {
             project = database.selectObjectSingle(new ProjectModel(), "SELECT * FROM project WHERE projectID = ?", id + "");
@@ -87,57 +65,53 @@ public class MariadbProjectDAO implements IProjectDAO {
     }
 
     @Override
-    public boolean updateProject(ProjectModel project) {
-        Connection dbConnection = null;
-        PreparedStatement ps = null;
-
+    public int updateProject(ProjectModel project) {
+        int result = 0;
         String updateSQL = "UPDATE project"
                 + " SET project_name = ?, start_date = ?, end_time = ?, category = ?"
                 + " WHERE projectID = ?";
-
         try {
-            dbConnection = database.getConnection();
-            ps = database.getConnection().prepareStatement(updateSQL);
-
-            ps.setString(1, project.getName());
-            ps.setDate(2, (Date) project.getStartDate());
-            ps.setDate(3, (Date) project.getEndDate());
-            ps.setString(4, project.getCategorie());
-
-            ps.executeUpdate();
-
-            System.out.println("Record geupdate");
+            database.updateQuery(
+                    updateSQL,
+                    project.getName(),
+                    project.getStartDate(),
+                    project.getEndDate(),
+                    project.getCategorie(),
+                    project.getId()
+                    );
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
-        catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        finally {
-            if (ps != null) {
-                try {
-                    ps.getConnection().close();
-                }
-                    catch (SQLException e) {
-                     e.printStackTrace();
-                }
-            }
-
-            if (dbConnection != null) {
-                try {
-                    dbConnection.close();
-                    }
-                    catch (SQLException e) {
-                     e.printStackTrace();
-                }
-            }
-        }
-        return true;
+        return result;
     }
 
     @Override
-    public ProjectModel selectProjectByCustomer(String customerId) {
+    public List<ProjectModel> selectAllProjects() {
+        List<ProjectModel> project = null;
+        try {
+            project = database.selectObjectList(new ProjectModel(), "SELECT * FROM project");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return project;
+    }
+
+    @Override
+    public ProjectModel selectProjectByCustomer(CustomerModel customer) {
         ProjectModel project = null;
         try {
-            project = database.selectObjectSingle(new ProjectModel(), "SELECT * FROM project WHERE  = ?", customerId + "");
+            project = database.selectObjectSingle(new ProjectModel(), "SELECT * FROM project WHERE projectID = ?", customer.getId());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return project;
+    }
+
+    @Override
+    public List<ProjectModel> selectProjectsByEmployee(EmployeeModel employee) {
+        List<ProjectModel> project = null;
+        try {
+            project = database.selectObjectList(new ProjectModel(), "SELECT * FROM project WHERE projectID = ?", employee.getId());
         } catch (SQLException e) {
             e.printStackTrace();
         }
