@@ -56,6 +56,7 @@ public class MongoActivitiesDAO implements IActivitiesDAO {
     public ActivitiesModel findActivitie(String id) {
         CompletableFuture<ActivitiesModel> completableFuture = new CompletableFuture<>();
         ActivitiesModel ac = new ActivitiesModel();
+
         client.getDatabase(DATABASE_NAME).getCollection(ACTIVITY_COLLECTION).find(
                 eq("_id", id)).first((document, throwable) -> {
                     completableFuture.complete(ac.convertMongo(document, 0));

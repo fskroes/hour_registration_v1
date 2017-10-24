@@ -86,7 +86,7 @@ public class ProjectModel extends DatabaseRowMapper<ProjectModel> {
     }
 
     @Override
-    public ProjectModel convertMongo(Document set, int rowNum) throws SQLException {
+    public ProjectModel convertMongo(Document set, int rowNum) {
         this.id = set.getString("_id");
         this.name = set.getString("project_name");
         this.startDate = set.getDate("start_date");
