@@ -37,8 +37,8 @@ public class MongoUserAuthenticationDAO implements IUserAuthenticationDAO {
     }
 
     @Override
-    public void registerUser(String username, String password) {
-        model = findUser(username);
+    public void registerUser(String email, String password) {
+        model = findUser(email);
         if(model == null) {
             System.out.println("User already registered");
             return;
@@ -48,7 +48,7 @@ public class MongoUserAuthenticationDAO implements IUserAuthenticationDAO {
 
         MongoCollection<Document> coll = client.getDatabase(DATABASE_NAME).getCollection(EMPLOYEE_COLLECTION);
         Document query =
-                new Document("username", username)
+                new Document("email", email)
                         .append("password", hashedPassword);
 
 

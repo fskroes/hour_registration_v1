@@ -6,6 +6,7 @@ import org.bson.Document;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.Optional;
 
 public class SubjectModel extends DatabaseRowMapper<SubjectModel> {
 
@@ -70,7 +71,7 @@ public class SubjectModel extends DatabaseRowMapper<SubjectModel> {
     }
 
     @Override
-    public SubjectModel convertMongo(Document set, int rowNum) throws SQLException {
+    public SubjectModel convertMongo(Optional<Document> set) {
         // TODO: Setup MongoDB config
         return this;
     }

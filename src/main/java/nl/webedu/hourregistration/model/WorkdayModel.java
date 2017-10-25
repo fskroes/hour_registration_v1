@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public class WorkdayModel extends DatabaseRowMapper<WorkdayModel> {
 
@@ -113,7 +114,7 @@ public class WorkdayModel extends DatabaseRowMapper<WorkdayModel> {
     }
 
     @Override
-    public WorkdayModel convertMongo(Document set, int rowNum) {
+    public WorkdayModel convertMongo(Optional<Document> set) {
         // TODO: Setup MongoDB config
         return this;
     }

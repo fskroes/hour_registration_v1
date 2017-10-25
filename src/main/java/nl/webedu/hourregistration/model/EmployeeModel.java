@@ -1,19 +1,25 @@
 package nl.webedu.hourregistration.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import nl.webedu.hourregistration.database.DatabaseRowMapper;
 import nl.webedu.hourregistration.enumeration.Role;
 import org.bson.Document;
 
+import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-public class EmployeeModel extends DatabaseRowMapper<EmployeeModel> {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class EmployeeModel extends DatabaseRowMapper<EmployeeModel> implements Serializable {
 
-    private String id;
-    private String email, password, firstname, suffix, lastname;
-    private Role role;
+    @JsonProperty("_id")
+    private String _id;
+    private Optional<String> email, password, firstname, suffix, lastname;
+    private Optional<Role> role;
     private ContractModel contractModel;
     private List<ProjectModel> projectModels;
     private List<WorkdayModel> workdayModels;
@@ -25,77 +31,77 @@ public class EmployeeModel extends DatabaseRowMapper<EmployeeModel> {
 
     }
 
-    public EmployeeModel(String id, String email, String password, String firstname, String suffix, String lastname) {
-        this(email, password, firstname, suffix, lastname);
-        this.id = id;
-    }
-
-    public EmployeeModel(String email, String password, String firstname, String suffix, String lastname) {
+    public EmployeeModel(
+            Optional<String> email,
+            Optional<String> firstname,
+            Optional<String> suffix,
+            Optional<String> lastname)
+    {
         this.email = email;
-        this.password = password;
-        this.role = role;
+//        this.password = password;
+//        this.role = role;
         this.firstname = firstname;
         this.suffix = suffix;
         this.lastname = lastname;
     }
 
-    public String getId() {
-        return id;
+    public String get_id() {
+        return _id;
     }
 
-    public String getEmail() {
+    public Optional<String> getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(Optional<String> email) {
         this.email = email;
     }
 
-    public String getPassword() {
+    public Optional<String> getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(Optional<String> password) {
         this.password = password;
     }
 
-    public String getFirstname() {
+    public Optional<String> getFirstname() {
         return firstname;
     }
 
-    public void setFirstname(String firstname) {
+    public void setFirstname(Optional<String> firstname) {
         this.firstname = firstname;
     }
 
-    public String getSuffix() {
+    public Optional<String> getSuffix() {
         return suffix;
     }
 
-    public void setSuffix(String suffix) {
+    public void setSuffix(Optional<String> suffix) {
         this.suffix = suffix;
     }
 
-    public String getLastname() {
+    public Optional<String> getLastname() {
         return lastname;
     }
 
-    public void setLastname(String lastname) {
+    public void setLastname(Optional<String> lastname) {
         this.lastname = lastname;
     }
 
-    public Role getRole() {
+    public Optional<Role> getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(Optional<Role> role) {
         this.role = role;
     }
 
     public void setRole(int roleId) {
         switch (roleId) {
-            case 1: this.role = Role.ADMIN;
-            case 2: this.role = Role.EMPLOYEE;
-            case 3: this.role = Role.MANAGER;
+            case 1: this.role = Optional.of(Role.ADMIN);
+            case 2: this.role = Optional.of(Role.EMPLOYEE);
+            case 3: this.role = Optional.of(Role.MANAGER);
 
         }
     }
@@ -147,25 +153,25 @@ public class EmployeeModel extends DatabaseRowMapper<EmployeeModel> {
 
     @Override
     public EmployeeModel convertSQL(ResultSet set, int rowNum) throws SQLException {
-        this.id = String.valueOf(set.getInt("employeeID"));
-        this.email = set.getString("email");
-        this.password = set.getString("password");
-        this.firstname = set.getString("firstname");
-        this.suffix = set.getString("suffix");
-        this.lastname = set.getString("lastname");
-        this.setRole(set.getInt("role"));
+        this._id = String.valueOf(set.getInt("employeeID"));
+        this.email = Optional.ofNullable(set.getString("email"));
+        this.password = Optional.ofNullable(set.getString("password"));
+        this.firstname = Optional.ofNullable(set.getString("firstname"));
+        this.suffix = Optional.ofNullable(set.getString("suffix"));
+        this.lastname = Optional.ofNullable(set.getString("lastname"));
         return this;
     }
 
     @Override
-    public EmployeeModel convertMongo(Document set, int rowNum) {
-        this.id = set.getString("_id");
-        this.email = set.getString("email");
-        this.password = set.getString("password");
-        this.firstname = set.getString("firstname");
-        this.suffix = set.getString("suffix");
-        this.lastname = set.getString("lastname");
-        this.setRole(set.getInteger("role"));
+    public EmployeeModel convertMongo(Optional<Document> set) {
+
+//        this._id = String.valueOf(set.ifPresent(e -> e.getObjectId("_id")));
+        this._id = String.valueOf(set.get().getObjectId("_id"));
+        this.email = Optional.of(set.get().getString("email"));
+        this.password = Optional.of(set.get().getString("password"));
+        this.password = Optional.of(set.get().getString("firstname"));
+        this.password = Optional.of(set.get().getString("suffix"));
+        this.password = Optional.of(set.get().getString("lastname"));
         return this;
     }
 }
