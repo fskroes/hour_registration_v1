@@ -51,7 +51,7 @@ public class MariadbReportDAO implements IReportDAO {
             e.printStackTrace();
         }
         return result;
-    };
+    }
 
     @Override
     public ReportModel findReport(String id) {
