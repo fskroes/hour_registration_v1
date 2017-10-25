@@ -1,44 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.geometry.Insets?>
-<?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXButton?>
-
 <?import com.jfoenix.controls.JFXPasswordField?>
-<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
-            prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="nl.webedu.hourregistration.controller.UserAuthenticationController">
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.webedu.hourregistration.controller.UserAuthenticationController">
     <padding>
-        <Insets bottom="24.0" left="24.0" right="24.0" top="24.0"/>
+        <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
     </padding>
-    <VBox alignment="TOP_CENTER" layoutX="250.0" layoutY="100.0" AnchorPane.bottomAnchor="0.0"
-          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <VBox alignment="TOP_CENTER" layoutX="250.0" layoutY="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <padding>
-            <Insets bottom="24.0" left="24.0" right="24.0" top="24.0"/>
+            <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
         </padding>
         <Label alignment="TOP_CENTER" text="Welcome to WebEdu!">
             <VBox.margin>
-                <Insets bottom="24.0"/>
+                <Insets bottom="40.0" />
             </VBox.margin>
             <font>
-                <Font size="24.0"/>
+                <Font size="24.0" />
             </font>
         </Label>
         <JFXTextField fx:id="txtEmail" labelFloat="true" maxWidth="-Infinity" prefWidth="300.0" promptText="Email">
             <VBox.margin>
-                <Insets bottom="24.0"/>
+                <Insets bottom="24.0" />
             </VBox.margin>
         </JFXTextField>
-        <JFXPasswordField fx:id="txtPassword" labelFloat="true" maxWidth="-Infinity" prefWidth="300.0"
-                          promptText="Password">
+        <JFXPasswordField fx:id="txtPassword" labelFloat="true" maxWidth="-Infinity" prefWidth="300.0" promptText="Password">
             <VBox.margin>
-                <Insets bottom="24.0"/>
+                <Insets bottom="24.0" />
             </VBox.margin>
         </JFXPasswordField>
-        <JFXButton fx:id="btnLogin" buttonType="RAISED" onAction="#onLogin" text="Sign in"/>
+      <VBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+         <children>
+            <Button fx:id="btnSignIn" alignment="CENTER" mnemonicParsing="false" onAction="#onLogin" text="Sign in" textAlignment="CENTER" />
+             <JFXButton fx:id="btnGeenAccount" alignment="CENTER" mnemonicParsing="false" onAction="#toRegisterView" text="Ik heb nog geen account" textAlignment="CENTER" />
+         </children>
+      </VBox>
     </VBox>
 </AnchorPane>

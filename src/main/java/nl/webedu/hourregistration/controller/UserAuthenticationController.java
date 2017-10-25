@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import nl.webedu.hourregistration.dao.IUserAuthenticationDAO;
@@ -24,9 +25,9 @@ public class UserAuthenticationController {
     @FXML
     public JFXPasswordField txtPassword;
     @FXML
-    public JFXButton btnRegister;
+    public JFXButton btnGeenAccount;
     @FXML
-    public JFXButton btnLogin;
+    public JFXButton btnEenAccount;
 
     private IUserAuthenticationDAO mongoUserAuthenticationDAO;
 
@@ -56,6 +57,25 @@ public class UserAuthenticationController {
 
     public void onRegister(ActionEvent actionEvent) {
         mongoUserAuthenticationDAO.registerUser(txtEmail.getText(), txtPassword.getText());
+        toLoginView(actionEvent);
+    }
+
+    public void toRegisterView(ActionEvent actionEvent) {
+        Stage primaryStage = (Stage) root.getScene().getWindow();
+        primaryStage.hide();
+        Parent parent = null;
+        try {
+            parent = FXMLLoader.load(getClass().getResource("/RegisterView.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        assert parent != null;
+        Scene scene = new Scene(parent, 600, 400);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    public void toLoginView(ActionEvent actionEvent) {
         Stage primaryStage = (Stage) root.getScene().getWindow();
         primaryStage.hide();
         Parent parent = null;

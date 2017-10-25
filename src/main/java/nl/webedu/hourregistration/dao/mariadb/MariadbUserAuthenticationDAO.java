@@ -3,6 +3,7 @@ package nl.webedu.hourregistration.dao.mariadb;
 import nl.webedu.hourregistration.dao.IUserAuthenticationDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.database.MariaDatabaseExtension;
+import nl.webedu.hourregistration.helpers.PasswordHashing;
 import nl.webedu.hourregistration.model.ActivitiesModel;
 import nl.webedu.hourregistration.model.EmployeeModel;
 import nl.webedu.hourregistration.model.UserAuthenticationModel;
@@ -10,6 +11,7 @@ import nl.webedu.hourregistration.model.UserAuthenticationModel;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import static nl.webedu.hourregistration.helpers.PasswordHashing.checkPassword;
 import static nl.webedu.hourregistration.helpers.PasswordHashing.hashPassword;
 
 public class MariadbUserAuthenticationDAO implements IUserAuthenticationDAO {
@@ -69,8 +71,11 @@ public class MariadbUserAuthenticationDAO implements IUserAuthenticationDAO {
     public boolean authenticateUser(String email, String password) {
         model = null;
         model = findUser(email);
-        if(model != null)
+        if(model.getEmail().equals(email) && checkPassword(password, model.getPassword()))
             return true;
+        else if (model.getEmail().equals(email) && !checkPassword(password, model.getPassword()))
+            System.out.println("Incorrect password");
+
         return false;
     }
 }
