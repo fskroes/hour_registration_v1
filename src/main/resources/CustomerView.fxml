@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.webedu.hourregistration.controller.CustomerController">
+    <children>
+        <HBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="1200.0" spacing="24.0" style="-fx-background-color: #4285F4;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <padding>
+                <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
+            </padding>
+            <children>
+                <ImageView fx:id="imgTitle" fitHeight="50.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" />
+                <Label fx:id="lblTitle" style="-fx-text-fill: white;" text="Customers">
+                    <font>
+                        <Font size="36.0" />
+                    </font>
+                </Label>
+            </children>
+        </HBox>
+      <HBox prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
+         <children>
+            <VBox prefHeight="700.0" prefWidth="640.0" spacing="24.0">
+               <children>
+                  <VBox maxWidth="1.7976931348623157E308" prefHeight="604.0" prefWidth="450.0" style="-fx-border-width: 1px; -fx-border-color: #4285F4;">
+                     <children>
+                        <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="840.0" spacing="24.0" style="-fx-background-color: #4285F4;">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
+                           </padding>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+               <padding>
+                  <Insets bottom="48.0" left="48.0" right="48.0" top="48.0" />
+               </padding>
+            </VBox>
+            <VBox prefHeight="700.0" prefWidth="607.0" spacing="24.0">
+               <children>
+                  <VBox alignment="TOP_RIGHT" maxWidth="1.7976931348623157E308" prefHeight="662.0" prefWidth="413.0" style="-fx-border-width: 1px; -fx-border-color: #4285F4;">
+                     <children>
+                        <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="840.0" spacing="24.0" style="-fx-background-color: #4285F4;">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
+                           </padding>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+               <padding>
+                  <Insets bottom="48.0" left="48.0" right="48.0" top="48.0" />
+               </padding>
+            </VBox>
+         </children>
+      </HBox>
+    </children>
+</AnchorPane>
