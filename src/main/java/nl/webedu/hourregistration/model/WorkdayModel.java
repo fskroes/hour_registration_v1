@@ -114,7 +114,7 @@ public class WorkdayModel extends DatabaseRowMapper<WorkdayModel> {
     }
 
     @Override
-    public WorkdayModel convertMongo(Optional<Document> set) {
+    public WorkdayModel convertMongo(Document set) {
         // TODO: Setup MongoDB config
         return this;
     }

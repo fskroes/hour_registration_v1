@@ -18,8 +18,8 @@ public class EmployeeModel extends DatabaseRowMapper<EmployeeModel> implements S
 
     @JsonProperty("_id")
     private String _id;
-    private Optional<String> email, password, firstname, suffix, lastname;
-    private Optional<Role> role;
+    private String email, password, firstname, suffix, lastname;
+    private Role role;
     private ContractModel contractModel;
     private List<ProjectModel> projectModels;
     private List<WorkdayModel> workdayModels;
@@ -32,10 +32,10 @@ public class EmployeeModel extends DatabaseRowMapper<EmployeeModel> implements S
     }
 
     public EmployeeModel(
-            Optional<String> email,
-            Optional<String> firstname,
-            Optional<String> suffix,
-            Optional<String> lastname)
+            String email,
+            String firstname,
+            String suffix,
+            String lastname)
     {
         this.email = email;
 //        this.password = password;
@@ -49,59 +49,59 @@ public class EmployeeModel extends DatabaseRowMapper<EmployeeModel> implements S
         return _id;
     }
 
-    public Optional<String> getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    public void setEmail(Optional<String> email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
-    public Optional<String> getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword(Optional<String> password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 
-    public Optional<String> getFirstname() {
+    public String getFirstname() {
         return firstname;
     }
 
-    public void setFirstname(Optional<String> firstname) {
+    public void setFirstname(String firstname) {
         this.firstname = firstname;
     }
 
-    public Optional<String> getSuffix() {
+    public String getSuffix() {
         return suffix;
     }
 
-    public void setSuffix(Optional<String> suffix) {
+    public void setSuffix(String suffix) {
         this.suffix = suffix;
     }
 
-    public Optional<String> getLastname() {
+    public String getLastname() {
         return lastname;
     }
 
-    public void setLastname(Optional<String> lastname) {
+    public void setLastname(String lastname) {
         this.lastname = lastname;
     }
 
-    public Optional<Role> getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(Optional<Role> role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
     public void setRole(int roleId) {
         switch (roleId) {
-            case 1: this.role = Optional.of(Role.ADMIN);
-            case 2: this.role = Optional.of(Role.EMPLOYEE);
-            case 3: this.role = Optional.of(Role.MANAGER);
+            case 1: this.role = Role.ADMIN;
+            case 2: this.role = Role.EMPLOYEE;
+            case 3: this.role = Role.MANAGER;
 
         }
     }
@@ -154,24 +154,24 @@ public class EmployeeModel extends DatabaseRowMapper<EmployeeModel> implements S
     @Override
     public EmployeeModel convertSQL(ResultSet set, int rowNum) throws SQLException {
         this._id = String.valueOf(set.getInt("employeeID"));
-        this.email = Optional.ofNullable(set.getString("email"));
-        this.password = Optional.ofNullable(set.getString("password"));
-        this.firstname = Optional.ofNullable(set.getString("firstname"));
-        this.suffix = Optional.ofNullable(set.getString("suffix"));
-        this.lastname = Optional.ofNullable(set.getString("lastname"));
+        this.email = set.getString("email");
+        this.password = set.getString("password");
+        this.firstname = set.getString("firstname");
+        this.suffix = set.getString("suffix");
+        this.lastname = set.getString("lastname");
         return this;
     }
 
     @Override
-    public EmployeeModel convertMongo(Optional<Document> set) {
+    public EmployeeModel convertMongo(Document set) {
 
 //        this._id = String.valueOf(set.ifPresent(e -> e.getObjectId("_id")));
-        this._id = String.valueOf(set.get().getObjectId("_id"));
-        this.email = Optional.of(set.get().getString("email"));
-        this.password = Optional.of(set.get().getString("password"));
-        this.password = Optional.of(set.get().getString("firstname"));
-        this.password = Optional.of(set.get().getString("suffix"));
-        this.password = Optional.of(set.get().getString("lastname"));
+        this._id = String.valueOf(set.getObjectId("_id"));
+        this.email = set.getString("email");
+        this.password = set.getString("password");
+        this.password = set.getString("firstname");
+        this.password = set.getString("suffix");
+        this.password = set.getString("lastname");
         return this;
     }
 }

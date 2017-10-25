@@ -1,6 +1,8 @@
 package nl.webedu.hourregistration.dao.mongodb;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mongodb.async.SingleResultCallback;
 import com.mongodb.async.client.MongoClient;
 import com.mongodb.async.client.MongoCollection;
 import com.sun.xml.internal.ws.util.CompletedFuture;
@@ -38,26 +40,81 @@ public class MongoEmployeeDAO implements IEmployeeDAO {
 
     @Override
     public boolean insertEmployee(EmployeeModel employee) {
-    return true;
+
+        Boolean b = false;
+        employee = findEmployee(employee.getEmail());
+
+        if (employee != null) {
+            System.out.println("employee not found, nothing happened");
+            return false;
+        }
+
+        MongoCollection<Document> collection = client.getDatabase(DATABASE_NAME).getCollection(EMPLOYEE_COLLECTION);
+        CompletableFuture<Boolean> result = new CompletableFuture<>();
+
+        String json = null;
+        try {
+            json = objectMapper.writeValueAsString(employee);
+            System.out.println("employee toJson " + json);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        Document d = Document.parse(json);
+        collection
+                .insertOne(d, (aVoid, throwable) ->  {
+                    result.complete(true);
+                });
+
+
+        try {
+            b = result.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        return b;
     }
 
     @Override
-    public boolean deleteEmployee(String id) {
-        return false;
+    public boolean deleteEmployee(String email) {
+        Boolean br = false;
+
+        MongoCollection<Document> collection = client.getDatabase(DATABASE_NAME).getCollection(EMPLOYEE_COLLECTION);
+        CompletableFuture<Boolean> result = new CompletableFuture<>();
+        collection
+                .findOneAndDelete(eq("email", email),
+                        ((document, throwable) -> {
+                            System.out.println("employee deleted: " + document.toJson());
+                            result.complete(true);
+                }));
+
+        try {
+            br = result.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        return br;
     }
 
     @Override
-    public EmployeeModel findEmployee(String id) {
+    public EmployeeModel findEmployee(String email) {
 
         model = new EmployeeModel();
 
         MongoCollection<Document> collection = client.getDatabase(DATABASE_NAME).getCollection(EMPLOYEE_COLLECTION);
         CompletableFuture<EmployeeModel> result = new CompletableFuture<>();
         collection
-                .find(eq("email", id))
+                .find(eq("email", email))
                 .first((employeeModelsJson, Throwable) -> { // onResults
                     System.out.println(employeeModelsJson);
-                    model.convertMongo(java.util.Optional.of(employeeModelsJson));
+                    model.convertMongo(employeeModelsJson);
                     System.out.println(model.get_id());
                     System.out.println(model.getEmail());
                     result.complete(model);
@@ -80,6 +137,8 @@ public class MongoEmployeeDAO implements IEmployeeDAO {
 
         MongoCollection<Document> collection = client.getDatabase(DATABASE_NAME).getCollection(EMPLOYEE_COLLECTION);
         CompletableFuture<Boolean> result = new CompletableFuture<>();
+
+
 
         return false; // todo working on this, feri
     }

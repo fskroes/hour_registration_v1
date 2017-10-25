@@ -74,12 +74,12 @@ public class ContractModel extends DatabaseRowMapper<ContractModel> {
     }
 
     @Override
-    public ContractModel convertMongo(Optional<Document> set) {
-        this.id = set.get().getString("_id");
-        this.minHours = set.get().getInteger("min_hours");
-        this.maxHours = set.get().getInteger("max_hours");
-        this.startTime = set.get().getDate("start_time");
-        this.endTime =set.get().getDate("end_time");
+    public ContractModel convertMongo(Document set) {
+        this.id = set.getString("_id");
+        this.minHours = set.getInteger("min_hours");
+        this.maxHours = set.getInteger("max_hours");
+        this.startTime = set.getDate("start_time");
+        this.endTime =set.getDate("end_time");
         return this;
     }
 }
