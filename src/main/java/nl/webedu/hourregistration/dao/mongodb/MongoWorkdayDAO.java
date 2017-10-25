@@ -3,6 +3,7 @@ package nl.webedu.hourregistration.dao.mongodb;
 import com.mongodb.async.client.MongoClient;
 import nl.webedu.hourregistration.dao.IWorkdayDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
+import nl.webedu.hourregistration.model.ActivitiesModel;
 import nl.webedu.hourregistration.model.EmployeeModel;
 import nl.webedu.hourregistration.model.WorkdayModel;
 import org.bson.Document;
@@ -32,14 +33,31 @@ public class MongoWorkdayDAO implements IWorkdayDAO {
     }
 
     @Override
-    public boolean insertWorkday(WorkdayModel Workday) {
+    public boolean insertWorkday(WorkdayModel workday) {
         CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();
-        Document query = new Document("date", Workday.getDate())
-                .append("start_time",Workday.getStartTime())
-                .append("end_time",Workday.getEndTime())
-                .append("week_number", Workday.getWeekNumber())
-                .append("activities",Workday.getActivities())
-                .append("employees", Workday.getEmployeeModels());
+        ArrayList<Document> activitiesDoc = new ArrayList<>();
+        ArrayList<Document> employeesDoc = new ArrayList<>();
+
+        for (ActivitiesModel model : workday.getActivities()) {
+            activitiesDoc.add(new Document("category", model.getCategory())
+                    .append("start_time", model.getStartTime())
+                    .append("end_time",model.getEndTime())
+                    .append("workday_id",model.getWorkdayId()));
+        }
+
+        for (EmployeeModel model: workday.getEmployeeModels()){
+            employeesDoc.add(new Document("email", model.getEmail())
+                    .append("firstname", model.getFirstname())
+                    .append("suffix",model.getSuffix())
+                    .append("lastname",model.getLastname()));
+        }
+
+        Document query = new Document("date", workday.getDate())
+                .append("start_time",workday.getStartTime())
+                .append("end_time",workday.getEndTime())
+                .append("week_number", workday.getWeekNumber())
+                .append("activities",activitiesDoc)
+                .append("employees", employeesDoc);
 
         client.getDatabase(DATABASE_NAME).getCollection(WORKDAY_COLLECTION)
                 .insertOne(query, (result, t) -> completableFuture.complete(true));

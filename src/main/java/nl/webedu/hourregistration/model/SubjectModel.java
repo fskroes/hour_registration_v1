@@ -70,7 +70,7 @@ public class SubjectModel extends DatabaseRowMapper<SubjectModel> {
     }
 
     @Override
-    public SubjectModel convertMongo(Document set, int rowNum) throws SQLException {
+    public SubjectModel convertMongo(Document set, int rowNum) {
         // TODO: Setup MongoDB config
         return this;
     }
