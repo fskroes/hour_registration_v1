@@ -16,19 +16,21 @@ public class ReportModel extends DatabaseRowMapper<ReportModel> {
     private ArrayList<WorkdayModel> workDays;
     private int weekNumber;
     private Date reportDate;
+    private Date endDate;
 
     public ReportModel() {
     }
 
-    public ReportModel(String id, ArrayList<WorkdayModel> workDays, int weekNumber, Date reportDate) {
-        this(workDays, weekNumber, reportDate);
+    public ReportModel(String id, ArrayList<WorkdayModel> workDays, int weekNumber, Date reportDate, Date endDate) {
+        this(workDays, weekNumber, reportDate, endDate);
         this.id = id;
     }
 
-    public ReportModel(ArrayList<WorkdayModel> workDays, int weekNumber, Date reportDate) {
+    public ReportModel(ArrayList<WorkdayModel> workDays, int weekNumber, Date reportDate, Date endDate) {
         this.workDays = workDays;
         this.weekNumber = weekNumber;
         this.reportDate = reportDate;
+        this.endDate = endDate;
     }
 
     public String getId() {
@@ -58,6 +60,10 @@ public class ReportModel extends DatabaseRowMapper<ReportModel> {
     public void setReportDate(Date reportDate) {
         this.reportDate = reportDate;
     }
+
+    public Date getReportEndDate(){ return endDate; }
+
+    public void setReportEndDate(Date endDate){ this.endDate = endDate;}
 
     @Override
     public ReportModel convertSQL(ResultSet set, int rowNum) throws SQLException {

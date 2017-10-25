@@ -65,7 +65,22 @@ public class MariadbSubjectDAO implements ISubjectDAO {
 
     @Override
     public int updateSubject(SubjectModel subject) {
-        return 0;
+        int result = 0;
+        String updateSQL = "UPDATE subject"
+                + " SET subject_name = ?, start_date = ?, end_date = ?"
+                + " WHERE subjectID = ?";
+        try {
+            database.updateQuery(
+                    updateSQL,
+                    subject.getOnderwerpName(),
+                    subject.getStartDate(),
+                    subject.getEndDate(),
+                    subject.getId()
+            );
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return result;
     }
 
     @Override
