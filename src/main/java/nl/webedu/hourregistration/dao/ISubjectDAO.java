@@ -11,5 +11,5 @@ public interface ISubjectDAO {
     public int deleteSubject(SubjectModel subject);
     public int updateSubject(SubjectModel subject);
     public List<SubjectModel> selectAllSubject();
-    public List<SubjectModel> selectSubjectByPorject(ProjectModel project);
+    public List<SubjectModel> selectSubjectByProject(ProjectModel project);
 }
