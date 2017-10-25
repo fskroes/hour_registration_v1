@@ -6,6 +6,7 @@ import org.bson.Document;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.Optional;
 
 public class ProjectModel extends DatabaseRowMapper<ProjectModel> {
 
@@ -86,12 +87,12 @@ public class ProjectModel extends DatabaseRowMapper<ProjectModel> {
     }
 
     @Override
-    public ProjectModel convertMongo(Document set, int rowNum) {
-        this.id = set.getString("_id");
-        this.name = set.getString("project_name");
-        this.startDate = set.getDate("start_date");
-        this.endDate = set.getDate("end_date");
-        this.categorie = set.getString("category");
+    public ProjectModel convertMongo(Optional<Document> set) {
+        this.id = set.get().getString("_id");
+        this.name = set.get().getString("project_name");
+        this.startDate = set.get().getDate("start_date");
+        this.endDate = set.get().getDate("end_date");
+        this.categorie = set.get().getString("category");
         return this;
     }
 }

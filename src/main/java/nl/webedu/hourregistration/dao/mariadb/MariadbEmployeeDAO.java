@@ -36,12 +36,12 @@ public class MariadbEmployeeDAO implements IEmployeeDAO {
 
             PreparedStatement ps = database.openConnection().prepareStatement(sql);
 
-            ps.setString(1, employee.getEmail());
-            ps.setString(2, employee.getPassword());
+            ps.setString(1, String.valueOf(employee.getEmail()));
+            ps.setString(2, String.valueOf(employee.getPassword()));
             ps.setInt(3, 1/*employee.getRole().getIndex()*/);
-            ps.setString(4, employee.getFirstname());
-            ps.setString(5, employee.getSuffix());
-            ps.setString(6, employee.getLastname());
+            ps.setString(4, String.valueOf(employee.getFirstname()));
+            ps.setString(5, String.valueOf(employee.getSuffix()));
+            ps.setString(6, String.valueOf(employee.getLastname()));
             ps.setBoolean(7, true);
 
             ps.executeUpdate();
@@ -110,13 +110,13 @@ public class MariadbEmployeeDAO implements IEmployeeDAO {
 
             PreparedStatement ps = database.openConnection().prepareStatement(sql);
 
-            ps.setString(1, employee.getEmail());
-            ps.setString(2, employee.getPassword());
+            ps.setString(1, String.valueOf(employee.getEmail()));
+            ps.setString(2, String.valueOf(employee.getPassword()));
             ps.setInt(3, 1/*employee.getRole().getIndex()*/);
-            ps.setString(4, employee.getFirstname());
-            ps.setString(5, employee.getSuffix());
-            ps.setString(6, employee.getLastname());
-            ps.setString(7, employee.getId());
+            ps.setString(4, String.valueOf(employee.getFirstname()));
+            ps.setString(5, String.valueOf(employee.getSuffix()));
+            ps.setString(6, String.valueOf(employee.getLastname()));
+            ps.setString(7, String.valueOf(employee.get_id()));
 
             ps.executeUpdate();
             ps.close();

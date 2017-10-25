@@ -10,6 +10,7 @@ import org.bson.Document;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -79,7 +80,7 @@ public class MongoCustomerDAO implements ICustomerDAO {
         CustomerModel cm = new CustomerModel();
         client.getDatabase(DATABASE_NAME).getCollection(CUSTOMER_COLLECTION).find(
                 eq("_id", id)).first((document, throwable) -> {
-            completableFuture.complete(cm.convertMongo(document, 0));
+            completableFuture.complete(cm.convertMongo(Optional.of(document)));
         });
         try {
             return completableFuture.get();

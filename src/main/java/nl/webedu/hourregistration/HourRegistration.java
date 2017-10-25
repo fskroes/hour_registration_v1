@@ -25,18 +25,17 @@ public class HourRegistration extends Application {
 
         DatabaseManager.getInstance().connectToDatabase(DatabaseType.MONGODB);
 
-        ArrayList<EmployeeModel> em = new ArrayList<EmployeeModel>();
-        em.add(new EmployeeModel("mail@m.nl","Leon"," ", "Marchal"));
-        em.add(new EmployeeModel("mail@asdasd.nl","Matthijs"," ", "Eikelboom"));
-
-        ArrayList<ActivitiesModel> am = new ArrayList<ActivitiesModel>();
-        am.add(new ActivitiesModel( "categorie 2", new Date(), new Date(),2));
-        am.add(new ActivitiesModel( "categorie 4", new Date(), new Date(),2));
-
-        WorkdayModel wm = new WorkdayModel(new Date(),new Date(),new Date(),2,am,em);
-
-        DatabaseManager.getInstance().getDaoFactory().getWorkdayDAO().insertWorkday(wm);
-
+//        ArrayList<EmployeeModel> em = new ArrayList<EmployeeModel>();
+//
+//
+//        ArrayList<ActivitiesModel> am = new ArrayList<ActivitiesModel>();
+//        am.add(new ActivitiesModel( "categorie 2", new Date(), new Date(),2));
+//        am.add(new ActivitiesModel( "categorie 4", new Date(), new Date(),2));
+//
+//        WorkdayModel wm = new WorkdayModel(new Date(),new Date(),new Date(),2,am,em);
+//
+//        DatabaseManager.getInstance().getDaoFactory().getWorkdayDAO().insertWorkday(wm);
+//
 
 
 

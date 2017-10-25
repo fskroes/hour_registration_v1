@@ -10,6 +10,7 @@ import org.bson.Document;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -61,7 +62,7 @@ public class MongoActivitiesDAO implements IActivitiesDAO {
 
         client.getDatabase(DATABASE_NAME).getCollection(ACTIVITY_COLLECTION).find(
                 eq("_id", id)).first((document, throwable) -> {
-                    completableFuture.complete(ac.convertMongo(document, 0));
+                    completableFuture.complete(ac.convertMongo(Optional.of(document)));
                 });
         try {
             return completableFuture.get();

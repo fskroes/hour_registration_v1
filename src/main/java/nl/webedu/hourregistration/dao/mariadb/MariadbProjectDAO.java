@@ -111,7 +111,7 @@ public class MariadbProjectDAO implements IProjectDAO {
     public List<ProjectModel> selectProjectsByEmployee(EmployeeModel employee) {
         List<ProjectModel> project = null;
         try {
-            project = database.selectObjectList(new ProjectModel(), "SELECT * FROM project WHERE employeeID = ?", employee.getId());
+            project = database.selectObjectList(new ProjectModel(), "SELECT * FROM project WHERE projectID = ?", String.valueOf(employee.get_id()));
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -12,10 +12,7 @@ import nl.webedu.hourregistration.model.WorkdayModel;
 import org.bson.Document;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -92,7 +89,7 @@ public class MongoWorkdayDAO implements IWorkdayDAO {
                 .find(eq("_id", id))
                 .first((document, Throwable) -> { // onResults
                     System.out.println(document.toJson());
-                    result.complete(new WorkdayModel().convertMongo(document, 0));
+                    result.complete(new WorkdayModel().convertMongo(Optional.of(document)));
                 });
         try {
             return result.get();
@@ -137,7 +134,7 @@ public class MongoWorkdayDAO implements IWorkdayDAO {
                 .find()
                 .into(alworkdayDocuments,(documents, throwable) -> {
                     for (Document d: alworkdayDocuments) {
-                        alWorkdays.add(new WorkdayModel().convertMongo(d,0));
+                        alWorkdays.add(new WorkdayModel().convertMongo(Optional.of(d)));
                     }
                     result.complete(alWorkdays);
                 });
@@ -156,17 +153,17 @@ public class MongoWorkdayDAO implements IWorkdayDAO {
         MongoCollection<Document> collection = client.getDatabase(DATABASE_NAME).getCollection(EMPLOYEE_COLLECTION);
 
         collection
-                .find(eq("_id ",employee.getId()))
+                .find(eq("_id ",employee.get_id()))
                 .first((document, Throwable) -> { // onResults
-                   employee.convertMongo(document, 0);
+                   employee.convertMongo(Optional.of(document));
 
                    MongoCollection<Document> collection2 = client.getDatabase(DATABASE_NAME).getCollection(WORKDAY_COLLECTION);
-                   for (String s:employee.getWorkdayModels() ){
+                   for (String s:employee.getWorkday_Ids() ){
                        collection2
                                .find(eq("_id", s))
                                .into(alworkdayDocuments,(documents, throwable) -> {
                                    for (Document d: alworkdayDocuments) {
-                                       alWorkdays.add(new WorkdayModel().convertMongo(d,0));
+                                       alWorkdays.add(new WorkdayModel().convertMongo(Optional.of(d)));
                                    }
                                });
                    }
@@ -193,12 +190,12 @@ public class MongoWorkdayDAO implements IWorkdayDAO {
                     .append("workday_id",model.getWorkdayId()));
         }
 
-        for (EmployeeModel model: workday.getEmployeeModels()){
-            employeesDoc.add(new Document("email", model.getEmail())
-                    .append("firstname", model.getFirstname())
-                    .append("suffix",model.getSuffix())
-                    .append("lastname",model.getLastname()));
-        }
+//        for (EmployeeModel model: workday.getEmployeeModels()){
+//            employeesDoc.add(new Document("email", model.getEmail())
+//                    .append("firstname", model.getFirstname())
+//                    .append("suffix",model.getSuffix())
+//                    .append("lastname",model.getLastname()));
+//        }
 
         Map<String, List<Document>> map = new HashMap<>();
         map.put("activitiesDoc", activitiesDoc);

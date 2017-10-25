@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public class WorkdayModel extends DatabaseRowMapper<WorkdayModel> {
 
@@ -17,28 +18,28 @@ public class WorkdayModel extends DatabaseRowMapper<WorkdayModel> {
     private Date date, startTime, endTime;
     private int weekNumber;
     private List<ActivitiesModel> activities;
-    private List<EmployeeModel> employeeModels;
+    private List<String> employee_ids;
 
     public WorkdayModel() {
         
     }
 
-    public WorkdayModel(String id, Date date, Date startTime, Date endTime, int weekNumber, List<ActivitiesModel> activities, List<EmployeeModel> employeeModels) {
+    public WorkdayModel(String id, Date date, Date startTime, Date endTime, int weekNumber, List<ActivitiesModel> activities, List<String> employee_ids) {
         this.id = id;
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
         this.weekNumber = weekNumber;
         this.activities = activities;
-        this.employeeModels = employeeModels;
+        this.employee_ids = employee_ids;
     }
-    public WorkdayModel(Date date, Date startTime, Date endTime, int weekNumber, List<ActivitiesModel> activities, List<EmployeeModel> employeeModels) {
+    public WorkdayModel(Date date, Date startTime, Date endTime, int weekNumber, List<ActivitiesModel> activities, List<String> employee_ids) {
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
         this.weekNumber = weekNumber;
         this.activities = activities;
-        this.employeeModels = employeeModels;
+        this.employee_ids = employee_ids;
     }
 
     public String getId() {
@@ -86,19 +87,19 @@ public class WorkdayModel extends DatabaseRowMapper<WorkdayModel> {
     }
 
     public List<String> getEmployeeId() {
-        return new ArrayList<>(employeeModels);
+        return new ArrayList<>(employee_ids);
     }
 
-    public void setEmployeeModels(List<EmployeeModel> employeeModels) {
-        this.employeeModels = employeeModels;
+    public void setEmployeeModels(List<String> employeeModels) {
+        this.employee_ids = employeeModels;
     }
 
-    public void addEmployee(EmployeeModel employeeModel) {
-        this.employeeModels.add(employeeModel);
+    public void addEmployee(String employeeModel) {
+        this.employee_ids.add(employeeModel);
     }
 
-    public void removeEmployee(EmployeeModel employeeModel) {
-        this.employeeModels.remove(employeeModel);
+    public void removeEmployee(String employeeModel) {
+        this.employee_ids.remove(employeeModel);
     }
 
     @Override
@@ -113,7 +114,7 @@ public class WorkdayModel extends DatabaseRowMapper<WorkdayModel> {
     }
 
     @Override
-    public WorkdayModel convertMongo(Document set, int rowNum) {
+    public WorkdayModel convertMongo(Optional<Document> set) {
         // TODO: Setup MongoDB config
         return this;
     }

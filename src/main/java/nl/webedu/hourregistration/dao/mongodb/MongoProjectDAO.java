@@ -10,6 +10,7 @@ import org.bson.Document;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -74,7 +75,7 @@ public class MongoProjectDAO implements IProjectDAO {
         ProjectModel pm = new ProjectModel();
 
         client.getDatabase(DATABASE_NAME).getCollection(PROJECT_COLLECTION).find(
-                eq("_id", id)).first((document, throwable) -> completableFuture.complete(pm.convertMongo(document, 0)));
+                eq("_id", id)).first((document, throwable) -> completableFuture.complete(pm.convertMongo(Optional.of(document))));
         try {
             return completableFuture.get();
         } catch (InterruptedException | ExecutionException e) {
