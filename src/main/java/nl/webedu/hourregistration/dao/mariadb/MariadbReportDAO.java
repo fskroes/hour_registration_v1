@@ -78,7 +78,7 @@ public class MariadbReportDAO implements IReportDAO {
     public ReportModel selectReportByCustomer(CustomerModel customer) {
         ReportModel report = null;
         try {
-            report = database.selectObjectSingle(new ReportModel(), "SELECT * FROM report WHERE id = ?", customer.getId());
+            report = database.selectObjectSingle(new ReportModel(), "SELECT * FROM report WHERE customerID = ?", customer.getId());
         } catch (SQLException e) {
             e.printStackTrace();
         }

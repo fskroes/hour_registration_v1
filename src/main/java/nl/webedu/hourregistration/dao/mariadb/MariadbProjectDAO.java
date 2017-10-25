@@ -100,7 +100,7 @@ public class MariadbProjectDAO implements IProjectDAO {
     public ProjectModel selectProjectByCustomer(CustomerModel customer) {
         ProjectModel project = null;
         try {
-            project = database.selectObjectSingle(new ProjectModel(), "SELECT * FROM project WHERE projectID = ?", customer.getId());
+            project = database.selectObjectSingle(new ProjectModel(), "SELECT * FROM project WHERE customerID = ?", customer.getId());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -111,7 +111,7 @@ public class MariadbProjectDAO implements IProjectDAO {
     public List<ProjectModel> selectProjectsByEmployee(EmployeeModel employee) {
         List<ProjectModel> project = null;
         try {
-            project = database.selectObjectList(new ProjectModel(), "SELECT * FROM project WHERE projectID = ?", employee.getId());
+            project = database.selectObjectList(new ProjectModel(), "SELECT * FROM project WHERE employeeID = ?", employee.getId());
         } catch (SQLException e) {
             e.printStackTrace();
         }
