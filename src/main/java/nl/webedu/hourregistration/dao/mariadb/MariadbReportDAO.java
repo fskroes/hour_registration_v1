@@ -67,7 +67,22 @@ public class MariadbReportDAO implements IReportDAO {
 
     @Override
     public int updateReport(ReportModel report) {
-        return 0;
+        int result = 0;
+        String updateSQL = "UPDATE report"
+                + " SET create_date = ?, end_date = ?, week_number = ?"
+                + " WHERE reportID = ?";
+        try {
+            database.updateQuery(
+                    updateSQL,
+                    report.getReportDate(),
+                    report.getReportEndDate(),
+                    report.getWeekNumber(),
+                    report.getId()
+            );
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return result;
     }
 
     @Override
