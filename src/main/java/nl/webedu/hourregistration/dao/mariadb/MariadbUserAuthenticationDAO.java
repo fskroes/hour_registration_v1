@@ -71,11 +71,16 @@ public class MariadbUserAuthenticationDAO implements IUserAuthenticationDAO {
     public boolean authenticateUser(String email, String password) {
         model = null;
         model = findUser(email);
-        if(model.getEmail().equals(email) && checkPassword(password, model.getPassword()))
+        if (email.isEmpty() || password.isEmpty()) {
+            System.out.println("Fill in both fields");
+            return false;
+        }
+        if (model == null)
+            System.out.println("User does not exist");
+        else if (model.getEmail().equals(email) && checkPassword(password, model.getPassword()))
             return true;
         else if (model.getEmail().equals(email) && !checkPassword(password, model.getPassword()))
             System.out.println("Incorrect password");
-
         return false;
     }
 }
