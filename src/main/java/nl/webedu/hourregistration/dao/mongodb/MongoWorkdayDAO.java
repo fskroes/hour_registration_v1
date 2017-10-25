@@ -1,6 +1,9 @@
 package nl.webedu.hourregistration.dao.mongodb;
 
+import com.mongodb.Block;
+import com.mongodb.async.SingleResultCallback;
 import com.mongodb.async.client.MongoClient;
+import com.mongodb.async.client.MongoCollection;
 import nl.webedu.hourregistration.dao.IWorkdayDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.model.ActivitiesModel;
@@ -8,11 +11,18 @@ import nl.webedu.hourregistration.model.EmployeeModel;
 import nl.webedu.hourregistration.model.WorkdayModel;
 import org.bson.Document;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
+import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Updates.combine;
+import static com.mongodb.client.model.Updates.set;
+import static nl.webedu.hourregistration.database.DatabaseUtil.EMPLOYEE_COLLECTION;
 import static nl.webedu.hourregistration.database.DatabaseUtil.WORKDAY_COLLECTION;
 import static nl.webedu.hourregistration.database.DatabaseUtil.DATABASE_NAME;
 
@@ -20,7 +30,7 @@ public class MongoWorkdayDAO implements IWorkdayDAO {
 
     private MongoClient client;
     private static MongoWorkdayDAO instance;
-    ArrayList<Document> alActivitieDocuments = new ArrayList<>();
+    ArrayList<Document> alworkdayDocuments = new ArrayList<>();
 
     private MongoWorkdayDAO() {
         this.client = (MongoClient) DatabaseManager.getInstance().getDatabase().getConnection();
@@ -35,29 +45,13 @@ public class MongoWorkdayDAO implements IWorkdayDAO {
     @Override
     public boolean insertWorkday(WorkdayModel workday) {
         CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();
-        ArrayList<Document> activitiesDoc = new ArrayList<>();
-        ArrayList<Document> employeesDoc = new ArrayList<>();
-
-        for (ActivitiesModel model : workday.getActivities()) {
-            activitiesDoc.add(new Document("category", model.getCategory())
-                    .append("start_time", model.getStartTime())
-                    .append("end_time",model.getEndTime())
-                    .append("workday_id",model.getWorkdayId()));
-        }
-
-        for (EmployeeModel model: workday.getEmployeeModels()){
-            employeesDoc.add(new Document("email", model.getEmail())
-                    .append("firstname", model.getFirstname())
-                    .append("suffix",model.getSuffix())
-                    .append("lastname",model.getLastname()));
-        }
 
         Document query = new Document("date", workday.getDate())
                 .append("start_time",workday.getStartTime())
                 .append("end_time",workday.getEndTime())
                 .append("week_number", workday.getWeekNumber())
-                .append("activities",activitiesDoc)
-                .append("employees", employeesDoc);
+                .append("activities",getLists(workday).get("activitiesDoc"))
+                .append("employees", getLists(workday).get("employeesDoc"));
 
         client.getDatabase(DATABASE_NAME).getCollection(WORKDAY_COLLECTION)
                 .insertOne(query, (result, t) -> completableFuture.complete(true));
@@ -91,21 +85,125 @@ public class MongoWorkdayDAO implements IWorkdayDAO {
 
     @Override
     public WorkdayModel findWorkday(String id) {
-        return null;
+
+        MongoCollection<Document> collection = client.getDatabase(DATABASE_NAME).getCollection(WORKDAY_COLLECTION);
+        CompletableFuture<WorkdayModel> result = new CompletableFuture<>();
+        collection
+                .find(eq("_id", id))
+                .first((document, Throwable) -> { // onResults
+                    System.out.println(document.toJson());
+                    result.complete(new WorkdayModel().convertMongo(document, 0));
+                });
+        try {
+            return result.get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
-    public int updateWorkday(WorkdayModel Workday) {
-        return 0;
+    public int updateWorkday(WorkdayModel workday) {
+
+        CompletableFuture<Integer> completableFuture = new CompletableFuture<>();
+        Document query = new Document();
+        query.put("workday_id", workday.getId());
+        client.getDatabase(DATABASE_NAME).getCollection(WORKDAY_COLLECTION).updateOne(
+                eq("date", workday.getDate()),
+                combine(set("start_time", workday.getStartTime()),
+                        set("end_time", workday.getEndTime()),
+                        set("week_number", workday.getWeekNumber()),
+                        set("activities", getLists(workday).get("activitiesDoc")),
+                        set("employees",getLists(workday).get("employeesDoc"))),
+                (updateResult, throwable) -> {
+                    completableFuture.complete((int) updateResult.getModifiedCount());
+                });
+        try {
+            return completableFuture.get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 
     @Override
     public List<WorkdayModel> selectAllWorkdays() {
-        return null;
+
+        CompletableFuture<List<WorkdayModel>> result = new CompletableFuture<>();
+        ArrayList<WorkdayModel> alWorkdays = new ArrayList<>();
+        MongoCollection<Document> collection = client.getDatabase(DATABASE_NAME).getCollection(WORKDAY_COLLECTION);
+
+        collection
+                .find()
+                .into(alworkdayDocuments,(documents, throwable) -> {
+                    for (Document d: alworkdayDocuments) {
+                        alWorkdays.add(new WorkdayModel().convertMongo(d,0));
+                    }
+                    result.complete(alWorkdays);
+                });
+        try {
+            return result.get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
-    public WorkdayModel selectWorkdayByEmployee(EmployeeModel employee) {
-        return null;
+    public List<WorkdayModel> selectWorkdaysByEmployee(EmployeeModel employee) {
+        CompletableFuture<List<WorkdayModel>> result = new CompletableFuture<>();
+        ArrayList<WorkdayModel> alWorkdays = new ArrayList<>();
+        MongoCollection<Document> collection = client.getDatabase(DATABASE_NAME).getCollection(EMPLOYEE_COLLECTION);
+
+        collection
+                .find(eq("_id ",employee.getId()))
+                .first((document, Throwable) -> { // onResults
+                   employee.convertMongo(document, 0);
+
+                   MongoCollection<Document> collection2 = client.getDatabase(DATABASE_NAME).getCollection(WORKDAY_COLLECTION);
+                   for (String s:employee.getWorkdayModels() ){
+                       collection2
+                               .find(eq("_id", s))
+                               .into(alworkdayDocuments,(documents, throwable) -> {
+                                   for (Document d: alworkdayDocuments) {
+                                       alWorkdays.add(new WorkdayModel().convertMongo(d,0));
+                                   }
+                               });
+                   }
+                    result.complete(alWorkdays);
+                });
+
+        try {
+            return result.get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private Map<String,List<Document>> getLists(WorkdayModel workday) {
+
+        List<Document> activitiesDoc = new ArrayList<Document>();
+        List<Document> employeesDoc = new ArrayList<Document>();
+
+        for (ActivitiesModel model : workday.getActivities()) {
+            activitiesDoc.add(new Document("category", model.getCategory())
+                    .append("start_time", model.getStartTime())
+                    .append("end_time",model.getEndTime())
+                    .append("workday_id",model.getWorkdayId()));
+        }
+
+        for (EmployeeModel model: workday.getEmployeeModels()){
+            employeesDoc.add(new Document("email", model.getEmail())
+                    .append("firstname", model.getFirstname())
+                    .append("suffix",model.getSuffix())
+                    .append("lastname",model.getLastname()));
+        }
+
+        Map<String, List<Document>> map = new HashMap<>();
+        map.put("activitiesDoc", activitiesDoc);
+        map.put("employeesDoc", employeesDoc);
+        return map;
     }
 }
+

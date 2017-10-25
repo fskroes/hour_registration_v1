@@ -16,7 +16,7 @@ public class EmployeeModel extends DatabaseRowMapper<EmployeeModel> {
     private Role role;
     private ContractModel contractModel;
     private List<ProjectModel> projectModels;
-    private List<WorkdayModel> workdayModels;
+    private List<String> workdayModelsId;
 
     /**
      * Empty contructor, for test purposes only
@@ -25,8 +25,9 @@ public class EmployeeModel extends DatabaseRowMapper<EmployeeModel> {
 
     }
 
-    public EmployeeModel(String id, String email, String password, String firstname, String suffix, String lastname) {
+    public EmployeeModel(String id, String email, String password, String firstname, String suffix, String lastname, ArrayList<String> workdayModelsId) {
         this(email, password, firstname, suffix, lastname);
+        this.workdayModelsId = workdayModelsId;
         this.id = id;
     }
 
@@ -132,20 +133,20 @@ public class EmployeeModel extends DatabaseRowMapper<EmployeeModel> {
         this.projectModels.remove(projectModel);
     }
 
-    public List<WorkdayModel> getWorkdayModels() {
-        return new ArrayList<>(workdayModels);
+    public List<String> getWorkdayModels() {
+        return new ArrayList<>(workdayModelsId);
     }
 
-    public void setWorkdayModels(List<WorkdayModel> workdayModels) {
-        this.workdayModels = workdayModels;
+    public void setWorkdayModels(List<String> workdayModels) {
+        this.workdayModelsId = workdayModels;
     }
 
-    public void addWorkday(WorkdayModel workdayModel) {
-        this.workdayModels.add(workdayModel);
+    public void addWorkday(String workdayModel) {
+        this.workdayModelsId.add(workdayModel);
     }
 
     public void removeWorkday(WorkdayModel workdayModel) {
-        this.workdayModels.remove(workdayModel);
+        this.workdayModelsId.remove(workdayModel);
     }
 
     @Override

@@ -11,5 +11,5 @@ public interface IWorkdayDAO {
     public WorkdayModel findWorkday(String id);
     public int updateWorkday(WorkdayModel Workday);
     public List<WorkdayModel> selectAllWorkdays();
-    public WorkdayModel selectWorkdayByEmployee(EmployeeModel employee);
+    public List<WorkdayModel> selectWorkdaysByEmployee(EmployeeModel employee);
 }

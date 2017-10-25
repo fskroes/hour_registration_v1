@@ -85,7 +85,7 @@ public class WorkdayModel extends DatabaseRowMapper<WorkdayModel> {
         this.activities = activities;
     }
 
-    public List<EmployeeModel> getEmployeeModels() {
+    public List<String> getEmployeeId() {
         return new ArrayList<>(employeeModels);
     }
 
