@@ -10,6 +10,8 @@ import nl.webedu.hourregistration.model.UserAuthenticationModel;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import static nl.webedu.hourregistration.helpers.PasswordHashing.hashPassword;
+
 public class MariadbUserAuthenticationDAO implements IUserAuthenticationDAO {
 
     private static MariadbUserAuthenticationDAO instance;
@@ -49,12 +51,14 @@ public class MariadbUserAuthenticationDAO implements IUserAuthenticationDAO {
             return;
         }
 
+        String hashedPassword = hashPassword(password);
+
         String insertSQL = "INSERT INTO employee"
                 + "(email, password) VALUES"
                 + "(?,?)";
 
         try {
-            database.insertQuery(insertSQL, username, password);
+            database.insertQuery(insertSQL, username, hashedPassword);
             System.out.println(username + " is registered");
         } catch (SQLException e) {
             e.printStackTrace();
