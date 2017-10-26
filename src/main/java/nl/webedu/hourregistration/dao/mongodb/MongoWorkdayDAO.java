@@ -15,6 +15,7 @@ import java.util.concurrent.ExecutionException;
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Updates.combine;
 import static com.mongodb.client.model.Updates.set;
+import static nl.webedu.hourregistration.database.DatabaseUtil.REPORT_COLLECTION;
 import static nl.webedu.hourregistration.database.DatabaseUtil.WORKDAY_COLLECTION;
 import static nl.webedu.hourregistration.database.DatabaseUtil.DATABASE_NAME;
 
@@ -55,23 +56,21 @@ public class MongoWorkdayDAO implements IWorkdayDAO {
         }
     }
 
+    @SuppressWarnings("Duplicates")
     @Override
     public int deleteWorkday(WorkdayModel workday) {
-        return 0;
-    }
-
-    public boolean deleteWorkday(String id) {
-        CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();
+        CompletableFuture<Integer> completableFuture = new CompletableFuture<>();
         Document query = new Document();
-        query.put("_id", id);
+        query.put("_id", workday.getId());
 
-        client.getDatabase(DATABASE_NAME).getCollection(WORKDAY_COLLECTION)
-                .deleteOne(query, (deleteResult, throwable) -> completableFuture.complete(true));
+        client.getDatabase(DATABASE_NAME).getCollection(WORKDAY_COLLECTION).deleteOne(
+                query,
+                (deleteResult, throwable) -> completableFuture.complete((int) deleteResult.getDeletedCount()));
         try {
             return completableFuture.get();
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
-            return false;
+            return 0;
         }
     }
 
