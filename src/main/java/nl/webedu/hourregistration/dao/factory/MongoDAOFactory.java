@@ -32,7 +32,7 @@ public class MongoDAOFactory extends DAOFactory {
 
     @Override
     public IEmployeeDAO getEmployeeDAO() {
-        return null;
+        return MongoEmployeeDAO.getInstance();
     }
 
     @Override
@@ -47,12 +47,12 @@ public class MongoDAOFactory extends DAOFactory {
 
     @Override
     public IReportDAO getReportDAO() {
-        return null;
+        return MongoReportDAO.getInstance();
     }
 
     @Override
     public ISubjectDAO getSubjectDAO() {
-        return null;
+        return MongoSubjectDAO.getInstance();
     }
 
     @Override

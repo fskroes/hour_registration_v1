@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Optional;
 
 public class ReportModel extends DatabaseRowMapper<ReportModel> {
 
@@ -72,7 +73,7 @@ public class ReportModel extends DatabaseRowMapper<ReportModel> {
     }
 
     @Override
-    public ReportModel convertMongo(Document set, int rowNum) {
+    public ReportModel convertMongo(Document set) {
         // TODO: Setup MongoDB config
         return this;
     }

@@ -11,8 +11,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import nl.webedu.hourregistration.dao.IEmployeeDAO;
 import nl.webedu.hourregistration.dao.IUserAuthenticationDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
+import nl.webedu.hourregistration.model.EmployeeModel;
 
 import java.io.IOException;
 
@@ -34,12 +36,20 @@ public class UserAuthenticationController {
     public Button btnRegisterMe;
 
     private IUserAuthenticationDAO mongoUserAuthenticationDAO;
+    private IEmployeeDAO mongoEmployeeDAO;
 
     public void initialize() {
         mongoUserAuthenticationDAO = DatabaseManager.getInstance().getDaoFactory().getUserAuthenticationDAO();
+        mongoEmployeeDAO = DatabaseManager.getInstance().getDaoFactory().getEmployeeDAO();
     }
 
     public void onLogin(ActionEvent actionEvent) {
+
+//        EmployeeModel x = mongoEmployeeDAO.findEmployee("test@test.nl");
+        EmployeeModel x = mongoEmployeeDAO.findEmployee("test@test.nl");
+        System.out.println("x " + x.getEmail());
+
+
         if(mongoUserAuthenticationDAO.authenticateUser(txtEmail.getText(), txtPassword.getText())) {
             System.out.println(txtEmail.getText() + " is signing in");
 

@@ -101,14 +101,17 @@ public class MariadbWorkdayDAO implements IWorkdayDAO {
         return workday;
     }
 
+    //Sorry moet opnieuw!!!
+    //moet een lijst terug geven van alle werkdagen die een employee heeft gewerkt.
     @Override
-    public WorkdayModel selectWorkdayByEmployee(EmployeeModel employee) {
+    public List<WorkdayModel> selectWorkdaysByEmployee(EmployeeModel employee) {
         WorkdayModel workday = null;
         try {
-            workday = database.selectObjectSingle(new WorkdayModel(), "SELECT * FROM workday WHERE id = ?",  employee.getId());
+            workday = database.selectObjectSingle(new WorkdayModel(), "SELECT * FROM workday WHERE id = ?", String.valueOf(employee.get_id()));
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return workday;
+        //return workday;
+        return null;
     }
 }

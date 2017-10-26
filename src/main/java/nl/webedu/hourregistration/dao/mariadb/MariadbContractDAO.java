@@ -99,7 +99,7 @@ public class MariadbContractDAO implements IContractDAO {
         ContractModel contract = null;
 
         try {
-            contract = database.selectObjectSingle(new ContractModel(), "SELECT * FROM contract WHERE employeeID = ?", employee.getId());
+            contract = database.selectObjectSingle(new ContractModel(), "SELECT * FROM contract WHERE employeeID = ?", String.valueOf(employee.get_id()));
         } catch (SQLException e) {
             e.printStackTrace();
         }

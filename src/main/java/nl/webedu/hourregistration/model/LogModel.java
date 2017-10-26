@@ -6,6 +6,7 @@ import org.bson.Document;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.Optional;
 
 public class LogModel extends DatabaseRowMapper<LogModel> {
 
@@ -60,7 +61,7 @@ public class LogModel extends DatabaseRowMapper<LogModel> {
     }
 
     @Override
-    public LogModel convertMongo(Document set, int rowNum) {
+    public LogModel convertMongo(Document set) {
         this.id = set.getString("_id");
         this.date = set.getDate("date");
         this.description = set.getString("description");

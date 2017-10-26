@@ -141,7 +141,7 @@ public class MariadbLogDAO implements ILogDAO {
     List<LogModel> log = null;
 
         try {
-            log = database.selectObjectList(new LogModel(), "SELECT * FROM contract WHERE employeeID = ?", employee.getId());
+            log = database.selectObjectList(new LogModel(), "SELECT * FROM contract WHERE employeeID = ?", employee.get_id());
         }
         catch (SQLException e) {
         e.printStackTrace();
