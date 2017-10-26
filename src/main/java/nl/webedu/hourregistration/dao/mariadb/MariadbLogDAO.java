@@ -3,7 +3,9 @@ package nl.webedu.hourregistration.dao.mariadb;
 import nl.webedu.hourregistration.dao.ILogDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.database.MariaDatabaseExtension;
+import nl.webedu.hourregistration.model.EmployeeModel;
 import nl.webedu.hourregistration.model.LogModel;
+import nl.webedu.hourregistration.model.SubjectModel;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -82,7 +84,7 @@ public class MariadbLogDAO implements ILogDAO {
 
         LogModel log = null;
         try {
-            log = database.selectObjectSingle(new LogModel(), "SELECT * FROM log WHERE logID = ?", id + "");
+            log = database.selectObjectSingle(new LogModel(), "SELECT * FROM log WHERE logID = ?", log.getId());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -134,12 +136,12 @@ public class MariadbLogDAO implements ILogDAO {
     }
 
     @Override
-    public Collection<LogModel> selectLogByEmployee(int employeeId) {
+    public Collection<LogModel> selectLogByEmployee(EmployeeModel employee) {
 
     List<LogModel> log = null;
 
         try {
-            log = database.selectObjectList(new LogModel(), "SELECT * FROM contract WHERE employeeID = ?", employeeId);
+            log = database.selectObjectList(new LogModel(), "SELECT * FROM contract WHERE employeeID = ?", employee.getId());
         }
         catch (SQLException e) {
         e.printStackTrace();
@@ -147,12 +149,12 @@ public class MariadbLogDAO implements ILogDAO {
         return log;
 }
     @Override
-    public Collection<LogModel> selectLogBySubject(int subjectId) {
+    public Collection<LogModel> selectLogBySubject(SubjectModel subject) {
 
         List<LogModel> log = null;
 
         try {
-            log = database.selectObjectList(new LogModel(), "SELECT * FROM log WHERE subjectID = ?", subjectId);
+            log = database.selectObjectList(new LogModel(), "SELECT * FROM log WHERE subjectID = ?", subject.getId());
         }
         catch (SQLException e) {
             e.printStackTrace();
