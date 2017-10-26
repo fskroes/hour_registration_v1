@@ -3,14 +3,12 @@ package nl.webedu.hourregistration.dao.mongodb;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.async.client.MongoClient;
 import com.mongodb.async.client.MongoCollection;
-import com.sun.xml.internal.ws.util.CompletedFuture;
 import nl.webedu.hourregistration.dao.IEmployeeDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.model.EmployeeModel;
 import nl.webedu.hourregistration.model.ProjectModel;
 import org.bson.Document;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;

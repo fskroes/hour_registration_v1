@@ -42,7 +42,12 @@ public class MongoSubjectDAO implements ISubjectDAO {
     }
 
     @Override
-    public List<SubjectModel> selectSubjectByPorject(ProjectModel project) {
+    public List<SubjectModel> selectSubjectByProject(ProjectModel project) {
         return null;
     }
+
+//    @Override
+//    public List<SubjectModel> selectSubjectByPorject(ProjectModel project) {
+//        return null;
+//    }
 }
