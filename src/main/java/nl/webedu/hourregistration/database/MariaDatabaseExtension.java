@@ -3,6 +3,7 @@ package nl.webedu.hourregistration.database;
 import nl.webedu.hourregistration.model.UserAuthenticationModel;
 
 import java.sql.*;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -99,7 +100,6 @@ public class MariaDatabaseExtension extends Database<Connection> {
                 result.add(obj);
             }
         }
-
         return result;
     }
 

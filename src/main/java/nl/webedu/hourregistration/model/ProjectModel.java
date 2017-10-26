@@ -77,7 +77,7 @@ public class ProjectModel extends DatabaseRowMapper<ProjectModel> {
 
     @Override
     public ProjectModel convertSQL(ResultSet set, int rowNum) throws SQLException {
-        this.id = String.valueOf("projectID");
+        this.id = String.valueOf(set.getInt("projectID"));
         this.name = set.getString("project_name");
         this.startDate = set.getDate("start_date");
         this.endDate = set.getDate("end_date");
