@@ -1,17 +1,20 @@
 package nl.webedu.hourregistration.controller;
 
 import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXToggleButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import nl.webedu.hourregistration.dao.ICustomerDAO;
-import nl.webedu.hourregistration.dao.IUserAuthenticationDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.model.CustomerModel;
 
-import java.lang.management.MemoryManagerMXBean;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -21,26 +24,50 @@ public class CustomerController {
 
     private ICustomerDAO customerDAO;
     private List<CustomerModel> customers;
+    private Boolean geactiveerd = false;
+    private Boolean loadData = true;
+
+
+    @FXML
+    private VBox   ListVbox, AddVbox, ListOnlyVbox;
+
+    @FXML
+    private JFXTextField CustomerNameText;
 
     @FXML
     private JFXListView<?> CustomerList;
 
     @FXML
-    private Text ProjectTime;
-
-    @FXML
-    private Text StartDate;
-
-    @FXML
-    private Text EndDate;
-
-    @FXML
-    private Text ProjectName;
+    private Text ProjectName, ProjectTime, StartDate, EndDate;
 
     public void initialize() {
         customerDAO = DatabaseManager.getInstance().getDaoFactory().getCustomerDAO();
-        loadData();
+        if (loadData){
+            loadData();
+        }
     }
+
+    @FXML
+    public void AddCustomer(MouseEvent mouseEvent) throws IOException {
+
+        if(geactiveerd){
+            geactiveerd = false;
+            loadData = true;
+            ListVbox.getChildren().clear();
+            ListVbox.getChildren().add(FXMLLoader.load(getClass().getResource("/LoginView")));
+            loadData();
+        }
+        else{
+            geactiveerd = true;
+            loadData = false;
+            ListVbox.getChildren().clear();
+            ListVbox.getChildren().add(FXMLLoader.load(getClass().getResource("/AddCustomer.fxml")));
+            CustomerList.getItems().removeAll();
+        }
+
+
+    }
+
 
     public void CustomerSelect(MouseEvent mouseEvent) {
         int index = CustomerList.getSelectionModel().getSelectedIndex();
@@ -64,4 +91,5 @@ public class CustomerController {
         CustomerList.getItems().addAll(list);
 
     }
+
 }

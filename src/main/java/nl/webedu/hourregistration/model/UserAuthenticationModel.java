@@ -45,7 +45,7 @@ public class UserAuthenticationModel extends DatabaseRowMapper<UserAuthenticatio
     }
 
     @Override
-    public UserAuthenticationModel convertMongo(Document set, int rowNum) {
+    public UserAuthenticationModel convertMongo(Document document) throws SQLException {
         return null;
     }
 }
