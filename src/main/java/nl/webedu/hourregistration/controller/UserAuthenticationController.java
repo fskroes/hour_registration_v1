@@ -16,6 +16,7 @@ import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.model.EmployeeModel;
 
 import java.io.IOException;
+import java.util.List;
 
 public class UserAuthenticationController {
 
@@ -43,6 +44,12 @@ public class UserAuthenticationController {
 //        EmployeeModel x = mongoEmployeeDAO.findEmployee("test@test.nl");
         EmployeeModel x = mongoEmployeeDAO.findEmployee("test@test.nl");
         System.out.println("x " + x.getEmail());
+
+        List<String> l = mongoEmployeeDAO.selectProjectsByEmployee("test@mail.nl");
+        System.out.println("l " + l);
+        for (String s: l) {
+            System.out.println("s " + s);
+        }
 
 
         if(mongoUserAuthenticationDAO.authenticateUser(txtEmail.getText(), txtPassword.getText())) {

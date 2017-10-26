@@ -1,5 +1,6 @@
 package nl.webedu.hourregistration.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import nl.webedu.hourregistration.database.DatabaseRowMapper;
 import org.bson.Document;
 
@@ -10,6 +11,7 @@ import java.util.Optional;
 
 public class ProjectModel extends DatabaseRowMapper<ProjectModel> {
 
+    @JsonProperty("_id")
     private String id;
     private String name;
     private Date startDate;

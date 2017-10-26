@@ -2,24 +2,20 @@ package nl.webedu.hourregistration.dao.mongodb;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mongodb.async.SingleResultCallback;
 import com.mongodb.async.client.MongoClient;
 import com.mongodb.async.client.MongoCollection;
-import com.sun.xml.internal.ws.util.CompletedFuture;
 import nl.webedu.hourregistration.dao.IEmployeeDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.model.EmployeeModel;
-import nl.webedu.hourregistration.model.ProjectModel;
 import org.bson.Document;
 
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 import static com.mongodb.client.model.Filters.eq;
-import static nl.webedu.hourregistration.database.DatabaseUtil.DATABASE_NAME;
-import static nl.webedu.hourregistration.database.DatabaseUtil.EMPLOYEE_COLLECTION;
+import static nl.webedu.hourregistration.database.DatabaseUtil.*;
 
 public class MongoEmployeeDAO implements IEmployeeDAO {
 
@@ -27,6 +23,7 @@ public class MongoEmployeeDAO implements IEmployeeDAO {
     private static MongoEmployeeDAO instance;
     private ObjectMapper objectMapper = new ObjectMapper();
     private EmployeeModel model;
+    private List<String> projectsByEmployeeList;
 
     public MongoEmployeeDAO() {
         this.client = (MongoClient) DatabaseManager.getInstance().getDatabase().getConnection();
@@ -45,7 +42,7 @@ public class MongoEmployeeDAO implements IEmployeeDAO {
         employee = findEmployee(employee.getEmail());
 
         if (employee != null) {
-            System.out.println("employee not found, nothing happened");
+            System.out.println("employee not found, nothing happened \t" + "'¯\\(°_o)/¯'");
             return false;
         }
 
@@ -65,6 +62,7 @@ public class MongoEmployeeDAO implements IEmployeeDAO {
         collection
                 .insertOne(d, (aVoid, throwable) ->  {
                     result.complete(true);
+                    System.out.println("Employee inserted! Do a dance now \t (•_•) ( •_•)>⌐■-■ (⌐■_■)");
                 });
 
 
@@ -114,9 +112,12 @@ public class MongoEmployeeDAO implements IEmployeeDAO {
                 .find(eq("email", email))
                 .first((employeeModelsJson, Throwable) -> { // onResults
                     System.out.println(employeeModelsJson);
+
                     model.convertMongo(employeeModelsJson);
+
                     System.out.println(model.get_id());
                     System.out.println(model.getEmail());
+
                     result.complete(model);
                 });
 
@@ -133,18 +134,43 @@ public class MongoEmployeeDAO implements IEmployeeDAO {
 
     @Override
     public boolean updateEmployee(EmployeeModel employee) {
-        findEmployee(employee.getEmail().toString());
+        if(findEmployee(employee.getEmail()) != null) return false;
 
-        MongoCollection<Document> collection = client.getDatabase(DATABASE_NAME).getCollection(EMPLOYEE_COLLECTION);
-        CompletableFuture<Boolean> result = new CompletableFuture<>();
-
-
-
-        return false; // todo working on this, feri
+        return insertEmployee(employee);
     }
 
     @Override
-    public List<EmployeeModel> selectEmployeesByProject(ProjectModel project) {
+    public List<String> selectProjectsByEmployee(String employeeEmail) {
+
+        model = new EmployeeModel();
+        projectsByEmployeeList = new ArrayList<>();
+
+        MongoCollection<Document> collectionProjects = client.getDatabase(DATABASE_NAME).getCollection(PROJECT_COLLECTION);
+        CompletableFuture<List<String>> result = new CompletableFuture<>();
+
+        collectionProjects
+                .find(eq("employees", employeeEmail))
+                .map(Document::toString)
+                .forEach((document -> {
+                    System.out.println("foreach, document: " + document + "╭∩╮（︶︿︶）╭∩╮");
+                    projectsByEmployeeList.add(document);
+                }), (aVoid, throwable) -> {
+                    result.complete(projectsByEmployeeList);
+                });
+
+        try {
+            projectsByEmployeeList = result.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        return projectsByEmployeeList;
+    }
+
+    @Override
+    public List<String> selectEmployeeByProject(String projectName) {
         return null;
     }
 }

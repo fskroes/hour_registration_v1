@@ -4,7 +4,6 @@ import nl.webedu.hourregistration.dao.IEmployeeDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.database.MariaDatabaseExtension;
 import nl.webedu.hourregistration.model.EmployeeModel;
-import nl.webedu.hourregistration.model.ProjectModel;
 
 import java.sql.*;
 import java.util.List;
@@ -134,13 +133,14 @@ public class MariadbEmployeeDAO implements IEmployeeDAO {
     }
 
     @Override
-    public List<EmployeeModel> selectEmployeesByProject(ProjectModel project) {
-        List<EmployeeModel> employee = null;
-        try {
-            employee = database.selectObjectList(new EmployeeModel(), "SELECT * FROM employee WHERE projectID = ?", project.getId());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public List<String> selectProjectsByEmployee(String employeeEmail) {
+        List<String> employee = null;
+//        try {
+//            employee = database.selectObjectList(new EmployeeModel(), "SELECT * FROM employee WHERE projectID = ?", projectname); // todo changed, before was id of project
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+
         return employee;
     }
 }
