@@ -20,7 +20,7 @@
         <padding>
             <Insets bottom="24.0" left="24.0" right="24.0" top="24.0"/>
         </padding>
-        <Label alignment="TOP_CENTER" text="Welkom! Login a.u.b">
+        <Label alignment="TOP_CENTER" text="Welcome to WebEdu!">
             <VBox.margin>
                 <Insets bottom="24.0"/>
             </VBox.margin>
@@ -39,6 +39,6 @@
                 <Insets bottom="24.0"/>
             </VBox.margin>
         </JFXPasswordField>
-        <JFXButton fx:id="btnLogin" buttonType="RAISED" onAction="#onLogin" text="Login"/>
+        <JFXButton fx:id="btnLogin" buttonType="RAISED" onAction="#onLogin" text="Sign in"/>
     </VBox>
 </AnchorPane>

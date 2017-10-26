@@ -23,20 +23,28 @@
                 </Label>
             </children>
         </HBox>
-      <HBox prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
+      <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: e8e8e8;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
          <children>
-            <VBox prefHeight="700.0" prefWidth="640.0" spacing="24.0">
+            <VBox prefHeight="700.0" prefWidth="450.0" spacing="24.0">
                <children>
-                  <VBox maxWidth="1.7976931348623157E308" prefHeight="604.0" prefWidth="450.0" style="-fx-border-width: 1px; -fx-border-color: #4285F4;">
+                  <VBox maxWidth="1.7976931348623157E308" prefHeight="604.0" style="-fx-border-width: 1px; -fx-border-color: #4285F4;">
                      <children>
-                        <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="840.0" spacing="24.0" style="-fx-background-color: #4285F4;">
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="840.0" spacing="24.0" style="-fx-background-color: #4285F4;">
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets>
                            <padding>
                               <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
                            </padding>
+                           <children>
+                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Klanten" wrappingWidth="114.13671875">
+                                 <font>
+                                    <Font name="Bell MT" size="33.0" />
+                                 </font>
+                              </Text>
+                           </children>
                         </HBox>
+                        <JFXListView fx:id="CustomerList" onMouseClicked="#CustomerSelect" prefHeight="502.0" prefWidth="347.0" />
                      </children>
                   </VBox>
                </children>
@@ -44,18 +52,109 @@
                   <Insets bottom="48.0" left="48.0" right="48.0" top="48.0" />
                </padding>
             </VBox>
-            <VBox prefHeight="700.0" prefWidth="607.0" spacing="24.0">
+            <VBox prefHeight="700.0" prefWidth="760.0" spacing="24.0">
                <children>
                   <VBox alignment="TOP_RIGHT" maxWidth="1.7976931348623157E308" prefHeight="662.0" prefWidth="413.0" style="-fx-border-width: 1px; -fx-border-color: #4285F4;">
                      <children>
-                        <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="840.0" spacing="24.0" style="-fx-background-color: #4285F4;">
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="840.0" spacing="24.0" style="-fx-background-color: #4285F4;">
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets>
                            <padding>
                               <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
                            </padding>
+                           <children>
+                              <Text fx:id="customerProperties" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Klant gegevens" wrappingWidth="250.13671875">
+                                 <font>
+                                    <Font name="Bell MT" size="33.0" />
+                                 </font>
+                              </Text>
+                           </children>
                         </HBox>
+                        <VBox prefHeight="502.0" prefWidth="657.0" style="-fx-background-color: #FFFFFF;">
+                           <children>
+                              <HBox alignment="CENTER_LEFT" prefHeight="125.0" prefWidth="200.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Project:" wrappingWidth="144.13671875">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="30.0" />
+                                       </HBox.margin>
+                                    </Text>
+                                    <Text fx:id="ProjectName" strokeType="OUTSIDE" strokeWidth="0.0" text="-" wrappingWidth="130.13671875">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="20.0" />
+                                       </HBox.margin>
+                                    </Text>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="125.0" prefWidth="200.0">
+                                 <children>
+                                    <Text fx:id="ProjectTime2" strokeType="OUTSIDE" strokeWidth="0.0" text="Totale tijd:" wrappingWidth="144.13671875">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="30.0" />
+                                       </HBox.margin>
+                                    </Text>
+                                    <Text fx:id="ProjectTime" strokeType="OUTSIDE" strokeWidth="0.0" text="-" wrappingWidth="130.13671875">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="20.0" />
+                                       </HBox.margin>
+                                    </Text>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="125.0" prefWidth="200.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Startdatum:" wrappingWidth="138.13671875">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="30.0" />
+                                       </HBox.margin>
+                                    </Text>
+                                    <Text fx:id="StartDate" strokeType="OUTSIDE" strokeWidth="0.0" text="-" wrappingWidth="155.13671875">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="20.0" />
+                                       </HBox.margin>
+                                    </Text>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="126.0" prefWidth="200.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Einddatum:" wrappingWidth="138.13671875">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="30.0" />
+                                       </HBox.margin>
+                                    </Text>
+                                    <Text fx:id="EndDate" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="20.0" />
+                                       </HBox.margin>
+                                    </Text>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
                      </children>
                   </VBox>
                </children>

@@ -17,7 +17,7 @@
         <padding>
             <Insets bottom="24.0" left="24.0" right="24.0" top="24.0"/>
         </padding>
-        <Label alignment="TOP_CENTER" text="Registreer gebruiker">
+        <Label alignment="TOP_CENTER" text="Register to WebEdu!">
            <VBox.margin>
                <Insets bottom="24.0"/>
            </VBox.margin>
@@ -36,6 +36,6 @@
                <Insets bottom="24.0"/>
            </VBox.margin>
         </JFXPasswordField>
-        <JFXButton fx:id="btnRegister" buttonType="RAISED" onAction="#onRegister" text="Register User"/>
+        <JFXButton fx:id="btnRegister" buttonType="RAISED" onAction="#onRegister" text="Register"/>
     </VBox>
 </AnchorPane>

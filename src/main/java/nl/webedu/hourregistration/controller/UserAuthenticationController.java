@@ -36,6 +36,7 @@ public class UserAuthenticationController {
 
     public void onLogin(ActionEvent actionEvent) {
         if(mongoUserAuthenticationDAO.authenticateUser(txtEmail.getText(), txtPassword.getText())) {
+            System.out.println(txtEmail.getText() + " is signing in");
             Stage primaryStage = (Stage) root.getScene().getWindow();
             primaryStage.hide();
             Parent parent = null;
@@ -55,6 +56,17 @@ public class UserAuthenticationController {
 
     public void onRegister(ActionEvent actionEvent) {
         mongoUserAuthenticationDAO.registerUser(txtEmail.getText(), txtPassword.getText());
-        onLogin(actionEvent);
+        Stage primaryStage = (Stage) root.getScene().getWindow();
+        primaryStage.hide();
+        Parent parent = null;
+        try {
+            parent = FXMLLoader.load(getClass().getResource("/LoginView.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        assert parent != null;
+        Scene scene = new Scene(parent, 600, 400);
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 }
