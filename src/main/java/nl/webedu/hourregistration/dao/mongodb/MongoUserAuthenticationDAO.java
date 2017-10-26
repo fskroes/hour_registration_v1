@@ -6,6 +6,7 @@ import com.mongodb.async.client.MongoClient;
 import com.mongodb.async.client.MongoCollection;
 import nl.webedu.hourregistration.dao.IUserAuthenticationDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
+import nl.webedu.hourregistration.model.EmployeeModel;
 import nl.webedu.hourregistration.model.UserAuthenticationModel;
 import org.bson.Document;
 
@@ -37,8 +38,8 @@ public class MongoUserAuthenticationDAO implements IUserAuthenticationDAO {
     }
 
     @Override
-    public void registerUser(String username, String password) {
-        model = findUser(username);
+    public void registerUser(String email, String password) {
+        model = findUser(email);
         if(model == null) {
             System.out.println("User already registered");
             return;
@@ -48,7 +49,7 @@ public class MongoUserAuthenticationDAO implements IUserAuthenticationDAO {
 
         MongoCollection<Document> coll = client.getDatabase(DATABASE_NAME).getCollection(EMPLOYEE_COLLECTION);
         Document query =
-                new Document("username", username)
+                new Document("email", email)
                         .append("password", hashedPassword);
 
 
@@ -97,5 +98,10 @@ public class MongoUserAuthenticationDAO implements IUserAuthenticationDAO {
         });
 
         return lib[0];
+    }
+
+    @Override
+    public EmployeeModel findEmployee(String email) {
+        return null;
     }
 }

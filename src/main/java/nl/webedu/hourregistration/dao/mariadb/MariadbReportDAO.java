@@ -4,6 +4,7 @@ import nl.webedu.hourregistration.dao.IReportDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.database.MariaDatabaseExtension;
 import nl.webedu.hourregistration.model.CustomerModel;
+import nl.webedu.hourregistration.model.EmployeeModel;
 import nl.webedu.hourregistration.model.ReportModel;
 
 import java.sql.SQLException;
@@ -51,16 +52,38 @@ public class MariadbReportDAO implements IReportDAO {
             e.printStackTrace();
         }
         return result;
-    };
+    }
 
     @Override
     public ReportModel findReport(String id) {
-        return null;
-    };
+
+        ReportModel report = null;
+        try {
+            report = database.selectObjectSingle(new ReportModel(), "SELECT * FROM project WHERE projectID = ?", id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return report;
+    }
 
     @Override
     public int updateReport(ReportModel report) {
-        return 0;
+        int result = 0;
+        String updateSQL = "UPDATE report"
+                + " SET create_date = ?, end_date = ?, week_number = ?"
+                + " WHERE reportID = ?";
+        try {
+            database.updateQuery(
+                    updateSQL,
+                    report.getReportDate(),
+                    report.getReportEndDate(),
+                    report.getWeekNumber(),
+                    report.getId()
+            );
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return result;
     }
 
     @Override
@@ -75,13 +98,14 @@ public class MariadbReportDAO implements IReportDAO {
     }
 
     @Override
-    public ReportModel selectReportByCustomer(CustomerModel customer) {
-        ReportModel report = null;
+    public List<ReportModel> selectReportByEmployee(EmployeeModel employee) {
+        List<ReportModel> report = null;
         try {
-            report = database.selectObjectSingle(new ReportModel(), "SELECT * FROM report WHERE id = ?", customer.getId());
+            report = database.selectObjectList(new ReportModel(), "SELECT * FROM report WHERE employeeID = ?", employee.get_id());
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return report;
     }
+
 }

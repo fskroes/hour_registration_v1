@@ -3,6 +3,7 @@ package nl.webedu.hourregistration.dao.mariadb;
 import nl.webedu.hourregistration.dao.ILogDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.database.MariaDatabaseExtension;
+import nl.webedu.hourregistration.model.EmployeeModel;
 import nl.webedu.hourregistration.model.LogModel;
 
 import java.sql.Connection;
@@ -82,7 +83,7 @@ public class MariadbLogDAO implements ILogDAO {
 
         LogModel log = null;
         try {
-            log = database.selectObjectSingle(new LogModel(), "SELECT * FROM log WHERE logID = ?", id + "");
+            log = database.selectObjectSingle(new LogModel(), "SELECT * FROM log WHERE logID = ?", log.getId());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -134,29 +135,16 @@ public class MariadbLogDAO implements ILogDAO {
     }
 
     @Override
-    public Collection<LogModel> selectLogByEmployee(int employeeId) {
+    public Collection<LogModel> selectLogByEmployee(EmployeeModel employee) {
 
     List<LogModel> log = null;
 
         try {
-            log = database.selectObjectList(new LogModel(), "SELECT * FROM contract WHERE employeeID = ?", employeeId);
+            log = database.selectObjectList(new LogModel(), "SELECT * FROM contract WHERE employeeID = ?", employee.get_id());
         }
         catch (SQLException e) {
         e.printStackTrace();
     }
-        return log;
-}
-    @Override
-    public Collection<LogModel> selectLogBySubject(int subjectId) {
-
-        List<LogModel> log = null;
-
-        try {
-            log = database.selectObjectList(new LogModel(), "SELECT * FROM log WHERE subjectID = ?", subjectId);
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
         return log;
     }
 }

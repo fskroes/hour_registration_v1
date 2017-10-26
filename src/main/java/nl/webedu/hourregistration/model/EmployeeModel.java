@@ -158,8 +158,8 @@ public class EmployeeModel extends DatabaseRowMapper<EmployeeModel> {
     }
 
     @Override
-    public EmployeeModel convertMongo(Document set, int rowNum) {
-        this.id = set.getString("_id");
+    public EmployeeModel convertMongo(Document set) {
+        this.id = set.getObjectId("_id").toString();
         this.email = set.getString("email");
         this.password = set.getString("password");
         this.firstname = set.getString("firstname");

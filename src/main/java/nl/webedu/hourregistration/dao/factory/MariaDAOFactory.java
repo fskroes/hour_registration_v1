@@ -52,11 +52,6 @@ public class MariaDAOFactory extends DAOFactory {
     }
 
     @Override
-    public ISubjectDAO getSubjectDAO() {
-        return MariadbSubjectDAO.getInstance();
-    }
-
-    @Override
     public IUserAuthenticationDAO getUserAuthenticationDAO() {
         return MariadbUserAuthenticationDAO.getInstance();
     }

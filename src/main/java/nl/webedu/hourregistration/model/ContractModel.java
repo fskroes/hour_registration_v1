@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.util.Date;
+import java.util.Optional;
 
 public class ContractModel extends DatabaseRowMapper<ContractModel> {
 
@@ -74,7 +75,7 @@ public class ContractModel extends DatabaseRowMapper<ContractModel> {
     }
 
     @Override
-    public ContractModel convertMongo(Document set, int rowNum) {
+    public ContractModel convertMongo(Document set) {
         this.id = set.getString("_id");
         this.minHours = set.getInteger("min_hours");
         this.maxHours = set.getInteger("max_hours");

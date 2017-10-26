@@ -6,6 +6,7 @@ import org.bson.Document;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.Optional;
 
 public class ActivitiesModel extends DatabaseRowMapper<ActivitiesModel> {
 
@@ -76,8 +77,8 @@ public class ActivitiesModel extends DatabaseRowMapper<ActivitiesModel> {
     }
 
     @Override
-    public ActivitiesModel convertMongo(Document set, int rowNum) {
-        this.id = set.getString("_id");
+    public ActivitiesModel convertMongo(Document set) {
+        this.id = String.valueOf(set.getObjectId("_id"));
         this.category = set.getString("category");
         this.startTime = set.getDate("start_time");
         this.endTime = set.getDate("end_time");

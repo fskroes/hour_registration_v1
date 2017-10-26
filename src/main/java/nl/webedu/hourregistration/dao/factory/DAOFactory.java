@@ -11,7 +11,6 @@ public abstract class DAOFactory {
     public abstract ILogDAO getLogDAO();
     public abstract IProjectDAO getProjectDAO();
     public abstract IReportDAO getReportDAO();
-    public abstract ISubjectDAO getSubjectDAO();
     public abstract IUserAuthenticationDAO getUserAuthenticationDAO();
     public abstract IWorkdayDAO getWorkdayDAO();
 

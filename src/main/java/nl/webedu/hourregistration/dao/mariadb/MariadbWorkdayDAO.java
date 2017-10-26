@@ -60,12 +60,34 @@ public class MariadbWorkdayDAO implements IWorkdayDAO {
 
     @Override
     public WorkdayModel findWorkday(String id) {
-        return null;
+        WorkdayModel workday = null;
+        try {
+            workday = database.selectObjectSingle(new WorkdayModel(), "SELECT * FROM workday WHERE workdayID = ?", id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return workday;
     }
 
     @Override
-    public int updateWorkday(WorkdayModel Workday) {
-        return 0;
+    public int updateWorkday(WorkdayModel workday) {
+        int result = 0;
+        String updateSQL = "UPDATE workday"
+                + " SET date = ?, week_number = ?, start_time = ?, end_time = ?"
+                + " WHERE workdayID = ?";
+        try {
+            database.updateQuery(
+                    updateSQL,
+                    workday.getDate(),
+                    workday.getWeekNumber(),
+                    workday.getStartTime(),
+                    workday.getEndTime(),
+                    workday.getId()
+            );
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return result;
     }
 
     @Override
@@ -79,14 +101,17 @@ public class MariadbWorkdayDAO implements IWorkdayDAO {
         return workday;
     }
 
+    //Sorry moet opnieuw!!!
+    //moet een lijst terug geven van alle werkdagen die een employee heeft gewerkt.
     @Override
-    public WorkdayModel selectWorkdayByEmployee(EmployeeModel employee) {
+    public List<WorkdayModel> selectWorkdaysByEmployee(EmployeeModel employee) {
         WorkdayModel workday = null;
         try {
-            workday = database.selectObjectSingle(new WorkdayModel(), "SELECT * FROM workday WHERE id = ?",  employee.getId());
+            workday = database.selectObjectSingle(new WorkdayModel(), "SELECT * FROM workday WHERE id = ?", String.valueOf(employee.get_id()));
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return workday;
+        //return workday;
+        return null;
     }
 }

@@ -79,13 +79,17 @@ public class MariadbCustomerDAO implements ICustomerDAO {
 
     @Override
     public List<CustomerModel> selectAllCustomers() {
-        List<CustomerModel> customer = null;
+        List<CustomerModel> customers = null;
         try {
-            customer = database.selectObjectList(new CustomerModel(), "SELECT * FROM customer");
+            customers = database.selectObjectList(new CustomerModel(), "SELECT * FROM customer");
+            for (CustomerModel customer : customers) {
+                customer.setProjectModel(DatabaseManager.getInstance().getDaoFactory().
+                        getProjectDAO().selectProjectByCustomer(customer));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return customer;
+        return customers;
     }
 
     @Override
