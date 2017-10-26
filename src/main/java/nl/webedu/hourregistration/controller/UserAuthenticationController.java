@@ -44,12 +44,6 @@ public class UserAuthenticationController {
     }
 
     public void onLogin(ActionEvent actionEvent) {
-
-//        EmployeeModel x = mongoEmployeeDAO.findEmployee("test@test.nl");
-        EmployeeModel x = mongoEmployeeDAO.findEmployee("test@test.nl");
-        System.out.println("x " + x.getEmail());
-
-
         if(mongoUserAuthenticationDAO.authenticateUser(txtEmail.getText(), txtPassword.getText())) {
             System.out.println(txtEmail.getText() + " is signing in");
 
