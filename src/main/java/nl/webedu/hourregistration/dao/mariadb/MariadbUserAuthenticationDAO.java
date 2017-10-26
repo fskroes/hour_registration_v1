@@ -3,6 +3,7 @@ package nl.webedu.hourregistration.dao.mariadb;
 import nl.webedu.hourregistration.dao.IUserAuthenticationDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.database.MariaDatabaseExtension;
+import nl.webedu.hourregistration.helpers.PasswordHashing;
 import nl.webedu.hourregistration.model.ActivitiesModel;
 import nl.webedu.hourregistration.model.EmployeeModel;
 import nl.webedu.hourregistration.model.UserAuthenticationModel;
@@ -10,6 +11,7 @@ import nl.webedu.hourregistration.model.UserAuthenticationModel;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import static nl.webedu.hourregistration.helpers.PasswordHashing.checkPassword;
 import static nl.webedu.hourregistration.helpers.PasswordHashing.hashPassword;
 
 public class MariadbUserAuthenticationDAO implements IUserAuthenticationDAO {
@@ -51,12 +53,16 @@ public class MariadbUserAuthenticationDAO implements IUserAuthenticationDAO {
             return;
         }
 
+        if (username.isEmpty() || password.isEmpty()) {
+            System.out.println("Fill in both fields");
+            return;
+        }
+
         String hashedPassword = hashPassword(password);
 
         String insertSQL = "INSERT INTO employee"
                 + "(email, password) VALUES"
                 + "(?,?)";
-
         try {
             database.insertQuery(insertSQL, username, hashedPassword);
             System.out.println(username + " is registered");
@@ -69,8 +75,28 @@ public class MariadbUserAuthenticationDAO implements IUserAuthenticationDAO {
     public boolean authenticateUser(String email, String password) {
         model = null;
         model = findUser(email);
-        if(model != null)
+        if (email.isEmpty() || password.isEmpty()) {
+            System.out.println("Fill in both fields");
+            return false;
+        }
+        if (model == null)
+            System.out.println("User does not exist");
+        else if (model.getEmail().equals(email) && checkPassword(password, model.getPassword()))
             return true;
+        else if (model.getEmail().equals(email) && !checkPassword(password, model.getPassword()))
+            System.out.println("Incorrect password");
         return false;
+    }
+
+    @Override
+    public EmployeeModel findEmployee(String email) {
+        EmployeeModel employee = null;
+        String selectSQL = "SELECT * FROM employee WHERE email = ?";
+        try {
+            employee = database.selectObjectSingle(new EmployeeModel(), selectSQL, email);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return employee;
     }
 }
