@@ -11,5 +11,5 @@ public abstract class DatabaseRowMapper<E> {
 
     public abstract E convertSQL(ResultSet set, int rowNum) throws SQLException;
 
-    public abstract E convertMongo(Optional<Document> set) throws SQLException;
+    public abstract E convertMongo(Document document) throws SQLException;
 }

@@ -75,7 +75,7 @@ public class MongoProjectDAO implements IProjectDAO {
         ProjectModel pm = new ProjectModel();
 
         client.getDatabase(DATABASE_NAME).getCollection(PROJECT_COLLECTION).find(
-                eq("_id", id)).first((document, throwable) -> completableFuture.complete(pm.convertMongo(Optional.of(document))));
+                eq("_id", id)).first((document, throwable) -> completableFuture.complete(pm.convertMongo(document)));
         try {
             return completableFuture.get();
         } catch (InterruptedException | ExecutionException e) {

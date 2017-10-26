@@ -71,7 +71,7 @@ public class SubjectModel extends DatabaseRowMapper<SubjectModel> {
     }
 
     @Override
-    public SubjectModel convertMongo(Optional<Document> set) {
+    public SubjectModel convertMongo(Document set) {
         // TODO: Setup MongoDB config
         return this;
     }

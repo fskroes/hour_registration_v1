@@ -59,7 +59,7 @@ public class MongoContractDAO implements IContractDAO {
         client.getDatabase(DatabaseUtil.DATABASE_NAME).getCollection(DatabaseUtil.CONTRACT_COLLECTION).find(
                 eq("_id", new ObjectId("59dde9480c74011202d9fff9"))
         ).forEach(
-                (document) -> queryTimer.complete(new ContractModel().convertMongo(Optional.of(document))),
+                (document) -> queryTimer.complete(new ContractModel().convertMongo(document)),
                 (aVoid, throwable) -> System.out.println("Found a record")
         );
         try {

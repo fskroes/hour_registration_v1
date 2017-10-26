@@ -25,20 +25,6 @@ public class HourRegistration extends Application {
 
         DatabaseManager.getInstance().connectToDatabase(DatabaseType.MONGODB);
 
-//        ArrayList<EmployeeModel> em = new ArrayList<EmployeeModel>();
-//
-//
-//        ArrayList<ActivitiesModel> am = new ArrayList<ActivitiesModel>();
-//        am.add(new ActivitiesModel( "categorie 2", new Date(), new Date(),2));
-//        am.add(new ActivitiesModel( "categorie 4", new Date(), new Date(),2));
-//
-//        WorkdayModel wm = new WorkdayModel(new Date(),new Date(),new Date(),2,am,em);
-//
-//        DatabaseManager.getInstance().getDaoFactory().getWorkdayDAO().insertWorkday(wm);
-//
-
-
-
         Parent root = FXMLLoader.load(getClass().getResource("/LoginView.fxml"));
         Scene scene = new Scene(root, 600, 400);
         primaryStage.setScene(scene);

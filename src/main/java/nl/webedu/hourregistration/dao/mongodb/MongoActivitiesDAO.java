@@ -62,7 +62,7 @@ public class MongoActivitiesDAO implements IActivitiesDAO {
 
         client.getDatabase(DATABASE_NAME).getCollection(ACTIVITY_COLLECTION).find(
                 eq("_id", id)).first((document, throwable) -> {
-                    completableFuture.complete(ac.convertMongo(Optional.of(document)));
+                    completableFuture.complete(ac.convertMongo(document));
                 });
         try {
             return completableFuture.get();

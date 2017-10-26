@@ -61,10 +61,10 @@ public class LogModel extends DatabaseRowMapper<LogModel> {
     }
 
     @Override
-    public LogModel convertMongo(Optional<Document> set) {
-        this.id = set.get().getString("_id");
-        this.date = set.get().getDate("date");
-        this.description = set.get().getString("description");
+    public LogModel convertMongo(Document set) {
+        this.id = set.getString("_id");
+        this.date = set.getDate("date");
+        this.description = set.getString("description");
         return this;
     }
 }

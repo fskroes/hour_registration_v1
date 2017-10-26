@@ -57,7 +57,7 @@ public class MongoEmployeeDAO implements IEmployeeDAO {
                 .find(eq("email", id))
                 .first((employeeModelsJson, Throwable) -> { // onResults
                     System.out.println(employeeModelsJson);
-                    model.convertMongo(java.util.Optional.of(employeeModelsJson));
+                    model.convertMongo(employeeModelsJson);
                     System.out.println(model.get_id());
                     System.out.println(model.getEmail());
                     result.complete(model);

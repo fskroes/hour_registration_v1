@@ -17,14 +17,14 @@ public class WorkdayModel extends DatabaseRowMapper<WorkdayModel> {
     private String id;
     private Date date, startTime, endTime;
     private int weekNumber;
-    private List<ActivitiesModel> activities;
+    private List<String> activities;
     private List<String> employee_ids;
 
     public WorkdayModel() {
         
     }
 
-    public WorkdayModel(String id, Date date, Date startTime, Date endTime, int weekNumber, List<ActivitiesModel> activities, List<String> employee_ids) {
+    public WorkdayModel(String id, Date date, Date startTime, Date endTime, int weekNumber, List<String> activities, List<String> employee_ids) {
         this.id = id;
         this.date = date;
         this.startTime = startTime;
@@ -33,7 +33,7 @@ public class WorkdayModel extends DatabaseRowMapper<WorkdayModel> {
         this.activities = activities;
         this.employee_ids = employee_ids;
     }
-    public WorkdayModel(Date date, Date startTime, Date endTime, int weekNumber, List<ActivitiesModel> activities, List<String> employee_ids) {
+    public WorkdayModel(Date date, Date startTime, Date endTime, int weekNumber, List<String> activities, List<String> employee_ids) {
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -78,11 +78,11 @@ public class WorkdayModel extends DatabaseRowMapper<WorkdayModel> {
         this.weekNumber = weekNumber;
     }
 
-    public List<ActivitiesModel> getActivities() {
-        return activities;
+    public List<String> getActivitieIds() {
+        return new ArrayList<>(activities);
     }
 
-    public void setActivities(List<ActivitiesModel> activities) {
+    public void setActivities(List<String> activities) {
         this.activities = activities;
     }
 
@@ -114,7 +114,7 @@ public class WorkdayModel extends DatabaseRowMapper<WorkdayModel> {
     }
 
     @Override
-    public WorkdayModel convertMongo(Optional<Document> set) {
+    public WorkdayModel convertMongo(Document document) {
         // TODO: Setup MongoDB config
         return this;
     }
