@@ -53,12 +53,16 @@ public class MariadbUserAuthenticationDAO implements IUserAuthenticationDAO {
             return;
         }
 
+        if (username.isEmpty() || password.isEmpty()) {
+            System.out.println("Fill in both fields");
+            return;
+        }
+
         String hashedPassword = hashPassword(password);
 
         String insertSQL = "INSERT INTO employee"
                 + "(email, password) VALUES"
                 + "(?,?)";
-
         try {
             database.insertQuery(insertSQL, username, hashedPassword);
             System.out.println(username + " is registered");
@@ -82,5 +86,17 @@ public class MariadbUserAuthenticationDAO implements IUserAuthenticationDAO {
         else if (model.getEmail().equals(email) && !checkPassword(password, model.getPassword()))
             System.out.println("Incorrect password");
         return false;
+    }
+
+    @Override
+    public EmployeeModel findEmployee(String email) {
+        EmployeeModel employee = null;
+        String selectSQL = "SELECT * FROM employee WHERE email = ?";
+        try {
+            employee = database.selectObjectSingle(new EmployeeModel(), selectSQL, email);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return employee;
     }
 }

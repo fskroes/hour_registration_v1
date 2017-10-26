@@ -28,6 +28,10 @@ public class UserAuthenticationController {
     public JFXButton btnGeenAccount;
     @FXML
     public JFXButton btnEenAccount;
+    @FXML
+    public Button btnSignMeIn;
+    @FXML
+    public Button btnRegisterMe;
 
     private IUserAuthenticationDAO mongoUserAuthenticationDAO;
 
@@ -38,15 +42,23 @@ public class UserAuthenticationController {
     public void onLogin(ActionEvent actionEvent) {
         if(mongoUserAuthenticationDAO.authenticateUser(txtEmail.getText(), txtPassword.getText())) {
             System.out.println(txtEmail.getText() + " is signing in");
+
             Stage primaryStage = (Stage) root.getScene().getWindow();
             primaryStage.hide();
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/MainView.fxml"));
+
             Parent parent = null;
             try {
-                parent = FXMLLoader.load(getClass().getResource("/MainView.fxml"));
+                parent = loader.load();
             } catch (IOException e) {
                 e.printStackTrace();
             }
             assert parent != null;
+
+            MainController controller = loader.getController();
+            //controller.setSessionEmployee(mongoUserAuthenticationDAO.findEmployee(txtEmail.getText()));
+
             Scene scene = new Scene(parent, 1200, 800);
             primaryStage.setScene(scene);
             primaryStage.show();
@@ -57,7 +69,9 @@ public class UserAuthenticationController {
 
     public void onRegister(ActionEvent actionEvent) {
         mongoUserAuthenticationDAO.registerUser(txtEmail.getText(), txtPassword.getText());
-        toLoginView(actionEvent);
+        if (!txtEmail.getText().isEmpty() && !txtPassword.getText().isEmpty()) {
+            toLoginView(actionEvent);
+        }
     }
 
     public void toRegisterView(ActionEvent actionEvent) {

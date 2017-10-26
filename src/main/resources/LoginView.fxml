@@ -21,25 +21,25 @@
         </padding>
         <Label alignment="TOP_CENTER" text="Welcome to WebEdu!">
             <VBox.margin>
-                <Insets bottom="40.0" />
+                <Insets bottom="50.0" />
             </VBox.margin>
             <font>
                 <Font size="24.0" />
             </font>
         </Label>
-        <JFXTextField fx:id="txtEmail" labelFloat="true" maxWidth="-Infinity" prefWidth="300.0" promptText="Email">
-            <VBox.margin>
-                <Insets bottom="24.0" />
-            </VBox.margin>
-        </JFXTextField>
-        <JFXPasswordField fx:id="txtPassword" labelFloat="true" maxWidth="-Infinity" prefWidth="300.0" promptText="Password">
+        <JFXTextField fx:id="txtEmail" labelFloat="true" maxWidth="-Infinity" prefWidth="300.0" promptText="Email" unFocusColor="#4059a9">
             <VBox.margin>
                 <Insets bottom="40.0" />
+            </VBox.margin>
+        </JFXTextField>
+        <JFXPasswordField fx:id="txtPassword" labelFloat="true" maxWidth="-Infinity" prefWidth="300.0" promptText="Password" unFocusColor="#4059a9">
+            <VBox.margin>
+                <Insets bottom="30.0" />
             </VBox.margin>
         </JFXPasswordField>
       <VBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
          <children>
-            <Button fx:id="btnSignIn" alignment="CENTER" mnemonicParsing="false" onAction="#onLogin" text="Sign me in" />
+            <Button fx:id="btnSignMeIn" alignment="CENTER" mnemonicParsing="false" onAction="#onLogin" text="Sign me in" />
              <JFXButton fx:id="btnGeenAccount" mnemonicParsing="false" onAction="#toRegisterView" text="Ik heb nog geen account">
                <cursor>
                   <Cursor fx:constant="HAND" />
