@@ -15,8 +15,8 @@ public class EmployeeModel extends DatabaseRowMapper<EmployeeModel> {
     private String email, password, firstname, suffix, lastname;
     private Role role;
     private ContractModel contractModel;
-    private List<ProjectModel> projectModels;
-    private List<WorkdayModel> workdayModels;
+    private List<ProjectModel> projects;
+    private List<WorkdayModel> workdays;
 
     /**
      * Empty contructor, for test purposes only
@@ -108,36 +108,36 @@ public class EmployeeModel extends DatabaseRowMapper<EmployeeModel> {
         this.contractModel = contractModel;
     }
 
-    public List<ProjectModel> getProjectModels() {
-        return new ArrayList<>(projectModels);
+    public List<ProjectModel> getProjects() {
+        return new ArrayList<>(projects);
     }
 
-    public void setProjectModels(List<ProjectModel> projectModels) {
-        this.projectModels = projectModels;
+    public void setProjects(List<ProjectModel> projects) {
+        this.projects = projects;
     }
 
     public void addProject(ProjectModel projectModel) {
-        this.projectModels.add(projectModel);
+        this.projects.add(projectModel);
     }
 
     public void removeProject(ProjectModel projectModel) {
-        this.projectModels.remove(projectModel);
+        this.projects.remove(projectModel);
     }
 
-    public List<WorkdayModel> getWorkdayModels() {
-        return new ArrayList<>(workdayModels);
+    public List<WorkdayModel> getWorkdays() {
+        return new ArrayList<>(workdays);
     }
 
-    public void setWorkdayModels(List<WorkdayModel> workdayModels) {
-        this.workdayModels = workdayModels;
+    public void setWorkdays(List<WorkdayModel> workdays) {
+        this.workdays = workdays;
     }
 
     public void addWorkday(WorkdayModel workdayModel) {
-        this.workdayModels.add(workdayModel);
+        this.workdays.add(workdayModel);
     }
 
     public void removeWorkday(WorkdayModel workdayModel) {
-        this.workdayModels.remove(workdayModel);
+        this.workdays.remove(workdayModel);
     }
 
     @Override

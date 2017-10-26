@@ -18,6 +18,7 @@ public class ReportModel extends DatabaseRowMapper<ReportModel> {
     private Date reportDate;
 
     public ReportModel() {
+        type = ReportModel.class;
     }
 
     public ReportModel(String id, ArrayList<WorkdayModel> workDays, int weekNumber, Date reportDate) {

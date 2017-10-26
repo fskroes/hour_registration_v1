@@ -20,7 +20,7 @@ public class WorkdayModel extends DatabaseRowMapper<WorkdayModel> {
     private List<EmployeeModel> employeeModels;
 
     public WorkdayModel() {
-        
+        type = WorkdayModel.class;
     }
 
     public WorkdayModel(String id, Date date, Date startTime, Date endTime, int weekNumber, List<ActivitiesModel> activities, List<EmployeeModel> employeeModels) {

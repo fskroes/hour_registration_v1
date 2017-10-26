@@ -17,6 +17,7 @@ public class ContractModel extends DatabaseRowMapper<ContractModel> {
     private Date endTime;
 
     public ContractModel() {
+        type = ContractModel.class;
     }
 
     public ContractModel(int minHours, int maxHours, Date startTime, Date endTime) {

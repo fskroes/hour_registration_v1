@@ -15,6 +15,7 @@ public class LogModel extends DatabaseRowMapper<LogModel> {
     private String description;
 
     public LogModel() {
+        type = LogModel.class;
     }
 
     public LogModel(EmployeeModel employeeModel, Date date, String description) {

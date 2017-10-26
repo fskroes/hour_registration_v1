@@ -17,6 +17,7 @@ public class ProjectModel extends DatabaseRowMapper<ProjectModel> {
     private CustomerModel customerModel;
 
     public ProjectModel() {
+        type = ProjectModel.class;
     }
 
     public ProjectModel(String id, String name, Date startDate, Date endDate, String categorie) {

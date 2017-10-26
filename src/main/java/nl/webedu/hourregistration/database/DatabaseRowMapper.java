@@ -7,8 +7,14 @@ import java.sql.SQLException;
 
 public abstract class DatabaseRowMapper<E> {
 
+    protected Class<E> type;
+
     public abstract E convertSQL(ResultSet set, int rowNum) throws SQLException;
 
     public abstract E convertMongo(Document set, int rowNum);
+
+    public Class<E> getType() {
+        return type;
+    }
 
 }

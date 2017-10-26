@@ -18,6 +18,7 @@ public class SubjectModel extends DatabaseRowMapper<SubjectModel> {
     private ProjectModel projectModel;
 
     public SubjectModel() {
+        type = SubjectModel.class;
     }
 
     public SubjectModel(String onderwerpName, Date startDate, Date endDate, ProjectModel projectModel) {
@@ -70,7 +71,7 @@ public class SubjectModel extends DatabaseRowMapper<SubjectModel> {
     }
 
     @Override
-    public SubjectModel convertMongo(Document set, int rowNum) throws SQLException {
+    public SubjectModel convertMongo(Document set, int rowNum) {
         // TODO: Setup MongoDB config
         return this;
     }
