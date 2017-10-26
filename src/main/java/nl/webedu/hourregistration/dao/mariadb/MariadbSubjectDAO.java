@@ -41,8 +41,14 @@ public class MariadbSubjectDAO implements ISubjectDAO {
 
     @Override
     public SubjectModel findSubject(String id) {
-        return null;
-    };
+        SubjectModel subject = null;
+        try {
+            subject = database.selectObjectSingle(new SubjectModel(), "SELECT * FROM project WHERE projectID = ?", id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return subject;
+    }
 
     @Override
     public int deleteSubject(SubjectModel subject) {
@@ -59,16 +65,44 @@ public class MariadbSubjectDAO implements ISubjectDAO {
 
     @Override
     public int updateSubject(SubjectModel subject) {
-        return 0;
+        int result = 0;
+        String updateSQL = "UPDATE subject"
+                + " SET subject_name = ?, start_date = ?, end_date = ?"
+                + " WHERE subjectID = ?";
+        try {
+            database.updateQuery(
+                    updateSQL,
+                    subject.getOnderwerpName(),
+                    subject.getStartDate(),
+                    subject.getEndDate(),
+                    subject.getId()
+            );
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return result;
     }
 
     @Override
     public List<SubjectModel> selectAllSubject() {
-        return null;
+        List<SubjectModel> subject = null;
+        try {
+            subject = database.selectObjectList(new SubjectModel(), "SELECT * FROM subject");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return subject;
     }
 
     @Override
-    public List<SubjectModel> selectSubjectByPorject(ProjectModel project) {
-        return null;
+    public List<SubjectModel> selectSubjectByProject(ProjectModel project) {
+
+        List<SubjectModel> subject = null;
+        try {
+            subject = database.selectObjectList(new SubjectModel(), "SELECT * FROM subject WHERE projectID = ?", project.getId());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return subject;
     }
 }

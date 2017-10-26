@@ -62,6 +62,6 @@ public class MongoDAOFactory extends DAOFactory {
 
     @Override
     public IWorkdayDAO getWorkdayDAO() {
-        return null;
+        return MongoWorkdayDAO.getInstance();
     }
 }

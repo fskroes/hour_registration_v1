@@ -30,6 +30,14 @@ public class EmployeeModel extends DatabaseRowMapper<EmployeeModel> {
         this.id = id;
     }
 
+    public EmployeeModel(String email, String firstname, String suffix, String lastname) {
+        this.email = email;
+        this.role = role;
+        this.firstname = firstname;
+        this.suffix = suffix;
+        this.lastname = lastname;
+    }
+
     public EmployeeModel(String email, String password, String firstname, String suffix, String lastname) {
         this.email = email;
         this.password = password;
