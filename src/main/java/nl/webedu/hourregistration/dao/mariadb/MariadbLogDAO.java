@@ -5,7 +5,6 @@ import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.database.MariaDatabaseExtension;
 import nl.webedu.hourregistration.model.EmployeeModel;
 import nl.webedu.hourregistration.model.LogModel;
-import nl.webedu.hourregistration.model.SubjectModel;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -146,19 +145,6 @@ public class MariadbLogDAO implements ILogDAO {
         catch (SQLException e) {
         e.printStackTrace();
     }
-        return log;
-}
-    @Override
-    public Collection<LogModel> selectLogBySubject(SubjectModel subject) {
-
-        List<LogModel> log = null;
-
-        try {
-            log = database.selectObjectList(new LogModel(), "SELECT * FROM log WHERE subjectID = ?", subject.getId());
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
         return log;
     }
 }

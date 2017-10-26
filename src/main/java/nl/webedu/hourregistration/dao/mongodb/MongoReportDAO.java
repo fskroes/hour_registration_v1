@@ -32,11 +32,6 @@ public class MongoReportDAO implements IReportDAO {
         return instance;
     }
 
-//    public ReportModel(String id, ArrayList<WorkdayModel> workDays, int weekNumber, Date reportDate, Date endDate) {
-//        this(workDays, weekNumber, reportDate, endDate);
-//        this.id = id;
-//    }
-
     @Override
     public boolean insertReport(ReportModel report) {
         CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();

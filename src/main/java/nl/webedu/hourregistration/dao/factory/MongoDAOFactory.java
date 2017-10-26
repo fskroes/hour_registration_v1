@@ -51,11 +51,6 @@ public class MongoDAOFactory extends DAOFactory {
     }
 
     @Override
-    public ISubjectDAO getSubjectDAO() {
-        return MongoSubjectDAO.getInstance();
-    }
-
-    @Override
     public IUserAuthenticationDAO getUserAuthenticationDAO() {
         return MongoUserAuthenticationDAO.getInstance();
     }
