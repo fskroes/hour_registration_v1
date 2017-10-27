@@ -101,7 +101,7 @@ public class MariadbReportDAO implements IReportDAO {
     public List<ReportModel> selectReportByEmployee(EmployeeModel employee) {
         List<ReportModel> report = null;
         try {
-            report = database.selectObjectList(new ReportModel(), "SELECT * FROM report WHERE employeeID = ?", employee.get_id());
+            report = database.selectObjectList(new ReportModel(), "SELECT * FROM report WHERE employeeID = ?", employee.getId());
         } catch (SQLException e) {
             e.printStackTrace();
         }

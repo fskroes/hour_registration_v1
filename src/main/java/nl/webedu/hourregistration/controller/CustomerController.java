@@ -39,7 +39,7 @@ public class CustomerController {
 
     public void initialize() {
         customerDAO = DatabaseManager.getInstance().getDaoFactory().getCustomerDAO();
-        loadData();
+        //loadData();
     }
 
     public void CustomerSelect(MouseEvent mouseEvent) {
@@ -54,14 +54,14 @@ public class CustomerController {
 //        System.out.println(CustomerList.getSelectionModel().getSelectedIndex());
 
     }
-    public void loadData(){
-        list.removeAll();
-        customers = customerDAO.selectAllCustomers();
-        for(CustomerModel customer : customers){
-            list.add(customer.getBusinessName());
-        }
-
-        CustomerList.getItems().addAll(list);
-
-    }
+//    public void loadData(){
+//        list.removeAll();
+//        customers = customerDAO.selectAllCustomers();
+//        for(CustomerModel customer : customers){
+//            list.add(customer.getBusinessName());
+//        }
+//
+//        CustomerList.getItems().addAll(list);
+//
+//    }
 }

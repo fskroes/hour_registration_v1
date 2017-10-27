@@ -133,9 +133,9 @@ public class MongoReportDAO implements IReportDAO {
         CompletableFuture<List<ReportModel>> result = new CompletableFuture<>();
         ArrayList<ReportModel> alWorkdays = new ArrayList<>();
         MongoCollection<Document> collection = client.getDatabase(DATABASE_NAME).getCollection(REPORT_COLLECTION);
-        System.out.println("!!!!!!! "+employee.get_id());
+        System.out.println("!!!!!!! "+employee.getId());
         collection
-                .find(eq("reports",employee.get_id()))
+                .find(eq("reports",employee.getId()))
                 .forEach((document -> {
                     System.out.println(document.toJson());
                     alWorkdays.add(new ReportModel().convertMongo(document));

@@ -110,7 +110,7 @@ public class MariadbActivitiesDAO implements IActivitiesDAO {
     public List<ActivitiesModel> selectActivitiesByEmployee(EmployeeModel employee) {
         List<ActivitiesModel> activities = null;
         try {
-            activities = database.selectObjectList(new ActivitiesModel(), "SELECT * FROM activity WHERE activityID = ?", String.valueOf(employee.get_id()));
+            activities = database.selectObjectList(new ActivitiesModel(), "SELECT * FROM activity WHERE activityID = ?", String.valueOf(employee.getId()));
         } catch (SQLException e) {
             e.printStackTrace();
         }

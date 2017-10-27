@@ -116,7 +116,7 @@ public class MariadbEmployeeDAO implements IEmployeeDAO {
             ps.setString(4, String.valueOf(employee.getFirstname()));
             ps.setString(5, String.valueOf(employee.getSuffix()));
             ps.setString(6, String.valueOf(employee.getLastname()));
-            ps.setString(7, String.valueOf(employee.get_id()));
+            ps.setString(7, String.valueOf(employee.getId()));
 
             ps.executeUpdate();
             ps.close();

@@ -107,7 +107,7 @@ public class MariadbWorkdayDAO implements IWorkdayDAO {
     public List<WorkdayModel> selectWorkdaysByEmployee(EmployeeModel employee) {
         WorkdayModel workday = null;
         try {
-            workday = database.selectObjectSingle(new WorkdayModel(), "SELECT * FROM workday WHERE id = ?", String.valueOf(employee.get_id()));
+            workday = database.selectObjectSingle(new WorkdayModel(), "SELECT * FROM workday WHERE id = ?", String.valueOf(employee.getId()));
         } catch (SQLException e) {
             e.printStackTrace();
         }

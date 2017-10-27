@@ -145,9 +145,9 @@ public class MongoWorkdayDAO implements IWorkdayDAO {
         CompletableFuture<List<WorkdayModel>> result = new CompletableFuture<>();
         ArrayList<WorkdayModel> alWorkdays = new ArrayList<>();
         MongoCollection<Document> collection = client.getDatabase(DATABASE_NAME).getCollection(WORKDAY_COLLECTION);
-        System.out.println("!!!!!!! "+employee.get_id());
+        System.out.println("!!!!!!! "+employee.getId());
         collection
-                .find(eq("employee",employee.get_id()))
+                .find(eq("employee",employee.getId()))
                 .forEach((document -> {
                     System.out.println(document.toJson());
                     alWorkdays.add(new WorkdayModel().convertMongo(document));
