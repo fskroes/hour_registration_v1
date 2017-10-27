@@ -15,7 +15,7 @@ public class MariadbWorkdayDAO implements IWorkdayDAO {
     private MariaDatabaseExtension database;
 
     private MariadbWorkdayDAO() {
-        this.database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase().getConnection();
+        this.database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
     }
 
     public static MariadbWorkdayDAO getInstance() {

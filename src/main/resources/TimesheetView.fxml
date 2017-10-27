@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
 <?import com.jfoenix.controls.JFXNodesList?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
+
 <AnchorPane fx:id="root" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.webedu.hourregistration.controller.TimesheetController">
    <children>
       <HBox fx:id="header" alignment="CENTER_LEFT" spacing="24.0" style="-fx-background-color: #4285F4;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-         <padding>
-            <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
-         </padding>
          <children>
             <ImageView fx:id="imgTitle" fitHeight="50.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" />
             <Label fx:id="lblTitle" style="-fx-text-fill: white;" text="Timesheet">
@@ -20,21 +25,33 @@
                </font>
             </Label>
          </children>
+         <padding>
+            <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
+         </padding>
       </HBox>
-      <VBox layoutY="98.0" prefHeight="700.0" prefWidth="1200.0" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <VBox fx:id="content" spacing="24.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
          <children>
-            <Label text="Label">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+               <children>
+                  <Label text="Week: {weeknumer} timesheet" />
+                  <JFXButton fx:id="btnSave" alignment="CENTER" buttonType="RAISED" text="Opslaan" textAlignment="CENTER" />
+               </children>
+            </HBox>
+            <VBox fx:id="timeSheetConainer" style="-fx-border-width: 1px; -fx-border-color: #4285F4;">
+               <children>
+                  <HBox alignment="CENTER_RIGHT" spacing="24.0" style="-fx-background-color: #4285F4;">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <padding>
+                        <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
+                     </padding>
+                  </HBox>
+                  <JFXListView fx:id="lvTimeSheets" />
+               </children>
                <VBox.margin>
                   <Insets />
                </VBox.margin>
-            </Label>
-            <VBox fx:id="ContentContainer" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0">
-               <VBox.margin>
-                  <Insets top="24.0" />
-               </VBox.margin>
-               <children>
-                  <JFXNodesList />
-               </children>
             </VBox>
          </children>
          <padding>

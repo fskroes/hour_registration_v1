@@ -40,7 +40,6 @@ public class MainController {
 
     private void postConstructor() {
         if (sessionEmployee.getRole() == Role.ADMIN) {
-
         }
     }
 
@@ -48,7 +47,7 @@ public class MainController {
 //        for (WorkdayModel workdays : sessionEmployee.getWorkdays()) {
 //
 //        }
-        for (int i = 0 ; i < 4 ; i++) {
+        for (int i = 0 ; i < 1 ; i++) {
             HBox itemWrapper = new HBox(48);
             itemWrapper.setFillHeight(true);
 
@@ -106,7 +105,7 @@ public class MainController {
                 }
                 assert parent != null;
 
-                MainController controller = loader.getController();
+                //MainController controller = loader.getController();
 
                 Scene scene = new Scene(parent, 1200, 800);
                 primaryStage.setScene(scene);
@@ -116,6 +115,8 @@ public class MainController {
             itemWrapper.getChildren().add(dateWrapper);
             itemWrapper.getChildren().add(timeWorked);
             itemWrapper.getChildren().add(overtimeWorked);
+            itemWrapper.getChildren().add(btnTimeSheet);
+
             lvTimeSheets.getItems().add(itemWrapper);
         }
     }
