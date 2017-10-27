@@ -1,9 +1,11 @@
 package nl.webedu.hourregistration.dao;
 
+import nl.webedu.hourregistration.model.EmployeeModel;
 import nl.webedu.hourregistration.model.UserAuthenticationModel;
 
 public interface IUserAuthenticationDAO {
-    public UserAuthenticationModel findUser(String email);
-    public void registerUser(String username, String password);
-    public boolean authenticateUser(String email, String password);
+    UserAuthenticationModel findUser(String email);
+    void registerUser(String username, String password);
+    boolean authenticateUser(String email, String password);
+    EmployeeModel findEmployee(String email);
 }

@@ -16,7 +16,7 @@ public class ActivitiesModel extends DatabaseRowMapper<ActivitiesModel> {
     private int workdayId;
 
     public ActivitiesModel() {
-
+        type = ActivitiesModel.class;
     }
 
     public ActivitiesModel(String category, Date startTime, Date endTime, int workdayId) {

@@ -6,7 +6,6 @@ import org.bson.Document;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
-import java.util.Optional;
 
 public class SubjectModel extends DatabaseRowMapper<SubjectModel> {
 
@@ -19,6 +18,7 @@ public class SubjectModel extends DatabaseRowMapper<SubjectModel> {
     private ProjectModel projectModel;
 
     public SubjectModel() {
+        type = SubjectModel.class;
     }
 
     public SubjectModel(String onderwerpName, Date startDate, Date endDate, ProjectModel projectModel) {

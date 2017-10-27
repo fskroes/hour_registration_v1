@@ -1,6 +1,9 @@
 package nl.webedu.hourregistration.database;
 
+import nl.webedu.hourregistration.model.UserAuthenticationModel;
+
 import java.sql.*;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -93,11 +96,13 @@ public class MariaDatabaseExtension extends Database<Connection> {
             ResultSet resultSet = statement.executeQuery();
             int rowNum = 0;
             while (resultSet.next()) {
-                E obj = object.convertSQL(resultSet, rowNum++);
+                DatabaseRowMapper<E> newInstance = (DatabaseRowMapper<E>) object.getType().newInstance();
+                E obj = newInstance.convertSQL(resultSet, rowNum++);
                 result.add(obj);
             }
+        } catch (IllegalAccessException | InstantiationException e) {
+            e.printStackTrace();
         }
-
         return result;
     }
 
@@ -107,9 +112,12 @@ public class MariaDatabaseExtension extends Database<Connection> {
             ResultSet resultSet = statement.executeQuery();
             int rowNum = 0;
             while (resultSet.next()) {
-                E obj = object.convertSQL(resultSet, rowNum++);
+                DatabaseRowMapper<E> newInstance = (DatabaseRowMapper<E>) object.getType().newInstance();
+                E obj = newInstance.convertSQL(resultSet, rowNum++);
                 result.add(obj);
             }
+        } catch (IllegalAccessException | InstantiationException e) {
+            e.printStackTrace();
         }
 
         return result;

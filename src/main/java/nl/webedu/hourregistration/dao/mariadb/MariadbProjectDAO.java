@@ -29,10 +29,11 @@ public class MariadbProjectDAO implements IProjectDAO {
     @Override
     public boolean insertProject(ProjectModel project) {
         String querySQL = "INSERT INTO project"
-                + "(project_name, start_date, end_time, category) VALUES"
-                + "(?,?,?,?)";
+                + "(project_name, start_date, end_date, category, customerID) VALUES"
+                + "(?,?,?,?,?)";
         try {
-            database.insertQuery(querySQL, project.getName(), project.getStartDate(), project.getEndDate(), project.getCategorie());
+            database.insertQuery(querySQL, project.getName(), project.getStartDate(), project.getEndDate(),
+                    project.getCategorie(), project.getCustomerModel().getId());
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -68,7 +69,7 @@ public class MariadbProjectDAO implements IProjectDAO {
     public int updateProject(ProjectModel project) {
         int result = 0;
         String updateSQL = "UPDATE project"
-                + " SET project_name = ?, start_date = ?, end_time = ?, category = ?"
+                + " SET project_name = ?, start_date = ?, end_date = ?, category = ?"
                 + " WHERE projectID = ?";
         try {
             database.updateQuery(
@@ -100,7 +101,7 @@ public class MariadbProjectDAO implements IProjectDAO {
     public ProjectModel selectProjectByCustomer(CustomerModel customer) {
         ProjectModel project = null;
         try {
-            project = database.selectObjectSingle(new ProjectModel(), "SELECT * FROM project WHERE projectID = ?", customer.getId());
+            project = database.selectObjectSingle(new ProjectModel(), "SELECT * FROM project WHERE customerID = ?", customer.getId());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -111,7 +112,7 @@ public class MariadbProjectDAO implements IProjectDAO {
     public List<ProjectModel> selectProjectsByEmployee(EmployeeModel employee) {
         List<ProjectModel> project = null;
         try {
-            project = database.selectObjectList(new ProjectModel(), "SELECT * FROM project WHERE projectID = ?", String.valueOf(employee.get_id()));
+            project = database.selectObjectList(new ProjectModel(), "SELECT * FROM project WHERE projectID = ?", String.valueOf(employee.getId()));
         } catch (SQLException e) {
             e.printStackTrace();
         }

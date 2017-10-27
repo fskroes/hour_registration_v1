@@ -2,11 +2,9 @@ package nl.webedu.hourregistration.model;
 
 import nl.webedu.hourregistration.database.DatabaseRowMapper;
 import org.bson.Document;
-import org.bson.types.ObjectId;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Optional;
 
 public class CustomerModel extends DatabaseRowMapper<CustomerModel> {
 
@@ -15,7 +13,7 @@ public class CustomerModel extends DatabaseRowMapper<CustomerModel> {
     private ProjectModel projectModel;
 
     public CustomerModel() {
-
+        type = CustomerModel.class;
     }
 
     public CustomerModel(String businessName) {
@@ -49,7 +47,6 @@ public class CustomerModel extends DatabaseRowMapper<CustomerModel> {
 
     @Override
     public CustomerModel convertSQL(ResultSet set, int rowNum) throws SQLException {
-
         this._id = String.valueOf("customerID");
         this.businessName = set.getString("company_name");
         return this;

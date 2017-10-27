@@ -7,7 +7,6 @@ import org.bson.Document;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
-import java.util.Optional;
 
 public class ProjectModel extends DatabaseRowMapper<ProjectModel> {
 
@@ -20,6 +19,7 @@ public class ProjectModel extends DatabaseRowMapper<ProjectModel> {
     private CustomerModel customerModel;
 
     public ProjectModel() {
+        type = ProjectModel.class;
     }
 
     public ProjectModel(String id, String name, Date startDate, Date endDate, String categorie) {
@@ -80,7 +80,7 @@ public class ProjectModel extends DatabaseRowMapper<ProjectModel> {
 
     @Override
     public ProjectModel convertSQL(ResultSet set, int rowNum) throws SQLException {
-        this.id = String.valueOf("projectID");
+        this.id = String.valueOf(set.getInt("projectID"));
         this.name = set.getString("project_name");
         this.startDate = set.getDate("start_date");
         this.endDate = set.getDate("end_date");

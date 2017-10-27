@@ -6,6 +6,7 @@ import com.mongodb.async.client.MongoClient;
 import com.mongodb.async.client.MongoCollection;
 import nl.webedu.hourregistration.dao.IUserAuthenticationDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
+import nl.webedu.hourregistration.model.EmployeeModel;
 import nl.webedu.hourregistration.model.UserAuthenticationModel;
 import org.bson.Document;
 
@@ -97,5 +98,10 @@ public class MongoUserAuthenticationDAO implements IUserAuthenticationDAO {
         });
 
         return lib[0];
+    }
+
+    @Override
+    public EmployeeModel findEmployee(String email) {
+        return null;
     }
 }

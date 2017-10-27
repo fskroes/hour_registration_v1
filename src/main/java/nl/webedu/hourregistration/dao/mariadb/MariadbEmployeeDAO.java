@@ -6,6 +6,8 @@ import nl.webedu.hourregistration.database.MariaDatabaseExtension;
 import nl.webedu.hourregistration.model.EmployeeModel;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class MariadbEmployeeDAO implements IEmployeeDAO {
@@ -17,7 +19,6 @@ public class MariadbEmployeeDAO implements IEmployeeDAO {
     private MariadbEmployeeDAO() {
         this.database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
     }
-
     public static MariadbEmployeeDAO getInstance() {
         if (instance == null) {
             instance = new MariadbEmployeeDAO();
@@ -26,11 +27,11 @@ public class MariadbEmployeeDAO implements IEmployeeDAO {
     }
 
     @Override
-    public boolean insertEmployee(EmployeeModel employee) {
+    public boolean insertEmployee(EmployeeModel employee){
         try {
             String sql = "INSERT INTO employee"
-                    + "(email, password, role, firstname, suffix, lastname, active) VALUES"
-                    + "(?,?,?,?,?,?,?)";
+                    +"(email, password, role, firstname, suffix, lastname, active) VALUES"
+                    +"(?,?,?,?,?,?,?)";
 
             PreparedStatement ps = database.openConnection().prepareStatement(sql);
 
@@ -58,7 +59,7 @@ public class MariadbEmployeeDAO implements IEmployeeDAO {
     }
 
     @Override
-    public boolean deleteEmployee(String id) {
+    public boolean deleteEmployee(String id){
         try {
 
             String sql = "UPDATE employee SET active= FALSE WHERE employeeID = ?;";
@@ -92,7 +93,7 @@ public class MariadbEmployeeDAO implements IEmployeeDAO {
                     "SELECT* FROM employee WHERE employeeID = ?;",
                     id
             );
-        } catch (SQLException e) {
+        } catch(SQLException e){
             System.out.println(e.getMessage());
         }
         return employee;
@@ -100,7 +101,7 @@ public class MariadbEmployeeDAO implements IEmployeeDAO {
     }
 
     @Override
-    public boolean updateEmployee(EmployeeModel employee) {
+    public boolean updateEmployee(EmployeeModel employee){
         try {
 
             String sql = "UPDATE employee SET email = ?, password = ?, role = ?, firstname = ?," +
@@ -114,7 +115,7 @@ public class MariadbEmployeeDAO implements IEmployeeDAO {
             ps.setString(4, String.valueOf(employee.getFirstname()));
             ps.setString(5, String.valueOf(employee.getSuffix()));
             ps.setString(6, String.valueOf(employee.getLastname()));
-            ps.setString(7, String.valueOf(employee.get_id()));
+            ps.setString(7, String.valueOf(employee.getId()));
 
             ps.executeUpdate();
             ps.close();
@@ -133,14 +134,19 @@ public class MariadbEmployeeDAO implements IEmployeeDAO {
     }
 
     @Override
-    public List<String> selectProjectsByEmployee(String employeeEmail) {
-        List<String> employee = null;
-//        try {
-//            employee = database.selectObjectList(new EmployeeModel(), "SELECT * FROM employee WHERE projectID = ?", projectname); // todo changed, before was id of project
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
+    public List<EmployeeModel> selectEmployeesByProject(ProjectModel project){
+        List<EmployeeModel> employees = null;
+        try {
+            employees = database.selectObjectList(
+                    new EmployeeModel(),
+                    "SELECT * FROM employee WHERE employeeID = " +
+                            "(SELECT fk_employee_id FROM employee_project WHERE fk_project_id = ?);",
+                    project.getId()
 
-        return employee;
+            );
+        } catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return employees;
     }
 }
