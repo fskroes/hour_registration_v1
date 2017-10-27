@@ -16,9 +16,9 @@ public class HourRegistration extends Application {
 
     public void start(Stage primaryStage) throws Exception {
 
-        DatabaseManager.getInstance().connectToDatabase(DatabaseType.MONGODB);
+        DatabaseManager.getInstance().connectToDatabase(DatabaseType.MARIADB);
 
-        Parent root = FXMLLoader.load(getClass().getResource("/CustomerView.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/LoginView.fxml"));
         Scene scene = new Scene(root, 600, 400);
         primaryStage.setScene(scene);
         primaryStage.show();
