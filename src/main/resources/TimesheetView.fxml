@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.paint.*?>
 <?import com.jfoenix.controls.*?>
 <?import java.lang.*?>
-<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
-<?import com.jfoenix.controls.JFXNodesList?>
-<?import javafx.geometry.Insets?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
@@ -33,9 +32,27 @@
          <children>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                <children>
-                  <Label text="Week: {weeknumer} timesheet" />
-                  <JFXButton fx:id="btnSave" alignment="CENTER" buttonType="RAISED" text="Opslaan" textAlignment="CENTER" />
+                  <Label text="Week: 44" />
+                  <JFXButton fx:id="btnSave" alignment="CENTER" buttonType="RAISED" defaultButton="true" ripplerFill="#d3d3d3" text="Save" textAlignment="CENTER" underline="true" />
+                  <JFXButton fx:id="btnreturntoTimesheets" alignment="CENTER" buttonType="RAISED" defaultButton="true" ripplerFill="#d3d3d3" text="Return to timesheets" textAlignment="CENTER" underline="true" />
                </children>
+            </HBox>
+            <HBox alignment="TOP_RIGHT" prefHeight="30.0" prefWidth="1104.0" spacing="30.0">
+               <children>
+                  <Label text="Monday" />
+                  <Label text="Tuesday" />
+                  <Label text="Wednesday" />
+                  <Label text="Thursday" />
+                  <Label text="Friday" />
+                  <Label text="Saturday" />
+                  <Label text="Sunday" />
+               </children>
+               <padding>
+                  <Insets top="3.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets right="5.0" />
+               </VBox.margin>
             </HBox>
             <VBox fx:id="timeSheetConainer" style="-fx-border-width: 1px; -fx-border-color: #4285F4;">
                <children>
@@ -47,7 +64,7 @@
                         <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
                      </padding>
                   </HBox>
-                  <JFXListView fx:id="lvTimeSheets" />
+                  <JFXListView fx:id="timesheetListview" />
                </children>
                <VBox.margin>
                   <Insets />

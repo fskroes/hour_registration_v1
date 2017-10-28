@@ -14,7 +14,6 @@ import javafx.stage.Stage;
 import nl.webedu.hourregistration.dao.IEmployeeDAO;
 import nl.webedu.hourregistration.dao.IUserAuthenticationDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
-import nl.webedu.hourregistration.model.EmployeeModel;
 
 import java.io.IOException;
 
@@ -50,7 +49,7 @@ public class UserAuthenticationController {
             Stage primaryStage = (Stage) root.getScene().getWindow();
             primaryStage.hide();
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/MainView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/TimesheetsView.fxml"));
 
             Parent parent = null;
             try {
@@ -60,7 +59,7 @@ public class UserAuthenticationController {
             }
             assert parent != null;
 
-            MainController controller = loader.getController();
+            TimeSheetsController controller = loader.getController();
             //controller.setSessionEmployee(mongoUserAuthenticationDAO.findEmployee(txtEmail.getText()));
 
             Scene scene = new Scene(parent, 1200, 800);

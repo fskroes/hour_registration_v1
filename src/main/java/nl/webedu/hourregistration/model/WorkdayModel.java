@@ -3,8 +3,10 @@ package nl.webedu.hourregistration.model;
 import nl.webedu.hourregistration.database.DatabaseRowMapper;
 import org.bson.Document;
 
+import javax.xml.crypto.Data;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,6 +18,7 @@ public class WorkdayModel extends DatabaseRowMapper<WorkdayModel> {
 
     private String id;
     private Date date, startTime, endTime;
+    private SimpleDateFormat day;
     private int weekNumber;
     private List<String> activities;
     private List<String> employee_ids;
@@ -24,26 +27,41 @@ public class WorkdayModel extends DatabaseRowMapper<WorkdayModel> {
         type = WorkdayModel.class;
     }
 
-    public WorkdayModel(String id, Date date, Date startTime, Date endTime, int weekNumber, List<String> activities, List<String> employee_ids) {
-        this.id = id;
+    public WorkdayModel(Date date, Date startTime, Date endTime, int weekNumber, SimpleDateFormat workday) {
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
         this.weekNumber = weekNumber;
-        this.activities = activities;
-        this.employee_ids = employee_ids;
     }
-    public WorkdayModel(Date date, Date startTime, Date endTime, int weekNumber, List<String> activities, List<String> employee_ids) {
-        this.date = date;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.weekNumber = weekNumber;
-        this.activities = activities;
-        this.employee_ids = employee_ids;
-    }
+
+//    public WorkdayModel(String id, Date date, Date startTime, Date endTime, int weekNumber, List<String> activities, List<String> employee_ids) {
+//        this.id = id;
+//        this.date = date;
+//        this.startTime = startTime;
+//        this.endTime = endTime;
+//        this.weekNumber = weekNumber;
+//        this.activities = activities;
+//        this.employee_ids = employee_ids;
+//    }
+//    public WorkdayModel(Date date, Date startTime, Date endTime, int weekNumber, List<String> activities, List<String> employee_ids) {
+//        this.date = date;
+//        this.startTime = startTime;
+//        this.endTime = endTime;
+//        this.weekNumber = weekNumber;
+//        this.activities = activities;
+//        this.employee_ids = employee_ids;
+//    }
 
     public String getId() {
         return id;
+    }
+
+    public SimpleDateFormat getDay() {
+        return day;
+    }
+
+    public void setDay(SimpleDateFormat day) {
+        this.day = day;
     }
 
     public Date getDate() {
@@ -102,10 +120,10 @@ public class WorkdayModel extends DatabaseRowMapper<WorkdayModel> {
         this.employee_ids.remove(employeeModel);
     }
 
-    @Override
-    public String toString() {
-        return weekNumber + " " + date.toString();
-    }
+//    @Override
+//    public String toString() {
+//        return weekNumber + " " + date.toString();
+//    }
 
     @Override
     public WorkdayModel convertSQL(ResultSet set, int rowNum) throws SQLException {
@@ -118,4 +136,5 @@ public class WorkdayModel extends DatabaseRowMapper<WorkdayModel> {
         // TODO: Setup MongoDB config
         return this;
     }
+
 }
