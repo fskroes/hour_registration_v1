@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.text.*?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXListView?>
-<?import javafx.geometry.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="root" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.webedu.hourregistration.controller.TimesheetController">
+<AnchorPane fx:id="root" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.webedu.hourregistration.controller.TimesheetController">
    <children>
       <HBox fx:id="header" alignment="CENTER_LEFT" spacing="24.0" style="-fx-background-color: #4285F4;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
@@ -32,8 +29,8 @@
          <children>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                <children>
-                  <Label text="Week: 44" />
-                  <JFXButton fx:id="btnSave" alignment="CENTER" buttonType="RAISED" defaultButton="true" ripplerFill="#d3d3d3" text="Save" textAlignment="CENTER" underline="true" />
+                  <Label fx:id="weekLabel" text="Week: 44" />
+                  <JFXButton alignment="CENTER" buttonType="RAISED" defaultButton="true" onAction="#SAVEALL" ripplerFill="#d3d3d3" text="Save workweek" textAlignment="CENTER" underline="true" />
                   <JFXButton fx:id="btnreturntoTimesheets" alignment="CENTER" buttonType="RAISED" defaultButton="true" ripplerFill="#d3d3d3" text="Return to timesheets" textAlignment="CENTER" underline="true" />
                </children>
             </HBox>
@@ -56,15 +53,17 @@
             </HBox>
             <VBox fx:id="timeSheetConainer" style="-fx-border-width: 1px; -fx-border-color: #4285F4;">
                <children>
-                  <HBox alignment="CENTER_RIGHT" spacing="24.0" style="-fx-background-color: #4285F4;">
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <padding>
-                        <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
-                     </padding>
-                  </HBox>
-                  <JFXListView fx:id="timesheetListview" />
+                  <!--<HBox alignment="CENTER_RIGHT" spacing="24.0" style="-fx-background-color: #4285F4;">-->
+                     <!--<opaqueInsets>-->
+                        <!--<Insets />-->
+                     <!--</opaqueInsets>-->
+                     <!--<padding>-->
+                        <!--<Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />-->
+                     <!--</padding>-->
+                  <!--</HBox>-->
+                  <JFXListView fx:id="timesheetListview">
+                     <HBox fx:id="cellHBOX" />
+                  </JFXListView>
                </children>
                <VBox.margin>
                   <Insets />
