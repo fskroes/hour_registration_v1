@@ -5,7 +5,6 @@ import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTimePicker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -20,31 +19,32 @@ import java.text.SimpleDateFormat;
 import java.time.*;
 import java.time.temporal.IsoFields;
 import java.util.Date;
+import java.util.Optional;
 
 public class TimesheetController {
 
     private static boolean loaded = false;
 
-    public JFXButton btnSave;
     public JFXButton btnreturntoTimesheets;
     public JFXListView timesheetListview;
     public AnchorPane root;
     public HBox cellHBOX;
     public Label weekLabel;
-    public JFXTimePicker timepicker1;
-    public JFXTimePicker timepicker2;
-    public JFXTimePicker timepicker3;
-    public JFXTimePicker timepicker4;
-    public JFXTimePicker timepicker5;
-    public JFXTimePicker timepicker6;
-    public JFXTimePicker timepicker7;
-    public JFXTimePicker timepicker8;
-    public JFXTimePicker timepicker9;
-    public JFXTimePicker timepicker10;
-    public JFXTimePicker timepicker11;
-    public JFXTimePicker timepicker12;
-    public JFXTimePicker timepicker13;
-    public JFXTimePicker timepicker14;
+    public JFXTimePicker
+            timepicker1,
+            timepicker2,
+            timepicker3,
+            timepicker4,
+            timepicker5,
+            timepicker6,
+            timepicker7,
+            timepicker8,
+            timepicker9,
+            timepicker10,
+            timepicker11,
+            timepicker12,
+            timepicker13,
+            timepicker14;
 
     public void initialize() {
         if (loaded) {
@@ -84,26 +84,55 @@ public class TimesheetController {
     }
 
     public Date toDate(LocalTime lt) {
-        Instant instant = lt.atDate(LocalDate.of(1900,1,1)).
-                atZone(ZoneId.systemDefault()).toInstant();
-        Date time = Date.from(instant);
-        return  time;
+        if(lt != null) {
+            Instant instant = lt.atDate(LocalDate.of(1900,1,1)).
+                    atZone(ZoneId.systemDefault()).toInstant();
+            Date time = Date.from(instant);
+            return time;
+        }
+
+        return Optional.ofNullable(new Date())
+                .filter(s -> s != null).orElse(new Date());
     }
 
     public void setUpUserInterface() {
+
+        HBox box = null;
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/TimesheetCellView.fxml"));
         try {
-            HBox newCell = FXMLLoader.load(getClass().getResource("/TimesheetCellView.fxml"));
-            for (Node n: newCell.getChildren()) {
-                System.out.println("n : " + n.getId());
-            }
-            cellHBOX.getChildren().add(newCell);
+            box = loader.load();
+            cellHBOX.getChildren().addAll(box);
+//            Map<String, Object> namespace = loader.getNamespace();
+//
+//            timepicker1 = (JFXTimePicker) namespace.get("timepicker1");
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        TimePickerController controller = loader.getController();
+
+        timepicker1 = controller.getTimepicker1();
+        timepicker2 = controller.getTimepicker2();
+        timepicker3 = controller.getTimepicker3();
+        timepicker4 = controller.getTimepicker4();
+        timepicker5 = controller.getTimepicker5();
+        timepicker6 = controller.getTimepicker6();
+        timepicker7 = controller.getTimepicker7();
+        timepicker8 = controller.getTimepicker8();
+        timepicker9 = controller.getTimepicker9();
+        timepicker10 = controller.getTimepicker10();
+        timepicker11 = controller.getTimepicker11();
+        timepicker12 = controller.getTimepicker12();
+        timepicker13 = controller.getTimepicker13();
+        timepicker14 = controller.getTimepicker14();
+
     }
 
     public void SAVEALL(ActionEvent actionEvent) {
         WorkdayModel mon, tues, wednes, thurs, fri, sat, sun;
+        System.out.println("timepicker 1: " + timepicker1.toString());
+        System.out.println("timepicker 1: " + timepicker1.getValue());
+
         mon = new WorkdayModel(
                 new Date(),
                 toDate(timepicker1.getValue()),
