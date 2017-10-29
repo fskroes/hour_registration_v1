@@ -138,49 +138,49 @@ public class TimesheetController {
                 toDate(timepicker1.getValue()),
                 toDate(timepicker2.getValue()),
                 toWeekNumber(),
-                new SimpleDateFormat("EEEE")
+                "monday"
         );
         tues = new WorkdayModel(
                 new Date(),
                 toDate(timepicker3.getValue()),
                 toDate(timepicker4.getValue()),
                 toWeekNumber(),
-                new SimpleDateFormat("EEEE")
+                "tuesday"
         );
         wednes = new WorkdayModel(
                 new Date(),
                 toDate(timepicker5.getValue()),
                 toDate(timepicker6.getValue()),
                 toWeekNumber(),
-                new SimpleDateFormat("EEEE")
+                "wednesday"
         );
         thurs = new WorkdayModel(
                 new Date(),
                 toDate(timepicker7.getValue()),
                 toDate(timepicker8.getValue()),
                 toWeekNumber(),
-                new SimpleDateFormat("EEEE")
+                "thrusday"
         );
         fri = new WorkdayModel(
                 new Date(),
                 toDate(timepicker9.getValue()),
                 toDate(timepicker10.getValue()),
                 toWeekNumber(),
-                new SimpleDateFormat("EEEE")
+                "friday"
         );
         sat = new WorkdayModel(
                 new Date(),
                 toDate(timepicker11.getValue()),
                 toDate(timepicker12.getValue()),
                 toWeekNumber(),
-                new SimpleDateFormat("EEEE")
+                "saturday"
         );
         sun = new WorkdayModel(
                 new Date(),
                 toDate(timepicker13.getValue()),
                 toDate(timepicker14.getValue()),
                 toWeekNumber(),
-                new SimpleDateFormat("EEEE")
+                "sunday"
         );
         DatabaseManager.getInstance().getDaoFactory().getWorkdayDAO().insertWorkday(mon);
         DatabaseManager.getInstance().getDaoFactory().getWorkdayDAO().insertWorkday(tues);

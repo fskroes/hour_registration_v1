@@ -112,8 +112,4 @@ public class TimeSheetsController {
 
         lvTimeSheets.getItems().add(itemWrapper);
     }
-
-    private void loadUIControls() {
-
-    }
 }

@@ -18,7 +18,7 @@ public class WorkdayModel extends DatabaseRowMapper<WorkdayModel> {
 
     private String id;
     private Date date, startTime, endTime;
-    private SimpleDateFormat day;
+    private String day;
     private int weekNumber;
     private List<String> activities;
     private List<String> employee_ids;
@@ -27,11 +27,12 @@ public class WorkdayModel extends DatabaseRowMapper<WorkdayModel> {
         type = WorkdayModel.class;
     }
 
-    public WorkdayModel(Date date, Date startTime, Date endTime, int weekNumber, SimpleDateFormat workday) {
+    public WorkdayModel(Date date, Date startTime, Date endTime, int weekNumber, String workday) {
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
         this.weekNumber = weekNumber;
+        this.day = workday;
     }
 
 //    public WorkdayModel(String id, Date date, Date startTime, Date endTime, int weekNumber, List<String> activities, List<String> employee_ids) {
@@ -56,11 +57,11 @@ public class WorkdayModel extends DatabaseRowMapper<WorkdayModel> {
         return id;
     }
 
-    public SimpleDateFormat getDay() {
+    public String getDay() {
         return day;
     }
 
-    public void setDay(SimpleDateFormat day) {
+    public void setDay(String day) {
         this.day = day;
     }
 
