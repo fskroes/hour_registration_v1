@@ -10,5 +10,6 @@ public interface IEmployeeDAO {
     public boolean deleteEmployee(String id);
     public EmployeeModel findEmployee(String id);
     public boolean updateEmployee(EmployeeModel employee);
+    public List<EmployeeModel> selectAllEmployees();
     public List<EmployeeModel> selectEmployeesByProject(ProjectModel project);
 }

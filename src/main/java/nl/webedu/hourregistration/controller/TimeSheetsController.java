@@ -1,6 +1,7 @@
 package nl.webedu.hourregistration.controller;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +15,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.enumeration.Role;
 import nl.webedu.hourregistration.model.EmployeeModel;
 
@@ -33,7 +35,10 @@ public class TimeSheetsController {
     public VBox timeSheetConainer;
     @FXML
     public JFXListView lvTimeSheets;
+    @FXML
+    public JFXComboBox cmEmployees;
 
+    @FXML
     public void initialize() {
         setupUserInterface();
     }
@@ -111,5 +116,24 @@ public class TimeSheetsController {
         itemWrapper.getChildren().add(btnTimeSheet);
 
         lvTimeSheets.getItems().add(itemWrapper);
+    }
+
+    public void setSessionEmployee(EmployeeModel sessionEmployee) {
+        this.sessionEmployee = sessionEmployee;
+        roleProperties();
+    }
+
+    private void roleProperties() {
+        int SessionEmployeeId;
+        if (!sessionEmployee.getRole().equals(Role.ADMIN)) {
+            cmEmployees.setVisible(false);
+        } else {
+            for (EmployeeModel emp : DatabaseManager.getInstance().getDaoFactory().getEmployeeDAO().selectAllEmployees()) {
+                cmEmployees.getItems().add(emp);
+
+
+            }
+            cmEmployees.getSelectionModel().select(sessionEmployee);
+        }
     }
 }

@@ -20,6 +20,11 @@
                   <Font size="36.0" />
                </font>
             </Label>
+            <JFXComboBox fx:id="cmEmployees">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </JFXComboBox>
          </children>
       </HBox>
       <VBox fx:id="content" spacing="24.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
