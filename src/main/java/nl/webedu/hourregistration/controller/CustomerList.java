@@ -56,5 +56,8 @@ public class CustomerList {
         index = ListView.getSelectionModel().getSelectedIndex();
         controller.showProject(index, customers);
     }
+    public void setController(ProjectInfo controller){
+        this.controller = controller;
+    }
 
 }
