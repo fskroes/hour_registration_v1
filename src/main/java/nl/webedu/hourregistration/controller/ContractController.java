@@ -16,15 +16,15 @@ public class ContractController {
     private List<ContractModel> contracts;
 
     @FXML
-    private JFXListView<?> contract;
+    public JFXListView<?> employeeList;
     @FXML
-    private Text max_uren;
+    public Text max_uren;
     @FXML
-    private Text min_uren;
+    public Text min_uren;
     @FXML
-    private Text start_datum;
+    public Text start_datum;
     @FXML
-    private Text eind_datum;
+    public Text eind_datum;
 
     public void initialize() {
         cDAO = DatabaseManager.getInstance().getDaoFactory().getContractDAO();
