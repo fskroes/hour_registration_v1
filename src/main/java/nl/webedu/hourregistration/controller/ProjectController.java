@@ -54,7 +54,6 @@ public class ProjectController {
 
         pListView.getItems().addAll(list);
     }
-
     public void toCustomerView(ActionEvent actionEvent) {
         Stage primaryStage = (Stage) pAnchor.getScene().getWindow();
         primaryStage.hide();
