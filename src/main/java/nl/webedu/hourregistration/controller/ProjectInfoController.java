@@ -1,17 +1,15 @@
 package nl.webedu.hourregistration.controller;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.text.Text;
 import javafx.scene.control.Label;
+import javafx.scene.text.Text;
 import nl.webedu.hourregistration.model.CustomerModel;
 
-import java.awt.*;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-public class ProjectInfo {
+public class ProjectInfoController {
 
     @FXML
     private Text /*ProjectName,*/ ProjectTime, StartDate, EndDate;

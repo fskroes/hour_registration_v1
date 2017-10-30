@@ -7,17 +7,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.VBox;
 import nl.webedu.hourregistration.dao.ICustomerDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.model.CustomerModel;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 
-public class CustomerList {
+public class CustomerListController {
 
     ObservableList obsList = FXCollections.observableArrayList();
 
@@ -25,7 +23,7 @@ public class CustomerList {
     private List<CustomerModel> customers;
     private int index;
     private FXMLLoader loader;
-    private ProjectInfo controller;
+    private ProjectInfoController controller;
     private Parent root;
 
 
@@ -34,7 +32,7 @@ public class CustomerList {
 
     public void initialize() throws IOException {
         customerDAO = DatabaseManager.getInstance().getDaoFactory().getCustomerDAO();
-        loader = new FXMLLoader(getClass().getResource("/ProjectInfo.fxml"));
+        loader = new FXMLLoader(getClass().getResource("/ProjectInfoView.fxml"));
         loadData();
     }
 
@@ -56,7 +54,7 @@ public class CustomerList {
         index = ListView.getSelectionModel().getSelectedIndex();
         controller.showProject(index, customers);
     }
-    public void setController(ProjectInfo controller){
+    public void setController(ProjectInfoController controller){
         this.controller = controller;
     }
 
