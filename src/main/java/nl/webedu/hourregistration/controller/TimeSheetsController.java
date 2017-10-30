@@ -46,7 +46,7 @@ public class TimeSheetsController {
         dateWrapper.setPadding(new Insets(12));
         dateWrapper.setSpacing(5D);
         dateWrapper.setAlignment(Pos.CENTER);
-        dateWrapper.setStyle("-fx-border-color: crimson; -fx-border-width: 1px;");
+//        dateWrapper.setStyle("-fx-border-color: crimson; -fx-border-width: 1px;");
 
         Label lblDateToDate = new Label("Datum - Datum");
         lblDateToDate.setFont(Font.font("System", 16));
@@ -59,7 +59,7 @@ public class TimeSheetsController {
         timeWorked.setPadding(new Insets(12));
         timeWorked.setSpacing(5D);
         timeWorked.setAlignment(Pos.CENTER);
-        timeWorked.setStyle("-fx-border-color: deepskyblue; -fx-border-width: 1px;");
+//        timeWorked.setStyle("-fx-border-color: deepskyblue; -fx-border-width: 1px;");
 
         Label lblTotalTime = new Label("Total time");
         lblTotalTime.setFont(Font.font("System", 16));
@@ -72,7 +72,7 @@ public class TimeSheetsController {
         overtimeWorked.setPadding(new Insets(12));
         overtimeWorked.setSpacing(5D);
         overtimeWorked.setAlignment(Pos.CENTER);
-        overtimeWorked.setStyle("-fx-border-color: lawngreen; -fx-border-width: 1px;");
+//        overtimeWorked.setStyle("-fx-border-color: lawngreen; -fx-border-width: 1px;");
 
         Label lblOvertime = new Label("Overtime");
         lblOvertime.setFont(Font.font("System", 16));

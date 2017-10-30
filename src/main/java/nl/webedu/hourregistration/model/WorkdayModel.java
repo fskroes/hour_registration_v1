@@ -121,11 +121,6 @@ public class WorkdayModel extends DatabaseRowMapper<WorkdayModel> {
         this.employee_ids.remove(employeeModel);
     }
 
-//    @Override
-//    public String toString() {
-//        return weekNumber + " " + date.toString();
-//    }
-
     @Override
     public WorkdayModel convertSQL(ResultSet set, int rowNum) throws SQLException {
         // TODO: Setup MariaDB config
