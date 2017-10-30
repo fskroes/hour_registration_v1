@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import nl.webedu.hourregistration.dao.IEmployeeDAO;
 import nl.webedu.hourregistration.dao.IUserAuthenticationDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
+import nl.webedu.hourregistration.model.EmployeeModel;
 
 import java.io.IOException;
 
@@ -60,7 +61,8 @@ public class UserAuthenticationController {
             assert parent != null;
 
             TimeSheetsController controller = loader.getController();
-            //controller.setSessionEmployee(mongoUserAuthenticationDAO.findEmployee(txtEmail.getText()));
+            EmployeeModel emp = mongoUserAuthenticationDAO.findEmployee(txtEmail.getText());
+            controller.setSessionEmployee(emp);
 
             Scene scene = new Scene(parent, 1200, 800);
             primaryStage.setScene(scene);
