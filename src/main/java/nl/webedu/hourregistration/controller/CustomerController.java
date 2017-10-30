@@ -28,8 +28,8 @@ public class CustomerController {
 
 
     public void initialize() throws IOException {
-        ListVbox.getChildren().add(FXMLLoader.load(getClass().getResource("/CustomerList.fxml")));
         InfoVbox.getChildren().add(FXMLLoader.load(getClass().getResource("/ProjectInfo.fxml")));
+        ListVbox.getChildren().add(FXMLLoader.load(getClass().getResource("/CustomerList.fxml")));
 
     }
 

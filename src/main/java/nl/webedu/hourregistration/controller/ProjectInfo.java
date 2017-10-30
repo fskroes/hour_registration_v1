@@ -26,6 +26,7 @@ public class ProjectInfo {
 
     public void showProject(int index, List<CustomerModel> customers){
         System.out.println("hier komt hij ook");
+        System.out.println(sdf.format(customers.get(index).getProjectModel().getStartDate()));
         ProjectName.setText(customers.get(index).getProjectModel().getName());
         ProjectTime.setText(customers.get(index).getProjectModel().getId());
         StartDate.setText(sdf.format(customers.get(index).getProjectModel().getStartDate()));
