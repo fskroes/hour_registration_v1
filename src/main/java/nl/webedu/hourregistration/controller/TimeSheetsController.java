@@ -3,6 +3,7 @@ package nl.webedu.hourregistration.controller;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -23,6 +24,7 @@ import java.io.IOException;
 
 public class TimeSheetsController {
 
+    public JFXButton manageEmployeesButton;
     private EmployeeModel sessionEmployee;
 
     @FXML
@@ -110,6 +112,27 @@ public class TimeSheetsController {
             primaryStage.show();
         });
 
+        manageEmployeesButton.setOnAction(event -> {
+            Stage primaryStage = (Stage) root.getScene().getWindow();
+            primaryStage.hide();
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/RollenView.fxml"));
+
+            Parent parent = null;
+            try {
+                parent = loader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            assert parent != null;
+
+            //MainController controller = loader.getController();
+
+            Scene scene = new Scene(parent, 1200, 800);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        });
+
         itemWrapper.getChildren().add(dateWrapper);
         itemWrapper.getChildren().add(timeWorked);
         itemWrapper.getChildren().add(overtimeWorked);
@@ -128,7 +151,7 @@ public class TimeSheetsController {
         if (!sessionEmployee.getRole().equals(Role.ADMIN)) {
             cmEmployees.setVisible(false);
         } else {
-            for (EmployeeModel emp : DatabaseManager.getInstance().getDaoFactory().getEmployeeDAO().selectAllEmployees()) {
+            for (EmployeeModel emp : DatabaseManager.getInstance().getDaoFactory().getEmployeeDAO().getAllEmployees()) {
                 cmEmployees.getItems().add(emp);
 
 

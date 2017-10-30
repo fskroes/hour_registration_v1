@@ -137,7 +137,7 @@ public class MariadbEmployeeDAO implements IEmployeeDAO {
     }
 
     @Override
-    public List<EmployeeModel> selectAllEmployees() {
+    public List<EmployeeModel> getAllEmployees() {
         List<EmployeeModel> employees = null;
         try {
             employees = database.selectObjectList(new EmployeeModel(), "SELECT * FROM employee");

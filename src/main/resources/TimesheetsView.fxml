@@ -7,6 +7,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
+<?import com.jfoenix.controls.JFXButton?>
 <AnchorPane fx:id="root" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.webedu.hourregistration.controller.TimeSheetsController">
    <children>
       <HBox fx:id="header" alignment="CENTER_LEFT" spacing="24.0" style="-fx-background-color: #4285F4;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
@@ -55,6 +56,7 @@
                      </padding>
                   </HBox>
                   <JFXListView fx:id="lvTimeSheets" />
+                  <JFXButton fx:id="manageEmployeesButton" text="Manage employees" ></JFXButton>
                </children>
                <VBox.margin>
                   <Insets />
