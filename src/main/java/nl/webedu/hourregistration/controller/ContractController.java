@@ -12,6 +12,7 @@ import nl.webedu.hourregistration.model.ContractModel;
 import nl.webedu.hourregistration.model.EmployeeModel;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ContractController {
@@ -29,6 +30,7 @@ public class ContractController {
 
     private IEmployeeDAO eDAO;
     private List<EmployeeModel> employees;
+    private List<ContractModel> contracts;
 
     public void initialize() {
         eDAO = DatabaseManager.getInstance().getDaoFactory().getEmployeeDAO();
@@ -38,22 +40,19 @@ public class ContractController {
     public void employeeSelect(MouseEvent mouseEvent) {
         int index = employeeList.getSelectionModel().getSelectedIndex();
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-
-        max_uren.setText(String.valueOf(employees.get(index).getContractModel().getMaxHours()));
-        min_uren.setText(String.valueOf(employees.get(index).getContractModel().getMinHours()));
-        start_datum.setText(sdf.format(employees.get(index).getContractModel().getStartTime()));
-        eind_datum.setText(sdf.format(employees.get(index).getContractModel().getEndTime()));
-
-
+        max_uren.setText(String.valueOf(contracts.get(index).getMaxHours()));
+        min_uren.setText(String.valueOf(contracts.get(index).getMinHours()));
+        start_datum.setText(sdf.format(contracts.get(index).getStartTime()));
+        eind_datum.setText(sdf.format(contracts.get(index).getEndTime()));
     }
 
     public void loadData(){
         ObservableList list = FXCollections.observableArrayList();
+        contracts = new ArrayList<>();
         employees = eDAO.selectAllEmployees();
         for(EmployeeModel employee : employees) {
-            list.add(employee.getLastname() + ", "+ employee.getFirstname());
-            ContractModel m = eDAO.findContractByEmployee(employee);
-            System.out.println("contract id :" + m.getId());
+            list.add(employee.getLastname() + ", " + employee.getFirstname());
+            contracts.add(eDAO.findContractByEmployee(employee));
         }
         employeeList.getItems().addAll(list);
     }
