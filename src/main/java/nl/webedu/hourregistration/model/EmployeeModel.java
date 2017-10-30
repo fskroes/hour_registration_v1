@@ -134,6 +134,16 @@ public class EmployeeModel extends DatabaseRowMapper<EmployeeModel> {
         return new ArrayList<>(workdays);
     }
 
+    public List<WorkdayModel> getWorksdaysByWeekNumber(int weekNumber) {
+        List<WorkdayModel> weekList = new ArrayList<>();
+        for (WorkdayModel workday : workdays) {
+            if (workday.getWeekNumber() == weekNumber) {
+                weekList.add(workday);
+            }
+        }
+        return weekList;
+    }
+
     public void setWorkdays(List<WorkdayModel> workdays) {
         this.workdays = workdays;
     }
@@ -159,7 +169,6 @@ public class EmployeeModel extends DatabaseRowMapper<EmployeeModel> {
         this.firstname = set.getString("firstname");
         this.suffix = set.getString("suffix");
         this.lastname = set.getString("lastname");
-        int test = set.getInt("role");
         this.setRole(set.getInt("role"));
         return this;
     }

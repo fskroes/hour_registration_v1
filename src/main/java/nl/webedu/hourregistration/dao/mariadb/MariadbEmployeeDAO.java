@@ -138,6 +138,10 @@ public class MariadbEmployeeDAO implements IEmployeeDAO {
         List<EmployeeModel> employees = null;
         try {
             employees = database.selectObjectList(new EmployeeModel(), "SELECT * FROM employee");
+            for (EmployeeModel employee : employees) {
+                employee.setWorkdays(DatabaseManager.getInstance().getDaoFactory().getWorkdayDAO().selectWorkdaysByEmployee(employee));
+                employee.setProjects(DatabaseManager.getInstance().getDaoFactory().getProjectDAO().selectProjectsByEmployee(employee));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -153,7 +157,6 @@ public class MariadbEmployeeDAO implements IEmployeeDAO {
                     "SELECT * FROM employee WHERE employeeID = " +
                             "(SELECT fk_employee_id FROM employee_project WHERE fk_project_id = ?);",
                     project.getId()
-
             );
         } catch(SQLException e){
             System.out.println(e.getMessage());
