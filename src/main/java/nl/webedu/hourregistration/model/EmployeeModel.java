@@ -22,7 +22,7 @@ public class EmployeeModel extends DatabaseRowMapper<EmployeeModel> {
      * Empty contructor, for test purposes only
      */
     public EmployeeModel() {
-
+        type = EmployeeModel.class;
     }
 
     public EmployeeModel(String id, String email, String password, String firstname, String suffix, String lastname) {
@@ -93,9 +93,15 @@ public class EmployeeModel extends DatabaseRowMapper<EmployeeModel> {
 
     public void setRole(int roleId) {
         switch (roleId) {
-            case 1: this.role = Role.ADMIN;
-            case 2: this.role = Role.EMPLOYEE;
-            case 3: this.role = Role.MANAGER;
+            case 1:
+                this.role = Role.ADMIN;
+                break;
+            case 2:
+                this.role = Role.EMPLOYEE;
+                break;
+            case 3:
+                this.role = Role.MANAGER;
+                break;
 
         }
     }
@@ -153,6 +159,7 @@ public class EmployeeModel extends DatabaseRowMapper<EmployeeModel> {
         this.firstname = set.getString("firstname");
         this.suffix = set.getString("suffix");
         this.lastname = set.getString("lastname");
+        int test = set.getInt("role");
         this.setRole(set.getInt("role"));
         return this;
     }

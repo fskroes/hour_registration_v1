@@ -63,9 +63,7 @@ public class MongoEmployeeDAO implements IEmployeeDAO {
 
         try {
             model = result.get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
 
@@ -80,6 +78,11 @@ public class MongoEmployeeDAO implements IEmployeeDAO {
         CompletableFuture<Boolean> result = new CompletableFuture<>();
 
         return false; // todo working on this, feri
+    }
+
+    @Override
+    public List<EmployeeModel> selectAllEmployees() {
+        return null;
     }
 
     @Override
