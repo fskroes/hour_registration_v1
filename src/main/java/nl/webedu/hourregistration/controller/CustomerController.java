@@ -20,8 +20,6 @@ import nl.webedu.hourregistration.model.CustomerModel;
 
 import javax.sound.sampled.Line;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.List;
 
 public class CustomerController {
 
@@ -48,7 +46,7 @@ public class CustomerController {
 
 
     public void initialize() throws IOException {
-        loader = new FXMLLoader(getClass().getResource("/ProjectInfo.fxml"));
+        loader = new FXMLLoader(getClass().getResource("/ProjectInfoView.fxml"));
         projectInfoView = loader.load();
         InfoVbox.getChildren().add(projectInfoView);
         projectInfoController = loader.getController();
