@@ -8,6 +8,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import nl.webedu.hourregistration.dao.IEmployeeDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
+import nl.webedu.hourregistration.model.ContractModel;
 import nl.webedu.hourregistration.model.EmployeeModel;
 
 import java.text.SimpleDateFormat;
@@ -42,6 +43,8 @@ public class ContractController {
         min_uren.setText(String.valueOf(employees.get(index).getContractModel().getMinHours()));
         start_datum.setText(sdf.format(employees.get(index).getContractModel().getStartTime()));
         eind_datum.setText(sdf.format(employees.get(index).getContractModel().getEndTime()));
+
+
     }
 
     public void loadData(){
@@ -49,6 +52,8 @@ public class ContractController {
         employees = eDAO.selectAllEmployees();
         for(EmployeeModel employee : employees) {
             list.add(employee.getLastname() + ", "+ employee.getFirstname());
+            ContractModel m = eDAO.findContractByEmployee(employee);
+            System.out.println("contract id :" + m.getId());
         }
         employeeList.getItems().addAll(list);
     }
