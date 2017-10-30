@@ -20,6 +20,7 @@ public class ReportModel extends DatabaseRowMapper<ReportModel> {
     private Date endDate;
 
     public ReportModel() {
+        type = ReportModel.class;
     }
 
     public ReportModel(String id, ArrayList<WorkdayModel> workDays, int weekNumber, Date reportDate, Date endDate) {

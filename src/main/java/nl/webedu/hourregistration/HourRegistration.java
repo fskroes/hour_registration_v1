@@ -5,17 +5,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import nl.webedu.hourregistration.dao.factory.MongoDAOFactory;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.database.DatabaseType;
-import nl.webedu.hourregistration.model.ActivitiesModel;
-import nl.webedu.hourregistration.model.EmployeeModel;
-import nl.webedu.hourregistration.model.ProjectModel;
-import nl.webedu.hourregistration.model.WorkdayModel;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 
 public class HourRegistration extends Application {
 

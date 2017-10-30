@@ -6,9 +6,8 @@ import nl.webedu.hourregistration.database.MariaDatabaseExtension;
 import nl.webedu.hourregistration.model.EmployeeModel;
 import nl.webedu.hourregistration.model.ProjectModel;
 
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 public class MariadbEmployeeDAO implements IEmployeeDAO {
@@ -116,7 +115,7 @@ public class MariadbEmployeeDAO implements IEmployeeDAO {
             ps.setString(4, String.valueOf(employee.getFirstname()));
             ps.setString(5, String.valueOf(employee.getSuffix()));
             ps.setString(6, String.valueOf(employee.getLastname()));
-            ps.setString(7, String.valueOf(employee.get_id()));
+            ps.setString(7, String.valueOf(employee.getId()));
 
             ps.executeUpdate();
             ps.close();
@@ -132,6 +131,17 @@ public class MariadbEmployeeDAO implements IEmployeeDAO {
 
         }
         return true;
+    }
+
+    @Override
+    public List<EmployeeModel> selectAllEmployees() {
+        List<EmployeeModel> employees = null;
+        try {
+            employees = database.selectObjectList(new EmployeeModel(), "SELECT * FROM employee");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return employees;
     }
 
     @Override

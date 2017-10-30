@@ -1,52 +1,46 @@
 package nl.webedu.hourregistration.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import nl.webedu.hourregistration.database.DatabaseRowMapper;
 import nl.webedu.hourregistration.enumeration.Role;
 import org.bson.Document;
 
-import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class EmployeeModel extends DatabaseRowMapper<EmployeeModel> implements Serializable {
+public class EmployeeModel extends DatabaseRowMapper<EmployeeModel> {
 
-    @JsonProperty("_id")
-    private String _id;
+    private String id;
     private String email, password, firstname, suffix, lastname;
     private Role role;
     private ContractModel contractModel;
-    private List<ProjectModel> projectModels;
-    private List<String> workday_ids;
+    private List<ProjectModel> projects;
+    private List<WorkdayModel> workdays;
 
     /**
      * Empty contructor, for test purposes only
      */
     public EmployeeModel() {
-
+        type = EmployeeModel.class;
     }
 
-    public EmployeeModel(
-            String email,
-            String firstname,
-            String suffix,
-            String lastname)
-    {
+    public EmployeeModel(String id, String email, String password, String firstname, String suffix, String lastname) {
+        this(email, password, firstname, suffix, lastname);
+        this.id = id;
+    }
+
+    public EmployeeModel(String email, String password, String firstname, String suffix, String lastname) {
         this.email = email;
-//        this.password = password;
-//        this.role = role;
+        this.password = password;
+        this.role = role;
         this.firstname = firstname;
         this.suffix = suffix;
         this.lastname = lastname;
     }
 
-    public String get_id() {
-        return _id;
+    public String getId() {
+        return id;
     }
 
     public String getEmail() {
@@ -99,9 +93,15 @@ public class EmployeeModel extends DatabaseRowMapper<EmployeeModel> implements S
 
     public void setRole(int roleId) {
         switch (roleId) {
-            case 1: this.role = Role.ADMIN;
-            case 2: this.role = Role.EMPLOYEE;
-            case 3: this.role = Role.MANAGER;
+            case 1:
+                this.role = Role.ADMIN;
+                break;
+            case 2:
+                this.role = Role.EMPLOYEE;
+                break;
+            case 3:
+                this.role = Role.MANAGER;
+                break;
 
         }
     }
@@ -114,36 +114,36 @@ public class EmployeeModel extends DatabaseRowMapper<EmployeeModel> implements S
         this.contractModel = contractModel;
     }
 
-    public List<ProjectModel> getProjectModels() {
-        return new ArrayList<>(projectModels);
+    public List<ProjectModel> getProjects() {
+        return new ArrayList<>(projects);
     }
 
-    public void setProjectModels(List<ProjectModel> projectModels) {
-        this.projectModels = projectModels;
+    public void setProjects(List<ProjectModel> projects) {
+        this.projects = projects;
     }
 
     public void addProject(ProjectModel projectModel) {
-        this.projectModels.add(projectModel);
+        this.projects.add(projectModel);
     }
 
     public void removeProject(ProjectModel projectModel) {
-        this.projectModels.remove(projectModel);
+        this.projects.remove(projectModel);
     }
 
-    public List<String> getWorkday_Ids() {
-        return new ArrayList<>(workday_ids);
+    public List<WorkdayModel> getWorkdays() {
+        return new ArrayList<>(workdays);
     }
 
-    public void setWorkdayModels(List<String> workdayModels) {
-        this.workday_ids = workdayModels;
+    public void setWorkdays(List<WorkdayModel> workdays) {
+        this.workdays = workdays;
     }
 
-    public void addWorkday(String workdayModel) {
-        this.workday_ids.add(workdayModel);
+    public void addWorkday(WorkdayModel workdayModel) {
+        this.workdays.add(workdayModel);
     }
 
-    public void removeWorkday(String workdayModel) {
-        this.workday_ids.remove(workdayModel);
+    public void removeWorkday(WorkdayModel workdayModel) {
+        this.workdays.remove(workdayModel);
     }
 
     @Override
@@ -153,24 +153,26 @@ public class EmployeeModel extends DatabaseRowMapper<EmployeeModel> implements S
 
     @Override
     public EmployeeModel convertSQL(ResultSet set, int rowNum) throws SQLException {
-        this._id = String.valueOf(set.getInt("employeeID"));
+        this.id = String.valueOf(set.getInt("employeeID"));
         this.email = set.getString("email");
         this.password = set.getString("password");
         this.firstname = set.getString("firstname");
         this.suffix = set.getString("suffix");
         this.lastname = set.getString("lastname");
+        int test = set.getInt("role");
+        this.setRole(set.getInt("role"));
         return this;
     }
 
     @Override
     public EmployeeModel convertMongo(Document set) {
-//        this._id = String.valueOf(set.ifPresent(e -> e.getObjectId("_id")));
-        this._id = set.getObjectId("_id").toString();
+        this.id = set.getObjectId("_id").toString();
         this.email = set.getString("email");
         this.password = set.getString("password");
-        this.password = set.getString("firstname");
-        this.password = set.getString("suffix");
-        this.password = set.getString("lastname");
+        this.firstname = set.getString("firstname");
+        this.suffix = set.getString("suffix");
+        this.lastname = set.getString("lastname");
+        this.setRole(set.getInteger("role"));
         return this;
     }
 }

@@ -2,6 +2,7 @@ package nl.webedu.hourregistration.dao.mongodb;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.async.client.MongoClient;
+import com.mongodb.async.client.MongoCollection;
 import nl.webedu.hourregistration.dao.ICustomerDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.model.CustomerModel;
@@ -129,7 +130,24 @@ public class MongoCustomerDAO implements ICustomerDAO {
 
     @Override
     public List<CustomerModel> selectAllCustomers() {
-        return null;
+        CompletableFuture<List<CustomerModel>> result = new CompletableFuture<>();
+        ArrayList<CustomerModel> alCustomers = new ArrayList<>();
+        MongoCollection<Document> collection = client.getDatabase(DATABASE_NAME).getCollection(CUSTOMER_COLLECTION);
+
+        collection
+                .find()
+                .into(alCustomerDocuments,(documents, throwable) -> {
+                    for (Document d: alCustomerDocuments) {
+                        alCustomers.add(new CustomerModel().convertMongo(d));
+                    }
+                    result.complete(alCustomers);
+                });
+        try {
+            return result.get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override

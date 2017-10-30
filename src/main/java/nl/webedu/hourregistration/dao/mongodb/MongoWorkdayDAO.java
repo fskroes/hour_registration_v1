@@ -15,6 +15,7 @@ import java.util.concurrent.ExecutionException;
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Updates.combine;
 import static com.mongodb.client.model.Updates.set;
+import static nl.webedu.hourregistration.database.DatabaseUtil.REPORT_COLLECTION;
 import static nl.webedu.hourregistration.database.DatabaseUtil.WORKDAY_COLLECTION;
 import static nl.webedu.hourregistration.database.DatabaseUtil.DATABASE_NAME;
 
@@ -55,23 +56,21 @@ public class MongoWorkdayDAO implements IWorkdayDAO {
         }
     }
 
+    @SuppressWarnings("Duplicates")
     @Override
     public int deleteWorkday(WorkdayModel workday) {
-        return 0;
-    }
-
-    public boolean deleteWorkday(String id) {
-        CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();
+        CompletableFuture<Integer> completableFuture = new CompletableFuture<>();
         Document query = new Document();
-        query.put("_id", id);
+        query.put("_id", workday.getId());
 
-        client.getDatabase(DATABASE_NAME).getCollection(WORKDAY_COLLECTION)
-                .deleteOne(query, (deleteResult, throwable) -> completableFuture.complete(true));
+        client.getDatabase(DATABASE_NAME).getCollection(WORKDAY_COLLECTION).deleteOne(
+                query,
+                (deleteResult, throwable) -> completableFuture.complete((int) deleteResult.getDeletedCount()));
         try {
             return completableFuture.get();
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
-            return false;
+            return 0;
         }
     }
 
@@ -146,9 +145,9 @@ public class MongoWorkdayDAO implements IWorkdayDAO {
         CompletableFuture<List<WorkdayModel>> result = new CompletableFuture<>();
         ArrayList<WorkdayModel> alWorkdays = new ArrayList<>();
         MongoCollection<Document> collection = client.getDatabase(DATABASE_NAME).getCollection(WORKDAY_COLLECTION);
-        System.out.println("!!!!!!! "+employee.get_id());
+        System.out.println("!!!!!!! "+employee.getId());
         collection
-                .find(eq("employee",employee.get_id()))
+                .find(eq("employee",employee.getId()))
                 .forEach((document -> {
                     System.out.println(document.toJson());
                     alWorkdays.add(new WorkdayModel().convertMongo(document));

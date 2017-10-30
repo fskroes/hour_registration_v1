@@ -4,6 +4,7 @@ import nl.webedu.hourregistration.dao.IReportDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.database.MariaDatabaseExtension;
 import nl.webedu.hourregistration.model.CustomerModel;
+import nl.webedu.hourregistration.model.EmployeeModel;
 import nl.webedu.hourregistration.model.ReportModel;
 
 import java.sql.SQLException;
@@ -97,13 +98,14 @@ public class MariadbReportDAO implements IReportDAO {
     }
 
     @Override
-    public ReportModel selectReportByCustomer(CustomerModel customer) {
-        ReportModel report = null;
+    public List<ReportModel> selectReportByEmployee(EmployeeModel employee) {
+        List<ReportModel> report = null;
         try {
-            report = database.selectObjectSingle(new ReportModel(), "SELECT * FROM report WHERE customerID = ?", customer.getId());
+            report = database.selectObjectList(new ReportModel(), "SELECT * FROM report WHERE employeeID = ?", employee.getId());
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return report;
     }
+
 }

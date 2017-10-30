@@ -44,19 +44,13 @@ public class UserAuthenticationController {
     }
 
     public void onLogin(ActionEvent actionEvent) {
-
-//        EmployeeModel x = mongoEmployeeDAO.findEmployee("test@test.nl");
-        EmployeeModel x = mongoEmployeeDAO.findEmployee("test@test.nl");
-        System.out.println("x " + x.getEmail());
-
-
         if(mongoUserAuthenticationDAO.authenticateUser(txtEmail.getText(), txtPassword.getText())) {
             System.out.println(txtEmail.getText() + " is signing in");
 
             Stage primaryStage = (Stage) root.getScene().getWindow();
             primaryStage.hide();
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/MainView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/TimesheetsView.fxml"));
 
             Parent parent = null;
             try {
@@ -66,8 +60,9 @@ public class UserAuthenticationController {
             }
             assert parent != null;
 
-            MainController controller = loader.getController();
-            //controller.setSessionEmployee(mongoUserAuthenticationDAO.findEmployee(txtEmail.getText()));
+            TimeSheetsController controller = loader.getController();
+            EmployeeModel emp = mongoUserAuthenticationDAO.findEmployee(txtEmail.getText());
+            controller.setSessionEmployee(emp);
 
             Scene scene = new Scene(parent, 1200, 800);
             primaryStage.setScene(scene);

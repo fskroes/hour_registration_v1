@@ -3,14 +3,12 @@ package nl.webedu.hourregistration.dao.mongodb;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.async.client.MongoClient;
 import com.mongodb.async.client.MongoCollection;
-import com.sun.xml.internal.ws.util.CompletedFuture;
 import nl.webedu.hourregistration.dao.IEmployeeDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.model.EmployeeModel;
 import nl.webedu.hourregistration.model.ProjectModel;
 import org.bson.Document;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -58,16 +56,14 @@ public class MongoEmployeeDAO implements IEmployeeDAO {
                 .first((employeeModelsJson, Throwable) -> { // onResults
                     System.out.println(employeeModelsJson);
                     model.convertMongo(employeeModelsJson);
-                    System.out.println(model.get_id());
+                    System.out.println(model.getId());
                     System.out.println(model.getEmail());
                     result.complete(model);
                 });
 
         try {
             model = result.get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
 
@@ -82,6 +78,11 @@ public class MongoEmployeeDAO implements IEmployeeDAO {
         CompletableFuture<Boolean> result = new CompletableFuture<>();
 
         return false; // todo working on this, feri
+    }
+
+    @Override
+    public List<EmployeeModel> selectAllEmployees() {
+        return null;
     }
 
     @Override
