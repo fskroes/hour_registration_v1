@@ -1,5 +1,6 @@
 package nl.webedu.hourregistration.controller;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXToggleButton;
@@ -15,6 +16,7 @@ import nl.webedu.hourregistration.dao.ICustomerDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.model.CustomerModel;
 
+import javax.sound.sampled.Line;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -22,15 +24,23 @@ import java.util.List;
 public class CustomerController {
 
 
-    private Boolean geactiveerd = false;
+    private boolean geactiveerd = false;
+    private boolean editing = false;
 
     @FXML
     private VBox   ListVbox, AddVbox, InfoVbox;
+    @FXML
+    private JFXButton EditButton;
+
     FXMLLoader loader;
+
     Parent projectInfoView;
     Parent customerListView;
+    Parent editProjectView;
+
     ProjectInfo projectInfoController;
     CustomerList customerListController;
+    EditProject editProjectController;
 
 
     public void initialize() throws IOException {
@@ -38,11 +48,17 @@ public class CustomerController {
         projectInfoView = loader.load();
         InfoVbox.getChildren().add(projectInfoView);
         projectInfoController = loader.getController();
+
         loader = new FXMLLoader(getClass().getResource("/CustomerList.fxml"));
         customerListView = loader.load();
         ListVbox.getChildren().add(customerListView);
         customerListController = loader.getController();
-        customerListController.setController(projectInfoController);
+
+        loader = new FXMLLoader(getClass().getResource("/EditProject.fxml"));
+        editProjectView = loader.load();
+        editProjectController = loader.getController();
+
+        customerListController.setProjectInfoController(projectInfoController);
 
     }
 
@@ -58,6 +74,26 @@ public class CustomerController {
             geactiveerd = true;
             ListVbox.getChildren().clear();
             ListVbox.getChildren().add(FXMLLoader.load(getClass().getResource("/AddCustomer.fxml")));
+        }
+
+
+    }
+    @FXML
+    public void EditProject (MouseEvent mouseEvent) throws IOException {
+        if (editing){
+            editProjectController.saveProject();
+            EditButton.setText("Pas aan");
+            InfoVbox.getChildren().clear();
+            InfoVbox.getChildren().add(projectInfoView);
+            editing = false;
+        }
+        else{
+            EditButton.setText("Opslaan");
+            editProjectController.setCustomer(projectInfoController.getCustomer());
+            editProjectController.setDefaults();
+            InfoVbox.getChildren().clear();
+            InfoVbox.getChildren().add(editProjectView);
+            editing = true;
         }
 
 

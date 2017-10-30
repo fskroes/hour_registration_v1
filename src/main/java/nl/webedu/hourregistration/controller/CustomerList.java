@@ -24,9 +24,7 @@ public class CustomerList {
     private ICustomerDAO customerDAO;
     private List<CustomerModel> customers;
     private int index;
-    private FXMLLoader loader;
     private ProjectInfo controller;
-    private Parent root;
 
 
     @FXML
@@ -34,13 +32,10 @@ public class CustomerList {
 
     public void initialize() throws IOException {
         customerDAO = DatabaseManager.getInstance().getDaoFactory().getCustomerDAO();
-        loader = new FXMLLoader(getClass().getResource("/ProjectInfo.fxml"));
         loadData();
     }
 
     public void loadData() throws IOException{
-        root = (Parent) loader.load();
-        controller = loader.getController();
         obsList.removeAll();
         customers = customerDAO.selectAllCustomers();
         for(CustomerModel customer : customers){
@@ -54,9 +49,9 @@ public class CustomerList {
     public void CustomerSelect(MouseEvent mouseEvent) {
 
         index = ListView.getSelectionModel().getSelectedIndex();
-        controller.showProject(index, customers);
+        controller.showProject(customers.get(index));
     }
-    public void setController(ProjectInfo controller){
+    public void setProjectInfoController(ProjectInfo controller){
         this.controller = controller;
     }
 
