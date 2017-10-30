@@ -82,7 +82,7 @@ public class MongoEmployeeDAO implements IEmployeeDAO {
     }
 
     @Override
-    public List<EmployeeModel> selectAllEmployees() {
+    public List<EmployeeModel> getAllEmployees() {
         return null;
     }
 

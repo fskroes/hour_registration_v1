@@ -49,7 +49,7 @@ public class ContractController {
     public void loadData(){
         ObservableList list = FXCollections.observableArrayList();
         contracts = new ArrayList<>();
-        employees = eDAO.selectAllEmployees();
+        employees = eDAO.getAllEmployees();
         for(EmployeeModel employee : employees) {
             list.add(employee.getLastname() + ", " + employee.getFirstname());
             contracts.add(eDAO.findContractByEmployee(employee));
