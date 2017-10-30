@@ -5,6 +5,7 @@ import com.mongodb.async.client.MongoClient;
 import com.mongodb.async.client.MongoCollection;
 import nl.webedu.hourregistration.dao.IEmployeeDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
+import nl.webedu.hourregistration.model.ContractModel;
 import nl.webedu.hourregistration.model.EmployeeModel;
 import nl.webedu.hourregistration.model.ProjectModel;
 import org.bson.Document;
@@ -87,6 +88,11 @@ public class MongoEmployeeDAO implements IEmployeeDAO {
 
     @Override
     public List<EmployeeModel> selectEmployeesByProject(ProjectModel project) {
+        return null;
+    }
+
+    @Override
+    public ContractModel findContractByEmployee(EmployeeModel employee) {
         return null;
     }
 }

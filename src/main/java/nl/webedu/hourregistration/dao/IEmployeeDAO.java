@@ -1,5 +1,6 @@
 package nl.webedu.hourregistration.dao;
 
+import nl.webedu.hourregistration.model.ContractModel;
 import nl.webedu.hourregistration.model.EmployeeModel;
 import nl.webedu.hourregistration.model.ProjectModel;
 
@@ -12,4 +13,5 @@ public interface IEmployeeDAO {
     public boolean updateEmployee(EmployeeModel employee);
     public List<EmployeeModel> selectAllEmployees();
     public List<EmployeeModel> selectEmployeesByProject(ProjectModel project);
+    public ContractModel findContractByEmployee(EmployeeModel employee);
 }
