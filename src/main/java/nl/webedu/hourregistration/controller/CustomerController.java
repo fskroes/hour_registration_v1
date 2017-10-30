@@ -20,31 +20,17 @@ import java.util.List;
 
 public class CustomerController {
 
-    ObservableList list = FXCollections.observableArrayList();
 
-    private ICustomerDAO customerDAO;
-    private List<CustomerModel> customers;
     private Boolean geactiveerd = false;
-    private Boolean loadData = true;
-
 
     @FXML
-    private VBox   ListVbox, AddVbox, ListOnlyVbox;
+    private VBox   ListVbox, AddVbox, InfoVbox;
 
-    @FXML
-    private JFXTextField CustomerNameText;
 
-    @FXML
-    private JFXListView<?> CustomerList;
+    public void initialize() throws IOException {
+        ListVbox.getChildren().add(FXMLLoader.load(getClass().getResource("/CustomerList.fxml")));
+        InfoVbox.getChildren().add(FXMLLoader.load(getClass().getResource("/ProjectInfo.fxml")));
 
-    @FXML
-    private Text ProjectName, ProjectTime, StartDate, EndDate;
-
-    public void initialize() {
-        customerDAO = DatabaseManager.getInstance().getDaoFactory().getCustomerDAO();
-        if (loadData){
-            loadData();
-        }
     }
 
     @FXML
@@ -52,44 +38,20 @@ public class CustomerController {
 
         if(geactiveerd){
             geactiveerd = false;
-            loadData = true;
             ListVbox.getChildren().clear();
-            ListVbox.getChildren().add(FXMLLoader.load(getClass().getResource("/LoginView")));
-            loadData();
+            ListVbox.getChildren().add(FXMLLoader.load(getClass().getResource("/CustomerList")));
         }
         else{
             geactiveerd = true;
-            loadData = false;
             ListVbox.getChildren().clear();
             ListVbox.getChildren().add(FXMLLoader.load(getClass().getResource("/AddCustomer.fxml")));
-            CustomerList.getItems().removeAll();
         }
 
 
     }
 
 
-    public void CustomerSelect(MouseEvent mouseEvent) {
-        int index = CustomerList.getSelectionModel().getSelectedIndex();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-        ProjectName.setText(customers.get(index).getProjectModel().getName());
-        ProjectTime.setText(customers.get(index).getProjectModel().getId());
-        StartDate.setText(sdf.format(customers.get(index).getProjectModel().getStartDate()));
-        EndDate.setText(sdf.format(customers.get(index).getProjectModel().getEndDate()));
 
-//        System.out.println(customers.get(0).getProjectModel());
-//        System.out.println(CustomerList.getSelectionModel().getSelectedIndex());
 
-    }
-    public void loadData(){
-        list.removeAll();
-        customers = customerDAO.selectAllCustomers();
-        for(CustomerModel customer : customers){
-            list.add(customer.getBusinessName());
-        }
-
-        CustomerList.getItems().addAll(list);
-
-    }
 
 }
