@@ -3,6 +3,7 @@ package nl.webedu.hourregistration.dao.mariadb;
 import nl.webedu.hourregistration.dao.IEmployeeDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.database.MariaDatabaseExtension;
+import nl.webedu.hourregistration.model.ContractModel;
 import nl.webedu.hourregistration.model.EmployeeModel;
 import nl.webedu.hourregistration.model.ProjectModel;
 
@@ -159,5 +160,19 @@ public class MariadbEmployeeDAO implements IEmployeeDAO {
             System.out.println(e.getMessage());
         }
         return employees;
+    }
+
+    public ContractModel findContractByEmployee(EmployeeModel employee) {
+        ContractModel contract = null;
+        try {
+            contract = database.selectObjectSingle(
+                    new ContractModel(),
+                    "SELECT * FROM employee WHERE employeeID = ?",
+                    employee.getId()
+            );
+        } catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return contract;
     }
 }
