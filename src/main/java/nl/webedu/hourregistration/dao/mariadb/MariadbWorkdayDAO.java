@@ -7,6 +7,7 @@ import nl.webedu.hourregistration.model.EmployeeModel;
 import nl.webedu.hourregistration.model.WorkdayModel;
 
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 public class MariadbWorkdayDAO implements IWorkdayDAO {
@@ -15,7 +16,7 @@ public class MariadbWorkdayDAO implements IWorkdayDAO {
     private MariaDatabaseExtension database;
 
     private MariadbWorkdayDAO() {
-        this.database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase().getConnection();
+        this.database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
     }
 
     public static MariadbWorkdayDAO getInstance() {
@@ -28,15 +29,16 @@ public class MariadbWorkdayDAO implements IWorkdayDAO {
     @Override
     public boolean insertWorkday(WorkdayModel workday) {
         String querySQL = "INSERT INTO workday"
-                + "(date, week_number, start_time, end_time) VALUES"
-                + "(?,?,?,?)";
+                + "(date, week_number, start_time, end_time, workday_day) VALUES"
+                + "(?,?,?,?,?)";
         try {
             database.insertQuery(
                     querySQL,
                     workday.getDate(),
                     workday.getWeekNumber(),
                     workday.getStartTime(),
-                    workday.getEndTime()
+                    workday.getEndTime(),
+                    workday.getDay()
             );
             return true;
         } catch (SQLException e) {
@@ -78,7 +80,7 @@ public class MariadbWorkdayDAO implements IWorkdayDAO {
         try {
             database.updateQuery(
                     updateSQL,
-                    workday.getDate(),
+                    workday.getDay(),
                     workday.getWeekNumber(),
                     workday.getStartTime(),
                     workday.getEndTime(),
