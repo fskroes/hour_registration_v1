@@ -9,7 +9,9 @@ import nl.webedu.hourregistration.model.ProjectModel;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public class MariadbEmployeeDAO implements IEmployeeDAO {
 
@@ -167,12 +169,16 @@ public class MariadbEmployeeDAO implements IEmployeeDAO {
         try {
             contract = database.selectObjectSingle(
                     new ContractModel(),
-                    "SELECT * FROM employee WHERE employeeID = ?",
+                    "SELECT * FROM employee JOIN contract ON employee.employeeID = contract.fk_employeeID WHERE employee.employeeID = ?",
                     employee.getId()
             );
         } catch(SQLException e){
             System.out.println(e.getMessage());
         }
-        return contract;
+
+        if (contract != null) return contract;
+
+        return Optional.ofNullable(contract = new ContractModel())
+                .filter(s -> s != null).orElse(new ContractModel());
     }
 }
