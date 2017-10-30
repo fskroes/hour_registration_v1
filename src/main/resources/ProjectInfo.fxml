@@ -20,14 +20,13 @@
                   <Insets left="30.0" />
                </HBox.margin>
             </Text>
-            <Text fx:id="ProjectName" strokeType="OUTSIDE" strokeWidth="0.0" text="-" wrappingWidth="130.13671875">
+            <Label fx:id="ProjectName" prefHeight="35.0" prefWidth="134.0" text="-">
                <font>
                   <Font size="24.0" />
                </font>
-               <HBox.margin>
+               <padding>
                   <Insets left="20.0" />
-               </HBox.margin>
-            </Text>
+               </padding></Label>
          </children>
       </HBox>
       <HBox alignment="CENTER_LEFT" prefHeight="125.0" prefWidth="200.0">
