@@ -1,23 +1,12 @@
 package nl.webedu.hourregistration.controller;
 
-import com.jfoenix.controls.JFXListView;
-import com.jfoenix.controls.JFXTextField;
-import com.jfoenix.controls.JFXToggleButton;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-import nl.webedu.hourregistration.dao.ICustomerDAO;
-import nl.webedu.hourregistration.database.DatabaseManager;
-import nl.webedu.hourregistration.model.CustomerModel;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.List;
 
 public class CustomerController {
 
@@ -29,20 +18,20 @@ public class CustomerController {
     FXMLLoader loader;
     Parent projectInfoView;
     Parent customerListView;
-    ProjectInfo projectInfoController;
-    CustomerList customerListController;
+    ProjectInfoController projectInfoControllerController;
+    CustomerListController customerListControllerController;
 
 
     public void initialize() throws IOException {
-        loader = new FXMLLoader(getClass().getResource("/ProjectInfo.fxml"));
+        loader = new FXMLLoader(getClass().getResource("/ProjectInfoView.fxml"));
         projectInfoView = loader.load();
         InfoVbox.getChildren().add(projectInfoView);
-        projectInfoController = loader.getController();
+        projectInfoControllerController = loader.getController();
         loader = new FXMLLoader(getClass().getResource("/CustomerList.fxml"));
         customerListView = loader.load();
         ListVbox.getChildren().add(customerListView);
-        customerListController = loader.getController();
-        customerListController.setController(projectInfoController);
+        customerListControllerController = loader.getController();
+        customerListControllerController.setController(projectInfoControllerController);
 
     }
 
@@ -57,7 +46,7 @@ public class CustomerController {
         else{
             geactiveerd = true;
             ListVbox.getChildren().clear();
-            ListVbox.getChildren().add(FXMLLoader.load(getClass().getResource("/AddCustomer.fxml")));
+            ListVbox.getChildren().add(FXMLLoader.load(getClass().getResource("/AddCustomerView.fxml")));
         }
 
 
