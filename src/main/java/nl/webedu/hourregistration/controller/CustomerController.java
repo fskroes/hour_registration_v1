@@ -1,67 +1,70 @@
 package nl.webedu.hourregistration.controller;
 
 import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXToggleButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import nl.webedu.hourregistration.dao.ICustomerDAO;
-import nl.webedu.hourregistration.dao.IUserAuthenticationDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.model.CustomerModel;
 
-import java.lang.management.MemoryManagerMXBean;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class CustomerController {
 
-    ObservableList list = FXCollections.observableArrayList();
 
-    private ICustomerDAO customerDAO;
-    private List<CustomerModel> customers;
+    private Boolean geactiveerd = false;
 
     @FXML
-    private JFXListView<?> CustomerList;
+    private VBox   ListVbox, AddVbox, InfoVbox;
+    FXMLLoader loader;
+    Parent projectInfoView;
+    Parent customerListView;
+    ProjectInfo projectInfoController;
+    CustomerList customerListController;
 
-    @FXML
-    private Text ProjectTime;
 
-    @FXML
-    private Text StartDate;
+    public void initialize() throws IOException {
+        loader = new FXMLLoader(getClass().getResource("/ProjectInfo.fxml"));
+        projectInfoView = loader.load();
+        InfoVbox.getChildren().add(projectInfoView);
+        projectInfoController = loader.getController();
+        loader = new FXMLLoader(getClass().getResource("/CustomerList.fxml"));
+        customerListView = loader.load();
+        ListVbox.getChildren().add(customerListView);
+        customerListController = loader.getController();
+        customerListController.setController(projectInfoController);
 
-    @FXML
-    private Text EndDate;
-
-    @FXML
-    private Text ProjectName;
-
-    public void initialize() {
-        customerDAO = DatabaseManager.getInstance().getDaoFactory().getCustomerDAO();
-        //loadData();
     }
 
-    public void CustomerSelect(MouseEvent mouseEvent) {
-        int index = CustomerList.getSelectionModel().getSelectedIndex();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-        ProjectName.setText(customers.get(index).getProjectModel().getName());
-        ProjectTime.setText(customers.get(index).getProjectModel().getId());
-        StartDate.setText(sdf.format(customers.get(index).getProjectModel().getStartDate()));
-        EndDate.setText(sdf.format(customers.get(index).getProjectModel().getEndDate()));
+    @FXML
+    public void AddCustomer(MouseEvent mouseEvent) throws IOException {
 
-//        System.out.println(customers.get(0).getProjectModel());
-//        System.out.println(CustomerList.getSelectionModel().getSelectedIndex());
+        if(geactiveerd){
+            geactiveerd = false;
+            ListVbox.getChildren().clear();
+            ListVbox.getChildren().add(customerListView);
+        }
+        else{
+            geactiveerd = true;
+            ListVbox.getChildren().clear();
+            ListVbox.getChildren().add(FXMLLoader.load(getClass().getResource("/AddCustomer.fxml")));
+        }
+
 
     }
-//    public void loadData(){
-//        list.removeAll();
-//        customers = customerDAO.selectAllCustomers();
-//        for(CustomerModel customer : customers){
-//            list.add(customer.getBusinessName());
-//        }
-//
-//        CustomerList.getItems().addAll(list);
-//
-//    }
+
+
+
+
+
 }
