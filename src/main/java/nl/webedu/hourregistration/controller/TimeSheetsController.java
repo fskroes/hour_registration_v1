@@ -154,6 +154,9 @@ public class TimeSheetsController {
             }
             assert parent != null;
 
+            TimesheetController controller = loader.getController();
+            controller.setSessionEmployee(sessionEmployee);
+
             //MainController controller = loader.getController();
 
             Scene scene = new Scene(parent, 1200, 800);
