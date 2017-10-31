@@ -37,7 +37,7 @@ public class RollenController {
         allEmployees = DatabaseManager.getInstance().getDaoFactory().getEmployeeDAO().getAllEmployees();
 
         for (EmployeeModel model : allEmployees) {
-            employeeListView.getItems().add(new Label(model.getFirstname() + model.getLastname()));
+            employeeListView.getItems().add(new Label(model.getLastname() + ", " + model.getFirstname()));
         }
     }
 
@@ -59,9 +59,7 @@ public class RollenController {
 
 
 //        EmployeeModel selectedItem = (EmployeeModel) employeeListView.getSelectionModel().getSelectedItem();
-        employeeTextfield.setText(model.getFirstname());
-        System.out.println("selected: " + model.getRole().toString());
-        System.out.println("selected: " + model.getRole().toString());
+        employeeTextfield.setText(model.getLastname() + ", " + model.getFirstname());
         switch (model.getRole()) {
             case EMPLOYEE:
                 employeeCheckboxEMPLOYEE.setSelected(true);
@@ -121,7 +119,7 @@ public class RollenController {
 
         //MainController controller = loader.getController();
 
-        Scene scene = new Scene(parent, 1200, 800);
+        Scene scene = new Scene(parent);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
