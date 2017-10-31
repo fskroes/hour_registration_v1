@@ -11,7 +11,9 @@ import nl.webedu.hourregistration.model.ProjectModel;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
@@ -38,12 +40,12 @@ public class EditProject {
 
     public void saveProject(){
         customer.getProjectModel().setName(ProjectName.getText());
-
+        localDateToDate(StartDate.getValue());
     }
 
     public void setDefaults(){
-        ProjectName.setText(customer.getProjectModel().getName());
-        StartDate.setValue(dateToLocalDate(customer.getProjectModel().getStartDate()));
+//        ProjectName.setText(customer.getProjectModel().getName());
+//        StartDate.setValue(dateToLocalDate(customer.getProjectModel().getStartDate()));
     }
 
     private LocalDate dateToLocalDate(Date date){
@@ -51,5 +53,10 @@ public class EditProject {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate localDate = LocalDate.parse(dateString, formatter);
         return localDate;
+    }
+    private Date localDateToDate (LocalDate localDate){
+        Instant instant = localDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
+        Date date = Date.from(instant);
+        return date;
     }
 }

@@ -44,17 +44,17 @@ public class MongoCustomerDAO implements ICustomerDAO {
 
 
     @Override
-    public boolean insertCustomer(CustomerModel customer) {
-        CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();
+    public String insertCustomer(CustomerModel customer) {
+        CompletableFuture<String> completableFuture = new CompletableFuture<>();
         Document query = new Document("business_name", customer.getBusinessName());
 
         client.getDatabase(DATABASE_NAME).getCollection(CUSTOMER_COLLECTION)
-                .insertOne(query, (result, t) -> completableFuture.complete(true));
+                .insertOne(query, (result, t) -> completableFuture.complete("1"));
         try {
             return completableFuture.get();
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
-            return false;
+            return "0";
         }
     }
 

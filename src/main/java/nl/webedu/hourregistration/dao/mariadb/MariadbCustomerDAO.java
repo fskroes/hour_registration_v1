@@ -6,6 +6,7 @@ import nl.webedu.hourregistration.database.MariaDatabaseExtension;
 import nl.webedu.hourregistration.model.CustomerModel;
 import nl.webedu.hourregistration.model.ProjectModel;
 
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -26,17 +27,17 @@ public class MariadbCustomerDAO implements ICustomerDAO {
     }
 
     @Override
-    public boolean insertCustomer(CustomerModel customer) {
+    public String insertCustomer(CustomerModel customer) {
         String querySQL = "INSERT INTO customer"
                 + "(company_name) VALUES"
                 + "(?)";
         try {
-            database.insertQuery(querySQL, customer.getBusinessName());
-            return true;
+            int id = database.insertQuery(querySQL, customer.getBusinessName());
+            return String.valueOf(id);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
+        return null;
     }
 
     @Override

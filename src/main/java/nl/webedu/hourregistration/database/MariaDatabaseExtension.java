@@ -135,12 +135,14 @@ public class MariaDatabaseExtension extends Database<Connection> {
 
     public int insertQuery(String sql) throws SQLException {
         PreparedStatement stat = connection.prepareStatement(sql);
-        return stat.executeUpdate();
+        stat.executeUpdate();
+        return stat.getGeneratedKeys().getInt(1);
     }
 
     public int insertQuery(String sql, Object... params) throws SQLException {
         PreparedStatement stat = prepareStatement(sql, params);
-        return stat.executeUpdate();
+        stat.executeUpdate();
+        return stat.getGeneratedKeys().getInt(1);
     }
 
     public int updateQuery(String sql) throws SQLException {

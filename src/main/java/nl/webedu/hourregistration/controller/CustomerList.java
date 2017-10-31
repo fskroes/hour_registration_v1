@@ -47,12 +47,14 @@ public class CustomerList {
     }
 
     public void CustomerSelect(MouseEvent mouseEvent) {
-
+        
         index = ListView.getSelectionModel().getSelectedIndex();
         controller.showProject(customers.get(index));
     }
     public void setProjectInfoController(ProjectInfo controller){
         this.controller = controller;
+        controller.showProject(customers.get(0));
+
     }
 
 }

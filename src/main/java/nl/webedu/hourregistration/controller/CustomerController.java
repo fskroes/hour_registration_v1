@@ -11,6 +11,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import nl.webedu.hourregistration.dao.ICustomerDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
@@ -30,17 +32,19 @@ public class CustomerController {
     @FXML
     private VBox   ListVbox, AddVbox, InfoVbox;
     @FXML
-    private JFXButton EditButton;
+    private JFXButton EditButton, AddCustomer;
 
     FXMLLoader loader;
 
     Parent projectInfoView;
     Parent customerListView;
     Parent editProjectView;
+    Parent addCustomerView;
 
     ProjectInfo projectInfoController;
     CustomerList customerListController;
     EditProject editProjectController;
+    AddCustomer addCustomerController;
 
 
     public void initialize() throws IOException {
@@ -58,6 +62,10 @@ public class CustomerController {
         editProjectView = loader.load();
         editProjectController = loader.getController();
 
+        loader = new FXMLLoader(getClass().getResource("/AddCustomer.fxml"));
+        addCustomerView = loader.load();
+        addCustomerController = loader.getController();
+
         customerListController.setProjectInfoController(projectInfoController);
 
     }
@@ -66,14 +74,21 @@ public class CustomerController {
     public void AddCustomer(MouseEvent mouseEvent) throws IOException {
 
         if(geactiveerd){
+            addCustomerController.newCustomer();
+            AddCustomer.setText("+");
+            AddCustomer.setFont(Font.font("Microsoft Tai Le", FontWeight.BOLD, 20));
+            AddCustomer.setPrefWidth(46);
             geactiveerd = false;
             ListVbox.getChildren().clear();
             ListVbox.getChildren().add(customerListView);
         }
         else{
+            AddCustomer.setPrefWidth(108);
+            AddCustomer.setText("Opslaan");
+            AddCustomer.setFont(Font.font("Eras Medium ITC", FontWeight.NORMAL, 18));
             geactiveerd = true;
             ListVbox.getChildren().clear();
-            ListVbox.getChildren().add(FXMLLoader.load(getClass().getResource("/AddCustomer.fxml")));
+            ListVbox.getChildren().add(addCustomerView);
         }
 
 
@@ -95,8 +110,6 @@ public class CustomerController {
             InfoVbox.getChildren().add(editProjectView);
             editing = true;
         }
-
-
     }
 
 
