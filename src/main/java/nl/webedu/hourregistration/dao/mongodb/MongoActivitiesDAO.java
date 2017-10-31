@@ -10,7 +10,6 @@ import org.bson.Document;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -42,7 +41,7 @@ public class MongoActivitiesDAO implements IActivitiesDAO {
         Document query = new Document("category", activitie.getCategory())
                 .append("start_time",activitie.getStartTime())
                 .append("end_time",activitie.getEndTime())
-                .append("workday_id", activitie.getWorkdayId());
+                .append("workday_id", activitie.getWorkday());
 
         client.getDatabase(DATABASE_NAME).getCollection(ACTIVITY_COLLECTION)
                 .insertOne(query, (result, t) -> completableFuture.complete(true));
@@ -96,11 +95,11 @@ public class MongoActivitiesDAO implements IActivitiesDAO {
         Document query = new Document();
         query.put("workday_id", activity.getId());
         client.getDatabase(DATABASE_NAME).getCollection(ACTIVITY_COLLECTION).updateOne(
-                eq("workday_id", activity.getWorkdayId()),
+                eq("workday_id", activity.getWorkday()),
                 combine(set("category", activity.getCategory()),
                         set("start_time", activity.getStartTime()),
                         set("end_time", activity.getEndTime()),
-                        set("workday_id", activity.getWorkdayId())),
+                        set("workday_id", activity.getWorkday())),
                 (updateResult, throwable) -> {
                     completableFuture.complete((int) updateResult.getModifiedCount());
                 });

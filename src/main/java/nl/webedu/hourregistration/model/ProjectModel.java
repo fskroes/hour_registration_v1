@@ -58,12 +58,12 @@ public class ProjectModel extends DatabaseRowMapper<ProjectModel> {
         this.endDate = endDate;
     }
 
-    public CustomerModel getCustomerModel() {
-        return customerModel;
+    public CustomerModel getCustomer() {
+        return customer;
     }
 
-    public void setCustomerModel(CustomerModel customerModel) {
-        this.customerModel = customerModel;
+    public void setCustomer(CustomerModel customer) {
+        this.customer = customer;
     }
 
 
