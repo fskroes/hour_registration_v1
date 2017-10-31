@@ -1,16 +1,24 @@
 package nl.webedu.hourregistration.controller;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.model.EmployeeModel;
 
 import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,12 +26,15 @@ import static nl.webedu.hourregistration.enumeration.Role.EMPLOYEE;
 
 public class RollenController {
 
-
+    @FXML
+    public AnchorPane root;
     public JFXListView employeeListView;
     public JFXTextField employeeTextfield;
     public JFXCheckBox employeeCheckboxADMIN;
     public JFXCheckBox employeeCheckboxEMPLOYEE;
     public JFXCheckBox employeeCheckboxADMINISTRATION;
+    public JFXButton btnTerug;
+
     private List<EmployeeModel> allEmployees;
 
     public void initialize() {
@@ -39,8 +50,6 @@ public class RollenController {
             employeeListView.getItems().add(new Label(model.getFirstname() + model.getLastname()));
         }
     }
-
-
 
     private void setUpUserInterface() {
 //        employeeListView.getItems().add(lbl);
@@ -104,5 +113,20 @@ public class RollenController {
         model.setRole(3);
 
         DatabaseManager.getInstance().getDaoFactory().getEmployeeDAO().updateEmployee(model);
+    }
+
+    public void toPreviousView (ActionEvent actionEvent) {
+        Stage primaryStage = (Stage) root.getScene().getWindow();
+        primaryStage.hide();
+        Parent parent = null;
+        try {
+            parent = FXMLLoader.load(getClass().getResource("/TimesheetsView.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        assert parent != null;
+        Scene scene = new Scene(parent);
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 }
