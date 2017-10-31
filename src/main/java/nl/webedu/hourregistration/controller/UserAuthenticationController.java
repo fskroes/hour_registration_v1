@@ -62,7 +62,7 @@ public class UserAuthenticationController {
 
             TimeSheetsController controller = loader.getController();
             EmployeeModel emp = mongoUserAuthenticationDAO.findEmployee(txtEmail.getText());
-            controller.setSessionEmployee(emp);
+            controller.postConstructor(emp);
 
             Scene scene = new Scene(parent);
             primaryStage.setScene(scene);

@@ -93,7 +93,7 @@ public class TimesheetController {
 //            assert parent != null;
 //
 //            TimeSheetsController controller = loader.getController();
-//            controller.setSessionEmployee(activeEmployee);
+//            controller.postConstructor(activeEmployee);
 //
 //            Scene scene = new Scene(parent, 1200, 800);
 //            primaryStage.setScene(scene);

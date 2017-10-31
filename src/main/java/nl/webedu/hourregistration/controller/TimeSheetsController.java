@@ -199,17 +199,18 @@ public class TimeSheetsController {
 
     }
 
-    public void setSessionEmployee(EmployeeModel sessionEmployee) {
+    public void postConstructor(EmployeeModel sessionEmployee) {
         this.sessionEmployee = sessionEmployee;
         roleProperties();
-        setupUserInterface(this.sessionEmployee);
+        this.activeEmployee = this.sessionEmployee;
+        setupUserInterface(this.activeEmployee);
     }
 
     private void roleProperties() {
         if (!sessionEmployee.getRole().equals(Role.ADMIN)) {
             cmEmployees.setVisible(false);
         } else {
-            List<EmployeeModel> employeeModels = DatabaseManager.getInstance().getDaoFactory().getEmployeeDAO().selectAllEmployees();
+            List<EmployeeModel> employeeModels = DatabaseManager.getInstance().getDaoFactory().getEmployeeDAO().getAllEmployees();
             for (EmployeeModel employeeModel : employeeModels) {
                 if (employeeModel.getId().equals(sessionEmployee.getId())) {
                     sessionEmployee = employeeModel;
@@ -232,5 +233,19 @@ public class TimeSheetsController {
     }
 
     public void onUntilChange(ActionEvent actionEvent) {
+    }
+
+    public void onFromChange(ActionEvent actionEvent) {
+        lvTimeSheets.getItems().clear();
+        setupUserInterface(activeEmployee);
+    }
+
+    public void onUntilChange(ActionEvent actionEvent) {
+        lvTimeSheets.getItems().clear();
+        setupUserInterface(activeEmployee);
+    }
+
+    public void onItemChange(ActionEvent actionEvent) {
+
     }
 }
