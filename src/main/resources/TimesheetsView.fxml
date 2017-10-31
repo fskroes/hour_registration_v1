@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXListView?>
-<?import javafx.geometry.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import com.jfoenix.controls.JFXButton?>
-<AnchorPane fx:id="root" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.webedu.hourregistration.controller.TimeSheetsController">
+
+<AnchorPane fx:id="root" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.webedu.hourregistration.controller.TimeSheetsController">
    <children>
       <HBox fx:id="header" alignment="CENTER_LEFT" spacing="24.0" style="-fx-background-color: #4285F4;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <padding>
@@ -56,12 +59,19 @@
                      </padding>
                   </HBox>
                   <JFXListView fx:id="lvTimeSheets" />
-                  <JFXButton fx:id="manageEmployeesButton" text="Manage employees" ></JFXButton>
                </children>
                <VBox.margin>
                   <Insets />
                </VBox.margin>
             </VBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="100.0">
+               <children>
+                  <JFXButton fx:id="manageContractsButton" onAction="#onManageContracts" text="Manage contracts" />
+                  <JFXButton fx:id="manageCustomersButton" onAction="#onManageCustomers" text="Manage customers" />
+                  <JFXButton fx:id="manageEmployeesButton" text="Manage employees" />
+                  <JFXButton fx:id="manageProjectsButton" onAction="#onManageProjects" text="Manage projects" />
+               </children>
+            </HBox>
          </children>
          <padding>
             <Insets bottom="48.0" left="48.0" right="48.0" top="48.0" />
