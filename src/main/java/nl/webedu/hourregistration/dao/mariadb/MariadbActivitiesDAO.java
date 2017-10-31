@@ -44,13 +44,13 @@ public class MariadbActivitiesDAO implements IActivitiesDAO {
 
     @Override
     public ActivitiesModel findActivitie(String id) {
-        ActivitiesModel activities = null;
+        ActivitiesModel activity = null;
         try {
-            activities = database.selectObjectSingle(new ActivitiesModel(), "SELECT * FROM activities WHERE activityID = ?", id);
+            activity = database.selectObjectSingle(new ActivitiesModel(), "SELECT * FROM activity WHERE activityID = ?", id);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return activities;
+        return activity;
     }
 
     @Override

@@ -5,26 +5,27 @@ import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTimePicker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.model.EmployeeModel;
+import nl.webedu.hourregistration.model.ProjectModel;
 import nl.webedu.hourregistration.model.WorkdayModel;
 
 import java.io.IOException;
 import java.time.*;
 import java.time.temporal.IsoFields;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 public class TimesheetController {
 
     private static boolean loaded = false;
-    private EmployeeModel sessionEmployee;
+    private EmployeeModel activeEmployee;
+    private Map<ProjectModel, HBox> row;
 
     public JFXButton btnreturntoTimesheets;
     public JFXListView timesheetListview;
@@ -48,6 +49,7 @@ public class TimesheetController {
             timepicker14;
 
     public void initialize() {
+        row = new HashMap<>();
         if (loaded) {
             return;
         } else {
@@ -77,32 +79,33 @@ public class TimesheetController {
 //            primaryStage.setScene(scene);
 //            primaryStage.show();
 
-            Stage primaryStage = (Stage) root.getScene().getWindow();
-            primaryStage.hide();
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/TimesheetsView.fxml"));
-
-            Parent parent = null;
-            try {
-                parent = loader.load();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            assert parent != null;
-
-            TimeSheetsController controller = loader.getController();
-            controller.setSessionEmployee(sessionEmployee);
-
-            Scene scene = new Scene(parent, 1200, 800);
-            primaryStage.setScene(scene);
-            primaryStage.show();
+//            Stage primaryStage = (Stage) root.getScene().getWindow();
+//            primaryStage.hide();
+//
+//            FXMLLoader loader = new FXMLLoader(getClass().getResource("/TimesheetsView.fxml"));
+//
+//            Parent parent = null;
+//            try {
+//                parent = loader.load();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            assert parent != null;
+//
+//            TimeSheetsController controller = loader.getController();
+//            controller.setSessionEmployee(activeEmployee);
+//
+//            Scene scene = new Scene(parent, 1200, 800);
+//            primaryStage.setScene(scene);
+//            primaryStage.show();
         });
-
     }
 
-    public void setSessionEmployee(EmployeeModel sessionEmployee) {
-        this.sessionEmployee = sessionEmployee;
+    public void postConstructor(EmployeeModel sessionEmployee, int weekId) {
+        this.activeEmployee = sessionEmployee;
+        sessionEmployee.getWorksdaysByWeekNumber(weekId);
     }
+
     private int toWeekNumber() {
         return ZonedDateTime.ofInstant(Instant.now(), ZoneId.systemDefault()).get(IsoFields.WEEK_OF_WEEK_BASED_YEAR);
     }

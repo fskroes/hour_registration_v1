@@ -38,8 +38,7 @@ public class MongoActivitiesDAO implements IActivitiesDAO {
     @Override
     public boolean insertActivitie(ActivitiesModel activitie) {
         CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();
-        Document query = new Document("category", activitie.getCategory())
-                .append("start_time",activitie.getStartTime())
+        Document query = new Document("start_time",activitie.getStartTime())
                 .append("end_time",activitie.getEndTime())
                 .append("workday_id", activitie.getWorkday());
 
@@ -96,8 +95,7 @@ public class MongoActivitiesDAO implements IActivitiesDAO {
         query.put("workday_id", activity.getId());
         client.getDatabase(DATABASE_NAME).getCollection(ACTIVITY_COLLECTION).updateOne(
                 eq("workday_id", activity.getWorkday()),
-                combine(set("category", activity.getCategory()),
-                        set("start_time", activity.getStartTime()),
+                combine(set("start_time", activity.getStartTime()),
                         set("end_time", activity.getEndTime()),
                         set("workday_id", activity.getWorkday())),
                 (updateResult, throwable) -> {
@@ -126,10 +124,9 @@ public class MongoActivitiesDAO implements IActivitiesDAO {
                 (documents, throwable) -> {
                     for (Document d: alActivitieDocuments) {
 
-                        alActivitiesmodels.add(new ActivitiesModel(d.getString("category"),
-                                d.getDate("start_time"),
-                                d.getDate("end_time"),
-                                d.getInteger("workday_id")));
+//                        alActivitiesmodels.add(new ActivitiesModel(d.getDate("start_time"),
+//                                d.getDate("end_time"),
+//                                d.getInteger("workday_id")));
                     }
                     completableFuture.complete(alActivitiesmodels);
                 });

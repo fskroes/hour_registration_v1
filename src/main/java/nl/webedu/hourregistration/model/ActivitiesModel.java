@@ -1,5 +1,6 @@
 package nl.webedu.hourregistration.model;
 
+import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.database.DatabaseRowMapper;
 import org.bson.Document;
 
@@ -70,6 +71,8 @@ public class ActivitiesModel extends DatabaseRowMapper<ActivitiesModel> {
         this.id = String.valueOf(set.getInt("activityID"));
         this.startTime = set.getDate("start_time");
         this.endTime = set.getDate("end_time");
+        this.workday = DatabaseManager.getInstance().getDaoFactory().getWorkdayDAO().findWorkday("fk_workdayID");
+        this.project = DatabaseManager.getInstance().getDaoFactory().getProjectDAO().findProject("fk_projectID");
         return this;
     }
 

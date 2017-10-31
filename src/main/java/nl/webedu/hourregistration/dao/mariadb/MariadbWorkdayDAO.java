@@ -102,8 +102,6 @@ public class MariadbWorkdayDAO implements IWorkdayDAO {
         return workday;
     }
 
-    //Sorry moet opnieuw!!!
-    //moet een lijst terug geven van alle werkdagen die een employee heeft gewerkt.
     @Override
     public List<WorkdayModel> selectWorkdaysByEmployee(EmployeeModel employee) {
         List<WorkdayModel> workdays = null;

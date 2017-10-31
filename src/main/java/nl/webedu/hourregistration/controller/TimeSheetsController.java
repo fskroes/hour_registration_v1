@@ -76,7 +76,6 @@ public class TimeSheetsController {
             long secondsInMilli = 1000;
             long minutesInMilli = secondsInMilli * 60;
             long hoursInMilli = minutesInMilli * 60;
-            long daysInMilli = hoursInMilli * 24;
 
             Calendar startDate = Calendar.getInstance();
             startDate.set(Calendar.WEEK_OF_YEAR, i);
@@ -91,12 +90,12 @@ public class TimeSheetsController {
                 Long different =+ workday.getStartTime().getTime() - workday.getEndTime().getTime();
                 elapsedHours = different / hoursInMilli;
             }
-            timesheetEntry(startDate.getTime(), endDate.getTime(), elapsedHours, 0);
+            timesheetEntry(i, startDate.getTime(), endDate.getTime(), elapsedHours, 0);
         }
 
     }
 
-    private void timesheetEntry(Date startDate, Date endDate, double TotalHours, double OverTime) {
+    private void timesheetEntry(int weekId, Date startDate, Date endDate, double TotalHours, double OverTime) {
         HBox itemWrapper = new HBox(48);
         itemWrapper.setFillHeight(true);
 
@@ -144,8 +143,8 @@ public class TimeSheetsController {
         JFXButton btnTimeSheet = new JFXButton("View timesheet");
         btnTimeSheet.setStyle("-fx-border-color: #4285F4; -fx-border-width: 1px;");
         btnTimeSheet.setOnAction(event -> {
-            Stage primaryStage = (Stage) root.getScene().getWindow();
-            primaryStage.hide();
+            Stage timesheet = new Stage();
+            timesheet.hide();
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/TimesheetView.fxml"));
 
@@ -158,13 +157,13 @@ public class TimeSheetsController {
             assert parent != null;
 
             TimesheetController controller = loader.getController();
-            controller.setSessionEmployee(sessionEmployee);
+            controller.postConstructor(sessionEmployee, weekId);
 
             //MainController controller = loader.getController();
 
             Scene scene = new Scene(parent, 1200, 800);
-            primaryStage.setScene(scene);
-            primaryStage.show();
+            timesheet.setScene(scene);
+            timesheet.show();
         });
 
         manageEmployeesButton.setOnAction(event -> {
