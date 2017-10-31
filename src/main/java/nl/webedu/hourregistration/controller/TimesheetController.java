@@ -12,6 +12,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import nl.webedu.hourregistration.database.DatabaseManager;
+import nl.webedu.hourregistration.model.EmployeeModel;
 import nl.webedu.hourregistration.model.WorkdayModel;
 
 import java.io.IOException;
@@ -22,9 +23,8 @@ import java.util.Optional;
 
 public class TimesheetController {
 
-    private boolean loaded = false;
-    private Date beginWeek;
-    private Date endWeek;
+    private static boolean loaded = false;
+    private EmployeeModel sessionEmployee;
 
     public JFXButton btnreturntoTimesheets;
     public JFXListView timesheetListview;
@@ -58,6 +58,25 @@ public class TimesheetController {
         weekLabel.setText("Week: " + String.valueOf(toWeekNumber()));
 
         btnreturntoTimesheets.setOnAction(event -> {
+//            Stage primaryStage = (Stage) root.getScene().getWindow();
+//            primaryStage.hide();
+//
+//            FXMLLoader loader = new FXMLLoader(getClass().getResource("/TimesheetsView.fxml"));
+//
+//            Parent parent = null;
+//            try {
+//                parent = loader.load();
+//            } catch (IOException ex) {
+//                ex.printStackTrace();
+//            }
+//            assert parent != null;
+//
+//            loaded = false;
+//
+//            Scene scene = new Scene(parent, 1200, 800);
+//            primaryStage.setScene(scene);
+//            primaryStage.show();
+
             Stage primaryStage = (Stage) root.getScene().getWindow();
             primaryStage.hide();
 
@@ -66,12 +85,13 @@ public class TimesheetController {
             Parent parent = null;
             try {
                 parent = loader.load();
-            } catch (IOException ex) {
-                ex.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
             assert parent != null;
 
-            loaded = false;
+            TimeSheetsController controller = loader.getController();
+            controller.setSessionEmployee(sessionEmployee);
 
             Scene scene = new Scene(parent, 1200, 800);
             primaryStage.setScene(scene);
@@ -80,6 +100,9 @@ public class TimesheetController {
 
     }
 
+    public void setSessionEmployee(EmployeeModel sessionEmployee) {
+        this.sessionEmployee = sessionEmployee;
+    }
     private int toWeekNumber() {
         return ZonedDateTime.ofInstant(Instant.now(), ZoneId.systemDefault()).get(IsoFields.WEEK_OF_WEEK_BASED_YEAR);
     }
@@ -96,7 +119,7 @@ public class TimesheetController {
                 .filter(s -> s != null).orElse(new Date());
     }
 
-    private void setUpUserInterface() {
+    public void setUpUserInterface() {
 
         HBox box = null;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/TimesheetCellView.fxml"));
@@ -190,22 +213,6 @@ public class TimesheetController {
         DatabaseManager.getInstance().getDaoFactory().getWorkdayDAO().insertWorkday(fri);
         DatabaseManager.getInstance().getDaoFactory().getWorkdayDAO().insertWorkday(sat);
         DatabaseManager.getInstance().getDaoFactory().getWorkdayDAO().insertWorkday(sun);
-    }
-
-    public Date getBeginWeek() {
-        return beginWeek;
-    }
-
-    public void setBeginWeek(Date beginWeek) {
-        this.beginWeek = beginWeek;
-    }
-
-    public Date getEndWeek() {
-        return endWeek;
-    }
-
-    public void setEndWeek(Date endWeek) {
-        this.endWeek = endWeek;
     }
 }
 

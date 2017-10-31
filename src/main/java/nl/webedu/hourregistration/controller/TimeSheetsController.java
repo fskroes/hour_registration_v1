@@ -152,9 +152,10 @@ public class TimeSheetsController {
             }
             assert parent != null;
 
-            TimesheetController timesheetController = loader.getController();
-            timesheetController.setBeginWeek(startDate);
-            timesheetController.setEndWeek(endDate);
+            TimesheetController controller = loader.getController();
+            controller.setSessionEmployee(sessionEmployee);
+
+            //MainController controller = loader.getController();
 
             Scene scene = new Scene(parent, 1200, 800);
             primaryStage.setScene(scene);
