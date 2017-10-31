@@ -51,6 +51,10 @@ public class TimeSheetsController {
     public JFXComboBox cmUntilWeek;
 
     @FXML
+    public JFXButton manageCustomersButton;
+    @FXML
+    public JFXButton manageProjectsButton;
+    @FXML
     public void initialize() {
         Calendar cal = Calendar.getInstance();
         int weeknr = cal.get(Calendar.WEEK_OF_YEAR) - 1;
