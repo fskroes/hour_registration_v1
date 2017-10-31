@@ -17,7 +17,6 @@
             <HBox alignment="CENTER" spacing="105.0">
                <children>
                   <JFXTextField fx:id="employeeTextfield" promptText="Select user left" />
-                  <JFXButton fx:id="btnTerug" mnemonicParsing="false" onMouseClicked="#toPreviousView" text="terug" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="20.0">

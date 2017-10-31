@@ -1,6 +1,5 @@
 package nl.webedu.hourregistration.controller;
 
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
@@ -20,14 +19,11 @@ import java.util.List;
 
 public class RollenController {
 
-    @FXML
-    public AnchorPane root;
     public JFXListView employeeListView;
     public JFXTextField employeeTextfield;
     public JFXCheckBox employeeCheckboxADMIN;
     public JFXCheckBox employeeCheckboxEMPLOYEE;
     public JFXCheckBox employeeCheckboxADMINISTRATION;
-    public JFXButton returnToTimesheetsButton;
     public SplitPane root;
     private List<EmployeeModel> allEmployees;
 
