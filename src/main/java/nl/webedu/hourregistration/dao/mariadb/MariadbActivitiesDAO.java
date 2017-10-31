@@ -34,7 +34,7 @@ public class MariadbActivitiesDAO implements IActivitiesDAO {
                 + "(?,?,?,?)";
 
         try {
-            database.insertQuery(insertSQL, activity.getCategory(), activity.getStartTime(), activity.getEndTime(), activity.getWorkdayId());
+            database.insertQuery(insertSQL, activity.getStartTime(), activity.getEndTime(), activity.getWorkday());
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -74,7 +74,6 @@ public class MariadbActivitiesDAO implements IActivitiesDAO {
                 "WHERE activityID = ?";
         try {
             result = database.updateQuery(updateSQL,
-                    activity.getCategory(),
                     activity.getStartTime(),
                     activity.getEndTime(),
                     activity.getId());

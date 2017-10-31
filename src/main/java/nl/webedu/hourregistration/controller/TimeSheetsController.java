@@ -26,11 +26,13 @@ import nl.webedu.hourregistration.model.WorkdayModel;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class TimeSheetsController {
 
     private EmployeeModel sessionEmployee;
+    private EmployeeModel activeEmployee;
 
     @FXML
     public AnchorPane root;
@@ -71,8 +73,6 @@ public class TimeSheetsController {
             long hoursInMilli = minutesInMilli * 60;
             long daysInMilli = hoursInMilli * 24;
 
-            SimpleDateFormat sdf = new SimpleDateFormat("dd MMMMM yyyy");
-
             Calendar startDate = Calendar.getInstance();
             startDate.set(Calendar.WEEK_OF_YEAR, i);
             startDate.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
@@ -81,21 +81,21 @@ public class TimeSheetsController {
             endDate.set(Calendar.WEEK_OF_YEAR, i);
             endDate.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
 
-            System.out.println(sdf.format(startDate.getTime()) + " - " + sdf.format(endDate.getTime()));
-
             List<WorkdayModel> workdays = employee.getWorksdaysByWeekNumber(i);
             for (WorkdayModel workday : workdays) {
                 Long different =+ workday.getStartTime().getTime() - workday.getEndTime().getTime();
                 elapsedHours = different / hoursInMilli;
             }
-            timesheetEntry(sdf.format(startDate.getTime()), sdf.format(endDate.getTime()), elapsedHours, 0);
+            timesheetEntry(startDate.getTime(), endDate.getTime(), elapsedHours, 0);
         }
 
     }
 
-    private void timesheetEntry(String startDate, String endDate, double TotalHours, double OverTime) {
+    private void timesheetEntry(Date startDate, Date endDate, double TotalHours, double OverTime) {
         HBox itemWrapper = new HBox(48);
         itemWrapper.setFillHeight(true);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd MMMMM yyyy");
 
         VBox dateWrapper = new VBox();
         dateWrapper.setPadding(new Insets(12));
@@ -103,7 +103,7 @@ public class TimeSheetsController {
         dateWrapper.setAlignment(Pos.CENTER);
 //        dateWrapper.setStyle("-fx-border-color: crimson; -fx-border-width: 1px;");
 
-        Label lblDateToDate = new Label(startDate + " - " + endDate);
+        Label lblDateToDate = new Label(sdf.format(startDate) + " - " + sdf.format(endDate));
         lblDateToDate.setFont(Font.font("System", 16));
         Label lblStatus = new Label("Status");
         lblStatus.setFont(Font.font("System", 10));
@@ -136,8 +136,6 @@ public class TimeSheetsController {
         overtimeWorked.getChildren().add(lblOvertime);
         overtimeWorked.getChildren().add(lblHoursOvertime);
 
-        //
-
         JFXButton btnTimeSheet = new JFXButton("View timesheet");
         btnTimeSheet.setStyle("-fx-border-color: #4285F4; -fx-border-width: 1px;");
         btnTimeSheet.setOnAction(event -> {
@@ -154,7 +152,9 @@ public class TimeSheetsController {
             }
             assert parent != null;
 
-            //MainController controller = loader.getController();
+            TimesheetController timesheetController = loader.getController();
+            timesheetController.setBeginWeek(startDate);
+            timesheetController.setEndWeek(endDate);
 
             Scene scene = new Scene(parent, 1200, 800);
             primaryStage.setScene(scene);
@@ -176,7 +176,6 @@ public class TimeSheetsController {
     public void setSessionEmployee(EmployeeModel sessionEmployee) {
         this.sessionEmployee = sessionEmployee;
         roleProperties();
-        this.sessionEmployee.getWorkdays();
         setupUserInterface(this.sessionEmployee);
     }
 

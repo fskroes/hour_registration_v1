@@ -33,7 +33,7 @@ public class MariadbProjectDAO implements IProjectDAO {
                 + "(?,?,?,?,?)";
         try {
             database.insertQuery(querySQL, project.getName(), project.getStartDate(), project.getEndDate(),
-                    project.getCategorie(), project.getCustomerModel().getId());
+                    project.getCategorie(), project.getCustomer().getId());
             return true;
         } catch (SQLException e) {
             e.printStackTrace();

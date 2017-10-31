@@ -15,7 +15,7 @@ public class WorkdayModel extends DatabaseRowMapper<WorkdayModel> {
     private Date date, startTime, endTime;
     private String dayName;
     private int weekNumber;
-    private List<String> activities;
+    private List<ActivitiesModel> activities;
     private List<String> employee_ids;
 
     public WorkdayModel() {
@@ -92,11 +92,11 @@ public class WorkdayModel extends DatabaseRowMapper<WorkdayModel> {
         this.weekNumber = weekNumber;
     }
 
-    public List<String> getActivitieIds() {
+    public List<ActivitiesModel> getActivitieIds() {
         return new ArrayList<>(activities);
     }
 
-    public void setActivities(List<String> activities) {
+    public void setActivities(List<ActivitiesModel> activities) {
         this.activities = activities;
     }
 

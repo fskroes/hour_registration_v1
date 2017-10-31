@@ -13,8 +13,7 @@ public class ProjectModel extends DatabaseRowMapper<ProjectModel> {
     private String name;
     private Date startDate;
     private Date endDate;
-    private String categorie;
-    private CustomerModel customerModel;
+    private CustomerModel customer;
 
     public ProjectModel() {
         type = ProjectModel.class;
@@ -29,7 +28,6 @@ public class ProjectModel extends DatabaseRowMapper<ProjectModel> {
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.categorie = categorie;
     }
 
     public String getId() {
@@ -60,20 +58,12 @@ public class ProjectModel extends DatabaseRowMapper<ProjectModel> {
         this.endDate = endDate;
     }
 
-    public CustomerModel getCustomerModel() {
-        return customerModel;
+    public CustomerModel getCustomer() {
+        return customer;
     }
 
-    public void setCustomerModel(CustomerModel customerModel) {
-        this.customerModel = customerModel;
-    }
-
-    public String getCategorie() {
-        return categorie;
-    }
-
-    public void setCategorie(String categorie) {
-        this.categorie = categorie;
+    public void setCustomer(CustomerModel customer) {
+        this.customer = customer;
     }
 
     @Override
@@ -82,7 +72,6 @@ public class ProjectModel extends DatabaseRowMapper<ProjectModel> {
         this.name = set.getString("project_name");
         this.startDate = set.getDate("start_date");
         this.endDate = set.getDate("end_date");
-        this.categorie = set.getString("category");
         return this;
     }
 
@@ -92,7 +81,6 @@ public class ProjectModel extends DatabaseRowMapper<ProjectModel> {
         this.name = set.getString("project_name");
         this.startDate = set.getDate("start_date");
         this.endDate = set.getDate("end_date");
-        this.categorie = set.getString("category");
         return this;
     }
 }

@@ -15,7 +15,6 @@ import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.model.WorkdayModel;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.time.*;
 import java.time.temporal.IsoFields;
 import java.util.Date;
@@ -23,7 +22,9 @@ import java.util.Optional;
 
 public class TimesheetController {
 
-    private static boolean loaded = false;
+    private boolean loaded = false;
+    private Date beginWeek;
+    private Date endWeek;
 
     public JFXButton btnreturntoTimesheets;
     public JFXListView timesheetListview;
@@ -95,7 +96,7 @@ public class TimesheetController {
                 .filter(s -> s != null).orElse(new Date());
     }
 
-    public void setUpUserInterface() {
+    private void setUpUserInterface() {
 
         HBox box = null;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/TimesheetCellView.fxml"));
@@ -189,6 +190,22 @@ public class TimesheetController {
         DatabaseManager.getInstance().getDaoFactory().getWorkdayDAO().insertWorkday(fri);
         DatabaseManager.getInstance().getDaoFactory().getWorkdayDAO().insertWorkday(sat);
         DatabaseManager.getInstance().getDaoFactory().getWorkdayDAO().insertWorkday(sun);
+    }
+
+    public Date getBeginWeek() {
+        return beginWeek;
+    }
+
+    public void setBeginWeek(Date beginWeek) {
+        this.beginWeek = beginWeek;
+    }
+
+    public Date getEndWeek() {
+        return endWeek;
+    }
+
+    public void setEndWeek(Date endWeek) {
+        this.endWeek = endWeek;
     }
 }
 
