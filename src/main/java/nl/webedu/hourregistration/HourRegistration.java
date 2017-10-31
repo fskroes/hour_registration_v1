@@ -18,7 +18,7 @@ public class HourRegistration extends Application {
 
         DatabaseManager.getInstance().connectToDatabase(DatabaseType.MARIADB);
 
-        Parent root = FXMLLoader.load(getClass().getResource("/LoginView.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/ProjectView.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
