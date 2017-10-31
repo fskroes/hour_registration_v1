@@ -4,25 +4,19 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.SplitPane;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.model.EmployeeModel;
 
-import java.awt.*;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-
-import static nl.webedu.hourregistration.enumeration.Role.EMPLOYEE;
 
 public class RollenController {
 
@@ -33,8 +27,8 @@ public class RollenController {
     public JFXCheckBox employeeCheckboxADMIN;
     public JFXCheckBox employeeCheckboxEMPLOYEE;
     public JFXCheckBox employeeCheckboxADMINISTRATION;
-    public JFXButton btnTerug;
-
+    public JFXButton returnToTimesheetsButton;
+    public SplitPane root;
     private List<EmployeeModel> allEmployees;
 
     public void initialize() {
@@ -115,17 +109,23 @@ public class RollenController {
         DatabaseManager.getInstance().getDaoFactory().getEmployeeDAO().updateEmployee(model);
     }
 
-    public void toPreviousView (ActionEvent actionEvent) {
+    public void returnToTimesheets(ActionEvent actionEvent) {
         Stage primaryStage = (Stage) root.getScene().getWindow();
         primaryStage.hide();
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/TimesheetsView.fxml"));
+
         Parent parent = null;
         try {
-            parent = FXMLLoader.load(getClass().getResource("/TimesheetsView.fxml"));
+            parent = loader.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
         assert parent != null;
-        Scene scene = new Scene(parent);
+
+        //MainController controller = loader.getController();
+
+        Scene scene = new Scene(parent, 1200, 800);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
