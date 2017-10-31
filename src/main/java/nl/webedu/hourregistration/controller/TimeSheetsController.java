@@ -39,7 +39,10 @@ public class TimeSheetsController {
     public JFXListView lvTimeSheets;
     @FXML
     public JFXComboBox cmEmployees;
-
+    @FXML
+    public JFXButton manageCustomersButton;
+    @FXML
+    public JFXButton manageProjectsButton;
     @FXML
     public void initialize() {
         setupUserInterface();
@@ -158,5 +161,50 @@ public class TimeSheetsController {
             }
             cmEmployees.getSelectionModel().select(sessionEmployee);
         }
+    }
+
+    public void onManageCustomers (ActionEvent actionEvent) {
+        Stage primaryStage = (Stage) root.getScene().getWindow();
+        primaryStage.hide();
+        Parent parent = null;
+        try {
+            parent = FXMLLoader.load(getClass().getResource("/CustomerView.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        assert parent != null;
+        Scene scene = new Scene(parent);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    public void onManageProjects (ActionEvent actionEvent) {
+        Stage primaryStage = (Stage) root.getScene().getWindow();
+        primaryStage.hide();
+        Parent parent = null;
+        try {
+            parent = FXMLLoader.load(getClass().getResource("/ProjectView.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        assert parent != null;
+        Scene scene = new Scene(parent);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    public void onManageContracts (ActionEvent actionEvent) {
+        Stage primaryStage = (Stage) root.getScene().getWindow();
+        primaryStage.hide();
+        Parent parent = null;
+        try {
+            parent = FXMLLoader.load(getClass().getResource("/ContractView.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        assert parent != null;
+        Scene scene = new Scene(parent);
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 }
