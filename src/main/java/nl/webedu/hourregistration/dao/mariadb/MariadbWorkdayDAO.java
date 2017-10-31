@@ -7,7 +7,6 @@ import nl.webedu.hourregistration.model.EmployeeModel;
 import nl.webedu.hourregistration.model.WorkdayModel;
 
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.List;
 
 public class MariadbWorkdayDAO implements IWorkdayDAO {
@@ -38,7 +37,7 @@ public class MariadbWorkdayDAO implements IWorkdayDAO {
                     workday.getWeekNumber(),
                     workday.getStartTime(),
                     workday.getEndTime(),
-                    workday.getDay()
+                    workday.getDayName()
             );
             return true;
         } catch (SQLException e) {
@@ -80,7 +79,7 @@ public class MariadbWorkdayDAO implements IWorkdayDAO {
         try {
             database.updateQuery(
                     updateSQL,
-                    workday.getDay(),
+                    workday.getDayName(),
                     workday.getWeekNumber(),
                     workday.getStartTime(),
                     workday.getEndTime(),
@@ -107,13 +106,15 @@ public class MariadbWorkdayDAO implements IWorkdayDAO {
     //moet een lijst terug geven van alle werkdagen die een employee heeft gewerkt.
     @Override
     public List<WorkdayModel> selectWorkdaysByEmployee(EmployeeModel employee) {
-        WorkdayModel workday = null;
+        List<WorkdayModel> workdays = null;
         try {
-            workday = database.selectObjectSingle(new WorkdayModel(), "SELECT * FROM workday WHERE id = ?", String.valueOf(employee.getId()));
+            workdays = database.selectObjectList(
+                    new WorkdayModel(),
+                    "SELECT * FROM workday INNER JOIN employee_workday ON workday.workdayID = employee_workday.fk_workday_id WHERE employee_workday.fk_employee_id = ?",
+                    employee.getId());
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        //return workday;
-        return null;
+        return workdays;
     }
 }

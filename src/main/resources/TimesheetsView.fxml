@@ -20,7 +20,7 @@
                   <Font size="36.0" />
                </font>
             </Label>
-            <JFXComboBox fx:id="cmEmployees">
+            <JFXComboBox fx:id="cmEmployees" onAction="#onItemChange" style="-fx-background-color: white;">
                <HBox.margin>
                   <Insets />
                </HBox.margin>
@@ -36,12 +36,12 @@
             </Label>
             <VBox fx:id="timeSheetConainer" style="-fx-border-width: 1px; -fx-border-color: #4285F4;">
                <children>
-                  <HBox alignment="CENTER_RIGHT" spacing="24.0" style="-fx-background-color: #4285F4;">
+                  <HBox alignment="CENTER_RIGHT" spacing="12.0" style="-fx-background-color: #4285F4;">
                      <children>
-                        <Label fx:id="lblSortBy" style="-fx-text-fill: white;" text="Sort by:" />
-                        <JFXComboBox fx:id="cmbSortBy" promptText="Due date" style="-fx-background-color: white;" />
-                        <Label fx:id="lblFilter" style="-fx-text-fill: white;" text="Filter:" />
-                        <JFXComboBox fx:id="cmbFilter" maxWidth="-Infinity" promptText="Active" style="-fx-background-color: white;">
+                        <Label fx:id="lblFromWeek" style="-fx-text-fill: white;" text="Vanaf:" />
+                        <JFXComboBox fx:id="cmFromWeek" onAction="#onFromChange" style="-fx-background-color: white;" />
+                        <Label fx:id="lblUntilWeek" style="-fx-text-fill: white;" text="Tot en met:" />
+                        <JFXComboBox fx:id="cmUntilWeek" maxWidth="-Infinity" onAction="#onUntilChange" style="-fx-background-color: white;">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>
