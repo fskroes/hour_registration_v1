@@ -1,5 +1,6 @@
 package nl.webedu.hourregistration.controller;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -37,6 +38,8 @@ public class ProjectController {
     private JFXListView<?> pListView;
     @FXML
     private JFXListView<?> wLijstView;
+    @FXML
+    public JFXButton btnTerug;
 
     public void initialize() {
         projectDAO = DatabaseManager.getInstance().getDaoFactory().getProjectDAO();
@@ -80,6 +83,20 @@ public class ProjectController {
         wLijstView.getItems().addAll(lijst);
     }
 
+    public void toPreviousView (ActionEvent actionEvent) {
+        Stage primaryStage = (Stage) pAnchor.getScene().getWindow();
+        primaryStage.hide();
+        Parent parent = null;
+        try {
+            parent = FXMLLoader.load(getClass().getResource("/TimesheetsView.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        assert parent != null;
+        Scene scene = new Scene(parent);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
 
 //    public void addEmployeeToList (ActionEvent actionevent) {
 //

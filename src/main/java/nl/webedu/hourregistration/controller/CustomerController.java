@@ -1,10 +1,14 @@
 package nl.webedu.hourregistration.controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -13,6 +17,8 @@ public class CustomerController {
 
     private Boolean geactiveerd = false;
 
+    @FXML
+    private AnchorPane root;
     @FXML
     private VBox   ListVbox, AddVbox, InfoVbox;
     FXMLLoader loader;
@@ -48,12 +54,20 @@ public class CustomerController {
             ListVbox.getChildren().clear();
             ListVbox.getChildren().add(FXMLLoader.load(getClass().getResource("/AddCustomerView.fxml")));
         }
-
-
     }
 
-
-
-
-
+    public void toPreviousView (ActionEvent actionEvent) {
+        Stage primaryStage = (Stage) root.getScene().getWindow();
+        primaryStage.hide();
+        Parent parent = null;
+        try {
+            parent = FXMLLoader.load(getClass().getResource("/TimesheetsView.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        assert parent != null;
+        Scene scene = new Scene(parent);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
 }
