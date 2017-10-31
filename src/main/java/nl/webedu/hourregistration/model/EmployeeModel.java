@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class EmployeeModel extends DatabaseRowMapper<EmployeeModel> {
 
@@ -84,7 +85,11 @@ public class EmployeeModel extends DatabaseRowMapper<EmployeeModel> {
     }
 
     public Role getRole() {
-        return role;
+        if (role != null) return role;
+
+        setRole(2);
+        return Optional.ofNullable(role)
+                .filter(e -> e != null).orElse(getRole());
     }
 
     public void setRole(Role role) {

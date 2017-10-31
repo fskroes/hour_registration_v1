@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXListView?>
-<?import javafx.geometry.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<AnchorPane fx:id="root" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.webedu.hourregistration.controller.TimeSheetsController">
+
+<AnchorPane fx:id="root" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.webedu.hourregistration.controller.TimeSheetsController">
    <children>
       <HBox fx:id="header" alignment="CENTER_LEFT" spacing="24.0" style="-fx-background-color: #4285F4;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <padding>
@@ -60,6 +64,26 @@
                   <Insets />
                </VBox.margin>
             </VBox>
+            <HBox alignment="CENTER" spacing="100.0" style="-fx-background-color: dimgray;">
+               <children>
+                  <JFXButton fx:id="manageContractsButton" onAction="#onManageContracts" text="MANAGE CONTRACTS" textFill="WHITE">
+                     <font>
+                        <Font size="12.0" />
+                     </font></JFXButton>
+                  <JFXButton fx:id="manageCustomersButton" onAction="#onManageCustomers" text="MANAGE CUSTOMERS" textFill="WHITE">
+                     <font>
+                        <Font size="12.0" />
+                     </font></JFXButton>
+                  <JFXButton fx:id="manageEmployeesButton" text="MANAGE EMPLOYEES" textFill="WHITE">
+                     <font>
+                        <Font size="12.0" />
+                     </font></JFXButton>
+                  <JFXButton fx:id="manageProjectsButton" onAction="#onManageProjects" text="MANAGE PROJECTS" textFill="WHITE">
+                     <font>
+                        <Font size="12.0" />
+                     </font></JFXButton>
+               </children>
+            </HBox>
          </children>
          <padding>
             <Insets bottom="48.0" left="48.0" right="48.0" top="48.0" />
