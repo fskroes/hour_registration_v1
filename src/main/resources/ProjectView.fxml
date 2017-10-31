@@ -31,7 +31,7 @@
                         <Font size="36.0" />
                     </font>
                 </Label>
-            <JFXButton fx:id="btnTerug" mnemonicParsing="false" onAction="#toPreviousView" text="terug" textFill="WHITE" />
+            <JFXButton fx:id="btnTerug" mnemonicParsing="false" onAction="#toTimesheetsView" text="terug" textFill="WHITE" />
             </children>
         </HBox>
         <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: e8e8e8;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
