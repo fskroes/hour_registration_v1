@@ -11,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import nl.webedu.hourregistration.dao.IEmployeeDAO;
@@ -43,6 +44,7 @@ public class ProjectController {
     public JFXButton btnTerug;
 
     private int index;
+    private int eindex;
     private boolean observe = false;
     private boolean actief = false;
 
@@ -85,6 +87,7 @@ public class ProjectController {
 
         int index = pListView.getSelectionModel().getSelectedIndex();
         ProjectModel model = projects.get(index);
+        wListView.getItems().clear();
 
         ObservableList lijst = FXCollections.observableArrayList();
 
@@ -98,27 +101,36 @@ public class ProjectController {
 
     //On select op de wListView, maak werknemer actief of inactief en verander dit visueel.
     public void selectEmployeeOnList(MouseEvent mouseEvent) {
-        int index = wListView.getSelectionModel().getSelectedIndex();
+        int eindex = wListView.getSelectionModel().getSelectedIndex();
+        EmployeeModel model = employees.get(eindex);
 
+        //If active is off then turn it on
         if(actief == false) {
+
+            //Set true and change color of listview item
             actief = true;
+            wListView.setStyle("-fx-background-color: darkgrey;");
         }
+        //If active is on then turn it off
         else if (actief == true){
             actief = false;
         }
     }
 
-    //Actieve employees worden toegevoegd aan het project.
+    //Actieve employees worden verwijderd van het project.
+    public void removeEmployeeFromList (ActionEvent actionevent) {
+
+        //get all employees that are active
+
+        //Delete all employees that correspond to the projectID
+
+    }
+
+        //Actieve employees worden toegevoegd aan het project.
     public void addEmployeeToList (ActionEvent actionEvent) {
 
         if(actief == true) {
 
         }
     }
-
-//    }
-//    //Actieve employees worden verwijderd van het project.
-//    public void removeEmployeeFromList (ActionEvent actionevent) {
-//
-//    }
 }
