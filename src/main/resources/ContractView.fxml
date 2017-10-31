@@ -168,5 +168,19 @@
                 </VBox>
             </children>
         </HBox>
+      <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="1200.0" spacing="24.0" style="-fx-background-color: #4285F4;">
+         <padding>
+            <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
+         </padding>
+         <children>
+            <ImageView fx:id="imgTitle1" fitHeight="50.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="lblTitle1" style="-fx-text-fill: white;" text="Contracts">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <JFXButton fx:id="btnTerug1" mnemonicParsing="false" onAction="#toPreviousView" text="terug" />
+         </children>
+      </HBox>
     </children>
 </AnchorPane>

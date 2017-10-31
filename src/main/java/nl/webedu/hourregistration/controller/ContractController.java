@@ -38,7 +38,7 @@ public class ContractController {
     @FXML
     public Text eind_datum;
     @FXML
-    private JFXButton btnTerug;
+    public JFXButton btnTerug;
 
     private IEmployeeDAO eDAO;
     private List<EmployeeModel> employees;
