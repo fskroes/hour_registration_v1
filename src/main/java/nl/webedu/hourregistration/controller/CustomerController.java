@@ -9,7 +9,9 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -27,6 +29,8 @@ public class CustomerController {
     private boolean geactiveerd = false;
     private boolean editing = false;
 
+    @FXML
+    private AnchorPane root;
     @FXML
     private VBox   ListVbox, AddVbox, InfoVbox;
     @FXML
@@ -90,8 +94,21 @@ public class CustomerController {
             ListVbox.getChildren().clear();
             ListVbox.getChildren().add(addCustomerView);
         }
+    }
 
-
+    public void toPreviousView (ActionEvent actionEvent) {
+        Stage primaryStage = (Stage) root.getScene().getWindow();
+        primaryStage.hide();
+        Parent parent = null;
+        try {
+            parent = FXMLLoader.load(getClass().getResource("/TimesheetsView.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        assert parent != null;
+        Scene scene = new Scene(parent);
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
     @FXML
     public void EditProject (MouseEvent mouseEvent) throws IOException {
