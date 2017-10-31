@@ -10,7 +10,6 @@ import org.bson.Document;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -39,8 +38,7 @@ public class MongoProjectDAO implements IProjectDAO {
         CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();
         Document query = new Document("name", Project.getName())
                 .append("start_date",Project.getStartDate())
-                .append("end_date",Project.getEndDate())
-                .append("category", Project.getCategorie());
+                .append("end_date",Project.getEndDate());
 
         client.getDatabase(DATABASE_NAME).getCollection(PROJECT_COLLECTION)
                 .insertOne(query, (result, t) -> completableFuture.complete(true));
@@ -91,8 +89,7 @@ public class MongoProjectDAO implements IProjectDAO {
         client.getDatabase(DATABASE_NAME).getCollection(PROJECT_COLLECTION).updateOne(eq("_id", Project.getId())
                 , combine(set("name", Project.getName()),
                         set("start_date", Project.getStartDate()),
-                        set("end_date", Project.getEndDate()),
-                        set("category", Project.getCategorie())), (updateResult, throwable) -> {
+                        set("end_date", Project.getEndDate())), (updateResult, throwable) -> {
                     completableFuture.complete((int) updateResult.getModifiedCount());
                 });
         try {

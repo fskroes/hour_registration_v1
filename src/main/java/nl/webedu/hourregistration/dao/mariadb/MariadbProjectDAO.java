@@ -29,11 +29,11 @@ public class MariadbProjectDAO implements IProjectDAO {
     @Override
     public boolean insertProject(ProjectModel project) {
         String querySQL = "INSERT INTO project"
-                + "(project_name, start_date, end_date, category, customerID) VALUES"
+                + "(project_name, start_date, end_date, customerID) VALUES"
                 + "(?,?,?,?,?)";
         try {
             database.insertQuery(querySQL, project.getName(), project.getStartDate(), project.getEndDate(),
-                    project.getCategorie(), project.getCustomer().getId());
+                    project.getCustomer().getId());
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -69,7 +69,7 @@ public class MariadbProjectDAO implements IProjectDAO {
     public int updateProject(ProjectModel project) {
         int result = 0;
         String updateSQL = "UPDATE project"
-                + " SET project_name = ?, start_date = ?, end_date = ?, category = ?"
+                + " SET project_name = ?, start_date = ?, end_date = ?"
                 + " WHERE projectID = ?";
         try {
             database.updateQuery(
@@ -77,7 +77,6 @@ public class MariadbProjectDAO implements IProjectDAO {
                     project.getName(),
                     project.getStartDate(),
                     project.getEndDate(),
-                    project.getCategorie(),
                     project.getId()
                     );
         } catch (SQLException ex) {
@@ -112,7 +111,8 @@ public class MariadbProjectDAO implements IProjectDAO {
     public List<ProjectModel> selectProjectsByEmployee(EmployeeModel employee) {
         List<ProjectModel> project = null;
         try {
-            project = database.selectObjectList(new ProjectModel(), "SELECT * FROM project WHERE projectID = ?", String.valueOf(employee.getId()));
+            project = database.selectObjectList(new ProjectModel(),
+                    "SELECT * FROM project INNER JOIN employee_project ON projectID = fk_project_id WHERE fk_employee_id = ?", employee.getId());
         } catch (SQLException e) {
             e.printStackTrace();
         }

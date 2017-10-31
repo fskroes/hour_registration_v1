@@ -5,7 +5,9 @@ import org.bson.Document;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class ProjectModel extends DatabaseRowMapper<ProjectModel> {
 
@@ -14,6 +16,7 @@ public class ProjectModel extends DatabaseRowMapper<ProjectModel> {
     private Date startDate;
     private Date endDate;
     private CustomerModel customer;
+    private List<EmployeeModel> employees;
 
     public ProjectModel() {
         type = ProjectModel.class;
@@ -64,6 +67,22 @@ public class ProjectModel extends DatabaseRowMapper<ProjectModel> {
 
     public void setCustomer(CustomerModel customer) {
         this.customer = customer;
+    }
+
+    public List<EmployeeModel> getEmployees() {
+        return new ArrayList<>(employees);
+    }
+
+    public void setEmployees(List<EmployeeModel> employees) {
+        this.employees = employees;
+    }
+
+    public void addEmployee(EmployeeModel employee) {
+        this.employees.add(employee);
+    }
+
+    public void removeEmployee(EmployeeModel employee) {
+        this.employees.remove(employee);
     }
 
     @Override
