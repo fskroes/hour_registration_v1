@@ -114,4 +114,9 @@ public class MongoProjectDAO implements IProjectDAO {
     public List<ProjectModel> selectProjectsByEmployee(EmployeeModel employee) {
         return null;
     }
+
+    @Override
+    public int DeleteJunctionItemByEmployee(EmployeeModel employee, ProjectModel project) {
+        return 0;
+    }
 }

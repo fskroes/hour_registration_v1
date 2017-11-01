@@ -45,7 +45,7 @@
                                         <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
                                     </padding>
                                     <children>
-                                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Projecten" wrappingWidth="146.13671875">
+                                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Project" wrappingWidth="146.13671875">
                                             <font>
                                                 <Font size="33.0" />
                                             </font>
@@ -78,7 +78,7 @@
                                             </font>
                                         </Text>
                                         <JFXButton onAction="#addEmployeeToList" text="Add" textFill="WHITE" />
-                                        <JFXButton text="Delete" textFill="#fcfcfc" />
+                                        <JFXButton onAction="#deleteEmployeeFromProject" text="Delete" textFill="#fcfcfc" />
                                     </children>
                                 </HBox>
                                 <VBox prefHeight="502.0" prefWidth="657.0" style="-fx-background-color: #FFFFFF;">
