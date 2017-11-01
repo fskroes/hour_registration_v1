@@ -42,20 +42,34 @@ public class EditProject {
     }
 
     public void saveProject(){
-        customer.getProjectModel().setName(ProjectName.getText());
-        customer.getProjectModel().setStartDate(localDateToDate(StartDate.getValue()));
-        customer.getProjectModel().setEndDate(localDateToDate(EndDate.getValue()));
-        projectDAO.updateProject(customer.getProjectModel());
+        if(!ProjectName.equals(null) && StartDate != null && EndDate != null) {
+            customer.getProjectModel().setName(ProjectName.getText());
+            customer.getProjectModel().setStartDate(localDateToDate(StartDate.getValue()));
+            customer.getProjectModel().setEndDate(localDateToDate(EndDate.getValue()));
+            projectDAO.updateProject(customer.getProjectModel());
+        }
 
     }
 
     public void setDefaults(){
-        ProjectName.setText(customer.getProjectModel().getName());
+        if (customer.getProjectModel().getName().equals("-")){
+            ProjectName.setText("");
+        }
+        else{
+            ProjectName.setText(customer.getProjectModel().getName());
+        }
+
         if (customer.getProjectModel().getStartDate()!= null){
             StartDate.setValue(dateToLocalDate(customer.getProjectModel().getStartDate()));
         }
+        else{
+            StartDate.setValue(null);
+        }
         if (customer.getProjectModel().getEndDate() != null){
             EndDate.setValue(dateToLocalDate(customer.getProjectModel().getEndDate()));
+        }
+        else{
+            EndDate.setValue(null);
         }
     }
 

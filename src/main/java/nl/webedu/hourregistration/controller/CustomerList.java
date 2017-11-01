@@ -62,7 +62,6 @@ public class CustomerList {
     public void addCustomerToList(CustomerModel customer){
         customers.add(0, customer);
         obsList.add(0, customer.getBusinessName());
-//        obsList.add(customer.getBusinessName());
         ListView.getItems().clear();
         ListView.getItems().addAll(obsList);
         ListView.refresh();
