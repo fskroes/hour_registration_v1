@@ -5,6 +5,7 @@
 <?import com.jfoenix.controls.JFXListView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -18,7 +19,10 @@
             <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
          </padding>
          <children>
-            <ImageView fx:id="imgTitle" fitHeight="50.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="imgTitle" fitHeight="50.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="img/Logo.png" />
+               </image></ImageView>
             <Label fx:id="lblTitle" style="-fx-text-fill: white;" text="Timesheets">
                <font>
                   <Font size="36.0" />

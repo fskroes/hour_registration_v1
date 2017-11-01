@@ -98,6 +98,7 @@ public class TimeSheetsController {
     private void timesheetEntry(int weekId, Date startDate, Date endDate, double TotalHours, double OverTime) {
         HBox itemWrapper = new HBox(48);
         itemWrapper.setFillHeight(true);
+        itemWrapper.setAlignment(Pos.CENTER_LEFT);
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd MMMMM yyyy");
 
@@ -142,6 +143,7 @@ public class TimeSheetsController {
 
         JFXButton btnTimeSheet = new JFXButton("View timesheet");
         btnTimeSheet.setStyle("-fx-border-color: #4285F4; -fx-border-width: 1px;");
+        btnTimeSheet.setAlignment(Pos.CENTER);
         btnTimeSheet.setOnAction(event -> {
             Stage timesheet = new Stage();
             timesheet.hide();
