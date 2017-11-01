@@ -152,7 +152,7 @@ public class ProjectController {
         int index = pListView.getSelectionModel().getSelectedIndex();
         ProjectModel Pmodel = projects.get(index);
 
-        if(!wListView. .contains(Emodel)) DatabaseManager
+        if(!wListView.contains()) DatabaseManager
                 .getInstance()
                 .getDaoFactory()
                 .getProjectDAO()

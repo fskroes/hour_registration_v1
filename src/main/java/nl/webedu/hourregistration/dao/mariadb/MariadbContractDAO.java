@@ -9,7 +9,8 @@ import nl.webedu.hourregistration.model.EmployeeModel;
 import java.sql.SQLException;
 import java.util.List;
 
-public class MariadbContractDAO implements IContractDAO {
+public class
+MariadbContractDAO implements IContractDAO {
 
     private static MariadbContractDAO instance;
     private MariaDatabaseExtension database = (MariaDatabaseExtension) DatabaseManager.getInstance().getDatabase();
