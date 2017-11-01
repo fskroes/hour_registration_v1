@@ -75,11 +75,12 @@
                                         <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
                                     </padding>
                                     <children>
-                                        <Text fx:id="customerProperties" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Werknemers" wrappingWidth="424.13671875">
+                                        <Text fx:id="customerProperties" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Werknemers" wrappingWidth="232.13671875">
                                             <font>
                                                 <Font size="33.0" />
                                             </font>
                                         </Text>
+                              <JFXComboBox fx:id="cbEmployee" prefHeight="27.0" prefWidth="169.0" />
                                         <JFXButton onAction="#addEmployeeToList" text="Add" textFill="WHITE" />
                                         <JFXButton onAction="#deleteEmployeeFromProject" text="Delete" textFill="#fcfcfc" />
                                     </children>

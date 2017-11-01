@@ -15,4 +15,5 @@ public interface IProjectDAO {
     public ProjectModel selectProjectByCustomer(CustomerModel customer);
     public List<ProjectModel> selectProjectsByEmployee(EmployeeModel employee);
     public int DeleteJunctionItemByEmployee(EmployeeModel employee, ProjectModel project);
+    public int addJunctionItemWithProject(EmployeeModel employee, ProjectModel project);
 }
