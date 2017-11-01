@@ -42,7 +42,7 @@ public class EditProject {
     }
 
     public void saveProject(){
-        if(!ProjectName.equals(null) && StartDate != null && EndDate != null) {
+        if(!ProjectName.getText().equals(null) && StartDate.getValue() != null && EndDate.getValue() != null) {
             customer.getProjectModel().setName(ProjectName.getText());
             customer.getProjectModel().setStartDate(localDateToDate(StartDate.getValue()));
             customer.getProjectModel().setEndDate(localDateToDate(EndDate.getValue()));

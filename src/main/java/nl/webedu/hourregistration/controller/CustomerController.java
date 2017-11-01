@@ -32,7 +32,7 @@ public class CustomerController {
     @FXML
     private VBox   ListVbox, AddVbox, InfoVbox;
     @FXML
-    private JFXButton EditButton, AddCustomer;
+    private JFXButton EditButton, AddCustomer, Back;
 
     FXMLLoader loader;
 
@@ -113,6 +113,10 @@ public class CustomerController {
             InfoVbox.getChildren().add(editProjectView);
             editing = true;
         }
+    }
+    @FXML
+    public void BackToHome(MouseEvent mouseEvent) throws IOException {
+        loader = new FXMLLoader(getClass().getResource("/TimesheetsView.fxml"));
     }
 
 

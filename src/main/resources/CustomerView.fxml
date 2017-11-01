@@ -15,12 +15,24 @@
                 <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
             </padding>
             <children>
-                <ImageView fx:id="imgTitle" fitHeight="50.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" />
-                <Label fx:id="lblTitle" style="-fx-text-fill: white;" text="Customers">
+                <Label fx:id="lblTitle" minHeight="-Infinity" minWidth="-Infinity" prefHeight="53.0" prefWidth="215.0" style="-fx-text-fill: white;" text="Customers" HBox.hgrow="NEVER">
                     <font>
                         <Font size="36.0" />
                     </font>
                 </Label>
+                <ImageView fx:id="imgTitle" fitHeight="50.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" />
+            <HBox alignment="CENTER_RIGHT" prefHeight="53.0" prefWidth="897.0">
+               <children>
+                  <JFXButton fx:id="Back" buttonType="RAISED" maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#BackToHome" prefHeight="46.0" prefWidth="108.0" ripplerFill="#5752d3" style="-fx-background-color: #180175; -fx-border-color: #322fe2; -fx-border-width: 2;" text="Terug" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="NEVER">
+                     <font>
+                        <Font name="Eras Medium ITC" size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="30.0" />
+                     </HBox.margin>
+                  </JFXButton>
+               </children>
+            </HBox>
             </children>
         </HBox>
       <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: e8e8e8;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
@@ -47,7 +59,7 @@
                                     <Insets />
                                  </opaqueInsets>
                                  <children>
-                                    <JFXButton fx:id="AddCustomer" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#AddCustomer" pickOnBounds="false" prefHeight="46.0" prefWidth="46.0" ripplerFill="#040057" scaleShape="false" style="-fx-background-color: #379b83; -fx-border-color: #003d2e; -fx-border-width: 2;" text="+" textAlignment="CENTER" HBox.hgrow="NEVER">
+                                    <JFXButton fx:id="AddCustomer" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" onMouseClicked="#AddCustomer" pickOnBounds="false" prefHeight="46.0" prefWidth="46.0" ripplerFill="#040057" scaleShape="false" style="-fx-background-color: #379b83; -fx-border-color: #003d2e; -fx-border-width: 2;" text="+" textAlignment="CENTER" HBox.hgrow="NEVER">
                                        <font>
                                           <Font name="Microsoft Tai Le Bold" size="20.0" />
                                        </font>
@@ -91,7 +103,7 @@
                               </HBox>
                               <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="402.0">
                                  <children>
-                                    <JFXButton fx:id="EditButton" buttonType="RAISED" maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#EditProject" prefHeight="46.0" prefWidth="108.0" ripplerFill="#040057" style="-fx-background-color: #379b83; -fx-border-color: #003d2e; -fx-border-width: 2;" text="Pas aan" textAlignment="CENTER" HBox.hgrow="NEVER">
+                                    <JFXButton fx:id="EditButton" buttonType="RAISED" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#EditProject" prefHeight="46.0" prefWidth="108.0" ripplerFill="#040057" style="-fx-background-color: #379b83; -fx-border-color: #003d2e; -fx-border-width: 2;" text="Pas aan" textAlignment="CENTER" HBox.hgrow="NEVER">
                                        <HBox.margin>
                                           <Insets right="30.0" />
                                        </HBox.margin>

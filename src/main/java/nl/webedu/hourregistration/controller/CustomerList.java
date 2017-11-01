@@ -48,7 +48,6 @@ public class CustomerList {
 
     public void customerSelect(MouseEvent mouseEvent) {
         index = ListView.getSelectionModel().getSelectedIndex();
-        System.out.println("line 52, customerlist"+index);
         if(index != -1){
             controller.showProject(customers.get(index));
         }

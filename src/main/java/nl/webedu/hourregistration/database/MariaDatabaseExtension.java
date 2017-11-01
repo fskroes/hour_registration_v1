@@ -138,7 +138,6 @@ public class MariaDatabaseExtension extends Database<Connection> {
         stat.executeUpdate();
         ResultSet rs = stat.getGeneratedKeys();
         if (rs.next()) {
-            System.out.println("DatabaseExtention - 147: " + (int) rs.getLong(1));
             return (int) rs.getLong(1);
         }
         return (int) stat.getGeneratedKeys().getLong(1);
@@ -149,7 +148,6 @@ public class MariaDatabaseExtension extends Database<Connection> {
         stat.executeUpdate();
         ResultSet rs = stat.getGeneratedKeys();
         if (rs.next()) {
-            System.out.println("DatabaseExtention - 147: " + (int) rs.getLong(1));
             return (int) rs.getLong(1);
         }
         return (int) stat.getGeneratedKeys().getLong(1);
