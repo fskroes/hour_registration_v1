@@ -51,6 +51,8 @@ public class ProjectController {
     public void initialize() {
         projectDAO = DatabaseManager.getInstance().getDaoFactory().getProjectDAO();
         employeeDAO = DatabaseManager.getInstance().getDaoFactory().getEmployeeDAO();
+        pListView.setFocusTraversable(false);
+        wListView.setFocusTraversable(false);
         onStartup();
     }
 
@@ -102,27 +104,47 @@ public class ProjectController {
     //On select op de wListView, maak werknemer actief of inactief en verander dit visueel.
     public void selectEmployeeOnList(MouseEvent mouseEvent) {
         int eindex = wListView.getSelectionModel().getSelectedIndex();
-        EmployeeModel model = employees.get(eindex);
 
-        //If active is off then turn it on
-        if(actief == false) {
-
-            //Set true and change color of listview item
-            actief = true;
-            wListView.setStyle("-fx-background-color: darkgrey;");
-        }
-        //If active is on then turn it off
-        else if (actief == true){
-            actief = false;
+        if (eindex < 0 ){
+        }else {
+            EmployeeModel model = employees.get(eindex);
         }
     }
 
+    private void refreshEmployeeList(){
+      wListView.getItems().clear();
+
+        ObservableList lijst = FXCollections.observableArrayList();
+        for (EmployeeModel employee : employees) {
+            lijst.add(employee.getFirstname() + " " + employee.getLastname());
+        }
+        wListView.getItems().addAll(lijst);
+
+    }
+
     //Actieve employees worden verwijderd van het project.
-    public void removeEmployeeFromList (ActionEvent actionevent) {
+    public void deleteEmployeeFromProject (ActionEvent actionevent) {
+
+
+
+        int eindex = wListView.getSelectionModel().getSelectedIndex();
+        int eindex2 = pListView.getSelectionModel().getSelectedIndex();
+
+        if (eindex < 0  || eindex2 < 0){
+        }else {
+            EmployeeModel emp = employees.get(eindex);
+            ProjectModel pro = projects.get(eindex2);
+            DatabaseManager.getInstance().getDaoFactory().getProjectDAO().DeleteJunctionItemByEmployee(emp,pro);
+            employees.remove(eindex);
+            refreshEmployeeList();
+        }
+
 
         //get all employees that are active
 
         //Delete all employees that correspond to the projectID
+
+
 
     }
 
