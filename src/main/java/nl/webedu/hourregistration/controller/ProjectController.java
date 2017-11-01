@@ -151,13 +151,7 @@ public class ProjectController {
         wListView.getItems().contains(Emodel);
         int index = pListView.getSelectionModel().getSelectedIndex();
         ProjectModel Pmodel = projects.get(index);
-
-        if(!wListView. .contains(Emodel)) DatabaseManager
-                .getInstance()
-                .getDaoFactory()
-                .getProjectDAO()
-                .addJunctionItemWithProject(Emodel, Pmodel);
-
+        DatabaseManager.getInstance().getDaoFactory().getProjectDAO().addJunctionItemWithProject(Emodel, Pmodel);
         refreshEmployeeList();
     }
 }

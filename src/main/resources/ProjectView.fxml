@@ -26,7 +26,7 @@
             </padding>
             <children>
             <ImageView fx:id="imgTitle" fitHeight="50.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" />
-                <Label fx:id="lblTitle" style="-fx-text-fill: white;" text="Projectlijst">
+                <Label fx:id="lblTitle" style="-fx-text-fill: white;" text="Projecten overzicht">
                     <font>
                         <Font size="36.0" />
                     </font>
