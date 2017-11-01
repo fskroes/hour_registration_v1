@@ -3,29 +3,40 @@ package nl.webedu.hourregistration.controller;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTimePicker;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.util.Callback;
 import nl.webedu.hourregistration.database.DatabaseManager;
+import nl.webedu.hourregistration.helpers.Data;
 import nl.webedu.hourregistration.model.EmployeeModel;
 import nl.webedu.hourregistration.model.ProjectModel;
 import nl.webedu.hourregistration.model.WorkdayModel;
 
 import java.io.IOException;
+import java.net.URL;
 import java.time.*;
 import java.time.temporal.IsoFields;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class TimesheetController {
 
     private static boolean loaded = false;
     private EmployeeModel activeEmployee;
     private Map<ProjectModel, HBox> row;
+
+
+    @FXML private ResourceBundle resources;
+    @FXML private URL location;
+    private List<String> stringList = new ArrayList<>(5);
+    private ObservableList observableList = FXCollections.observableArrayList();
 
     public JFXButton btnreturntoTimesheets;
     public JFXListView timesheetListview;
@@ -54,51 +65,33 @@ public class TimesheetController {
             return;
         } else {
             loaded = true;
-            setUpUserInterface();
+//            setUpUserInterface();
         }
 
         weekLabel.setText("Week: " + String.valueOf(toWeekNumber()));
 
-        btnreturntoTimesheets.setOnAction(event -> {
-//            Stage primaryStage = (Stage) root.getScene().getWindow();
-//            primaryStage.hide();
-//
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource("/TimesheetsView.fxml"));
-//
-//            Parent parent = null;
-//            try {
-//                parent = loader.load();
-//            } catch (IOException ex) {
-//                ex.printStackTrace();
-//            }
-//            assert parent != null;
-//
-//            loaded = false;
-//
-//            Scene scene = new Scene(parent, 1200, 800);
-//            primaryStage.setScene(scene);
-//            primaryStage.show();
+        assert timesheetListview != null : "fx:id=\"timesheetListview\" was not injected: check your FXML file 'CustomList.fxml'.";
 
-//            Stage primaryStage = (Stage) root.getScene().getWindow();
-//            primaryStage.hide();
-//
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource("/TimesheetsView.fxml"));
-//
-//            Parent parent = null;
-//            try {
-//                parent = loader.load();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//            assert parent != null;
-//
-//            TimeSheetsController controller = loader.getController();
-//            controller.postConstructor(activeEmployee);
-//
-//            Scene scene = new Scene(parent, 1200, 800);
-//            primaryStage.setScene(scene);
-//            primaryStage.show();
-        });
+        setListView();
+    }
+
+    private void setListView() {
+        stringList.add("String 1");
+        stringList.add("String 2");
+        stringList.add("String 3");
+        stringList.add("String 4");
+
+        observableList.setAll(stringList);
+
+        timesheetListview.setItems(observableList);
+
+        timesheetListview.setCellFactory(
+                new Callback<ListView<String>, ListCell<String>>() {
+                    @Override
+                    public ListCell<String> call(ListView<String> listView) {
+                        return new ListViewCell();
+                    }
+                });
     }
 
     public void postConstructor(EmployeeModel sessionEmployee, int weekId) {
@@ -122,38 +115,38 @@ public class TimesheetController {
                 .filter(s -> s != null).orElse(new Date());
     }
 
-    public void setUpUserInterface() {
-
-        HBox box = null;
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/TimesheetCellView.fxml"));
-        try {
-            box = loader.load();
-            cellHBOX.getChildren().addAll(box);
-//            Map<String, Object> namespace = loader.getNamespace();
+//    public void setUpUserInterface() {
 //
-//            timepicker1 = (JFXTimePicker) namespace.get("timepicker1");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        TimePickerController controller = loader.getController();
-
-        timepicker1 = controller.getTimepicker1();
-        timepicker2 = controller.getTimepicker2();
-        timepicker3 = controller.getTimepicker3();
-        timepicker4 = controller.getTimepicker4();
-        timepicker5 = controller.getTimepicker5();
-        timepicker6 = controller.getTimepicker6();
-        timepicker7 = controller.getTimepicker7();
-        timepicker8 = controller.getTimepicker8();
-        timepicker9 = controller.getTimepicker9();
-        timepicker10 = controller.getTimepicker10();
-        timepicker11 = controller.getTimepicker11();
-        timepicker12 = controller.getTimepicker12();
-        timepicker13 = controller.getTimepicker13();
-        timepicker14 = controller.getTimepicker14();
-
-    }
+//        HBox box = null;
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/TimesheetCellView.fxml"));
+//        try {
+//            box = loader.load();
+//            cellHBOX.getChildren().addAll(box);
+////            Map<String, Object> namespace = loader.getNamespace();
+////
+////            timepicker1 = (JFXTimePicker) namespace.get("timepicker1");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        TimePickerController controller = loader.getController();
+//
+//        timepicker1 = controller.getTimepicker1();
+//        timepicker2 = controller.getTimepicker2();
+//        timepicker3 = controller.getTimepicker3();
+//        timepicker4 = controller.getTimepicker4();
+//        timepicker5 = controller.getTimepicker5();
+//        timepicker6 = controller.getTimepicker6();
+//        timepicker7 = controller.getTimepicker7();
+//        timepicker8 = controller.getTimepicker8();
+//        timepicker9 = controller.getTimepicker9();
+//        timepicker10 = controller.getTimepicker10();
+//        timepicker11 = controller.getTimepicker11();
+//        timepicker12 = controller.getTimepicker12();
+//        timepicker13 = controller.getTimepicker13();
+//        timepicker14 = controller.getTimepicker14();
+//
+//    }
 
     public void SAVEALL(ActionEvent actionEvent) {
         WorkdayModel mon, tues, wednes, thurs, fri, sat, sun;
@@ -216,6 +209,21 @@ public class TimesheetController {
         DatabaseManager.getInstance().getDaoFactory().getWorkdayDAO().insertWorkday(fri);
         DatabaseManager.getInstance().getDaoFactory().getWorkdayDAO().insertWorkday(sat);
         DatabaseManager.getInstance().getDaoFactory().getWorkdayDAO().insertWorkday(sun);
+    }
+
+    static class ListViewCell extends ListCell<String>
+    {
+        @Override
+        public void updateItem(String string, boolean empty)
+        {
+            super.updateItem(string,empty);
+            if(string != null)
+            {
+                Data data = new Data();
+                data.setInfo(string);
+                setGraphic(data.getBox());
+            }
+        }
     }
 }
 
