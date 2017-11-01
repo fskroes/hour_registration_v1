@@ -108,4 +108,8 @@ public class UserAuthenticationController {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
+
+    public void onAction(ActionEvent actionEvent) {
+        onLogin(actionEvent);
+    }
 }

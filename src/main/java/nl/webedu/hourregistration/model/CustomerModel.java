@@ -53,9 +53,9 @@ public class CustomerModel extends DatabaseRowMapper<CustomerModel> {
     }
 
     @Override
-    public CustomerModel convertMongo(Document set) {
-        this._id = set.getString("_id");
-        this.businessName = set.getString("company_name");
+    public CustomerModel convertMongo(Document document) {
+        this._id = document.getString("_id");
+        this.businessName = document.getString("company_name");
         return this;
     }
 }

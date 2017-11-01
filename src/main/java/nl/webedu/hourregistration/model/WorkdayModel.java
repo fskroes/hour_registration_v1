@@ -129,7 +129,12 @@ public class WorkdayModel extends DatabaseRowMapper<WorkdayModel> {
 
     @Override
     public WorkdayModel convertMongo(Document document) {
-        // TODO: Setup MongoDB config
+        this.id = document.getObjectId("_id").toString();
+        this.date = document.getDate("date");
+        this.weekNumber = document.getInteger("week_number");
+        this.startTime = document.getDate("start_time");
+        this.endTime = document.getDate("end_time");
+        this.dayName = document.getString("day_name");
         return this;
     }
 

@@ -77,10 +77,10 @@ public class ActivitiesModel extends DatabaseRowMapper<ActivitiesModel> {
     }
 
     @Override
-    public ActivitiesModel convertMongo(Document set) {
-        this.id = String.valueOf(set.getObjectId("_id"));
-        this.startTime = set.getDate("start_time");
-        this.endTime = set.getDate("end_time");
+    public ActivitiesModel convertMongo(Document document) {
+        this.id = String.valueOf(document.getObjectId("_id"));
+        this.startTime = document.getDate("start_time");
+        this.endTime = document.getDate("end_time");
         return this;
     }
 }

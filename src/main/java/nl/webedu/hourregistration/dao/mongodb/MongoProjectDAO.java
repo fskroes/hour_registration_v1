@@ -79,7 +79,8 @@ public class MongoProjectDAO implements IProjectDAO {
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
             return null;
-        }    }
+        }
+    }
 
     @Override
     public int updateProject(ProjectModel Project) {

@@ -167,8 +167,8 @@ public class TimeSheetsController {
         });
 
         manageEmployeesButton.setOnAction(event -> {
-            Stage primaryStage = (Stage) root.getScene().getWindow();
-            primaryStage.hide();
+            Stage manageEmployeeStage = new Stage();
+            manageEmployeeStage.hide();
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/RollenView.fxml"));
 
@@ -183,8 +183,8 @@ public class TimeSheetsController {
             //MainController controller = loader.getController();
 
             Scene scene = new Scene(parent, 1200, 800);
-            primaryStage.setScene(scene);
-            primaryStage.show();
+            manageEmployeeStage.setScene(scene);
+            manageEmployeeStage.show();
         });
 
         itemWrapper.getChildren().add(dateWrapper);
@@ -202,7 +202,6 @@ public class TimeSheetsController {
     public void postConstructor(EmployeeModel sessionEmployee) {
         this.sessionEmployee = sessionEmployee;
         roleProperties();
-        this.activeEmployee = this.sessionEmployee;
         setupUserInterface(this.activeEmployee);
     }
 
@@ -214,6 +213,7 @@ public class TimeSheetsController {
             for (EmployeeModel employeeModel : employeeModels) {
                 if (employeeModel.getId().equals(sessionEmployee.getId())) {
                     sessionEmployee = employeeModel;
+                    activeEmployee = employeeModel;
                 }
             }
             ObservableList<EmployeeModel> employeeObLst = FXCollections.observableArrayList(employeeModels);

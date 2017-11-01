@@ -15,7 +15,7 @@ public class EmployeeModel extends DatabaseRowMapper<EmployeeModel> {
     private String id;
     private String email, password, firstname, suffix, lastname;
     private Role role;
-    private ContractModel contractModel;
+    private ContractModel contract;
     private List<ProjectModel> projects;
     private List<WorkdayModel> workdays;
 
@@ -111,12 +111,12 @@ public class EmployeeModel extends DatabaseRowMapper<EmployeeModel> {
         }
     }
 
-    public ContractModel getContractModel() {
-        return contractModel;
+    public ContractModel getContract() {
+        return contract;
     }
 
-    public void setContractModel(ContractModel contractModel) {
-        this.contractModel = contractModel;
+    public void setContract(ContractModel contract) {
+        this.contract = contract;
     }
 
     public List<ProjectModel> getProjects() {
@@ -179,14 +179,15 @@ public class EmployeeModel extends DatabaseRowMapper<EmployeeModel> {
     }
 
     @Override
-    public EmployeeModel convertMongo(Document set) {
-        this.id = set.getObjectId("_id").toString();
-        this.email = set.getString("email");
-        this.password = set.getString("password");
-        this.firstname = set.getString("firstname");
-        this.suffix = set.getString("suffix");
-        this.lastname = set.getString("lastname");
-        this.setRole(set.getInteger("role"));
+    public EmployeeModel convertMongo(Document document) {
+        this.id = document.getObjectId("_id").toString();
+        this.email = document.getString("email");
+        this.password = document.getString("password");
+        this.firstname = document.getString("firstname");
+        this.suffix = document.getString("suffix");
+        this.lastname = document.getString("lastname");
+        this.setRole(document.getInteger("role"));
+        this.contract = new ContractModel().convertMongo((Document) document.get("contract"));
         return this;
     }
 }
