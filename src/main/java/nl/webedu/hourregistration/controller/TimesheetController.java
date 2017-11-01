@@ -7,20 +7,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import javafx.util.Callback;
-import nl.webedu.hourregistration.database.DatabaseManager;
+import javafx.scene.layout.VBox;
 import nl.webedu.hourregistration.helpers.Data;
 import nl.webedu.hourregistration.model.EmployeeModel;
 import nl.webedu.hourregistration.model.ProjectModel;
-import nl.webedu.hourregistration.model.WorkdayModel;
 
-import java.io.IOException;
 import java.net.URL;
 import java.time.*;
 import java.time.temporal.IsoFields;
@@ -30,8 +26,7 @@ public class TimesheetController {
 
     private static boolean loaded = false;
     private EmployeeModel activeEmployee;
-    private Map<ProjectModel, HBox> row;
-
+    private Map<ProjectModel, JFXTimePicker[][]> row;
 
     @FXML private ResourceBundle resources;
     @FXML private URL location;
@@ -61,6 +56,7 @@ public class TimesheetController {
 
     public void initialize() {
         row = new HashMap<>();
+
         if (loaded) {
             return;
         } else {
@@ -72,31 +68,58 @@ public class TimesheetController {
 
         assert timesheetListview != null : "fx:id=\"timesheetListview\" was not injected: check your FXML file 'CustomList.fxml'.";
 
-        setListView();
+
     }
 
     private void setListView() {
-        stringList.add("String 1");
-        stringList.add("String 2");
-        stringList.add("String 3");
-        stringList.add("String 4");
+        for (ProjectModel project : activeEmployee.getProjects()) {
 
-        observableList.setAll(stringList);
+            HBox weekContainer = new HBox();
+            weekContainer.setFillHeight(true);
+            weekContainer.setSpacing(12);
+            weekContainer.setAlignment(Pos.CENTER);
 
-        timesheetListview.setItems(observableList);
+            JFXTimePicker[][] days = new JFXTimePicker[7][2];
+            weekContainer.getChildren().add(new Label(project.getName()));
+            int amountOfDaysInWeek = 7;
+            for (int i = 0; i < amountOfDaysInWeek; i++) {
+                VBox dayContainer = new VBox();
+                dayContainer.setAlignment(Pos.CENTER);
+                dayContainer.setPrefWidth(250);
 
-        timesheetListview.setCellFactory(
-                new Callback<ListView<String>, ListCell<String>>() {
-                    @Override
-                    public ListCell<String> call(ListView<String> listView) {
-                        return new ListViewCell();
-                    }
-                });
+                days[i][0] = new JFXTimePicker();
+                days[i][1] = new JFXTimePicker();
+                dayContainer.getChildren().addAll(days[i]);
+                weekContainer.getChildren().add(dayContainer);
+            }
+
+            row.put(project, days);
+            timesheetListview.getItems().add(weekContainer);
+        }
+
+
+//        stringList.add("String 1");
+//        stringList.add("String 2");
+//        stringList.add("String 3");
+//        stringList.add("String 4");
+//
+//        observableList.setAll(stringList);
+//
+//        timesheetListview.setItems(observableList);
+//
+//        timesheetListview.setCellFactory(
+//                new Callback<ListView<String>, ListCell<String>>() {
+//                    @Override
+//                    public ListCell<String> call(ListView<String> listView) {
+//                        return new ListViewCell();
+//                    }
+//                });
     }
 
     public void postConstructor(EmployeeModel sessionEmployee, int weekId) {
         this.activeEmployee = sessionEmployee;
         sessionEmployee.getWorksdaysByWeekNumber(weekId);
+        setListView();
     }
 
     private int toWeekNumber() {
@@ -149,66 +172,69 @@ public class TimesheetController {
 //    }
 
     public void SAVEALL(ActionEvent actionEvent) {
-        WorkdayModel mon, tues, wednes, thurs, fri, sat, sun;
-        System.out.println("timepicker 1: " + timepicker1.toString());
-        System.out.println("timepicker 1: " + timepicker1.getValue());
-
-        mon = new WorkdayModel(
-                new Date(),
-                toDate(timepicker1.getValue()),
-                toDate(timepicker2.getValue()),
-                toWeekNumber(),
-                "monday"
-        );
-        tues = new WorkdayModel(
-                new Date(),
-                toDate(timepicker3.getValue()),
-                toDate(timepicker4.getValue()),
-                toWeekNumber(),
-                "tuesday"
-        );
-        wednes = new WorkdayModel(
-                new Date(),
-                toDate(timepicker5.getValue()),
-                toDate(timepicker6.getValue()),
-                toWeekNumber(),
-                "wednesday"
-        );
-        thurs = new WorkdayModel(
-                new Date(),
-                toDate(timepicker7.getValue()),
-                toDate(timepicker8.getValue()),
-                toWeekNumber(),
-                "thrusday"
-        );
-        fri = new WorkdayModel(
-                new Date(),
-                toDate(timepicker9.getValue()),
-                toDate(timepicker10.getValue()),
-                toWeekNumber(),
-                "friday"
-        );
-        sat = new WorkdayModel(
-                new Date(),
-                toDate(timepicker11.getValue()),
-                toDate(timepicker12.getValue()),
-                toWeekNumber(),
-                "saturday"
-        );
-        sun = new WorkdayModel(
-                new Date(),
-                toDate(timepicker13.getValue()),
-                toDate(timepicker14.getValue()),
-                toWeekNumber(),
-                "sunday"
-        );
-        DatabaseManager.getInstance().getDaoFactory().getWorkdayDAO().insertWorkday(mon);
-        DatabaseManager.getInstance().getDaoFactory().getWorkdayDAO().insertWorkday(tues);
-        DatabaseManager.getInstance().getDaoFactory().getWorkdayDAO().insertWorkday(wednes);
-        DatabaseManager.getInstance().getDaoFactory().getWorkdayDAO().insertWorkday(thurs);
-        DatabaseManager.getInstance().getDaoFactory().getWorkdayDAO().insertWorkday(fri);
-        DatabaseManager.getInstance().getDaoFactory().getWorkdayDAO().insertWorkday(sat);
-        DatabaseManager.getInstance().getDaoFactory().getWorkdayDAO().insertWorkday(sun);
+        for (ProjectModel project : activeEmployee.getProjects()) {
+            System.out.println(row.get(project)[3][0].getValue());
+        }
+//        WorkdayModel mon, tues, wednes, thurs, fri, sat, sun;
+//        System.out.println("timepicker 1: " + timepicker1.toString());
+//        System.out.println("timepicker 1: " + timepicker1.getValue());
+//
+//        mon = new WorkdayModel(
+//                new Date(),
+//                toDate(timepicker1.getValue()),
+//                toDate(timepicker2.getValue()),
+//                toWeekNumber(),
+//                "monday"
+//        );
+//        tues = new WorkdayModel(
+//                new Date(),
+//                toDate(timepicker3.getValue()),
+//                toDate(timepicker4.getValue()),
+//                toWeekNumber(),
+//                "tuesday"
+//        );
+//        wednes = new WorkdayModel(
+//                new Date(),
+//                toDate(timepicker5.getValue()),
+//                toDate(timepicker6.getValue()),
+//                toWeekNumber(),
+//                "wednesday"
+//        );
+//        thurs = new WorkdayModel(
+//                new Date(),
+//                toDate(timepicker7.getValue()),
+//                toDate(timepicker8.getValue()),
+//                toWeekNumber(),
+//                "thrusday"
+//        );
+//        fri = new WorkdayModel(
+//                new Date(),
+//                toDate(timepicker9.getValue()),
+//                toDate(timepicker10.getValue()),
+//                toWeekNumber(),
+//                "friday"
+//        );
+//        sat = new WorkdayModel(
+//                new Date(),
+//                toDate(timepicker11.getValue()),
+//                toDate(timepicker12.getValue()),
+//                toWeekNumber(),
+//                "saturday"
+//        );
+//        sun = new WorkdayModel(
+//                new Date(),
+//                toDate(timepicker13.getValue()),
+//                toDate(timepicker14.getValue()),
+//                toWeekNumber(),
+//                "sunday"
+//        );
+//        DatabaseManager.getInstance().getDaoFactory().getWorkdayDAO().insertWorkday(mon);
+//        DatabaseManager.getInstance().getDaoFactory().getWorkdayDAO().insertWorkday(tues);
+//        DatabaseManager.getInstance().getDaoFactory().getWorkdayDAO().insertWorkday(wednes);
+//        DatabaseManager.getInstance().getDaoFactory().getWorkdayDAO().insertWorkday(thurs);
+//        DatabaseManager.getInstance().getDaoFactory().getWorkdayDAO().insertWorkday(fri);
+//        DatabaseManager.getInstance().getDaoFactory().getWorkdayDAO().insertWorkday(sat);
+//        DatabaseManager.getInstance().getDaoFactory().getWorkdayDAO().insertWorkday(sun);
     }
 
     static class ListViewCell extends ListCell<String>
