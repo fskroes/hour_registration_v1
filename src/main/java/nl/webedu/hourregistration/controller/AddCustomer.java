@@ -8,8 +8,8 @@ import nl.webedu.hourregistration.dao.IProjectDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.model.CustomerModel;
 import nl.webedu.hourregistration.model.ProjectModel;
-
 import java.io.IOException;
+
 
 public class AddCustomer {
 
@@ -37,5 +37,8 @@ public class AddCustomer {
     }
     public CustomerModel getCustomer(){
         return customer;
+    }
+    public void emptyNewCustomerText (){
+        CustomerNameText.setText("");
     }
 }

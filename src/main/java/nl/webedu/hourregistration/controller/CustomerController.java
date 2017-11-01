@@ -88,6 +88,7 @@ public class CustomerController {
             AddCustomer.setText("Opslaan");
             AddCustomer.setFont(Font.font("Eras Medium ITC", FontWeight.NORMAL, 18));
             geactiveerd = true;
+            addCustomerController.emptyNewCustomerText();
             ListVbox.getChildren().clear();
             ListVbox.getChildren().add(addCustomerView);
         }

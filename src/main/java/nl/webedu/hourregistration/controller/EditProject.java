@@ -50,8 +50,13 @@ public class EditProject {
     }
 
     public void setDefaults(){
-//        ProjectName.setText(customer.getProjectModel().getName());
-//        StartDate.setValue(dateToLocalDate(customer.getProjectModel().getStartDate()));
+        ProjectName.setText(customer.getProjectModel().getName());
+        if (customer.getProjectModel().getStartDate()!= null){
+            StartDate.setValue(dateToLocalDate(customer.getProjectModel().getStartDate()));
+        }
+        if (customer.getProjectModel().getEndDate() != null){
+            EndDate.setValue(dateToLocalDate(customer.getProjectModel().getEndDate()));
+        }
     }
 
     private LocalDate dateToLocalDate(Date date){

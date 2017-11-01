@@ -29,13 +29,19 @@ public class ProjectInfo {
     public void showProject(CustomerModel customer){
         this.customer = customer;
         ProjectName.setText(customer.getProjectModel().getName());
-        ProjectTime.setText(customer.getProjectModel().getId());
+//        ProjectTime.setText(customer.getProjectModel().getId());
 
         if (customer.getProjectModel().getStartDate()!=null) {
             StartDate.setText(sdf.format(customer.getProjectModel().getStartDate()));
         }
+        else{
+            StartDate.setText("-");
+        }
         if (customer.getProjectModel().getEndDate()!=null) {
             EndDate.setText(sdf.format(customer.getProjectModel().getEndDate()));
+        }
+        else {
+            EndDate.setText("-");
         }
 
     }

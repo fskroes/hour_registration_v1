@@ -82,7 +82,7 @@ public class MariadbCustomerDAO implements ICustomerDAO {
     public List<CustomerModel> selectAllCustomers() {
         List<CustomerModel> customers = null;
         try {
-            customers = database.selectObjectList(new CustomerModel(), "SELECT * FROM customer");
+            customers = database.selectObjectList(new CustomerModel(), "SELECT * FROM customer ORDER BY customerID DESC");
             for (CustomerModel customer : customers) {
                 customer.setProjectModel(DatabaseManager.getInstance().getDaoFactory().
                         getProjectDAO().selectProjectByCustomer(customer));

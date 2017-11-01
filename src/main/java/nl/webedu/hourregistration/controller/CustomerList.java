@@ -47,10 +47,12 @@ public class CustomerList {
     }
 
     public void customerSelect(MouseEvent mouseEvent) {
-
         index = ListView.getSelectionModel().getSelectedIndex();
         System.out.println("line 52, customerlist"+index);
-        controller.showProject(customers.get(index));
+        if(index != -1){
+            controller.showProject(customers.get(index));
+        }
+
     }
     public void setProjectInfoController(ProjectInfo controller){
         this.controller = controller;
@@ -58,10 +60,12 @@ public class CustomerList {
 
     }
     public void addCustomerToList(CustomerModel customer){
-        customers.add(customer);
-        obsList.add(customer.getBusinessName());
+        customers.add(0, customer);
+        obsList.add(0, customer.getBusinessName());
+//        obsList.add(customer.getBusinessName());
         ListView.getItems().clear();
         ListView.getItems().addAll(obsList);
+        ListView.refresh();
 
     }
 
