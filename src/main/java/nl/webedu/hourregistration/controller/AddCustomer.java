@@ -19,6 +19,8 @@ public class AddCustomer {
     private ICustomerDAO customerDAO;
     private IProjectDAO projectDAO;
 
+    private CustomerModel customer;
+
     public void initialize() throws IOException {
         customerDAO = DatabaseManager.getInstance().getDaoFactory().getCustomerDAO();
         projectDAO = DatabaseManager.getInstance().getDaoFactory().getProjectDAO();
@@ -27,7 +29,13 @@ public class AddCustomer {
 
     public void newCustomer(){
         String id = customerDAO.insertCustomer(new CustomerModel(CustomerNameText.getText()));
-        CustomerModel customer = customerDAO.findCustomer(id);
-        projectDAO.insertProject(new ProjectModel("-", null, null, customer.getId()));
+        customer = customerDAO.findCustomer(id);
+        ProjectModel newProjectModel = new ProjectModel("-", null, null);
+        newProjectModel.setCustomerModel(customer);
+        projectDAO.insertProject(newProjectModel);
+        customer.setProjectModel(projectDAO.selectProjectByCustomer(customer));
+    }
+    public CustomerModel getCustomer(){
+        return customer;
     }
 }

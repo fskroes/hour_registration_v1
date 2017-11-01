@@ -13,23 +13,21 @@ public class ProjectModel extends DatabaseRowMapper<ProjectModel> {
     private String name;
     private Date startDate;
     private Date endDate;
-    private String categorie;
     private CustomerModel customerModel;
 
     public ProjectModel() {
         type = ProjectModel.class;
     }
 
-    public ProjectModel(String id, String name, Date startDate, Date endDate, String categorie) {
-        this(name, startDate, endDate, categorie);
+    public ProjectModel(String id, String name, Date startDate, Date endDate) {
+        this(name, startDate, endDate);
         this.id = id;
     }
 
-    public ProjectModel(String name, Date startDate, Date endDate, String categorie) {
+    public ProjectModel(String name, Date startDate, Date endDate) {
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.categorie = categorie;
     }
 
     public String getId() {
@@ -68,13 +66,6 @@ public class ProjectModel extends DatabaseRowMapper<ProjectModel> {
         this.customerModel = customerModel;
     }
 
-    public String getCategorie() {
-        return categorie;
-    }
-
-    public void setCategorie(String categorie) {
-        this.categorie = categorie;
-    }
 
     @Override
     public ProjectModel convertSQL(ResultSet set, int rowNum) throws SQLException {
@@ -82,7 +73,6 @@ public class ProjectModel extends DatabaseRowMapper<ProjectModel> {
         this.name = set.getString("project_name");
         this.startDate = set.getDate("start_date");
         this.endDate = set.getDate("end_date");
-        this.categorie = set.getString("category");
         return this;
     }
 
@@ -92,7 +82,6 @@ public class ProjectModel extends DatabaseRowMapper<ProjectModel> {
         this.name = set.getString("project_name");
         this.startDate = set.getDate("start_date");
         this.endDate = set.getDate("end_date");
-        this.categorie = set.getString("category");
         return this;
     }
 }

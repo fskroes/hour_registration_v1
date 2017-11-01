@@ -75,6 +75,7 @@ public class CustomerController {
 
         if(geactiveerd){
             addCustomerController.newCustomer();
+            customerListController.addCustomerToList(addCustomerController.getCustomer());
             AddCustomer.setText("+");
             AddCustomer.setFont(Font.font("Microsoft Tai Le", FontWeight.BOLD, 20));
             AddCustomer.setPrefWidth(46);
@@ -97,6 +98,7 @@ public class CustomerController {
     public void EditProject (MouseEvent mouseEvent) throws IOException {
         if (editing){
             editProjectController.saveProject();
+            projectInfoController.showProject(editProjectController.getCustomer());
             EditButton.setText("Pas aan");
             InfoVbox.getChildren().clear();
             InfoVbox.getChildren().add(projectInfoView);

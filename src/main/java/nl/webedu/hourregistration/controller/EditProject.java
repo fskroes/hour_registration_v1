@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import nl.webedu.hourregistration.dao.ICustomerDAO;
+import nl.webedu.hourregistration.dao.IProjectDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.model.CustomerModel;
 import nl.webedu.hourregistration.model.ProjectModel;
@@ -27,12 +28,14 @@ public class EditProject {
 
     CustomerModel customer;
     private ICustomerDAO customerDAO;
+    private IProjectDAO projectDAO;
 
     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
     public void initialize()
     {
         customerDAO = DatabaseManager.getInstance().getDaoFactory().getCustomerDAO();
+        projectDAO = DatabaseManager.getInstance().getDaoFactory().getProjectDAO();
     }
     public void setCustomer(CustomerModel customer){
         this.customer = customer;
@@ -40,7 +43,10 @@ public class EditProject {
 
     public void saveProject(){
         customer.getProjectModel().setName(ProjectName.getText());
-        localDateToDate(StartDate.getValue());
+        customer.getProjectModel().setStartDate(localDateToDate(StartDate.getValue()));
+        customer.getProjectModel().setEndDate(localDateToDate(EndDate.getValue()));
+        projectDAO.updateProject(customer.getProjectModel());
+
     }
 
     public void setDefaults(){
@@ -58,5 +64,8 @@ public class EditProject {
         Instant instant = localDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
         Date date = Date.from(instant);
         return date;
+    }
+    public CustomerModel getCustomer(){
+        return customer;
     }
 }

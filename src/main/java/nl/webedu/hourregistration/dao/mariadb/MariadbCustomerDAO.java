@@ -31,13 +31,13 @@ public class MariadbCustomerDAO implements ICustomerDAO {
         String querySQL = "INSERT INTO customer"
                 + "(company_name) VALUES"
                 + "(?)";
+        String id = "";
         try {
-            int id = database.insertQuery(querySQL, customer.getBusinessName());
-            return String.valueOf(id);
+            id = String.valueOf(database.insertQuery(querySQL, customer.getBusinessName()));
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return id;
     }
 
     @Override
