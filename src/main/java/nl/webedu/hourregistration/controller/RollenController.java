@@ -1,9 +1,11 @@
 package nl.webedu.hourregistration.controller;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -43,6 +45,10 @@ public class RollenController {
 
     private void setUpUserInterface() {
 //        employeeListView.getItems().add(lbl);
+    }
+
+    public JFXListView getEmployeeListView(){
+        return employeeListView;
     }
 
     public void mouseClicked(MouseEvent mouseEvent) {
@@ -106,21 +112,20 @@ public class RollenController {
     public void returnToTimesheets(ActionEvent actionEvent) {
         Stage primaryStage = (Stage) root.getScene().getWindow();
         primaryStage.hide();
+    }
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/TimesheetsView.fxml"));
-
+    public void AddEmployeePressed(ActionEvent actionEvent) {
+        Stage stage = new Stage();
+        stage.hide();
         Parent parent = null;
         try {
-            parent = loader.load();
+            parent = FXMLLoader.load(getClass().getResource("/RegisterView.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
         assert parent != null;
-
-        //MainController controller = loader.getController();
-
         Scene scene = new Scene(parent);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        stage.setScene(scene);
+        stage.show();
     }
 }
