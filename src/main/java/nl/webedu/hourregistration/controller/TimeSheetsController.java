@@ -48,6 +48,10 @@ public class TimeSheetsController {
     @FXML
     public JFXComboBox cmEmployees;
     @FXML
+    public JFXButton manageCustomersButton;
+    @FXML
+    public JFXButton manageProjectsButton;
+    @FXML
     public JFXComboBox cmFromWeek;
     @FXML
     public JFXComboBox cmUntilWeek;
@@ -66,6 +70,27 @@ public class TimeSheetsController {
         }
         cmFromWeek.getSelectionModel().selectFirst();
         cmUntilWeek.getSelectionModel().select(weeknr);
+
+        manageEmployeesButton.setOnAction(event -> {
+            Stage primaryStage = new Stage();
+            primaryStage.hide();
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/RollenView.fxml"));
+
+            Parent parent = null;
+            try {
+                parent = loader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            assert parent != null;
+
+            //MainController controller = loader.getController();
+
+            Scene scene = new Scene(parent, 1200, 800);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        });
     }
 
     private void setupUserInterface(EmployeeModel employee) {
@@ -148,7 +173,7 @@ public class TimeSheetsController {
             Stage timesheet = new Stage();
             timesheet.hide();
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/TimesheetView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/RollenView.fxml"));
 
             Parent parent = null;
             try {
@@ -168,26 +193,7 @@ public class TimeSheetsController {
             timesheet.show();
         });
 
-        manageEmployeesButton.setOnAction(event -> {
-            Stage primaryStage = (Stage) root.getScene().getWindow();
-            primaryStage.hide();
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/RollenView.fxml"));
-
-            Parent parent = null;
-            try {
-                parent = loader.load();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            assert parent != null;
-
-            //MainController controller = loader.getController();
-
-            Scene scene = new Scene(parent, 1200, 800);
-            primaryStage.setScene(scene);
-            primaryStage.show();
-        });
 
         itemWrapper.getChildren().add(dateWrapper);
         itemWrapper.getChildren().add(timeWorked);
@@ -224,11 +230,8 @@ public class TimeSheetsController {
         }
     }
 
-
-
-
     public void onManageCustomers (ActionEvent actionEvent) {
-        Stage primaryStage = (Stage) root.getScene().getWindow();
+        Stage primaryStage = new Stage();
         primaryStage.hide();
         Parent parent = null;
         try {
@@ -243,7 +246,7 @@ public class TimeSheetsController {
     }
 
     public void onManageProjects (ActionEvent actionEvent) {
-        Stage primaryStage = (Stage) root.getScene().getWindow();
+        Stage primaryStage = new Stage();
         primaryStage.hide();
         Parent parent = null;
         try {
@@ -258,7 +261,7 @@ public class TimeSheetsController {
     }
 
     public void onManageContracts (ActionEvent actionEvent) {
-        Stage primaryStage = (Stage) root.getScene().getWindow();
+        Stage primaryStage = new Stage();
         primaryStage.hide();
         Parent parent = null;
         try {
@@ -272,19 +275,17 @@ public class TimeSheetsController {
         primaryStage.show();
     }
 
-
-
-
-    public void onItemChange(ActionEvent actionEvent) {
-
-    }
-
-    @FXML
     public void onFromChange(ActionEvent actionEvent) {
         lvTimeSheets.getItems().clear();
-        setupUserInterface((EmployeeModel) cmEmployees.getSelectionModel().getSelectedItem());
+        setupUserInterface(activeEmployee);
     }
 
     public void onUntilChange(ActionEvent actionEvent) {
+        lvTimeSheets.getItems().clear();
+        setupUserInterface(activeEmployee);
+    }
+
+    public void onItemChange(ActionEvent actionEvent) {
+
     }
 }

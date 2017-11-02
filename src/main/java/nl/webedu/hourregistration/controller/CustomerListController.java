@@ -7,24 +7,24 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.VBox;
 import nl.webedu.hourregistration.dao.ICustomerDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.model.CustomerModel;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 
-public class CustomerList {
+public class CustomerListController {
 
     ObservableList obsList = FXCollections.observableArrayList();
 
     private ICustomerDAO customerDAO;
     private List<CustomerModel> customers;
     private int index;
+    private FXMLLoader loader;
     private ProjectInfoController controller;
+    private Parent root;
 
 
     @FXML
@@ -32,10 +32,13 @@ public class CustomerList {
 
     public void initialize() throws IOException {
         customerDAO = DatabaseManager.getInstance().getDaoFactory().getCustomerDAO();
+        loader = new FXMLLoader(getClass().getResource("/ProjectInfoView.fxml"));
         loadData();
     }
 
     public void loadData() throws IOException{
+        root = (Parent) loader.load();
+        controller = loader.getController();
         obsList.removeAll();
         customers = customerDAO.selectAllCustomers();
         for(CustomerModel customer : customers){
@@ -46,25 +49,13 @@ public class CustomerList {
 
     }
 
-    public void customerSelect(MouseEvent mouseEvent) {
+    public void CustomerSelect(MouseEvent mouseEvent) {
+
         index = ListView.getSelectionModel().getSelectedIndex();
-        if(index != -1){
-            controller.showProject(customers.get(index));
-        }
-
+        controller.showProject(index, customers);
     }
-    public void setProjectInfoController(ProjectInfoController controller){
+    public void setController(ProjectInfoController controller){
         this.controller = controller;
-        controller.showProject(customers.get(0));
-
-    }
-    public void addCustomerToList(CustomerModel customer){
-        customers.add(0, customer);
-        obsList.add(0, customer.getBusinessName());
-        ListView.getItems().clear();
-        ListView.getItems().addAll(obsList);
-        ListView.refresh();
-
     }
 
 }

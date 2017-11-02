@@ -15,7 +15,8 @@ public class ProjectModel extends DatabaseRowMapper<ProjectModel> {
     private String name;
     private Date startDate;
     private Date endDate;
-    private CustomerModel customerModel;
+    private CustomerModel customer;
+    private List<EmployeeModel> employees;
 
     public ProjectModel() {
         type = ProjectModel.class;
@@ -61,13 +62,28 @@ public class ProjectModel extends DatabaseRowMapper<ProjectModel> {
     }
 
     public CustomerModel getCustomer() {
-        return customerModel;
+        return customer;
     }
 
     public void setCustomer(CustomerModel customer) {
-        this.customerModel = customer;
+        this.customer = customer;
     }
 
+    public List<EmployeeModel> getEmployees() {
+        return new ArrayList<>(employees);
+    }
+
+    public void setEmployees(List<EmployeeModel> employees) {
+        this.employees = employees;
+    }
+
+    public void addEmployee(EmployeeModel employee) {
+        this.employees.add(employee);
+    }
+
+    public void removeEmployee(EmployeeModel employee) {
+        this.employees.remove(employee);
+    }
 
     @Override
     public ProjectModel convertSQL(ResultSet set, int rowNum) throws SQLException {

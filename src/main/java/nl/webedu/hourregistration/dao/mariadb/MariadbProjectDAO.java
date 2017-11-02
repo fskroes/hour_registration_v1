@@ -118,4 +118,30 @@ public class MariadbProjectDAO implements IProjectDAO {
         }
         return project;
     }
+
+    @Override
+    public int DeleteJunctionItemByEmployee(EmployeeModel employee, ProjectModel project) {
+        int result = 0;
+        String querySQL = "DELETE FROM employee_project"
+                + " WHERE fk_employee_id = ? AND fk_project_id = ?";
+        try {
+            result = database.deleteQuery(querySQL, employee.getId(), project.getId());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    @Override
+    public int addJunctionItemWithProject(EmployeeModel employee, ProjectModel project) {
+        int result = 0;
+        String querySQL = "INSERT INTO employee_project (fk_employee_id, fk_project_id) VALUES"
+                + "(?,?)";
+        try {
+            result = database.insertQuery(querySQL, employee.getId(), project.getId());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 }
