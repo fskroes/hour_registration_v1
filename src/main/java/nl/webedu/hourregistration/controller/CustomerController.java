@@ -18,7 +18,7 @@ public class CustomerController {
 
     private boolean geactiveerd = false;
     private boolean editing = false;
-    
+
     @FXML
     private AnchorPane root;
     @FXML
