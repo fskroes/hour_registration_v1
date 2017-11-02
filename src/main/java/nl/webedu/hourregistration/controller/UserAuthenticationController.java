@@ -9,13 +9,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import nl.webedu.hourregistration.dao.IEmployeeDAO;
 import nl.webedu.hourregistration.dao.IUserAuthenticationDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
-import nl.webedu.hourregistration.enumeration.Role;
 import nl.webedu.hourregistration.model.EmployeeModel;
 
 import java.io.IOException;
@@ -108,26 +106,7 @@ public class UserAuthenticationController {
         }
     }
 
-    /**
-     * Zorgt ervoor dat het loginscherm wordt geladen en getoond.
-     * @param actionEvent het event wat zorgt voor het aanroepen van de methode.
-     */
-    public void toLoginView(ActionEvent actionEvent) {
-        Stage primaryStage = (Stage) root.getScene().getWindow();
-        primaryStage.hide();
-        Parent parent = null;
-        try {
-            parent = FXMLLoader.load(getClass().getResource("/LoginView.fxml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        assert parent != null;
-        Scene scene = new Scene(parent);
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
-
-    public void onAction(ActionEvent actionEvent) {
+    public void onEnterPress(ActionEvent actionEvent) {
         onLogin(actionEvent);
     }
 }

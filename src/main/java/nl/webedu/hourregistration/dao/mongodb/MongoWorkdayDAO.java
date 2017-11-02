@@ -36,8 +36,8 @@ public class MongoWorkdayDAO implements IWorkdayDAO {
     }
 
     @Override
-    public boolean insertWorkday(WorkdayModel workday) {
-        CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();
+    public int insertWorkday(WorkdayModel workday) {
+        CompletableFuture<Integer> completableFuture = new CompletableFuture<>();
 
         Document query = new Document("date", workday.getDate())
                 .append("start_time",workday.getStartTime())
@@ -47,12 +47,12 @@ public class MongoWorkdayDAO implements IWorkdayDAO {
                 .append("employees", workday.getEmployeeId());
 
         client.getDatabase(DATABASE_NAME).getCollection(WORKDAY_COLLECTION)
-                .insertOne(query, (result, t) -> completableFuture.complete(true));
+                .insertOne(query, (result, t) -> completableFuture.complete(1));
         try {
             return completableFuture.get();
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
-            return false;
+            return 0;
         }
     }
 

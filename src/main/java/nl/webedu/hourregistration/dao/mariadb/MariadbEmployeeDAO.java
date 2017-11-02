@@ -28,12 +28,14 @@ public class MariadbEmployeeDAO implements IEmployeeDAO {
     }
 
     @Override
-    public boolean insertEmployee(EmployeeModel employee){
+    public int insertEmployee(EmployeeModel employee){
         String sql = "INSERT INTO employee"
                 + "(email, password, role, firstname, suffix, lastname, active) VALUES"
                 + "(?,?,?,?,?,?,?)";
+        int id = 0;
+
         try {
-            database.insertQuery(
+            id = database.insertQuery(
                     sql,
                     employee.getEmail(),
                     employee.getPassword(),
@@ -52,7 +54,7 @@ public class MariadbEmployeeDAO implements IEmployeeDAO {
         for (ProjectModel project : employee.getProjects()) {
             DatabaseManager.getInstance().getDaoFactory().getProjectDAO().insertProject(project);
         }
-        return true;
+        return id;
     }
 
     @Override
@@ -119,9 +121,9 @@ public class MariadbEmployeeDAO implements IEmployeeDAO {
         }
         for (WorkdayModel workday : employee.getWorkdays()) {
             if (DatabaseManager.getInstance().getDaoFactory().getWorkdayDAO().findWorkday(workday.getId()) == null) {
-                DatabaseManager.getInstance().getDaoFactory().getWorkdayDAO().insertWorkday(workday);
+                int workdayId = DatabaseManager.getInstance().getDaoFactory().getWorkdayDAO().insertWorkday(workday);
                 try {
-                    database.insertQuery("INSERT INTO employee_workday SET fk_employee_id = ?, fk_workday_id = ?", employee.getId(), workday.getId());
+                    database.insertQuery("INSERT INTO employee_workday SET fk_employee_id = ?, fk_workday_id = ?", employee.getId(), workdayId);
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
@@ -131,7 +133,12 @@ public class MariadbEmployeeDAO implements IEmployeeDAO {
         }
         for (ProjectModel project : employee.getProjects()) {
             if (DatabaseManager.getInstance().getDaoFactory().getProjectDAO().findProject(project.getId()) == null) {
-                DatabaseManager.getInstance().getDaoFactory().getProjectDAO().insertProject(project);
+                int projectId = DatabaseManager.getInstance().getDaoFactory().getProjectDAO().insertProject(project);
+                try {
+                    database.insertQuery("INSERT INTO employee_project SET fk_employee_id = ?, fk_project_id = ?", employee.getId(), projectId);
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
             } else {
                 DatabaseManager.getInstance().getDaoFactory().getProjectDAO().updateProject(project);
             }

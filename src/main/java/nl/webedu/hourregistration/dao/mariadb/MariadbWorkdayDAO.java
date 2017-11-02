@@ -29,12 +29,14 @@ public class MariadbWorkdayDAO implements IWorkdayDAO {
     }
 
     @Override
-    public boolean insertWorkday(WorkdayModel workday) {
+    public int insertWorkday(WorkdayModel workday) {
         String querySQL = "INSERT INTO workday"
                 + "(date, week_number, start_time, end_time, day_name) VALUES"
                 + "(?,?,?,?,?)";
+        int id = 0;
+
         try {
-            database.insertQuery(
+            id = database.insertQuery(
                     querySQL,
                     Date.valueOf(workday.getDate()),
                     workday.getWeekNumber(),
@@ -42,17 +44,19 @@ public class MariadbWorkdayDAO implements IWorkdayDAO {
                     Time.valueOf(workday.getEndTime()),
                     workday.getDayName()
             );
+            workday.setId(String.valueOf(id));
         } catch (SQLException e) {
             e.printStackTrace();
         }
         for (ActivitiesModel activity : workday.getActivities()) {
             if (DatabaseManager.getInstance().getDaoFactory().getActivitiesDAO().findActivitie(activity.getId()) == null) {
+                System.out.println(activity.getWorkday().getId());
                 DatabaseManager.getInstance().getDaoFactory().getActivitiesDAO().insertActivitie(activity);
             } else {
                 DatabaseManager.getInstance().getDaoFactory().getActivitiesDAO().updateActivitie(activity);
             }
         }
-        return false;
+        return id;
     }
 
     @Override

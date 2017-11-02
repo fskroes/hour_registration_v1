@@ -12,7 +12,7 @@ public interface IContractDAO {
      * @param contract
      * @return
      */
-    public boolean insertContract(ContractModel contract);
+    public int insertContract(ContractModel contract);
 
     /**
      * find a contract by employee id

@@ -34,19 +34,19 @@ public class MongoProjectDAO implements IProjectDAO {
         return instance;
     }
     @Override
-    public boolean insertProject(ProjectModel Project) {
-        CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();
+    public int insertProject(ProjectModel Project) {
+        CompletableFuture<Integer> completableFuture = new CompletableFuture<>();
         Document query = new Document("name", Project.getName())
                 .append("start_date",Project.getStartDate())
                 .append("end_date",Project.getEndDate());
 
         client.getDatabase(DATABASE_NAME).getCollection(PROJECT_COLLECTION)
-                .insertOne(query, (result, t) -> completableFuture.complete(true));
+                .insertOne(query, (result, t) -> completableFuture.complete(1));
         try {
             return completableFuture.get();
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
-            return false;
+            return 0;
         }
     }
 

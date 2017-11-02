@@ -36,19 +36,19 @@ public class MongoActivitiesDAO implements IActivitiesDAO {
     }
 
     @Override
-    public boolean insertActivitie(ActivitiesModel activitie) {
-        CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();
+    public int insertActivitie(ActivitiesModel activitie) {
+        CompletableFuture<Integer> completableFuture = new CompletableFuture<>();
         Document query = new Document("start_time",activitie.getStartTime().toString())
                 .append("end_time",activitie.getEndTime().toString())
                 .append("workday_id", activitie.getWorkday().getId());
 
         client.getDatabase(DATABASE_NAME).getCollection(ACTIVITY_COLLECTION)
-                .insertOne(query, (result, t) -> completableFuture.complete(true));
+                .insertOne(query, (result, t) -> completableFuture.complete(1));
         try {
             return completableFuture.get();
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
-            return false;
+            return 0;
         }
     }
 

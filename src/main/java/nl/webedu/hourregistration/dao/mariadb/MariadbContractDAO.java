@@ -27,17 +27,18 @@ MariadbContractDAO implements IContractDAO {
     }
 
     @Override
-    public boolean insertContract(ContractModel contract) {
+    public int insertContract(ContractModel contract) {
         String querySQL = "INSERT INTO contract"
                 + "(max_hours, min_hours, start_time, end_time) VALUES"
                 + "(?,?,?,?)";
+        int id = 0;
+
         try {
-            database.insertQuery(querySQL, contract.getMaxHours(), contract.getMinHours(), contract.getStartTime(), contract.getEndTime());
-            return true;
+            id = database.insertQuery(querySQL, contract.getMaxHours(), contract.getMinHours(), contract.getStartTime(), contract.getEndTime());
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
+        return id;
     }
 
     @Override

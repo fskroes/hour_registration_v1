@@ -28,17 +28,18 @@ public class MariadbActivitiesDAO implements IActivitiesDAO {
     }
 
     @Override
-    public boolean insertActivitie(ActivitiesModel activity) {
+    public int insertActivitie(ActivitiesModel activity) {
         String insertSQL = "INSERT INTO activity"
                 + "(start_time, end_time, workdayID, projectID) VALUES"
                 + "(?,?,?,?)";
+        int id = 0;
+
         try {
-            database.insertQuery(insertSQL, Time.valueOf(activity.getStartTime()), Time.valueOf(activity.getEndTime()), activity.getWorkday().getId(), activity.getProject().getId());
-            return true;
+            id = database.insertQuery(insertSQL, Time.valueOf(activity.getStartTime()), Time.valueOf(activity.getEndTime()), activity.getWorkday().getId(), activity.getProject().getId());
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
         }
+        return id;
     }
 
     @Override

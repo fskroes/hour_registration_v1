@@ -33,8 +33,8 @@ public class MongoEmployeeDAO implements IEmployeeDAO {
     }
 
     @Override
-    public boolean insertEmployee(EmployeeModel employee) {
-    return true;
+    public int insertEmployee(EmployeeModel employee) {
+        return 0;
     }
 
     @Override

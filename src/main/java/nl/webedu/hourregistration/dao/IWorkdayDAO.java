@@ -11,7 +11,7 @@ public interface IWorkdayDAO {
      * @param Workday
      * @return boolean - done or faulted
      */
-    public boolean insertWorkday(WorkdayModel Workday);
+    public int insertWorkday(WorkdayModel Workday);
 
     /**
      * delete a existing workday in the database

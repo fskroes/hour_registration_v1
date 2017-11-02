@@ -56,6 +56,10 @@ public class WorkdayModel extends DatabaseRowMapper<WorkdayModel> {
         return id;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getDayName() {
         return dayName;
     }
