@@ -13,7 +13,7 @@
 
 <AnchorPane fx:id="root" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.webedu.hourregistration.controller.TimesheetController">
    <children>
-      <HBox fx:id="header" alignment="CENTER_LEFT" spacing="24.0" style="-fx-background-color: #4285F4;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <HBox fx:id="header" alignment="CENTER_LEFT" spacing="24.0" style="-fx-background-color: radial-gradient(radius 300%, #4059a9, derive(blueviolet, -30%), derive(chartreuse, 30%));" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
             <ImageView fx:id="imgTitle" fitHeight="50.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -34,8 +34,8 @@
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                <children>
                   <Label fx:id="weekLabel" text="Week: " />
-                  <JFXButton alignment="CENTER" buttonType="RAISED" defaultButton="true" onAction="#SAVEALL" ripplerFill="#d3d3d3" text="Save workweek" textAlignment="CENTER" underline="true" />
-                  <JFXButton fx:id="btnreturntoTimesheets" alignment="CENTER" buttonType="RAISED" defaultButton="true" ripplerFill="#d3d3d3" text="Return to timesheets" textAlignment="CENTER" underline="true" />
+                  <JFXButton alignment="CENTER" buttonType="RAISED" defaultButton="true" onAction="#SAVEALL" ripplerFill="#d3d3d3" text="Save workweek" textAlignment="CENTER" />
+                  <JFXButton fx:id="btnreturntoTimesheets" alignment="CENTER" buttonType="RAISED" defaultButton="true" ripplerFill="#d3d3d3" text="Return to timesheets" textAlignment="CENTER" />
                </children>
             </HBox>
             <HBox alignment="TOP_RIGHT" prefHeight="30.0" prefWidth="1104.0" spacing="63.0">
