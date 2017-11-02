@@ -77,16 +77,6 @@ public class ProjectController {
 
         Stage primaryStage = (Stage) pAnchor.getScene().getWindow();
         primaryStage.hide();
-        Parent parent = null;
-        try {
-            parent = FXMLLoader.load(getClass().getResource("/TimesheetsView.fxml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        assert parent != null;
-        Scene scene = new Scene(parent);
-        primaryStage.setScene(scene);
-        primaryStage.show();
     }
 
     //On select, geef werknemer first en lastnames die horen bij het projectID

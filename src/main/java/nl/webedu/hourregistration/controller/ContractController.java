@@ -72,15 +72,5 @@ public class ContractController {
     public void toPreviousView (ActionEvent actionEvent) {
         Stage primaryStage = (Stage) root.getScene().getWindow();
         primaryStage.hide();
-        Parent parent = null;
-        try {
-            parent = FXMLLoader.load(getClass().getResource("/TimesheetsView.fxml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        assert parent != null;
-        Scene scene = new Scene(parent);
-        primaryStage.setScene(scene);
-        primaryStage.show();
     }
 }
