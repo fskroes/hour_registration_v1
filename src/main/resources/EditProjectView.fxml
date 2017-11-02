@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.DatePicker?>
 
-<VBox fx:id="EditProject" prefHeight="502.0" prefWidth="657.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.webedu.hourregistration.controller.EditProject">
+<VBox fx:id="EditProject" prefHeight="502.0" prefWidth="657.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.webedu.hourregistration.controller.EditProjectController">
     <children>
         <HBox alignment="CENTER_LEFT" prefHeight="167.0" prefWidth="200.0">
             <children>

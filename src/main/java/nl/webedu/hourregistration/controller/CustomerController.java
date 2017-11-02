@@ -36,7 +36,7 @@ public class CustomerController {
 
 
     public void initialize() throws IOException {
-        loader = new FXMLLoader(getClass().getResource("/ProjectInfo.fxml"));
+        loader = new FXMLLoader(getClass().getResource("/ProjectInfoView.fxml"));
         projectInfoView = loader.load();
         InfoVbox.getChildren().add(projectInfoView);
         projectInfoController = loader.getController();
@@ -46,11 +46,11 @@ public class CustomerController {
         ListVbox.getChildren().add(customerListView);
         customerListController = loader.getController();
 
-        loader = new FXMLLoader(getClass().getResource("/EditProject.fxml"));
+        loader = new FXMLLoader(getClass().getResource("/EditProjectView.fxml"));
         editProjectView = loader.load();
         editProjectController = loader.getController();
 
-        loader = new FXMLLoader(getClass().getResource("/AddCustomer.fxml"));
+        loader = new FXMLLoader(getClass().getResource("/AddCustomerView.fxml"));
         addCustomerView = loader.load();
         addCustomerController = loader.getController();
 

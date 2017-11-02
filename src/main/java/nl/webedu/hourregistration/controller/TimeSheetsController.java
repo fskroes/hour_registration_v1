@@ -227,7 +227,7 @@ public class TimeSheetsController {
     }
 
     public void onManageCustomers (ActionEvent actionEvent) {
-        Stage primaryStage = new Stage();
+        Stage primaryStage = (Stage) root.getScene().getWindow();
         primaryStage.hide();
         Parent parent = null;
         try {
