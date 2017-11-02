@@ -4,6 +4,7 @@
 <?import com.jfoenix.controls.JFXListView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -14,7 +15,10 @@
    <children>
       <HBox fx:id="header" alignment="CENTER_LEFT" spacing="24.0" style="-fx-background-color: #4285F4;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <ImageView fx:id="imgTitle" fitHeight="50.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="imgTitle" fitHeight="50.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="img/Logo.png" />
+               </image></ImageView>
             <Label fx:id="lblTitle" style="-fx-text-fill: white;" text="Timesheet">
                <font>
                   <Font size="36.0" />
@@ -29,7 +33,7 @@
          <children>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                <children>
-                  <Label fx:id="weekLabel" text="Week: 44" />
+                  <Label fx:id="weekLabel" text="Week: " />
                   <JFXButton alignment="CENTER" buttonType="RAISED" defaultButton="true" onAction="#SAVEALL" ripplerFill="#d3d3d3" text="Save workweek" textAlignment="CENTER" underline="true" />
                   <JFXButton fx:id="btnreturntoTimesheets" alignment="CENTER" buttonType="RAISED" defaultButton="true" ripplerFill="#d3d3d3" text="Return to timesheets" textAlignment="CENTER" underline="true" />
                </children>

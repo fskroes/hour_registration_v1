@@ -3,6 +3,9 @@ package nl.webedu.hourregistration.controller;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -18,12 +21,19 @@ import javafx.stage.Stage;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.enumeration.Role;
 import nl.webedu.hourregistration.model.EmployeeModel;
+import nl.webedu.hourregistration.model.WorkdayModel;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 public class TimeSheetsController {
 
+    public JFXButton manageEmployeesButton;
     private EmployeeModel sessionEmployee;
+    private EmployeeModel activeEmployee;
 
     @FXML
     public AnchorPane root;
@@ -37,15 +47,60 @@ public class TimeSheetsController {
     public JFXListView lvTimeSheets;
     @FXML
     public JFXComboBox cmEmployees;
+    @FXML
+    public JFXComboBox cmFromWeek;
+    @FXML
+    public JFXComboBox cmUntilWeek;
 
     @FXML
+    public JFXButton manageCustomersButton;
+    @FXML
+    public JFXButton manageProjectsButton;
+    @FXML
     public void initialize() {
-        setupUserInterface();
+        Calendar cal = Calendar.getInstance();
+        int weeknr = cal.get(Calendar.WEEK_OF_YEAR) - 1;
+        for (int i = 1; i < 53; i++) {
+            cmFromWeek.getItems().add(i);
+            cmUntilWeek.getItems().add(i);
+        }
+        cmFromWeek.getSelectionModel().selectFirst();
+        cmUntilWeek.getSelectionModel().select(weeknr);
     }
 
-    private void setupUserInterface() {
+    private void setupUserInterface(EmployeeModel employee) {
+        for (int i = (int) cmFromWeek.getValue(); i <= (int) cmUntilWeek.getValue(); i++) {
+
+            long elapsedHours = 0;
+
+            long secondsInMilli = 1000;
+            long minutesInMilli = secondsInMilli * 60;
+            long hoursInMilli = minutesInMilli * 60;
+
+            Calendar startDate = Calendar.getInstance();
+            startDate.set(Calendar.WEEK_OF_YEAR, i);
+            startDate.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+
+            Calendar endDate = Calendar.getInstance();
+            endDate.set(Calendar.WEEK_OF_YEAR, i);
+            endDate.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
+
+            List<WorkdayModel> workdays = employee.getWorksdaysByWeekNumber(i);
+            for (WorkdayModel workday : workdays) {
+                Long different =+ workday.getStartTime().getTime() - workday.getEndTime().getTime();
+                elapsedHours = different / hoursInMilli;
+            }
+            timesheetEntry(i, startDate.getTime(), endDate.getTime(), elapsedHours, 0);
+        }
+
+    }
+
+    private void timesheetEntry(int weekId, Date startDate, Date endDate, double TotalHours, double OverTime) {
         HBox itemWrapper = new HBox(48);
         itemWrapper.setFillHeight(true);
+        itemWrapper.setAlignment(Pos.CENTER_LEFT);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd MMMMM yyyy");
 
         VBox dateWrapper = new VBox();
         dateWrapper.setPadding(new Insets(12));
@@ -53,7 +108,7 @@ public class TimeSheetsController {
         dateWrapper.setAlignment(Pos.CENTER);
 //        dateWrapper.setStyle("-fx-border-color: crimson; -fx-border-width: 1px;");
 
-        Label lblDateToDate = new Label("Datum - Datum");
+        Label lblDateToDate = new Label(sdf.format(startDate) + " - " + sdf.format(endDate));
         lblDateToDate.setFont(Font.font("System", 16));
         Label lblStatus = new Label("Status");
         lblStatus.setFont(Font.font("System", 10));
@@ -68,7 +123,7 @@ public class TimeSheetsController {
 
         Label lblTotalTime = new Label("Total time");
         lblTotalTime.setFont(Font.font("System", 16));
-        Label lblHoursWorked = new Label("5 Hrs");
+        Label lblHoursWorked = new Label( Double.toString(TotalHours));
         lblHoursWorked.setFont(Font.font("System", 10));
         timeWorked.getChildren().add(lblTotalTime);
         timeWorked.getChildren().add(lblHoursWorked);
@@ -81,19 +136,43 @@ public class TimeSheetsController {
 
         Label lblOvertime = new Label("Overtime");
         lblOvertime.setFont(Font.font("System", 16));
-        Label lblHoursOvertime = new Label("2 Hrs");
+        Label lblHoursOvertime = new Label(Double.toString(OverTime));
         lblHoursOvertime.setFont(Font.font("System", 10));
         overtimeWorked.getChildren().add(lblOvertime);
         overtimeWorked.getChildren().add(lblHoursOvertime);
 
-        //
-
         JFXButton btnTimeSheet = new JFXButton("View timesheet");
+        btnTimeSheet.setStyle("-fx-border-color: #4285F4; -fx-border-width: 1px;");
+        btnTimeSheet.setAlignment(Pos.CENTER);
         btnTimeSheet.setOnAction(event -> {
+            Stage timesheet = new Stage();
+            timesheet.hide();
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/TimesheetView.fxml"));
+
+            Parent parent = null;
+            try {
+                parent = loader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            assert parent != null;
+
+            TimesheetController controller = loader.getController();
+            controller.postConstructor(sessionEmployee, weekId);
+
+            //MainController controller = loader.getController();
+
+            Scene scene = new Scene(parent, 1200, 800);
+            timesheet.setScene(scene);
+            timesheet.show();
+        });
+
+        manageEmployeesButton.setOnAction(event -> {
             Stage primaryStage = (Stage) root.getScene().getWindow();
             primaryStage.hide();
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/TimesheetView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/RollenView.fxml"));
 
             Parent parent = null;
             try {
@@ -118,22 +197,57 @@ public class TimeSheetsController {
         lvTimeSheets.getItems().add(itemWrapper);
     }
 
-    public void setSessionEmployee(EmployeeModel sessionEmployee) {
+    private void refreshTimesheets(EmployeeModel employee) {
+
+    }
+
+    public void postConstructor(EmployeeModel sessionEmployee) {
         this.sessionEmployee = sessionEmployee;
         roleProperties();
+        this.activeEmployee = this.sessionEmployee;
+        setupUserInterface(this.activeEmployee);
     }
 
     private void roleProperties() {
-        int SessionEmployeeId;
         if (!sessionEmployee.getRole().equals(Role.ADMIN)) {
             cmEmployees.setVisible(false);
         } else {
-            for (EmployeeModel emp : DatabaseManager.getInstance().getDaoFactory().getEmployeeDAO().selectAllEmployees()) {
-                cmEmployees.getItems().add(emp);
-
-
+            List<EmployeeModel> employeeModels = DatabaseManager.getInstance().getDaoFactory().getEmployeeDAO().getAllEmployees();
+            for (EmployeeModel employeeModel : employeeModels) {
+                if (employeeModel.getId().equals(sessionEmployee.getId())) {
+                    sessionEmployee = employeeModel;
+                }
             }
+            ObservableList<EmployeeModel> employeeObLst = FXCollections.observableArrayList(employeeModels);
+            cmEmployees.setItems(employeeObLst);
             cmEmployees.getSelectionModel().select(sessionEmployee);
         }
+    }
+
+    public void onItemChange(ActionEvent actionEvent) {
+
+    }
+
+    @FXML
+    public void onFromChange(ActionEvent actionEvent) {
+        lvTimeSheets.getItems().clear();
+        setupUserInterface((EmployeeModel) cmEmployees.getSelectionModel().getSelectedItem());
+    }
+
+    public void onUntilChange(ActionEvent actionEvent) {
+    }
+
+    public void onFromChange(ActionEvent actionEvent) {
+        lvTimeSheets.getItems().clear();
+        setupUserInterface(activeEmployee);
+    }
+
+    public void onUntilChange(ActionEvent actionEvent) {
+        lvTimeSheets.getItems().clear();
+        setupUserInterface(activeEmployee);
+    }
+
+    public void onItemChange(ActionEvent actionEvent) {
+
     }
 }

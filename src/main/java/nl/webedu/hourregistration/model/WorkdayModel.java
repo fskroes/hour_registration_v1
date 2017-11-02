@@ -3,24 +3,19 @@ package nl.webedu.hourregistration.model;
 import nl.webedu.hourregistration.database.DatabaseRowMapper;
 import org.bson.Document;
 
-import javax.xml.crypto.Data;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 public class WorkdayModel extends DatabaseRowMapper<WorkdayModel> {
 
-    // TODO: Fill in RowMappers
-
     private String id;
     private Date date, startTime, endTime;
-    private String day;
+    private String dayName;
     private int weekNumber;
-    private List<String> activities;
+    private List<ActivitiesModel> activities;
     private List<String> employee_ids;
 
     public WorkdayModel() {
@@ -32,7 +27,7 @@ public class WorkdayModel extends DatabaseRowMapper<WorkdayModel> {
         this.startTime = startTime;
         this.endTime = endTime;
         this.weekNumber = weekNumber;
-        this.day = workday;
+        this.dayName = workday;
     }
 
 //    public WorkdayModel(String id, Date date, Date startTime, Date endTime, int weekNumber, List<String> activities, List<String> employee_ids) {
@@ -57,12 +52,12 @@ public class WorkdayModel extends DatabaseRowMapper<WorkdayModel> {
         return id;
     }
 
-    public String getDay() {
-        return day;
+    public String getDayName() {
+        return dayName;
     }
 
-    public void setDay(String day) {
-        this.day = day;
+    public void setDayName(String dayName) {
+        this.dayName = dayName;
     }
 
     public Date getDate() {
@@ -97,11 +92,11 @@ public class WorkdayModel extends DatabaseRowMapper<WorkdayModel> {
         this.weekNumber = weekNumber;
     }
 
-    public List<String> getActivitieIds() {
+    public List<ActivitiesModel> getActivitieIds() {
         return new ArrayList<>(activities);
     }
 
-    public void setActivities(List<String> activities) {
+    public void setActivities(List<ActivitiesModel> activities) {
         this.activities = activities;
     }
 
@@ -123,7 +118,12 @@ public class WorkdayModel extends DatabaseRowMapper<WorkdayModel> {
 
     @Override
     public WorkdayModel convertSQL(ResultSet set, int rowNum) throws SQLException {
-        // TODO: Setup MariaDB config
+        this.id = String.valueOf(set.getInt("workdayID"));
+        this.date = set.getDate("date");
+        this.weekNumber = set.getInt("week_number");
+        this.startTime = set.getTime("start_time");
+        this.endTime = set.getTime("end_time");
+        this.dayName = set.getString("day_name");
         return this;
     }
 

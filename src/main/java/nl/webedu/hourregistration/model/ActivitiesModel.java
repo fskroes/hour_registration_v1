@@ -1,41 +1,32 @@
 package nl.webedu.hourregistration.model;
 
+import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.database.DatabaseRowMapper;
 import org.bson.Document;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
-import java.util.Optional;
 
 public class ActivitiesModel extends DatabaseRowMapper<ActivitiesModel> {
 
     private String id;
-    private String category;
     private Date startTime, endTime;
-    private int workdayId;
+    private WorkdayModel workday;
+    private ProjectModel project;
 
     public ActivitiesModel() {
         type = ActivitiesModel.class;
     }
 
-    public ActivitiesModel(String category, Date startTime, Date endTime, int workdayId) {
-        this.category = category;
+    public ActivitiesModel(Date startTime, Date endTime, WorkdayModel workday) {
         this.startTime = startTime;
         this.endTime = endTime;
-        this.workdayId = workdayId;
+        this.workday = workday;
     }
 
     public String getId() {
         return id;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
     }
 
     public Date getStartTime() {
@@ -54,32 +45,40 @@ public class ActivitiesModel extends DatabaseRowMapper<ActivitiesModel> {
         this.endTime = endTime;
     }
 
-    public int getWorkdayId() {
-        return workdayId;
+    public WorkdayModel getWorkday() {
+        return workday;
     }
 
-    public void setWorkday(int workday) {
-        this.workdayId = workday;
+    public void setWorkday(WorkdayModel workday) {
+        this.workday = workday;
+    }
+
+    public ProjectModel getProject() {
+        return project;
+    }
+
+    public void setProject(ProjectModel project) {
+        this.project = project;
     }
 
     @Override
     public String toString() {
-        return " id: "+id+ " categorie: " +category+ " stime: " +startTime+ " etime: " +endTime+ " wdayid: " +workdayId;
+        return " id: "+id+ " stime: " +startTime+ " etime: " +endTime+ " wdayid: " + workday;
     }
 
     @Override
     public ActivitiesModel convertSQL(ResultSet set, int rowNum) throws SQLException {
-        this.id = String.valueOf("activityID");
-        this.category = set.getString("category");
+        this.id = String.valueOf(set.getInt("activityID"));
         this.startTime = set.getDate("start_time");
         this.endTime = set.getDate("end_time");
+        this.workday = DatabaseManager.getInstance().getDaoFactory().getWorkdayDAO().findWorkday("fk_workdayID");
+        this.project = DatabaseManager.getInstance().getDaoFactory().getProjectDAO().findProject("fk_projectID");
         return this;
     }
 
     @Override
     public ActivitiesModel convertMongo(Document set) {
         this.id = String.valueOf(set.getObjectId("_id"));
-        this.category = set.getString("category");
         this.startTime = set.getDate("start_time");
         this.endTime = set.getDate("end_time");
         return this;

@@ -3,12 +3,15 @@ package nl.webedu.hourregistration.dao.mariadb;
 import nl.webedu.hourregistration.dao.IEmployeeDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.database.MariaDatabaseExtension;
+import nl.webedu.hourregistration.model.ContractModel;
 import nl.webedu.hourregistration.model.EmployeeModel;
 import nl.webedu.hourregistration.model.ProjectModel;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public class MariadbEmployeeDAO implements IEmployeeDAO {
 
@@ -93,6 +96,8 @@ public class MariadbEmployeeDAO implements IEmployeeDAO {
                     "SELECT* FROM employee WHERE employeeID = ?;",
                     id
             );
+            employee.setProjects(DatabaseManager.getInstance().getDaoFactory().getProjectDAO().selectProjectsByEmployee(employee));
+            employee.setWorkdays(DatabaseManager.getInstance().getDaoFactory().getWorkdayDAO().selectWorkdaysByEmployee(employee));
         } catch(SQLException e){
             System.out.println(e.getMessage());
         }
@@ -134,10 +139,14 @@ public class MariadbEmployeeDAO implements IEmployeeDAO {
     }
 
     @Override
-    public List<EmployeeModel> selectAllEmployees() {
+    public List<EmployeeModel> getAllEmployees() {
         List<EmployeeModel> employees = null;
         try {
             employees = database.selectObjectList(new EmployeeModel(), "SELECT * FROM employee");
+            for (EmployeeModel employee : employees) {
+                employee.setWorkdays(DatabaseManager.getInstance().getDaoFactory().getWorkdayDAO().selectWorkdaysByEmployee(employee));
+                employee.setProjects(DatabaseManager.getInstance().getDaoFactory().getProjectDAO().selectProjectsByEmployee(employee));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -153,11 +162,32 @@ public class MariadbEmployeeDAO implements IEmployeeDAO {
                     "SELECT * FROM employee WHERE employeeID = " +
                             "(SELECT fk_employee_id FROM employee_project WHERE fk_project_id = ?);",
                     project.getId()
-
             );
+            for (EmployeeModel employee : employees) {
+                employee.setWorkdays(DatabaseManager.getInstance().getDaoFactory().getWorkdayDAO().selectWorkdaysByEmployee(employee));
+                employee.setProjects(DatabaseManager.getInstance().getDaoFactory().getProjectDAO().selectProjectsByEmployee(employee));
+            }
         } catch(SQLException e){
             System.out.println(e.getMessage());
         }
         return employees;
+    }
+
+    public ContractModel findContractByEmployee(EmployeeModel employee) {
+        ContractModel contract = null;
+        try {
+            contract = database.selectObjectSingle(
+                    new ContractModel(),
+                    "SELECT * FROM employee JOIN contract ON employee.employeeID = contract.fk_employeeID WHERE employee.employeeID = ?",
+                    employee.getId()
+            );
+        } catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+
+        if (contract != null) return contract;
+
+        return Optional.ofNullable(contract = new ContractModel())
+                .filter(s -> s != null).orElse(new ContractModel());
     }
 }

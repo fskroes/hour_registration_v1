@@ -62,9 +62,9 @@ public class UserAuthenticationController {
 
             TimeSheetsController controller = loader.getController();
             EmployeeModel emp = mongoUserAuthenticationDAO.findEmployee(txtEmail.getText());
-            controller.setSessionEmployee(emp);
+            controller.postConstructor(emp);
 
-            Scene scene = new Scene(parent, 1200, 800);
+            Scene scene = new Scene(parent);
             primaryStage.setScene(scene);
             primaryStage.show();
         } else {
@@ -89,7 +89,7 @@ public class UserAuthenticationController {
             e.printStackTrace();
         }
         assert parent != null;
-        Scene scene = new Scene(parent, 600, 400);
+        Scene scene = new Scene(parent);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -104,7 +104,7 @@ public class UserAuthenticationController {
             e.printStackTrace();
         }
         assert parent != null;
-        Scene scene = new Scene(parent, 600, 400);
+        Scene scene = new Scene(parent);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
