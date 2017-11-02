@@ -1,16 +1,14 @@
 package nl.webedu.hourregistration.controller;
 
-import javafx.event.ActionEvent;
+import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
-import javax.sound.sampled.Line;
 import java.io.IOException;
 
 public class CustomerController {
@@ -20,8 +18,6 @@ public class CustomerController {
     private boolean editing = false;
 
     @FXML
-    private AnchorPane root;
-    @FXML
     private VBox   ListVbox, AddVbox, InfoVbox;
     @FXML
     private JFXButton EditButton, AddCustomer, Back;
@@ -30,26 +26,31 @@ public class CustomerController {
 
     Parent projectInfoView;
     Parent customerListView;
-    ProjectInfoController projectInfoControllerController;
-    CustomerListController customerListControllerController;
+    Parent editProjectView;
+    Parent addCustomerView;
+
+    ProjectInfoController projectInfoController;
+    CustomerListController customerListController;
+    EditProject editProjectController;
+    AddCustomerController addCustomerController;
 
 
     public void initialize() throws IOException {
         loader = new FXMLLoader(getClass().getResource("/ProjectInfoView.fxml"));
         projectInfoView = loader.load();
         InfoVbox.getChildren().add(projectInfoView);
-        projectInfoControllerController = loader.getController();
+        projectInfoController = loader.getController();
+
         loader = new FXMLLoader(getClass().getResource("/CustomerList.fxml"));
         customerListView = loader.load();
         ListVbox.getChildren().add(customerListView);
-        customerListControllerController = loader.getController();
-        customerListControllerController.setController(projectInfoControllerController);
+        customerListController = loader.getController();
 
         loader = new FXMLLoader(getClass().getResource("/EditProject.fxml"));
         editProjectView = loader.load();
         editProjectController = loader.getController();
 
-        loader = new FXMLLoader(getClass().getResource("/AddCustomer.fxml"));
+        loader = new FXMLLoader(getClass().getResource("/AddCustomerView.fxml"));
         addCustomerView = loader.load();
         addCustomerController = loader.getController();
 
@@ -77,8 +78,10 @@ public class CustomerController {
             geactiveerd = true;
             addCustomerController.emptyNewCustomerText();
             ListVbox.getChildren().clear();
-            ListVbox.getChildren().add(FXMLLoader.load(getClass().getResource("/AddCustomerView.fxml")));
+            ListVbox.getChildren().add(addCustomerView);
         }
+
+
     }
     @FXML
     public void EditProject (MouseEvent mouseEvent) throws IOException {
@@ -104,9 +107,8 @@ public class CustomerController {
         loader = new FXMLLoader(getClass().getResource("/TimesheetsView.fxml"));
     }
 
-    public void toPreviousView (ActionEvent actionEvent) {
-        Stage primaryStage = (Stage) root.getScene().getWindow();
-        primaryStage.hide();
-//
-    }
+
+
+
+
 }
