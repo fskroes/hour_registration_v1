@@ -3,6 +3,9 @@ package nl.webedu.hourregistration.dao.factory;
 import nl.webedu.hourregistration.dao.*;
 import nl.webedu.hourregistration.dao.mariadb.*;
 
+/**
+ * DAO Factory for Maria database
+ */
 public class MariaDAOFactory extends DAOFactory {
 
     private static MariaDAOFactory instance;

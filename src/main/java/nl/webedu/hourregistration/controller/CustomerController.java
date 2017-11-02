@@ -16,11 +16,10 @@ import java.io.IOException;
 public class CustomerController {
 
 
+    public AnchorPane root;
     private boolean geactiveerd = false;
     private boolean editing = false;
 
-    @FXML
-    private AnchorPane root;
     @FXML
     private VBox   ListVbox, AddVbox, InfoVbox;
     @FXML

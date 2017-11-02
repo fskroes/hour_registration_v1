@@ -9,7 +9,6 @@ import nl.webedu.hourregistration.model.CustomerModel;
 import java.awt.*;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.List;
 
 public class ProjectInfoController {
 

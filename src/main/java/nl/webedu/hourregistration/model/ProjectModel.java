@@ -22,12 +22,12 @@ public class ProjectModel extends DatabaseRowMapper<ProjectModel> {
         type = ProjectModel.class;
     }
 
-    public ProjectModel(String id, String name, Date startDate, Date endDate, String categorie) {
-        this(name, startDate, endDate, categorie);
+    public ProjectModel(String id, String name, Date startDate, Date endDate) {
+        this(name, startDate, endDate);
         this.id = id;
     }
 
-    public ProjectModel(String name, Date startDate, Date endDate, String categorie) {
+    public ProjectModel(String name, Date startDate, Date endDate) {
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;

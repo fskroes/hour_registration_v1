@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.text.Text?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
 <VBox fx:id="ProjectInfo" prefHeight="502.0" prefWidth="657.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.webedu.hourregistration.controller.ProjectInfoController">
    <children>
       <HBox alignment="CENTER_LEFT" prefHeight="125.0" prefWidth="200.0">
@@ -92,3 +93,4 @@
       </HBox>
    </children>
 </VBox>
+

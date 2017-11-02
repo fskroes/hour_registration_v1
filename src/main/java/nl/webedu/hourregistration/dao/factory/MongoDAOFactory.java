@@ -3,6 +3,9 @@ package nl.webedu.hourregistration.dao.factory;
 import nl.webedu.hourregistration.dao.*;
 import nl.webedu.hourregistration.dao.mongodb.*;
 
+/**
+ * DAO Factory for Mongo database
+ */
 public class MongoDAOFactory extends DAOFactory {
 
     private static MongoDAOFactory instance;

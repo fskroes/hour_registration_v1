@@ -6,6 +6,7 @@ import nl.webedu.hourregistration.database.MariaDatabaseExtension;
 import nl.webedu.hourregistration.model.CustomerModel;
 import nl.webedu.hourregistration.model.ProjectModel;
 
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
