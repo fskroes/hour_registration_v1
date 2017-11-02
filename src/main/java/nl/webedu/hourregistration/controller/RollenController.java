@@ -29,13 +29,17 @@ public class RollenController {
     public SplitPane root;
     private List<EmployeeModel> allEmployees;
 
+    /**
+     * Wordt aangeroepen wanneer de view wordt opgestart, de DAO's worden geïnitialiseerd.
+     */
     public void initialize() {
-        setUpUserInterface();
         getEmployeesData();
     }
 
+    /**
+     * Zorgt voor het laden van de werknemer data in de listview.
+     */
     private void getEmployeesData() {
-//        List<EmployeeModel> allEmployees = new ArrayList<>();
         allEmployees = DatabaseManager.getInstance().getDaoFactory().getEmployeeDAO().getAllEmployees();
 
         for (EmployeeModel model : allEmployees) {
@@ -43,16 +47,11 @@ public class RollenController {
         }
     }
 
-    private void setUpUserInterface() {
-//        employeeListView.getItems().add(lbl);
-    }
-
-    public JFXListView getEmployeeListView(){
-        return employeeListView;
-    }
-
+    /**
+     * Zorgt ervoor dat de gegevens van de werknemer worden geladen als erop wordt geklikt.
+     * @param mouseEvent het event wat zorgt voor het aanroepen van de methode.
+     */
     public void mouseClicked(MouseEvent mouseEvent) {
-
         employeeCheckboxADMIN.setDisable(false);
         employeeCheckboxADMINISTRATION.setDisable(false);
         employeeCheckboxEMPLOYEE.setDisable(false);
@@ -63,8 +62,6 @@ public class RollenController {
         int index = employeeListView.getSelectionModel().getSelectedIndex();
         EmployeeModel model = allEmployees.get(index);
 
-
-//        EmployeeModel selectedItem = (EmployeeModel) employeeListView.getSelectionModel().getSelectedItem();
         employeeTextfield.setText(model.getLastname() + ", " + model.getFirstname());
         switch (model.getRole()) {
             case EMPLOYEE:
@@ -85,6 +82,10 @@ public class RollenController {
         }
     }
 
+    /**
+     * Zorgt ervoor dat de gegevens van de admin wordt geladen als erop wordt geklikt.
+     * @param actionEvent het event wat zorgt voor het aanroepen van de methode.
+     */
     public void setAdminProperties(ActionEvent actionEvent) {
         int index = employeeListView.getSelectionModel().getSelectedIndex();
         EmployeeModel model = allEmployees.get(index);
@@ -93,6 +94,10 @@ public class RollenController {
         DatabaseManager.getInstance().getDaoFactory().getEmployeeDAO().updateEmployee(model);
     }
 
+    /**
+     * Zorgt ervoor dat de gegevens van de administration wordt geladen als erop wordt geklikt.
+     * @param actionEvent het event wat zorgt voor het aanroepen van de methode.
+     */
     public void setAdministationProperties(ActionEvent actionEvent) {
         int index = employeeListView.getSelectionModel().getSelectedIndex();
         EmployeeModel model = allEmployees.get(index);
@@ -101,6 +106,10 @@ public class RollenController {
         DatabaseManager.getInstance().getDaoFactory().getEmployeeDAO().updateEmployee(model);
     }
 
+    /**
+     * Zorgt ervoor dat de gegevens van de werknemer wordt geladen als erop wordt geklikt.
+     * @param actionEvent het event wat zorgt voor het aanroepen van de methode.
+     */
     public void setEmployeeProperties(ActionEvent actionEvent) {
         int index = employeeListView.getSelectionModel().getSelectedIndex();
         EmployeeModel model = allEmployees.get(index);
@@ -109,11 +118,19 @@ public class RollenController {
         DatabaseManager.getInstance().getDaoFactory().getEmployeeDAO().updateEmployee(model);
     }
 
+    /**
+     * Gaat terug naar de vorige view.
+     * @param actionEvent het event wat zorgt voor het aanroepen van de methode.
+     */
     public void returnToTimesheets(ActionEvent actionEvent) {
         Stage primaryStage = (Stage) root.getScene().getWindow();
         primaryStage.hide();
     }
 
+    /**
+     * Knop die zorgt dat de registreren view wordt geopend.
+     * @param actionEvent het event wat zorgt voor het aanroepen van de methode.
+     */
     public void AddEmployeePressed(ActionEvent actionEvent) {
         Stage stage = new Stage();
         stage.hide();
