@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.model.EmployeeModel;
 import nl.webedu.hourregistration.model.ProjectModel;
@@ -60,44 +61,10 @@ public class TimesheetController {
         weekLabel.setText("Week: " + String.valueOf(toWeekNumber()));
 
         btnreturntoTimesheets.setOnAction(event -> {
-//            Stage primaryStage = (Stage) root.getScene().getWindow();
-//            primaryStage.hide();
-//
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource("/TimesheetsView.fxml"));
-//
-//            Parent parent = null;
-//            try {
-//                parent = loader.load();
-//            } catch (IOException ex) {
-//                ex.printStackTrace();
-//            }
-//            assert parent != null;
-//
-//            loaded = false;
-//
-//            Scene scene = new Scene(parent, 1200, 800);
-//            primaryStage.setScene(scene);
-//            primaryStage.show();
+            Stage primaryStage = (Stage) root.getScene().getWindow();
+            primaryStage.hide();
 
-//            Stage primaryStage = (Stage) root.getScene().getWindow();
-//            primaryStage.hide();
-//
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource("/TimesheetsView.fxml"));
-//
-//            Parent parent = null;
-//            try {
-//                parent = loader.load();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//            assert parent != null;
-//
-//            TimeSheetsController controller = loader.getController();
-//            controller.postConstructor(activeEmployee);
-//
-//            Scene scene = new Scene(parent, 1200, 800);
-//            primaryStage.setScene(scene);
-//            primaryStage.show();
+
         });
     }
 

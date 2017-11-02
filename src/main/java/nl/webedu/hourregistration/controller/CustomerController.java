@@ -16,10 +16,11 @@ import java.io.IOException;
 public class CustomerController {
 
 
-    public AnchorPane root;
     private boolean geactiveerd = false;
     private boolean editing = false;
 
+    @FXML
+    private VBox   ListVbox, AddVbox, InfoVbox;
     @FXML
     private VBox   ListVbox, AddVbox, InfoVbox;
     @FXML
@@ -34,7 +35,7 @@ public class CustomerController {
 
     ProjectInfoController projectInfoController;
     CustomerListController customerListController;
-    EditProject editProjectController;
+    EditProjectController editProjectController;
     AddCustomerController addCustomerController;
 
 
@@ -44,12 +45,12 @@ public class CustomerController {
         InfoVbox.getChildren().add(projectInfoView);
         projectInfoController = loader.getController();
 
-        loader = new FXMLLoader(getClass().getResource("/CustomerList.fxml"));
+        loader = new FXMLLoader(getClass().getResource("/CustomerListView.fxml"));
         customerListView = loader.load();
         ListVbox.getChildren().add(customerListView);
         customerListController = loader.getController();
 
-        loader = new FXMLLoader(getClass().getResource("/EditProject.fxml"));
+        loader = new FXMLLoader(getClass().getResource("/EditProjectView.fxml"));
         editProjectView = loader.load();
         editProjectController = loader.getController();
 
@@ -58,6 +59,7 @@ public class CustomerController {
         addCustomerController = loader.getController();
 
         customerListController.setProjectInfoController(projectInfoController);
+        addCustomerController.setCustomerListController(customerListController);
 
     }
 
@@ -66,7 +68,6 @@ public class CustomerController {
 
         if(geactiveerd){
             addCustomerController.newCustomer();
-            customerListController.addCustomerToList(addCustomerController.getCustomer());
             AddCustomer.setText("+");
             AddCustomer.setFont(Font.font("Microsoft Tai Le", FontWeight.BOLD, 20));
             AddCustomer.setPrefWidth(46);
@@ -107,8 +108,12 @@ public class CustomerController {
     }
     @FXML
     public void BackToHome(MouseEvent mouseEvent) throws IOException {
-//        loader = new FXMLLoader(getClass().getResource("/TimesheetsView.fxml"));
         Stage primaryStage = (Stage) root.getScene().getWindow();
         primaryStage.hide();
     }
+
+
+
+
+
 }

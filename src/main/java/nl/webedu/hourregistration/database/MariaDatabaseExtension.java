@@ -153,6 +153,7 @@ public class MariaDatabaseExtension extends Database<Connection> {
         return (int) stat.getGeneratedKeys().getLong(1);
     }
 
+
     public int updateQuery(String sql) throws SQLException {
         PreparedStatement stat = connection.prepareStatement(sql);
         return stat.executeUpdate();
@@ -170,6 +171,7 @@ public class MariaDatabaseExtension extends Database<Connection> {
     public int deleteQuery(String sql, Object... params) throws SQLException {
         return updateQuery(sql, params);
     }
+
 
     private PreparedStatement prepareStatement(String sql, Object... params) throws SQLException {
         PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);

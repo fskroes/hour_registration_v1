@@ -6,18 +6,7 @@ import nl.webedu.hourregistration.model.ProjectModel;
 import java.util.List;
 
 public interface ICustomerDAO {
-    /**
-     * Insert a customer
-     * @param customer
-     * @return String
-     */
     public String insertCustomer(CustomerModel customer);
-
-    /**
-     * Delete a customer
-     * @param customer
-     * @return
-     */
     public int deleteCustomer(CustomerModel customer);
 
     /**

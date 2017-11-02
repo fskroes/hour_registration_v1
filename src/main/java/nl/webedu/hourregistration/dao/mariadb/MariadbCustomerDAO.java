@@ -40,6 +40,7 @@ public class MariadbCustomerDAO implements ICustomerDAO {
         return id;
     }
 
+
     @Override
     public int deleteCustomer(CustomerModel customer) {
         int result = 0;

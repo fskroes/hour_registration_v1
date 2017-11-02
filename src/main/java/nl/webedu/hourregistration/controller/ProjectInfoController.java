@@ -1,9 +1,12 @@
 package nl.webedu.hourregistration.controller;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.text.Text;
+import javafx.scene.control.Label;
 import nl.webedu.hourregistration.model.CustomerModel;
 
+import java.awt.*;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 
@@ -12,7 +15,10 @@ public class ProjectInfoController {
     @FXML
     private Text ProjectName, ProjectTime, StartDate, EndDate;
     private CustomerModel customer;
-    private EditProject controller;
+    private EditProjectController controller;
+
+//    private FXMLLoader loader;
+//    private CustomerList controller;
 
     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
