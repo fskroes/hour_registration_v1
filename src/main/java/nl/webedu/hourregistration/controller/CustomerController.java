@@ -5,15 +5,18 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class CustomerController {
 
 
+    public AnchorPane root;
     private boolean geactiveerd = false;
     private boolean editing = false;
 
@@ -104,11 +107,8 @@ public class CustomerController {
     }
     @FXML
     public void BackToHome(MouseEvent mouseEvent) throws IOException {
-        loader = new FXMLLoader(getClass().getResource("/TimesheetsView.fxml"));
+//        loader = new FXMLLoader(getClass().getResource("/TimesheetsView.fxml"));
+        Stage primaryStage = (Stage) root.getScene().getWindow();
+        primaryStage.hide();
     }
-
-
-
-
-
 }
