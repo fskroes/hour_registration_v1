@@ -5,7 +5,7 @@ import nl.webedu.hourregistration.model.UserAuthenticationModel;
 
 public interface IUserAuthenticationDAO {
     UserAuthenticationModel findUser(String email);
-    void registerUser(String username, String password);
+    void registerUser(String username, String password, String firstname, String suffix, String lastname);
     boolean authenticateUser(String email, String password);
     EmployeeModel findEmployee(String email);
 }
