@@ -12,6 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
+<?import com.jfoenix.controls.JFXComboBox?>
 <AnchorPane fx:id="pAnchor" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.webedu.hourregistration.controller.ProjectController">
     <children>
         <HBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="1200.0" spacing="24.0" style="-fx-background-color: #4285F4;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -19,16 +20,10 @@
                 <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
             </padding>
             <children>
-<<<<<<< HEAD
-            <ImageView fx:id="imgTitle" fitHeight="50.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="img/Logo.png" />
-               </image></ImageView>
-                <Label fx:id="lblTitle" style="-fx-text-fill: white;" text="Projectlijst">
-=======
+
             <ImageView fx:id="imgTitle" fitHeight="50.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" />
                 <Label fx:id="lblTitle" style="-fx-text-fill: white;" text="Projecten overzicht">
->>>>>>> ed7c6a9a2685788b55cac6e1f0ac8ce7aa634eeb
+
                     <font>
                         <Font size="36.0" />
                     </font>
