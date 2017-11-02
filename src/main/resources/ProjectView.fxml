@@ -19,11 +19,16 @@
                 <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
             </padding>
             <children>
+<<<<<<< HEAD
             <ImageView fx:id="imgTitle" fitHeight="50.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="img/Logo.png" />
                </image></ImageView>
                 <Label fx:id="lblTitle" style="-fx-text-fill: white;" text="Projectlijst">
+=======
+            <ImageView fx:id="imgTitle" fitHeight="50.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" />
+                <Label fx:id="lblTitle" style="-fx-text-fill: white;" text="Projecten overzicht">
+>>>>>>> ed7c6a9a2685788b55cac6e1f0ac8ce7aa634eeb
                     <font>
                         <Font size="36.0" />
                     </font>
