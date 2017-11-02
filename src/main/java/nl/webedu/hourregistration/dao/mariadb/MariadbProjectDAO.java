@@ -30,7 +30,7 @@ public class MariadbProjectDAO implements IProjectDAO {
     public boolean insertProject(ProjectModel project) {
         String querySQL = "INSERT INTO project"
                 + "(project_name, start_date, end_date, customerID) VALUES"
-                + "(?,?,?,?,?)";
+                + "(?,?,?,?)";
         try {
             database.insertQuery(querySQL, project.getName(), project.getStartDate(), project.getEndDate(),
                     project.getCustomer().getId());

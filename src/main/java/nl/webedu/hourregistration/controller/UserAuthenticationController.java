@@ -29,6 +29,14 @@ public class UserAuthenticationController {
     @FXML
     public JFXPasswordField txtPassword;
     @FXML
+    public JFXTextField txtFirstName;
+    @FXML
+    public JFXTextField txtSuffix;
+    @FXML
+    public JFXTextField txtLastName;
+    @FXML
+    public JFXButton btnGeenAccount;
+    @FXML
     public JFXButton btnEenAccount;
     @FXML
     public Button btnSignMeIn;
@@ -84,7 +92,12 @@ public class UserAuthenticationController {
      * @param actionEvent het event wat zorgt voor het aanroepen van de methode.
      */
     public void onRegister(ActionEvent actionEvent) {
-        mongoUserAuthenticationDAO.registerUser(txtEmail.getText(), txtPassword.getText());
+        mongoUserAuthenticationDAO.registerUser(txtEmail.getText(),
+                txtPassword.getText(),
+                txtFirstName.getText(),
+                txtSuffix.getText(),
+                txtLastName.getText());
+
         if (!txtEmail.getText().isEmpty() && !txtPassword.getText().isEmpty()) {
             Stage primaryStage = (Stage) root.getScene().getWindow();
             primaryStage.hide();
