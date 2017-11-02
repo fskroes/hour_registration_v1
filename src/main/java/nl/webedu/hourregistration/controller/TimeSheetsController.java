@@ -236,18 +236,4 @@ public class TimeSheetsController {
 
     public void onUntilChange(ActionEvent actionEvent) {
     }
-
-    public void onFromChange(ActionEvent actionEvent) {
-        lvTimeSheets.getItems().clear();
-        setupUserInterface(activeEmployee);
-    }
-
-    public void onUntilChange(ActionEvent actionEvent) {
-        lvTimeSheets.getItems().clear();
-        setupUserInterface(activeEmployee);
-    }
-
-    public void onItemChange(ActionEvent actionEvent) {
-
-    }
 }

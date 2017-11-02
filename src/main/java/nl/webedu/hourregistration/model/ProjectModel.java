@@ -61,11 +61,11 @@ public class ProjectModel extends DatabaseRowMapper<ProjectModel> {
     }
 
     public CustomerModel getCustomer() {
-        return customer;
+        return customerModel;
     }
 
     public void setCustomer(CustomerModel customer) {
-        this.customer = customer;
+        this.customerModel = customer;
     }
 
 

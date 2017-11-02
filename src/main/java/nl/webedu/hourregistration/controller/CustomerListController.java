@@ -20,7 +20,7 @@ public class CustomerListController {
     ObservableList obsList = FXCollections.observableArrayList();
 
     private ICustomerDAO customerDAO;
-    private List<CustomerModel> customers;
+    private CustomerModel customers;
     private int index;
     private FXMLLoader loader;
     private ProjectInfoController controller;
@@ -40,10 +40,10 @@ public class CustomerListController {
         root = (Parent) loader.load();
         controller = loader.getController();
         obsList.removeAll();
-        customers = customerDAO.selectAllCustomers();
-        for(CustomerModel customer : customers){
-            obsList.add(customer.getBusinessName());
-        }
+//        customers = customerDAO.selectAllCustomers();
+//        for(CustomerModel customer : customers){
+//            obsList.add(customer.getBusinessName());
+//        }
 
         ListView.getItems().addAll(obsList);
 
@@ -52,7 +52,7 @@ public class CustomerListController {
     public void CustomerSelect(MouseEvent mouseEvent) {
 
         index = ListView.getSelectionModel().getSelectedIndex();
-        controller.showProject(index, customers);
+        controller.showProject(customers);
     }
     public void setController(ProjectInfoController controller){
         this.controller = controller;

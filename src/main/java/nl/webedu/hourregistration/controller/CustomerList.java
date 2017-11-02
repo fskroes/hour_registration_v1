@@ -24,7 +24,7 @@ public class CustomerList {
     private ICustomerDAO customerDAO;
     private List<CustomerModel> customers;
     private int index;
-    private ProjectInfo controller;
+    private ProjectInfoController controller;
 
 
     @FXML
@@ -53,7 +53,7 @@ public class CustomerList {
         }
 
     }
-    public void setProjectInfoController(ProjectInfo controller){
+    public void setProjectInfoController(ProjectInfoController controller){
         this.controller = controller;
         controller.showProject(customers.get(0));
 

@@ -31,7 +31,7 @@ public class AddCustomer {
         String id = customerDAO.insertCustomer(new CustomerModel(CustomerNameText.getText()));
         customer = customerDAO.findCustomer(id);
         ProjectModel newProjectModel = new ProjectModel("-", null, null);
-        newProjectModel.setCustomerModel(customer);
+        newProjectModel.setCustomer(customer);
         projectDAO.insertProject(newProjectModel);
         customer.setProjectModel(projectDAO.selectProjectByCustomer(customer));
     }

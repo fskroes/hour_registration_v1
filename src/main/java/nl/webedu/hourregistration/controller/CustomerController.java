@@ -6,6 +6,7 @@ import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXToggleButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,6 +17,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import nl.webedu.hourregistration.dao.ICustomerDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.model.CustomerModel;
@@ -43,7 +45,7 @@ public class CustomerController {
     Parent editProjectView;
     Parent addCustomerView;
 
-    ProjectInfo projectInfoController;
+    ProjectInfoController projectInfoController;
     CustomerList customerListController;
     EditProject editProjectController;
     AddCustomer addCustomerController;
