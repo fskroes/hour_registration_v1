@@ -6,6 +6,7 @@ import nl.webedu.hourregistration.database.MariaDatabaseExtension;
 import nl.webedu.hourregistration.model.CustomerModel;
 import nl.webedu.hourregistration.model.ProjectModel;
 
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -26,18 +27,19 @@ public class MariadbCustomerDAO implements ICustomerDAO {
     }
 
     @Override
-    public boolean insertCustomer(CustomerModel customer) {
+    public String insertCustomer(CustomerModel customer) {
         String querySQL = "INSERT INTO customer"
                 + "(company_name) VALUES"
                 + "(?)";
+        String id = "";
         try {
-            database.insertQuery(querySQL, customer.getBusinessName());
-            return true;
+            id = String.valueOf(database.insertQuery(querySQL, customer.getBusinessName()));
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
+        return id;
     }
+
 
     @Override
     public int deleteCustomer(CustomerModel customer) {
@@ -81,7 +83,7 @@ public class MariadbCustomerDAO implements ICustomerDAO {
     public List<CustomerModel> selectAllCustomers() {
         List<CustomerModel> customers = null;
         try {
-            customers = database.selectObjectList(new CustomerModel(), "SELECT * FROM customer");
+            customers = database.selectObjectList(new CustomerModel(), "SELECT * FROM customer ORDER BY customerID DESC");
             for (CustomerModel customer : customers) {
                 customer.setProjectModel(DatabaseManager.getInstance().getDaoFactory().
                         getProjectDAO().selectProjectByCustomer(customer));

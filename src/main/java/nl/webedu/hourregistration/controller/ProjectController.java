@@ -1,6 +1,7 @@
 package nl.webedu.hourregistration.controller;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -42,6 +43,8 @@ public class ProjectController {
     private JFXListView<?> wListView;
     @FXML
     public JFXButton btnTerug;
+    @FXML
+    public JFXComboBox cbEmployee;
 
     private int index;
     private int eindex;
@@ -51,10 +54,13 @@ public class ProjectController {
     public void initialize() {
         projectDAO = DatabaseManager.getInstance().getDaoFactory().getProjectDAO();
         employeeDAO = DatabaseManager.getInstance().getDaoFactory().getEmployeeDAO();
+        pListView.setFocusTraversable(false);
+        wListView.setFocusTraversable(false);
         onStartup();
     }
 
     public void onStartup(){
+        cbEmployee.getItems().addAll(DatabaseManager.getInstance().getDaoFactory().getEmployeeDAO().getAllEmployees());
         ObservableList list = FXCollections.observableArrayList();
         projects = projectDAO.selectAllProjects();
 
@@ -66,20 +72,11 @@ public class ProjectController {
         pListView.getItems().addAll(list);
     }
 
+    @SuppressWarnings("Duplicates")
     public void toTimesheetsView(ActionEvent actionEvent) {
 
         Stage primaryStage = (Stage) pAnchor.getScene().getWindow();
         primaryStage.hide();
-        Parent parent = null;
-        try {
-            parent = FXMLLoader.load(getClass().getResource("/TimesheetsView.fxml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        assert parent != null;
-        Scene scene = new Scene(parent);
-        primaryStage.setScene(scene);
-        primaryStage.show();
     }
 
     //On select, geef werknemer first en lastnames die horen bij het projectID
@@ -102,35 +99,51 @@ public class ProjectController {
     //On select op de wListView, maak werknemer actief of inactief en verander dit visueel.
     public void selectEmployeeOnList(MouseEvent mouseEvent) {
         int eindex = wListView.getSelectionModel().getSelectedIndex();
-        EmployeeModel model = employees.get(eindex);
 
-        //If active is off then turn it on
-        if(actief == false) {
-
-            //Set true and change color of listview item
-            actief = true;
-            wListView.setStyle("-fx-background-color: darkgrey;");
-        }
-        //If active is on then turn it off
-        else if (actief == true){
-            actief = false;
+        if (eindex < 0 ){
+        }else {
+            EmployeeModel model = employees.get(eindex);
         }
     }
 
+    private void refreshEmployeeList(){
+
+        wListView.getItems().clear();
+        ProjectModel model = projects.get(pListView.getSelectionModel().getSelectedIndex());
+
+        employees = employeeDAO.selectEmployeesByProject(model);
+        ObservableList lijst = FXCollections.observableArrayList();
+        for (EmployeeModel employee : employees) {
+            lijst.add(employee.getFirstname() + " " + employee.getLastname());
+        }
+        wListView.getItems().addAll(lijst);
+
+    }
+
     //Actieve employees worden verwijderd van het project.
-    public void removeEmployeeFromList (ActionEvent actionevent) {
+    public void deleteEmployeeFromProject (ActionEvent actionevent) {
+        int eindex = wListView.getSelectionModel().getSelectedIndex();
+        int eindex2 = pListView.getSelectionModel().getSelectedIndex();
 
-        //get all employees that are active
-
-        //Delete all employees that correspond to the projectID
-
+        if (eindex < 0  || eindex2 < 0){
+        }else {
+            EmployeeModel emp = employees.get(eindex);
+            ProjectModel pro = projects.get(eindex2);
+            DatabaseManager.getInstance().getDaoFactory().getProjectDAO().DeleteJunctionItemByEmployee(emp,pro);
+            employees.remove(eindex);
+            refreshEmployeeList();
+        }
     }
 
         //Actieve employees worden toegevoegd aan het project.
     public void addEmployeeToList (ActionEvent actionEvent) {
+        EmployeeModel Emodel =  (EmployeeModel) cbEmployee.getSelectionModel().getSelectedItem();
+        wListView.getItems().contains(Emodel);
+        int index = pListView.getSelectionModel().getSelectedIndex();
+        ProjectModel Pmodel = projects.get(index);
 
-        if(actief == true) {
+        DatabaseManager.getInstance().getDaoFactory().getProjectDAO().addJunctionItemWithProject(Emodel, Pmodel);
 
-        }
+        refreshEmployeeList();
     }
 }

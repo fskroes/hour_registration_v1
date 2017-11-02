@@ -44,11 +44,18 @@ public class ContractController {
     private List<EmployeeModel> employees;
     private List<ContractModel> contracts;
 
+    /**
+     * Wordt aangeroepen wanneer de view wordt opgestart, de DAO's worden geïnitialiseerd.
+     */
     public void initialize() {
         eDAO = DatabaseManager.getInstance().getDaoFactory().getEmployeeDAO();
         loadData();
     }
 
+    /**
+     * Zorgt ervoor dat de gegevens van de werknemer worden geladen als erop wordt geklikt.
+     * @param mouseEvent het event wat zorgt voor het aanroepen van de methode.
+     */
     public void employeeSelect(MouseEvent mouseEvent) {
         int index = employeeList.getSelectionModel().getSelectedIndex();
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
@@ -58,6 +65,9 @@ public class ContractController {
         eind_datum.setText(sdf.format(contracts.get(index).getEndTime()));
     }
 
+    /**
+     * Zorgt voor het laden van de werknemer data in de listview.
+     */
     public void loadData(){
         ObservableList list = FXCollections.observableArrayList();
         contracts = new ArrayList<>();
@@ -69,18 +79,12 @@ public class ContractController {
         employeeList.getItems().addAll(list);
     }
 
+    /**
+     * Zorgt ervoor dat de gebruiker terug kan naar de timesheets.
+     * @param actionEvent het event wat zorgt voor het aanroepen van de methode.
+     */
     public void toPreviousView (ActionEvent actionEvent) {
         Stage primaryStage = (Stage) root.getScene().getWindow();
         primaryStage.hide();
-        Parent parent = null;
-        try {
-            parent = FXMLLoader.load(getClass().getResource("/TimesheetsView.fxml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        assert parent != null;
-        Scene scene = new Scene(parent);
-        primaryStage.setScene(scene);
-        primaryStage.show();
     }
 }

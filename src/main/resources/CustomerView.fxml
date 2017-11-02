@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXToggleButton?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import java.lang.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="root" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.webedu.hourregistration.controller.CustomerController">
+<AnchorPane fx:id="root" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.webedu.hourregistration.controller.CustomerController">
     <children>
         <HBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="1200.0" spacing="24.0" style="-fx-background-color: #4285F4;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <padding>
@@ -20,87 +16,117 @@
             </padding>
             <children>
                 <ImageView fx:id="imgTitle" fitHeight="50.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="img/Logo.png" />
-               </image></ImageView>
-                <Label fx:id="lblTitle" style="-fx-text-fill: white;" text="Customers">
+                <image>
+                    <Image url="img/Logo.png" />
+                </image></ImageView>
+                <Label fx:id="lblTitle" minHeight="-Infinity" minWidth="-Infinity" prefHeight="53.0" prefWidth="215.0" style="-fx-text-fill: white;" text="Customers" HBox.hgrow="NEVER">
                     <font>
                         <Font size="36.0" />
                     </font>
                 </Label>
-            <JFXButton fx:id="btnTerug" mnemonicParsing="false" onAction="#toPreviousView" text="terug" textFill="WHITE" />
+                <HBox alignment="CENTER_RIGHT" prefHeight="53.0" prefWidth="897.0">
+                    <children>
+                        <JFXButton fx:id="Back" buttonType="RAISED" maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#BackToHome" prefHeight="46.0" prefWidth="108.0" ripplerFill="#5752d3" style="-fx-background-color: #180175; -fx-border-color: #322fe2; -fx-border-width: 2;" text="Terug" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="NEVER">
+                            <font>
+                                <Font name="Eras Medium ITC" size="18.0" />
+                            </font>
+                            <HBox.margin>
+                                <Insets right="30.0" />
+                            </HBox.margin>
+                        </JFXButton>
+                    </children>
+                </HBox>
             </children>
         </HBox>
-      <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: e8e8e8;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
-         <children>
-            <VBox prefHeight="700.0" prefWidth="450.0" spacing="24.0">
-               <children>
-                  <VBox maxWidth="1.7976931348623157E308" prefHeight="604.0" style="-fx-border-width: 1px; -fx-border-color: #4285F4;">
-                     <children>
-                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="840.0" spacing="24.0" style="-fx-background-color: #4285F4;">
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                           <children>
-                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Klanten" wrappingWidth="114.13671875">
-                                 <font>
-                                    <Font name="Bell MT" size="33.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets left="20.0" />
-                                 </HBox.margin>
-                              </Text>
-                              <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
-                                 <opaqueInsets>
-                                    <Insets />
-                                 </opaqueInsets>
-                                 <children>
-                                    <JFXToggleButton fx:id="AddToggle" contentDisplay="BOTTOM" onMouseClicked="#AddCustomer" prefHeight="45.0" prefWidth="155.0" text="Toevoegen">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                    </JFXToggleButton>
-                                 </children>
-                              </HBox>
-                           </children>
-                        </HBox>
-                        <VBox fx:id="ListVbox" />
+        <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: e8e8e8;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
+            <children>
+                <VBox prefHeight="700.0" prefWidth="450.0" spacing="24.0">
+                    <children>
+                        <VBox maxWidth="1.7976931348623157E308" prefHeight="604.0" style="-fx-border-width: 1px; -fx-border-color: #4285F4;">
+                            <children>
+                                <HBox alignment="CENTER_LEFT" minHeight="-Infinity" prefHeight="100.0" prefWidth="840.0" style="-fx-background-color: #4285F4;">
+                                    <opaqueInsets>
+                                        <Insets />
+                                    </opaqueInsets>
+                                    <children>
+                                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Klanten" wrappingWidth="114.13671875">
+                                            <font>
+                                                <Font name="Bell MT" size="33.0" />
+                                            </font>
+                                            <HBox.margin>
+                                                <Insets left="20.0" />
+                                            </HBox.margin>
+                                        </Text>
+                                        <HBox alignment="CENTER_RIGHT" prefHeight="96.0" prefWidth="250.0">
+                                            <opaqueInsets>
+                                                <Insets />
+                                            </opaqueInsets>
+                                            <children>
+                                                <JFXButton fx:id="AddCustomer" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" onMouseClicked="#AddCustomer" pickOnBounds="false" prefHeight="46.0" prefWidth="46.0" ripplerFill="#040057" scaleShape="false" style="-fx-background-color: #379b83; -fx-border-color: #003d2e; -fx-border-width: 2;" text="+" textAlignment="CENTER" HBox.hgrow="NEVER">
+                                                    <font>
+                                                        <Font name="Microsoft Tai Le Bold" size="20.0" />
+                                                    </font>
+                                                    <HBox.margin>
+                                                        <Insets right="20.0" />
+                                                    </HBox.margin>
+                                                </JFXButton>
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </HBox>
+                                <VBox fx:id="ListVbox" />
 
-                     </children>
-                  </VBox>
-               </children>
-               <padding>
-                  <Insets bottom="48.0" left="48.0" right="48.0" top="48.0" />
-               </padding>
-            </VBox>
-            <VBox prefHeight="700.0" prefWidth="760.0" spacing="24.0">
-               <children>
-                  <VBox alignment="TOP_RIGHT" maxWidth="1.7976931348623157E308" prefHeight="662.0" prefWidth="413.0" style="-fx-border-width: 1px; -fx-border-color: #4285F4;">
-                     <children>
-                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="840.0" spacing="24.0" style="-fx-background-color: #4285F4;">
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                           <padding>
-                              <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
-                           </padding>
-                           <children>
-                              <Text fx:id="customerProperties" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Klant gegevens" wrappingWidth="250.13671875">
-                                 <font>
-                                    <Font name="Bell MT" size="33.0" />
-                                 </font>
-                              </Text>
-                           </children>
-                        </HBox>
-                        <VBox fx:id="InfoVbox" prefHeight="502.0" prefWidth="657.0" style="-fx-background-color: #FFFFFF;" />
-                     </children>
-                  </VBox>
-               </children>
-               <padding>
-                  <Insets bottom="48.0" left="48.0" right="48.0" top="48.0" />
-               </padding>
-            </VBox>
-         </children>
-      </HBox>
+                            </children>
+                        </VBox>
+                    </children>
+                    <padding>
+                        <Insets bottom="48.0" left="48.0" right="48.0" top="48.0" />
+                    </padding>
+                </VBox>
+                <VBox prefHeight="700.0" prefWidth="760.0" spacing="24.0">
+                    <children>
+                        <VBox alignment="TOP_RIGHT" maxWidth="1.7976931348623157E308" prefHeight="662.0" prefWidth="413.0" style="-fx-border-width: 1px; -fx-border-color: #4285F4;">
+                            <children>
+                                <HBox alignment="CENTER_LEFT" minHeight="-Infinity" prefHeight="100.0" prefWidth="840.0" spacing="24.0" style="-fx-background-color: #4285F4;">
+                                    <opaqueInsets>
+                                        <Insets />
+                                    </opaqueInsets>
+                                    <children>
+                                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="230.0">
+                                            <children>
+                                                <Text fx:id="customerProperties" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Klant gegevens" wrappingWidth="212.13671875">
+                                                    <font>
+                                                        <Font name="Bell MT" size="33.0" />
+                                                    </font>
+                                                    <HBox.margin>
+                                                        <Insets left="20.0" />
+                                                    </HBox.margin>
+                                                </Text>
+                                            </children>
+                                        </HBox>
+                                        <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="402.0">
+                                            <children>
+                                                <JFXButton fx:id="EditButton" buttonType="RAISED" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#EditProject" prefHeight="46.0" prefWidth="108.0" ripplerFill="#040057" style="-fx-background-color: #379b83; -fx-border-color: #003d2e; -fx-border-width: 2;" text="Pas aan" textAlignment="CENTER" HBox.hgrow="NEVER">
+                                                    <HBox.margin>
+                                                        <Insets right="30.0" />
+                                                    </HBox.margin>
+                                                    <font>
+                                                        <Font name="Eras Medium ITC" size="18.0" />
+                                                    </font>
+                                                </JFXButton>
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </HBox>
+                                <VBox fx:id="InfoVbox" prefHeight="502.0" prefWidth="657.0" style="-fx-background-color: #FFFFFF;" />
+                            </children>
+                        </VBox>
+                    </children>
+                    <padding>
+                        <Insets bottom="48.0" left="48.0" right="48.0" top="48.0" />
+                    </padding>
+                </VBox>
+            </children>
+        </HBox>
     </children>
 </AnchorPane>

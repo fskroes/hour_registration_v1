@@ -135,29 +135,43 @@ public class MariaDatabaseExtension extends Database<Connection> {
 
     public int insertQuery(String sql) throws SQLException {
         PreparedStatement stat = connection.prepareStatement(sql);
-        return stat.executeUpdate();
+        stat.executeUpdate();
+        ResultSet rs = stat.getGeneratedKeys();
+        if (rs.next()) {
+            return (int) rs.getLong(1);
+        }
+        return (int) stat.getGeneratedKeys().getLong(1);
     }
 
     public int insertQuery(String sql, Object... params) throws SQLException {
         PreparedStatement stat = prepareStatement(sql, params);
+        stat.executeUpdate();
+        ResultSet rs = stat.getGeneratedKeys();
+        if (rs.next()) {
+            return (int) rs.getLong(1);
+        }
+        return (int) stat.getGeneratedKeys().getLong(1);
+    }
+
+
+    public int updateQuery(String sql) throws SQLException {
+        PreparedStatement stat = connection.prepareStatement(sql);
         return stat.executeUpdate();
     }
 
-    public int updateQuery(String sql) throws SQLException {
-        return insertQuery(sql);
-    }
-
     public int updateQuery(String sql, Object... params) throws SQLException {
-        return insertQuery(sql, params);
+        PreparedStatement stat = prepareStatement(sql, params);
+        return stat.executeUpdate();
     }
 
     public int deleteQuery(String sql) throws SQLException {
-        return insertQuery(sql);
+        return updateQuery(sql);
     }
 
     public int deleteQuery(String sql, Object... params) throws SQLException {
-        return insertQuery(sql, params);
+        return updateQuery(sql, params);
     }
+
 
     private PreparedStatement prepareStatement(String sql, Object... params) throws SQLException {
         PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);

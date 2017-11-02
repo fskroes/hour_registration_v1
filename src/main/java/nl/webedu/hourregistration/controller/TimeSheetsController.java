@@ -65,6 +65,27 @@ public class TimeSheetsController {
         }
         cmFromWeek.getSelectionModel().select(weeknr - 10);
         cmUntilWeek.getSelectionModel().select(weeknr);
+
+        manageEmployeesButton.setOnAction(event -> {
+            Stage primaryStage = new Stage();
+            primaryStage.hide();
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/RollenView.fxml"));
+
+            Parent parent = null;
+            try {
+                parent = loader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            assert parent != null;
+
+            //MainController controller = loader.getController();
+
+            Scene scene = new Scene(parent, 1200, 800);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        });
     }
 
     private void setupUserInterface(EmployeeModel employee) {
@@ -90,7 +111,6 @@ public class TimeSheetsController {
     }
 
     private void timesheetEntry(int weekId, Date startDate, Date endDate, double TotalHours, double OverTime) {
-        System.out.println(weekId);
         HBox itemWrapper = new HBox(48);
         itemWrapper.setFillHeight(true);
         itemWrapper.setAlignment(Pos.CENTER_LEFT);
@@ -158,26 +178,7 @@ public class TimeSheetsController {
             timesheet.show();
         });
 
-        manageEmployeesButton.setOnAction(event -> {
-            Stage manageEmployeeStage = new Stage();
-            manageEmployeeStage.hide();
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/RollenView.fxml"));
-
-            Parent parent = null;
-            try {
-                parent = loader.load();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            assert parent != null;
-
-            //MainController controller = loader.getController();
-
-            Scene scene = new Scene(parent, 1200, 800);
-            manageEmployeeStage.setScene(scene);
-            manageEmployeeStage.show();
-        });
 
         itemWrapper.getChildren().add(dateWrapper);
         itemWrapper.getChildren().add(timeWorked);
@@ -215,7 +216,7 @@ public class TimeSheetsController {
     }
 
     public void onManageCustomers (ActionEvent actionEvent) {
-        Stage primaryStage = (Stage) root.getScene().getWindow();
+        Stage primaryStage = new Stage();
         primaryStage.hide();
         Parent parent = null;
         try {
@@ -230,7 +231,7 @@ public class TimeSheetsController {
     }
 
     public void onManageProjects (ActionEvent actionEvent) {
-        Stage primaryStage = (Stage) root.getScene().getWindow();
+        Stage primaryStage = new Stage();
         primaryStage.hide();
         Parent parent = null;
         try {
@@ -245,7 +246,7 @@ public class TimeSheetsController {
     }
 
     public void onManageContracts (ActionEvent actionEvent) {
-        Stage primaryStage = (Stage) root.getScene().getWindow();
+        Stage primaryStage = new Stage();
         primaryStage.hide();
         Parent parent = null;
         try {

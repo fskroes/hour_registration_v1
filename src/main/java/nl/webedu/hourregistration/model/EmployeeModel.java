@@ -170,6 +170,9 @@ public class EmployeeModel extends DatabaseRowMapper<EmployeeModel> {
         this.workdays.remove(workdayModel);
     }
 
+    public String getFullName(){
+        return firstname + " " + suffix + " " + lastname;
+    }
     @Override
     public String toString() {
         return firstname + " " + suffix + " " + lastname;

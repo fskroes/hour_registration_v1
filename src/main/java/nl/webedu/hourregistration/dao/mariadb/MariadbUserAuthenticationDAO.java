@@ -45,7 +45,7 @@ public class MariadbUserAuthenticationDAO implements IUserAuthenticationDAO {
     }
 
     @Override
-    public void registerUser(String username, String password) {
+    public void registerUser(String username, String password , String firstName, String suffix, String lastName) {
         model = null;
         model = findUser(username);
         if(model != null) {
@@ -61,10 +61,10 @@ public class MariadbUserAuthenticationDAO implements IUserAuthenticationDAO {
         String hashedPassword = hashPassword(password);
 
         String insertSQL = "INSERT INTO employee"
-                + "(email, password) VALUES"
-                + "(?,?)";
+                + "(email, password, role, firstname, suffix, lastname) VALUES"
+                + "(?,?,?,?,?,?)";
         try {
-            database.insertQuery(insertSQL, username, hashedPassword);
+            database.insertQuery(insertSQL, username, hashedPassword, 1, firstName, suffix, lastName);
             System.out.println(username + " is registered");
         } catch (SQLException e) {
             e.printStackTrace();

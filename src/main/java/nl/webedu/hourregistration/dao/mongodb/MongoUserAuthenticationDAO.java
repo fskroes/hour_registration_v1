@@ -37,7 +37,6 @@ public class MongoUserAuthenticationDAO implements IUserAuthenticationDAO {
         return instance;
     }
 
-    @Override
     public void registerUser(String email, String password) {
         model = findUser(email);
         if(model == null) {
@@ -98,6 +97,11 @@ public class MongoUserAuthenticationDAO implements IUserAuthenticationDAO {
         });
 
         return lib[0];
+    }
+
+    @Override
+    public void registerUser(String username, String password, String firstname, String suffix, String lastname) {
+
     }
 
     @Override

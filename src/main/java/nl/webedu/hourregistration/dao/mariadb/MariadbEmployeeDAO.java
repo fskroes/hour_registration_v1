@@ -160,8 +160,7 @@ public class MariadbEmployeeDAO implements IEmployeeDAO {
         try {
             employees = database.selectObjectList(
                     new EmployeeModel(),
-                    "SELECT * FROM employee WHERE employeeID = " +
-                            "(SELECT fk_employee_id FROM employee_project WHERE fk_project_id = ?);",
+                    "SELECT * FROM employee INNER JOIN employee_project ON employee.employeeID = employee_project.fk_employee_id where fk_project_id = ?;",
                     project.getId()
             );
             for (EmployeeModel employee : employees) {

@@ -30,10 +30,10 @@ public class MariadbProjectDAO implements IProjectDAO {
     public boolean insertProject(ProjectModel project) {
         String querySQL = "INSERT INTO project"
                 + "(project_name, start_date, end_date, customerID) VALUES"
-                + "(?,?,?,?,?)";
+                + "(?,?,?,?)";
         try {
             database.insertQuery(querySQL, project.getName(), project.getStartDate(), project.getEndDate(),
-                    project.getCustomer().getId());
+                     project.getCustomer().getId());
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -117,5 +117,31 @@ public class MariadbProjectDAO implements IProjectDAO {
             e.printStackTrace();
         }
         return project;
+    }
+
+    @Override
+    public int DeleteJunctionItemByEmployee(EmployeeModel employee, ProjectModel project) {
+        int result = 0;
+        String querySQL = "DELETE FROM employee_project"
+                + " WHERE fk_employee_id = ? AND fk_project_id = ?";
+        try {
+            result = database.deleteQuery(querySQL, employee.getId(), project.getId());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    @Override
+    public int addJunctionItemWithProject(EmployeeModel employee, ProjectModel project) {
+        int result = 0;
+        String querySQL = "INSERT INTO employee_project (fk_employee_id, fk_project_id) VALUES"
+                + "(?,?)";
+        try {
+            result = database.insertQuery(querySQL, employee.getId(), project.getId());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }
