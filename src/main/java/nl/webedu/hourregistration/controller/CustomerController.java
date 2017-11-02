@@ -59,6 +59,7 @@ public class CustomerController {
         addCustomerController = loader.getController();
 
         customerListController.setProjectInfoController(projectInfoController);
+        addCustomerController.setCustomerListController(customerListController);
 
     }
 
@@ -67,7 +68,6 @@ public class CustomerController {
 
         if(geactiveerd){
             addCustomerController.newCustomer();
-            customerListController.addCustomerToList(addCustomerController.getCustomer());
             AddCustomer.setText("+");
             AddCustomer.setFont(Font.font("Microsoft Tai Le", FontWeight.BOLD, 20));
             AddCustomer.setPrefWidth(46);
