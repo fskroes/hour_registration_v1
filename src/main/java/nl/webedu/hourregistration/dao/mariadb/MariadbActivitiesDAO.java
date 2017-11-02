@@ -8,6 +8,7 @@ import nl.webedu.hourregistration.model.EmployeeModel;
 import nl.webedu.hourregistration.model.WorkdayModel;
 
 import java.sql.SQLException;
+import java.sql.Time;
 import java.util.List;
 
 public class MariadbActivitiesDAO implements IActivitiesDAO {
@@ -28,13 +29,11 @@ public class MariadbActivitiesDAO implements IActivitiesDAO {
 
     @Override
     public boolean insertActivitie(ActivitiesModel activity) {
-        int result = 0;
         String insertSQL = "INSERT INTO activity"
-                + "(category, start_time, end_time, fk_workdayID) VALUES"
+                + "(start_time, end_time, workdayID, projectID) VALUES"
                 + "(?,?,?,?)";
-
         try {
-            database.insertQuery(insertSQL, activity.getStartTime(), activity.getEndTime(), activity.getWorkday());
+            database.insertQuery(insertSQL, Time.valueOf(activity.getStartTime()), Time.valueOf(activity.getEndTime()), activity.getWorkday().getId(), activity.getProject().getId());
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -69,13 +68,13 @@ public class MariadbActivitiesDAO implements IActivitiesDAO {
     @Override
     public int updateActivitie(ActivitiesModel activity) {
         int result = 0;
-        String updateSQL = "UPDATE activity" +
-                "SET category = ?, start_time = ?, end_time = ?" +
+        String updateSQL = "UPDATE activity " +
+                "SET start_time = ?, end_time = ? " +
                 "WHERE activityID = ?";
         try {
             result = database.updateQuery(updateSQL,
-                    activity.getStartTime(),
-                    activity.getEndTime(),
+                    Time.valueOf(activity.getStartTime()),
+                    Time.valueOf(activity.getEndTime()),
                     activity.getId());
         } catch (SQLException e) {
             e.printStackTrace();
@@ -99,6 +98,9 @@ public class MariadbActivitiesDAO implements IActivitiesDAO {
         List<ActivitiesModel> activities = null;
         try {
             activities = database.selectObjectList(new ActivitiesModel(), "SELECT * FROM activity WHERE workdayID = ?", workday.getId());
+            for (ActivitiesModel activity : activities) {
+                activity.setWorkday(workday);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

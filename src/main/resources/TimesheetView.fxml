@@ -2,16 +2,13 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXListView?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-
-<AnchorPane fx:id="root" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.webedu.hourregistration.controller.TimesheetController">
+<AnchorPane fx:id="root" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.webedu.hourregistration.controller.TimesheetController">
    <children>
       <HBox fx:id="header" alignment="CENTER_LEFT" spacing="24.0" style="-fx-background-color: #4285F4;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
@@ -34,19 +31,18 @@
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                <children>
                   <Label fx:id="weekLabel" text="Week: " />
-                  <JFXButton alignment="CENTER" buttonType="RAISED" defaultButton="true" onAction="#SAVEALL" ripplerFill="#d3d3d3" text="Save workweek" textAlignment="CENTER" underline="true" />
-                  <JFXButton fx:id="btnreturntoTimesheets" alignment="CENTER" buttonType="RAISED" defaultButton="true" ripplerFill="#d3d3d3" text="Return to timesheets" textAlignment="CENTER" underline="true" />
+                  <JFXButton alignment="CENTER" buttonType="RAISED" defaultButton="true" onAction="#saveSheet" ripplerFill="#d3d3d3" text="Save workweek" textAlignment="CENTER" underline="true" />
                </children>
             </HBox>
-            <HBox alignment="TOP_RIGHT" prefHeight="30.0" prefWidth="1104.0" spacing="63.0">
+            <HBox alignment="TOP_RIGHT" prefHeight="30.0" prefWidth="1104.0" spacing="75.0">
                <children>
+                  <Label text="Sunday" />
                   <Label text="Monday" />
                   <Label text="Tuesday" />
                   <Label text="Wednesday" />
                   <Label text="Thursday" />
                   <Label text="Friday" />
                   <Label text="Saturday" />
-                  <Label text="Sunday" />
                </children>
                <padding>
                   <Insets right="80.0" top="3.0" />

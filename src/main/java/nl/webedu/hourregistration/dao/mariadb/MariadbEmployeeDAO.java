@@ -3,15 +3,13 @@ package nl.webedu.hourregistration.dao.mariadb;
 import nl.webedu.hourregistration.dao.IEmployeeDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.database.MariaDatabaseExtension;
-import nl.webedu.hourregistration.model.ContractModel;
 import nl.webedu.hourregistration.model.EmployeeModel;
 import nl.webedu.hourregistration.model.ProjectModel;
+import nl.webedu.hourregistration.model.WorkdayModel;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 public class MariadbEmployeeDAO implements IEmployeeDAO {
 
@@ -31,32 +29,28 @@ public class MariadbEmployeeDAO implements IEmployeeDAO {
 
     @Override
     public boolean insertEmployee(EmployeeModel employee){
+        String sql = "INSERT INTO employee"
+                + "(email, password, role, firstname, suffix, lastname, active) VALUES"
+                + "(?,?,?,?,?,?,?)";
         try {
-            String sql = "INSERT INTO employee"
-                    +"(email, password, role, firstname, suffix, lastname, active) VALUES"
-                    +"(?,?,?,?,?,?,?)";
-
-            PreparedStatement ps = database.openConnection().prepareStatement(sql);
-
-            ps.setString(1, String.valueOf(employee.getEmail()));
-            ps.setString(2, String.valueOf(employee.getPassword()));
-            ps.setInt(3, 1/*employee.getRole().getIndex()*/);
-            ps.setString(4, String.valueOf(employee.getFirstname()));
-            ps.setString(5, String.valueOf(employee.getSuffix()));
-            ps.setString(6, String.valueOf(employee.getLastname()));
-            ps.setBoolean(7, true);
-
-            ps.executeUpdate();
-            ps.close();
-            database.closeConnecion();
-
-            System.out.println("Record toegevoegd");
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            database.insertQuery(
+                    sql,
+                    employee.getEmail(),
+                    employee.getPassword(),
+                    employee.getRole().getIndex(),
+                    employee.getFirstname(),
+                    employee.getSuffix(),
+                    employee.getLastname(),
+                    employee.isActive()
+            );
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        for (WorkdayModel workday : employee.getWorkdays()) {
+            DatabaseManager.getInstance().getDaoFactory().getWorkdayDAO().insertWorkday(workday);
+        }
+        for (ProjectModel project : employee.getProjects()) {
+            DatabaseManager.getInstance().getDaoFactory().getProjectDAO().insertProject(project);
         }
         return true;
     }
@@ -102,38 +96,45 @@ public class MariadbEmployeeDAO implements IEmployeeDAO {
             System.out.println(e.getMessage());
         }
         return employee;
-
     }
 
     @Override
     public boolean updateEmployee(EmployeeModel employee){
+        String sql = "UPDATE employee SET email = ?, password = ?, role = ?, firstname = ?," +
+                "suffix = ?, lastname = ?, active = ?  WHERE employeeID = ?;";
         try {
-
-            String sql = "UPDATE employee SET email = ?, password = ?, role = ?, firstname = ?," +
-                    "suffix = ?, lastname = ?  WHERE employeeID = ?;";
-
-            PreparedStatement ps = database.openConnection().prepareStatement(sql);
-
-            ps.setString(1, String.valueOf(employee.getEmail()));
-            ps.setString(2, String.valueOf(employee.getPassword()));
-            ps.setInt(3, 1/*employee.getRole().getIndex()*/);
-            ps.setString(4, String.valueOf(employee.getFirstname()));
-            ps.setString(5, String.valueOf(employee.getSuffix()));
-            ps.setString(6, String.valueOf(employee.getLastname()));
-            ps.setString(7, String.valueOf(employee.getId()));
-
-            ps.executeUpdate();
-            ps.close();
-            database.closeConnecion();
-
-            System.out.println("Record toegevoegd");
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-
+            database.updateQuery(
+                    sql,
+                    employee.getEmail(),
+                    employee.getPassword(),
+                    employee.getRole().getIndex(),
+                    employee.getFirstname(),
+                    employee.getSuffix(),
+                    employee.getLastname(),
+                    employee.isActive(),
+                    employee.getId()
+            );
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        for (WorkdayModel workday : employee.getWorkdays()) {
+            if (DatabaseManager.getInstance().getDaoFactory().getWorkdayDAO().findWorkday(workday.getId()) == null) {
+                DatabaseManager.getInstance().getDaoFactory().getWorkdayDAO().insertWorkday(workday);
+                try {
+                    database.insertQuery("INSERT INTO employee_workday SET fk_employee_id = ?, fk_workday_id = ?", employee.getId(), workday.getId());
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            } else {
+                DatabaseManager.getInstance().getDaoFactory().getWorkdayDAO().updateWorkday(workday);
+            }
+        }
+        for (ProjectModel project : employee.getProjects()) {
+            if (DatabaseManager.getInstance().getDaoFactory().getProjectDAO().findProject(project.getId()) == null) {
+                DatabaseManager.getInstance().getDaoFactory().getProjectDAO().insertProject(project);
+            } else {
+                DatabaseManager.getInstance().getDaoFactory().getProjectDAO().updateProject(project);
+            }
         }
         return true;
     }
@@ -171,23 +172,5 @@ public class MariadbEmployeeDAO implements IEmployeeDAO {
             System.out.println(e.getMessage());
         }
         return employees;
-    }
-
-    public ContractModel findContractByEmployee(EmployeeModel employee) {
-        ContractModel contract = null;
-        try {
-            contract = database.selectObjectSingle(
-                    new ContractModel(),
-                    "SELECT * FROM employee JOIN contract ON employee.employeeID = contract.fk_employeeID WHERE employee.employeeID = ?",
-                    employee.getId()
-            );
-        } catch(SQLException e){
-            System.out.println(e.getMessage());
-        }
-
-        if (contract != null) return contract;
-
-        return Optional.ofNullable(contract = new ContractModel())
-                .filter(s -> s != null).orElse(new ContractModel());
     }
 }

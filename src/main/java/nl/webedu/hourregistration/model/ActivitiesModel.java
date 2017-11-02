@@ -6,12 +6,12 @@ import org.bson.Document;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
+import java.time.LocalTime;
 
 public class ActivitiesModel extends DatabaseRowMapper<ActivitiesModel> {
 
     private String id;
-    private Date startTime, endTime;
+    private LocalTime startTime, endTime;
     private WorkdayModel workday;
     private ProjectModel project;
 
@@ -19,7 +19,7 @@ public class ActivitiesModel extends DatabaseRowMapper<ActivitiesModel> {
         type = ActivitiesModel.class;
     }
 
-    public ActivitiesModel(Date startTime, Date endTime, WorkdayModel workday) {
+    public ActivitiesModel(LocalTime startTime, LocalTime endTime, WorkdayModel workday) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.workday = workday;
@@ -29,19 +29,19 @@ public class ActivitiesModel extends DatabaseRowMapper<ActivitiesModel> {
         return id;
     }
 
-    public Date getStartTime() {
+    public LocalTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(LocalTime startTime) {
         this.startTime = startTime;
     }
 
-    public Date getEndTime() {
+    public LocalTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
 
@@ -69,18 +69,17 @@ public class ActivitiesModel extends DatabaseRowMapper<ActivitiesModel> {
     @Override
     public ActivitiesModel convertSQL(ResultSet set, int rowNum) throws SQLException {
         this.id = String.valueOf(set.getInt("activityID"));
-        this.startTime = set.getDate("start_time");
-        this.endTime = set.getDate("end_time");
-        this.workday = DatabaseManager.getInstance().getDaoFactory().getWorkdayDAO().findWorkday("fk_workdayID");
-        this.project = DatabaseManager.getInstance().getDaoFactory().getProjectDAO().findProject("fk_projectID");
+        this.startTime = set.getTime("start_time").toLocalTime();
+        this.endTime = set.getTime("end_time").toLocalTime();
+        this.project = DatabaseManager.getInstance().getDaoFactory().getProjectDAO().findProject(String.valueOf(set.getInt("projectID")));
         return this;
     }
 
     @Override
     public ActivitiesModel convertMongo(Document document) {
         this.id = String.valueOf(document.getObjectId("_id"));
-        this.startTime = document.getDate("start_time");
-        this.endTime = document.getDate("end_time");
+        this.startTime = LocalTime.parse(document.getString("start_time"));
+        this.endTime = LocalTime.parse(document.getString("end_time"));
         return this;
     }
 }

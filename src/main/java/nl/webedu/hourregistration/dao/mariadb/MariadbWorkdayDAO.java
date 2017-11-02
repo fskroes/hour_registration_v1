@@ -3,10 +3,13 @@ package nl.webedu.hourregistration.dao.mariadb;
 import nl.webedu.hourregistration.dao.IWorkdayDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.database.MariaDatabaseExtension;
+import nl.webedu.hourregistration.model.ActivitiesModel;
 import nl.webedu.hourregistration.model.EmployeeModel;
 import nl.webedu.hourregistration.model.WorkdayModel;
 
+import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.util.List;
 
 public class MariadbWorkdayDAO implements IWorkdayDAO {
@@ -28,20 +31,26 @@ public class MariadbWorkdayDAO implements IWorkdayDAO {
     @Override
     public boolean insertWorkday(WorkdayModel workday) {
         String querySQL = "INSERT INTO workday"
-                + "(date, week_number, start_time, end_time, workday_day) VALUES"
+                + "(date, week_number, start_time, end_time, day_name) VALUES"
                 + "(?,?,?,?,?)";
         try {
             database.insertQuery(
                     querySQL,
-                    workday.getDate(),
+                    Date.valueOf(workday.getDate()),
                     workday.getWeekNumber(),
-                    workday.getStartTime(),
-                    workday.getEndTime(),
+                    Time.valueOf(workday.getStartTime()),
+                    Time.valueOf(workday.getEndTime()),
                     workday.getDayName()
             );
-            return true;
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+        for (ActivitiesModel activity : workday.getActivities()) {
+            if (DatabaseManager.getInstance().getDaoFactory().getActivitiesDAO().findActivitie(activity.getId()) == null) {
+                DatabaseManager.getInstance().getDaoFactory().getActivitiesDAO().insertActivitie(activity);
+            } else {
+                DatabaseManager.getInstance().getDaoFactory().getActivitiesDAO().updateActivitie(activity);
+            }
         }
         return false;
     }
@@ -74,19 +83,27 @@ public class MariadbWorkdayDAO implements IWorkdayDAO {
     public int updateWorkday(WorkdayModel workday) {
         int result = 0;
         String updateSQL = "UPDATE workday"
-                + " SET date = ?, week_number = ?, start_time = ?, end_time = ?"
+                + " SET date = ?, week_number = ?, start_time = ?, end_time = ?, day_name = ?"
                 + " WHERE workdayID = ?";
         try {
             database.updateQuery(
                     updateSQL,
-                    workday.getDayName(),
+                    Date.valueOf(workday.getDate()),
                     workday.getWeekNumber(),
-                    workday.getStartTime(),
-                    workday.getEndTime(),
+                    Time.valueOf(workday.getStartTime()),
+                    Time.valueOf(workday.getEndTime()),
+                    workday.getDayName(),
                     workday.getId()
             );
         } catch (SQLException ex) {
             ex.printStackTrace();
+        }
+        for (ActivitiesModel activity : workday.getActivities()) {
+            if (DatabaseManager.getInstance().getDaoFactory().getActivitiesDAO().findActivitie(activity.getId()) == null) {
+                DatabaseManager.getInstance().getDaoFactory().getActivitiesDAO().insertActivitie(activity);
+            } else {
+                DatabaseManager.getInstance().getDaoFactory().getActivitiesDAO().updateActivitie(activity);
+            }
         }
         return result;
     }

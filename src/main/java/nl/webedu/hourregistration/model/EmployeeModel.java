@@ -15,6 +15,7 @@ public class EmployeeModel extends DatabaseRowMapper<EmployeeModel> {
     private String id;
     private String email, password, firstname, suffix, lastname;
     private Role role;
+    private boolean isActive;
     private ContractModel contract;
     private List<ProjectModel> projects;
     private List<WorkdayModel> workdays;
@@ -109,6 +110,14 @@ public class EmployeeModel extends DatabaseRowMapper<EmployeeModel> {
                 break;
 
         }
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 
     public ContractModel getContract() {

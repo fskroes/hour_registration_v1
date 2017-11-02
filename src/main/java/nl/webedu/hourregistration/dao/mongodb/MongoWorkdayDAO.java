@@ -8,16 +8,16 @@ import nl.webedu.hourregistration.model.EmployeeModel;
 import nl.webedu.hourregistration.model.WorkdayModel;
 import org.bson.Document;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Updates.combine;
 import static com.mongodb.client.model.Updates.set;
-import static nl.webedu.hourregistration.database.DatabaseUtil.REPORT_COLLECTION;
-import static nl.webedu.hourregistration.database.DatabaseUtil.WORKDAY_COLLECTION;
 import static nl.webedu.hourregistration.database.DatabaseUtil.DATABASE_NAME;
+import static nl.webedu.hourregistration.database.DatabaseUtil.WORKDAY_COLLECTION;
 
 public class MongoWorkdayDAO implements IWorkdayDAO {
 
@@ -43,7 +43,7 @@ public class MongoWorkdayDAO implements IWorkdayDAO {
                 .append("start_time",workday.getStartTime())
                 .append("end_time",workday.getEndTime())
                 .append("week_number", workday.getWeekNumber())
-                .append("activities",workday.getActivitieIds())
+                .append("activities",workday.getActivities())
                 .append("employees", workday.getEmployeeId());
 
         client.getDatabase(DATABASE_NAME).getCollection(WORKDAY_COLLECTION)
@@ -100,11 +100,11 @@ public class MongoWorkdayDAO implements IWorkdayDAO {
         Document query = new Document();
         query.put("workday_id", workday.getId());
         client.getDatabase(DATABASE_NAME).getCollection(WORKDAY_COLLECTION).updateOne(
-                eq("date", workday.getDate()),
-                combine(set("start_time", workday.getStartTime()),
-                        set("end_time", workday.getEndTime()),
+                eq("date", workday.getDate().toString()),
+                combine(set("start_time", workday.getStartTime().toString()),
+                        set("end_time", workday.getEndTime().toString()),
                         set("week_number", workday.getWeekNumber()),
-                        set("activities", workday.getActivitieIds()),
+                        set("activities", workday.getActivities()),
                         set("employees",workday.getEmployeeId())),
                 (updateResult, throwable) -> {
                     completableFuture.complete((int) updateResult.getModifiedCount());
