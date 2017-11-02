@@ -169,7 +169,7 @@ public class TimeSheetsController {
             Stage timesheet = new Stage();
             timesheet.hide();
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/RollenView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/TimesheetView.fxml"));
 
             Parent parent = null;
             try {
