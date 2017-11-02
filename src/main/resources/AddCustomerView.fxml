@@ -6,7 +6,7 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox fx:id="AddVbox" fillWidth="false" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.webedu.hourregistration.controller.AddCustomer">
+<VBox fx:id="AddVbox" fillWidth="false" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.webedu.hourregistration.controller.AddCustomerController">
    <children>
       <HBox alignment="CENTER_LEFT" prefHeight="153.0" prefWidth="840.0" style="-fx-background-color: #FFFFFF;">
          <padding>

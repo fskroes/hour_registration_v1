@@ -6,7 +6,7 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox fx:id="CustomerList" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.webedu.hourregistration.controller.CustomerListController">
+<VBox fx:id="CustomerList" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.webedu.hourregistration.controller.CustomerList">
    <children>
       <JFXListView fx:id="ListView" onMouseClicked="#customerSelect" prefHeight="502.0" prefWidth="347.0" />
    </children>

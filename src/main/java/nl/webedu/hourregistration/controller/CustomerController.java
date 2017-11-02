@@ -6,24 +6,22 @@ import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXToggleButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import nl.webedu.hourregistration.dao.ICustomerDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.model.CustomerModel;
 
 import javax.sound.sampled.Line;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.List;
 
 public class CustomerController {
 
@@ -31,8 +29,6 @@ public class CustomerController {
     private boolean geactiveerd = false;
     private boolean editing = false;
 
-    @FXML
-    private AnchorPane root;
     @FXML
     private VBox   ListVbox, AddVbox, InfoVbox;
     @FXML
@@ -48,11 +44,11 @@ public class CustomerController {
     ProjectInfoController projectInfoController;
     CustomerList customerListController;
     EditProject editProjectController;
-    AddCustomer addCustomerController;
+    AddCustomerController addCustomerController;
 
 
     public void initialize() throws IOException {
-        loader = new FXMLLoader(getClass().getResource("/ProjectInfoView.fxml"));
+        loader = new FXMLLoader(getClass().getResource("/ProjectInfo.fxml"));
         projectInfoView = loader.load();
         InfoVbox.getChildren().add(projectInfoView);
         projectInfoController = loader.getController();
@@ -96,21 +92,8 @@ public class CustomerController {
             ListVbox.getChildren().clear();
             ListVbox.getChildren().add(addCustomerView);
         }
-    }
 
-    public void toPreviousView (ActionEvent actionEvent) {
-        Stage primaryStage = (Stage) root.getScene().getWindow();
-        primaryStage.hide();
-        Parent parent = null;
-        try {
-            parent = FXMLLoader.load(getClass().getResource("/TimesheetsView.fxml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        assert parent != null;
-        Scene scene = new Scene(parent);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+
     }
     @FXML
     public void EditProject (MouseEvent mouseEvent) throws IOException {
