@@ -1,11 +1,8 @@
 package nl.webedu.hourregistration.database;
 
-import com.mongodb.async.client.MongoCollection;
 import nl.webedu.hourregistration.dao.factory.DAOFactory;
 import nl.webedu.hourregistration.dao.factory.MariaDAOFactory;
 import nl.webedu.hourregistration.dao.factory.MongoDAOFactory;
-import nl.webedu.hourregistration.dao.mariadb.MariadbProjectDAO;
-import org.bson.Document;
 
 import java.sql.SQLException;
 
@@ -25,6 +22,10 @@ public class DatabaseManager {
         return instance;
     }
 
+    /**
+     * Creates connection with the given database type
+     * @param type - Database type to connect to, either MongoDB or MariaDB
+     */
     public void connectToDatabase(DatabaseType type) {
         if (type == DatabaseType.MARIADB) {
             database = new MariaDatabaseExtension(
@@ -58,9 +59,5 @@ public class DatabaseManager {
 
     public DAOFactory getDaoFactory() {
         return daoFactory;
-    }
-
-    public MongoCollection<Document> getMongoCollection() {
-        return instance.getMongoCollection();
     }
 }

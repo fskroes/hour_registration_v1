@@ -21,9 +21,11 @@ import javafx.stage.Stage;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.enumeration.Role;
 import nl.webedu.hourregistration.model.EmployeeModel;
+import nl.webedu.hourregistration.model.WorkdayModel;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -90,12 +92,11 @@ public class TimeSheetsController {
 
     private void setupUserInterface(EmployeeModel employee) {
         for (int i = (int) cmFromWeek.getValue(); i <= (int) cmUntilWeek.getValue(); i++) {
-
             long elapsedHours = 0;
-
-            long secondsInMilli = 1000;
-            long minutesInMilli = secondsInMilli * 60;
-            long hoursInMilli = minutesInMilli * 60;
+            for (WorkdayModel workday : activeEmployee.getWorksdaysByWeekNumber(i)) {
+                long dayDifference = ChronoUnit.HOURS.between(workday.getStartTime(), workday.getEndTime());
+                elapsedHours =+ dayDifference;
+            }
 
             Calendar startDate = Calendar.getInstance();
             startDate.set(Calendar.WEEK_OF_YEAR, i);
@@ -110,6 +111,14 @@ public class TimeSheetsController {
 
     }
 
+    /**
+     * Creating a timesheet or week, that opens a timesheet
+     * @param weekId
+     * @param startDate
+     * @param endDate
+     * @param TotalHours
+     * @param OverTime
+     */
     private void timesheetEntry(int weekId, Date startDate, Date endDate, double TotalHours, double OverTime) {
         HBox itemWrapper = new HBox(48);
         itemWrapper.setFillHeight(true);
@@ -192,12 +201,19 @@ public class TimeSheetsController {
 
     }
 
+    /**
+     * Manually called after FXML is loaded, because FXML used empty contructor
+     * @param sessionEmployee
+     */
     public void postConstructor(EmployeeModel sessionEmployee) {
         this.sessionEmployee = sessionEmployee;
         roleProperties();
         setupUserInterface(this.activeEmployee);
     }
 
+    /**
+     * Determine what role the loggedin user has and fill the combobox
+     */
     private void roleProperties() {
         if (!sessionEmployee.getRole().equals(Role.ADMIN)) {
             cmEmployees.setVisible(false);

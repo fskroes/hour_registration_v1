@@ -42,6 +42,11 @@ public class TimesheetController {
         row = new HashMap<>();
     }
 
+    /**
+     * Sets up the 'timedays' by using the activeEmployee
+     * First finding the projects, then creating a week, searching for existing workdays
+     * if so, searching for activities, then placing then in the correct timepickers
+     */
     private void setupUserInterface() {
         for (ProjectModel project : activeEmployee.getProjects()) {
             HBox weekContainer = new HBox();
@@ -128,6 +133,12 @@ public class TimesheetController {
         return new SimpleDateFormat("EEEE").format(getDayDate(day));
     }
 
+    /**
+     * Manually called after FXML is loaded, because FXML used empty contructor
+     * @param sessionEmployee
+     * @param activeEmployee
+     * @param weekId
+     */
     public void postConstructor(EmployeeModel sessionEmployee, EmployeeModel activeEmployee, int weekId) {
         this.sessionEmployee = sessionEmployee;
         this.activeEmployee = activeEmployee;
@@ -136,6 +147,11 @@ public class TimesheetController {
         setupUserInterface();
     }
 
+    /**
+     * Saves the timesheet into the database using the same algorithm as placing then into
+     * the timepickers, only reversed
+     * @param actionEvent
+     */
     public void saveSheet(ActionEvent actionEvent) {
         sprSaving.setVisible(true);
         new Thread(() -> {
