@@ -23,17 +23,17 @@
                <image>
                   <Image url="img/Logo.png" />
                </image></ImageView>
-                <Label fx:id="lblTitle" style="-fx-text-fill: white;" text="Contracten">
+                <Label fx:id="lblTitle" style="-fx-text-fill: white;" text="Contracten overzicht">
                     <font>
                         <Font size="36.0" />
                     </font>
                 </Label>
-                <JFXButton buttonType="RAISED" maxHeight="-Infinity" maxWidth="-Infinity" onAction="#returnToTimesheets" prefHeight="46.0" prefWidth="108.0" ripplerFill="#5752d3" style="-fx-background-color: #180175; -fx-border-color: #322fe2; -fx-border-width: 2;" text="Terug" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="NEVER">
+                <JFXButton buttonType="RAISED" maxHeight="-Infinity" maxWidth="-Infinity" onAction="#returnToTimesheets" ripplerFill="#5752d3" style="-fx-background-color: #180175; -fx-border-color: #322fe2; -fx-border-width: 2;" text="Terug" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="NEVER">
                     <font>
-                        <Font name="Eras Medium ITC" size="18.0" />
+                        <Font size="18.0" />
                     </font>
                     <HBox.margin>
-                        <Insets left="750.0" />
+                        <Insets />
                     </HBox.margin>
                 </JFXButton>
             </children>
@@ -54,7 +54,7 @@
                                     <children>
                                         <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Werknemers">
                                             <font>
-                                                <Font name="Arial" size="33.0" />
+                                                <Font name="System" size="33.0" />
                                             </font>
                                         </Text>
                                     </children>
@@ -81,7 +81,7 @@
                                     <children>
                                         <Text fx:id="customerProperties" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Contract gegevens">
                                             <font>
-                                                <Font name="Arial" size="33.0" />
+                                                <Font size="33.0" />
                                             </font>
                                         </Text>
                                     </children>

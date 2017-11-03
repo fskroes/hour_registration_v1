@@ -135,9 +135,4 @@ public class CustomerController {
         Stage primaryStage = (Stage) root.getScene().getWindow();
         primaryStage.hide();
     }
-
-
-
-
-
 }

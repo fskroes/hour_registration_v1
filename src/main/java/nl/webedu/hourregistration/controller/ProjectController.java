@@ -160,4 +160,13 @@ public class ProjectController {
 
         refreshEmployeeList();
     }
+
+    /**
+     * Gaat terug naar de vorige view.
+     * @param actionEvent het event wat zorgt voor het aanroepen van de methode.
+     */
+    public void returnToTimesheets(ActionEvent actionEvent) {
+        Stage primaryStage = (Stage) pAnchor.getScene().getWindow();
+        primaryStage.hide();
+    }
 }

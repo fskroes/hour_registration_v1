@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXListView?>
@@ -20,9 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<?import com.jfoenix.controls.JFXComboBox?>
-
-<AnchorPane fx:id="pAnchor" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.webedu.hourregistration.controller.ProjectController">
+<AnchorPane fx:id="pAnchor" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.webedu.hourregistration.controller.ProjectController">
 
     <children>
         <HBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="1200.0" spacing="24.0" style="-fx-background-color: radial-gradient(radius 300%, #4059a9, derive(blueviolet, -30%), derive(chartreuse, 30%));" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -35,18 +26,18 @@
                <image>
                   <Image url="img/Logo.png" />
                </image></ImageView>
-                <Label fx:id="lblTitle" style="-fx-text-fill: white;" text="Projecten">
+                <Label fx:id="lblTitle" style="-fx-text-fill: white;" text="Projecten overzicht">
 
                     <font>
                         <Font size="36.0" />
                     </font>
                 </Label>
-                <JFXButton buttonType="RAISED" maxHeight="-Infinity" maxWidth="-Infinity" onAction="#returnToTimesheets" prefHeight="46.0" prefWidth="108.0" ripplerFill="#5752d3" style="-fx-background-color: #180175; -fx-border-color: #322fe2; -fx-border-width: 2;" text="Terug" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="NEVER">
+                <JFXButton buttonType="RAISED" maxHeight="-Infinity" maxWidth="-Infinity" onAction="#returnToTimesheets" ripplerFill="#5752d3" style="-fx-background-color: #180175; -fx-border-color: #322fe2; -fx-border-width: 2;" text="Terug" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="NEVER">
                     <font>
-                        <Font name="Eras Medium ITC" size="18.0" />
+                        <Font size="18.0" />
                     </font>
                     <HBox.margin>
-                        <Insets left="775.0" />
+                        <Insets />
                     </HBox.margin>
                 </JFXButton>
             </children>

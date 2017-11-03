@@ -80,10 +80,10 @@ public class ContractController {
     }
 
     /**
-     * Zorgt ervoor dat de gebruiker terug kan naar de timesheets.
+     * Gaat terug naar de vorige view.
      * @param actionEvent het event wat zorgt voor het aanroepen van de methode.
      */
-    public void toPreviousView (ActionEvent actionEvent) {
+    public void returnToTimesheets(ActionEvent actionEvent) {
         Stage primaryStage = (Stage) root.getScene().getWindow();
         primaryStage.hide();
     }
