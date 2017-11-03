@@ -1,18 +1,15 @@
 package nl.webedu.hourregistration.controller;
 
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXSpinner;
 import com.jfoenix.controls.JFXTimePicker;
 import javafx.event.ActionEvent;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import nl.webedu.hourregistration.database.DatabaseManager;
-import nl.webedu.hourregistration.enumeration.Role;
 import nl.webedu.hourregistration.model.ActivitiesModel;
 import nl.webedu.hourregistration.model.EmployeeModel;
 import nl.webedu.hourregistration.model.ProjectModel;
@@ -96,19 +93,6 @@ public class TimesheetController {
                 days[i][0] = startTime;
                 days[i][1] = endTime;
                 dayContainer.getChildren().addAll(days[i]);
-                if (sessionEmployee.getRole().equals(Role.ADMIN)) {
-                    JFXButton btnApprove = new JFXButton("Goedkeuren");
-                    btnApprove.setStyle("-fx-border-color: #4285F4; -fx-border-width: 1px;");
-                    JFXButton btnDisapprove = new JFXButton("Afkeuren");
-                    btnDisapprove.setStyle("-fx-border-color: #4285F4; -fx-border-width: 1px;");
-                    HBox btnContainer = new HBox();
-                    btnContainer.setFillHeight(true);
-                    btnContainer.setPadding(new Insets(5));
-                    btnContainer.getChildren().add(btnApprove);
-                    btnContainer.getChildren().add(btnDisapprove);
-                    dayContainer.getChildren().add(btnContainer);
-
-                }
                 weekContainer.getChildren().add(dayContainer);
 
             }
