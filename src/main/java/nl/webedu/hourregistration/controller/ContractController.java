@@ -56,7 +56,7 @@ public class ContractController {
      * Zorgt ervoor dat de gegevens van de werknemer worden geladen als erop wordt geklikt.
      * @param mouseEvent het event wat zorgt voor het aanroepen van de methode.
      */
-    public void employeeSelect(MouseEvent mouseEvent) {
+    public void employeeSelect(MouseEvent mouseEvent) throws NullPointerException {
         int index = employeeList.getSelectionModel().getSelectedIndex();
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         max_uren.setText(String.valueOf(contracts.get(index).getMaxHours()));

@@ -23,12 +23,19 @@
                <image>
                   <Image url="img/Logo.png" />
                </image></ImageView>
-                <Label fx:id="lblTitle" style="-fx-text-fill: white;" text="Contracts">
+                <Label fx:id="lblTitle" style="-fx-text-fill: white;" text="Contracten">
                     <font>
                         <Font size="36.0" />
                     </font>
                 </Label>
-            <JFXButton fx:id="btnTerug" mnemonicParsing="false" onAction="#toPreviousView" text="terug" textFill="WHITE" />
+                <JFXButton buttonType="RAISED" maxHeight="-Infinity" maxWidth="-Infinity" onAction="#returnToTimesheets" prefHeight="46.0" prefWidth="108.0" ripplerFill="#5752d3" style="-fx-background-color: #180175; -fx-border-color: #322fe2; -fx-border-width: 2;" text="Terug" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="NEVER">
+                    <font>
+                        <Font name="Eras Medium ITC" size="18.0" />
+                    </font>
+                    <HBox.margin>
+                        <Insets left="750.0" />
+                    </HBox.margin>
+                </JFXButton>
             </children>
         </HBox>
         <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: e8e8e8;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">

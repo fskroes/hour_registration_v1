@@ -56,6 +56,8 @@ public class TimeSheetsController {
     public JFXComboBox cmFromWeek;
     @FXML
     public JFXComboBox cmUntilWeek;
+    @FXML
+    public Label labelNaam;
 
     @FXML
     public void initialize() {
@@ -108,7 +110,7 @@ public class TimeSheetsController {
 
             timesheetEntry(i, startDate.getTime(), endDate.getTime(), elapsedHours, 0);
         }
-
+        labelNaam.setText("Overzicht van: " + activeEmployee.getLastname()+ ", " + activeEmployee.getFirstname());
     }
 
     /**
