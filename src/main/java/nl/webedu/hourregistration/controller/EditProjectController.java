@@ -68,7 +68,7 @@ public class EditProjectController {
      * als het wel leeg is worden de velden die kunnen worden ingevuld leeggemaakt.
      */
     public void setDefaults(){
-        if (customer.getProjectModel().getName().equals("-")){
+        if (customer.getProjectModel().getName() == null){
             ProjectName.setText("");
         }
         else{
