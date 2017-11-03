@@ -8,6 +8,10 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.util.Date;
 
+/**
+ * Model van een contract
+ * met alle getters en setters
+ */
 public class ContractModel extends DatabaseRowMapper<ContractModel> {
 
     private String id;

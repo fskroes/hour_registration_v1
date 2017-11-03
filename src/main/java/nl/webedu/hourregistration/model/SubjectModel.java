@@ -7,6 +7,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
+/**
+ * Model van een subject
+ * met alle getters en setters
+ */
 public class SubjectModel extends DatabaseRowMapper<SubjectModel> {
 
     // TODO: Fill in RowMappers
