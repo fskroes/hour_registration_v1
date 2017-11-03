@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Model van een project
+ * met alle getters en setters
+ */
 public class ProjectModel extends DatabaseRowMapper<ProjectModel> {
 
     private String id;
