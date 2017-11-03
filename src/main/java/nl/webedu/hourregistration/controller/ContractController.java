@@ -74,7 +74,9 @@ public class ContractController {
         employees = eDAO.getAllEmployees();
         for(EmployeeModel employee : employees) {
             list.add(employee.getLastname() + ", " + employee.getFirstname());
-            contracts.add(employee.getContract());
+            if(employee.getContract() != null)
+                contracts.add(employee.getContract());
+            System.out.println("No contract found for " + employee.getLastname());
         }
         employeeList.getItems().addAll(list);
     }
