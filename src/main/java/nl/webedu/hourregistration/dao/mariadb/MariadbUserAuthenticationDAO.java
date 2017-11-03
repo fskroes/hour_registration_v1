@@ -64,7 +64,7 @@ public class MariadbUserAuthenticationDAO implements IUserAuthenticationDAO {
                 + "(email, password, role, firstname, suffix, lastname) VALUES"
                 + "(?,?,?,?,?,?)";
         try {
-            database.insertQuery(insertSQL, username, hashedPassword, 1, firstName, suffix, lastName);
+            database.insertQuery(insertSQL, username, hashedPassword, 3, firstName, suffix, lastName);
             System.out.println(username + " is registered");
         } catch (SQLException e) {
             e.printStackTrace();
