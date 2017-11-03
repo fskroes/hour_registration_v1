@@ -79,7 +79,10 @@ public class ProjectController {
         primaryStage.hide();
     }
 
-    //On select, geef werknemer first en lastnames die horen bij het projectID
+    /**
+     * On select, geef werknemer first en lastnames die horen bij het projectID
+     * @param mouseEvent
+     */
     public void onSelectProject(MouseEvent mouseEvent) {
 
         int index = pListView.getSelectionModel().getSelectedIndex();
@@ -96,7 +99,10 @@ public class ProjectController {
         wListView.getItems().addAll(lijst);
     }
 
-    //On select op de wListView, maak werknemer actief of inactief en verander dit visueel.
+    /**
+     * On select op de wListView, maak werknemer actief of inactief en verander dit visueel.
+     * @param mouseEvent
+     */
     public void selectEmployeeOnList(MouseEvent mouseEvent) {
         int eindex = wListView.getSelectionModel().getSelectedIndex();
 
@@ -106,8 +112,10 @@ public class ProjectController {
         }
     }
 
+    /**
+     * haalt alle employees op die bij een bepaald project horen en zet die in deemployeelijst
+     */
     private void refreshEmployeeList(){
-
         wListView.getItems().clear();
         ProjectModel model = projects.get(pListView.getSelectionModel().getSelectedIndex());
 
@@ -120,7 +128,10 @@ public class ProjectController {
 
     }
 
-    //Actieve employees worden verwijderd van het project.
+    /**
+     * Actieve employees worden verwijderd van het project.
+     * @param actionevent
+     */
     public void deleteEmployeeFromProject (ActionEvent actionevent) {
         int eindex = wListView.getSelectionModel().getSelectedIndex();
         int eindex2 = pListView.getSelectionModel().getSelectedIndex();
@@ -135,7 +146,10 @@ public class ProjectController {
         }
     }
 
-        //Actieve employees worden toegevoegd aan het project.
+    /**
+     * Actieve employees worden toegevoegd aan het project.
+     * @param actionEvent
+     */
     public void addEmployeeToList (ActionEvent actionEvent) {
         EmployeeModel Emodel =  (EmployeeModel) cbEmployee.getSelectionModel().getSelectedItem();
         wListView.getItems().contains(Emodel);
@@ -145,5 +159,14 @@ public class ProjectController {
         DatabaseManager.getInstance().getDaoFactory().getProjectDAO().addJunctionItemWithProject(Emodel, Pmodel);
 
         refreshEmployeeList();
+    }
+
+    /**
+     * Gaat terug naar de vorige view.
+     * @param actionEvent het event wat zorgt voor het aanroepen van de methode.
+     */
+    public void returnToTimesheets(ActionEvent actionEvent) {
+        Stage primaryStage = (Stage) pAnchor.getScene().getWindow();
+        primaryStage.hide();
     }
 }

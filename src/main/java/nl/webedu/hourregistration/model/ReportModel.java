@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Optional;
 
+/**
+ * Model van een report
+ * met alle getters en setters
+ */
 public class ReportModel extends DatabaseRowMapper<ReportModel> {
 
     // TODO: Fill in RowMappers

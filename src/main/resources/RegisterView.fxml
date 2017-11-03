@@ -82,11 +82,11 @@
             </JFXTextField>
               <VBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                   <children>
-                      <Button fx:id="btnRegisterMe" alignment="CENTER" mnemonicParsing="false" onAction="#onRegister" text="Register me" textOverrun="CENTER_ELLIPSIS">
+                      <JFXButton buttonType="RAISED" maxHeight="-Infinity" maxWidth="-Infinity" onAction="#onRegister" ripplerFill="#5752d3" style="-fx-background-color: #180175; -fx-border-color: #322fe2; -fx-border-width: 2;" text="Register" textAlignment="CENTER" textFill="WHITE">
                           <font>
-                              <Font name="System Bold" size="18.0" />
+                              <Font size="18.0" />
                           </font>
-                  </Button>
+                      </JFXButton>
                   </children>
                   <VBox.margin>
                       <Insets />

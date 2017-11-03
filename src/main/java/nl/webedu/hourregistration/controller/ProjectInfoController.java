@@ -22,9 +22,17 @@ public class ProjectInfoController {
 
     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
-    public void initialize() throws IOException {
+    /**
+     * zorgt ervoor dat de view wordt geladen.
+     */
+    public void initialize() {
     }
 
+    /**
+     * dit vult de textvelden van de projectinfo view met de gegevens van het project van de aangeklikte klant.
+     * het kijkt of de project gegevens er al zijn, zo niet dan zet het de textvelden naar -
+     * @param customer
+     */
     public void showProject(CustomerModel customer){
         this.customer = customer;
         ProjectName.setText(customer.getProjectModel().getName());
@@ -44,6 +52,12 @@ public class ProjectInfoController {
         }
 
     }
+
+    /**
+     * dit get de customer voor wanneer het project moet worden aangepast. zo wordt dus altijd het project aangepast
+     * van de customer die op dat moment geselecteerd is.
+     * @return
+     */
     public CustomerModel getCustomer (){
         return customer;
     }

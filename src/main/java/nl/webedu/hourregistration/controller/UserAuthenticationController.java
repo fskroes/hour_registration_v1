@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.geometry.Insets;
 import nl.webedu.hourregistration.dao.IEmployeeDAO;
 import nl.webedu.hourregistration.dao.IUserAuthenticationDAO;
 import nl.webedu.hourregistration.database.DatabaseManager;
@@ -33,13 +34,9 @@ public class UserAuthenticationController {
     @FXML
     public JFXTextField txtLastName;
     @FXML
-    public JFXButton btnGeenAccount;
+    public JFXButton btnSignMeIn;
     @FXML
-    public JFXButton btnEenAccount;
-    @FXML
-    public Button btnSignMeIn;
-    @FXML
-    public Button btnRegisterMe;
+    public JFXButton btnRegisterMe;
 
     private IUserAuthenticationDAO mongoUserAuthenticationDAO;
     private IEmployeeDAO mongoEmployeeDAO;

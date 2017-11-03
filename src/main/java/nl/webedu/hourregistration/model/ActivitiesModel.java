@@ -8,6 +8,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalTime;
 
+/**
+ * Model van een activitie
+ * met alle getters en setters
+ */
 public class ActivitiesModel extends DatabaseRowMapper<ActivitiesModel> {
 
     private String id;

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXListView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
@@ -12,23 +13,33 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<?import com.jfoenix.controls.JFXComboBox?>
 <AnchorPane fx:id="pAnchor" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.webedu.hourregistration.controller.ProjectController">
+
     <children>
-        <HBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="1200.0" spacing="24.0" style="-fx-background-color: #4285F4;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <HBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="1200.0" spacing="24.0" style="-fx-background-color: radial-gradient(radius 300%, #4059a9, derive(blueviolet, -30%), derive(chartreuse, 30%));" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <padding>
                 <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
             </padding>
             <children>
 
-            <ImageView fx:id="imgTitle" fitHeight="50.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="imgTitle" fitHeight="50.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="img/Logo.png" />
+               </image></ImageView>
                 <Label fx:id="lblTitle" style="-fx-text-fill: white;" text="Projecten overzicht">
 
                     <font>
                         <Font size="36.0" />
                     </font>
                 </Label>
-            <JFXButton fx:id="btnTerug" mnemonicParsing="false" onAction="#toTimesheetsView" text="terug" textFill="WHITE" />
+                <JFXButton buttonType="RAISED" maxHeight="-Infinity" maxWidth="-Infinity" onAction="#returnToTimesheets" ripplerFill="#5752d3" style="-fx-background-color: #180175; -fx-border-color: #322fe2; -fx-border-width: 2;" text="Terug" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="NEVER">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                    <HBox.margin>
+                        <Insets />
+                    </HBox.margin>
+                </JFXButton>
             </children>
         </HBox>
         <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: e8e8e8;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
@@ -37,7 +48,7 @@
                     <children>
                         <VBox maxWidth="1.7976931348623157E308" prefHeight="604.0" style="-fx-border-width: 1px; -fx-border-color: #4285F4;">
                             <children>
-                                <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="840.0" spacing="24.0" style="-fx-background-color: #4285F4;">
+                                <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="840.0" spacing="24.0" style="-fx-background-color: radial-gradient(radius 300%, #4059a9, derive(blueviolet, -30%), derive(chartreuse, 30%));">
                                     <opaqueInsets>
                                         <Insets />
                                     </opaqueInsets>
@@ -64,7 +75,7 @@
                     <children>
                         <VBox alignment="TOP_RIGHT" maxWidth="1.7976931348623157E308" prefHeight="662.0" prefWidth="413.0" style="-fx-border-width: 1px; -fx-border-color: #4285F4;">
                             <children>
-                                <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="840.0" spacing="24.0" style="-fx-background-color: #4285F4;">
+                                <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="840.0" spacing="24.0" style="-fx-background-color: radial-gradient(radius 300%, #4059a9, derive(blueviolet, -30%), derive(chartreuse, 30%));">
                                     <opaqueInsets>
                                         <Insets />
                                     </opaqueInsets>
@@ -77,16 +88,12 @@
                                                 <Font size="33.0" />
                                             </font>
                                         </Text>
-                              <JFXComboBox fx:id="cbEmployee" prefHeight="27.0" prefWidth="169.0" />
+                              <JFXComboBox fx:id="cbEmployee" focusColor="WHITE" prefHeight="27.0" prefWidth="169.0" unFocusColor="WHITE" />
                                         <JFXButton onAction="#addEmployeeToList" text="Add" textFill="WHITE" />
                                         <JFXButton onAction="#deleteEmployeeFromProject" text="Delete" textFill="#fcfcfc" />
                                     </children>
                                 </HBox>
-                                <VBox prefHeight="502.0" prefWidth="657.0" style="-fx-background-color: #FFFFFF;">
-                                    <children>
-                                        <JFXListView fx:id="wListView" onMouseClicked="#selectEmployeeOnList" prefHeight="503.0" prefWidth="633.0" />
-                                    </children>
-                                </VBox>
+                                  <JFXListView fx:id="wListView" onMouseClicked="#selectEmployeeOnList" prefHeight="600.0" prefWidth="633.0" />
                             </children>
                         </VBox>
                     </children>

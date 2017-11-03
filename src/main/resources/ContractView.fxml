@@ -14,7 +14,7 @@
 
 <AnchorPane fx:id="root" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.webedu.hourregistration.controller.ContractController">
     <children>
-        <HBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="1200.0" spacing="24.0" style="-fx-background-color: #4285F4;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <HBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="1200.0" spacing="24.0" style="-fx-background-color: radial-gradient(radius 300%, #4059a9, derive(blueviolet, -30%), derive(chartreuse, 30%));" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <padding>
                 <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
             </padding>
@@ -23,12 +23,19 @@
                <image>
                   <Image url="img/Logo.png" />
                </image></ImageView>
-                <Label fx:id="lblTitle" style="-fx-text-fill: white;" text="Contracts">
+                <Label fx:id="lblTitle" style="-fx-text-fill: white;" text="Contracten overzicht">
                     <font>
                         <Font size="36.0" />
                     </font>
                 </Label>
-            <JFXButton fx:id="btnTerug" mnemonicParsing="false" onAction="#toPreviousView" text="terug" textFill="WHITE" />
+                <JFXButton buttonType="RAISED" maxHeight="-Infinity" maxWidth="-Infinity" onAction="#returnToTimesheets" ripplerFill="#5752d3" style="-fx-background-color: #180175; -fx-border-color: #322fe2; -fx-border-width: 2;" text="Terug" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="NEVER">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                    <HBox.margin>
+                        <Insets />
+                    </HBox.margin>
+                </JFXButton>
             </children>
         </HBox>
         <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: e8e8e8;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
@@ -37,7 +44,7 @@
                     <children>
                         <VBox maxWidth="1.7976931348623157E308" prefHeight="604.0" style="-fx-border-width: 1px; -fx-border-color: #4285F4;">
                             <children>
-                                <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="840.0" spacing="24.0" style="-fx-background-color: #4285F4;">
+                                <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="840.0" spacing="24.0" style="-fx-background-color: radial-gradient(radius 300%, #4059a9, derive(blueviolet, -30%), derive(chartreuse, 30%));">
                                     <opaqueInsets>
                                         <Insets />
                                     </opaqueInsets>
@@ -47,7 +54,7 @@
                                     <children>
                                         <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Werknemers">
                                             <font>
-                                                <Font name="Bell MT" size="33.0" />
+                                                <Font name="System" size="33.0" />
                                             </font>
                                         </Text>
                                     </children>
@@ -64,7 +71,7 @@
                     <children>
                         <VBox alignment="TOP_RIGHT" maxWidth="1.7976931348623157E308" prefHeight="662.0" prefWidth="413.0" style="-fx-border-width: 1px; -fx-border-color: #4285F4;">
                             <children>
-                                <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="840.0" spacing="24.0" style="-fx-background-color: #4285F4;">
+                                <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="840.0" spacing="24.0" style="-fx-background-color: radial-gradient(radius 300%, #4059a9, derive(blueviolet, -30%), derive(chartreuse, 30%));">
                                     <opaqueInsets>
                                         <Insets />
                                     </opaqueInsets>
@@ -74,7 +81,7 @@
                                     <children>
                                         <Text fx:id="customerProperties" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Contract gegevens">
                                             <font>
-                                                <Font name="Bell MT" size="33.0" />
+                                                <Font size="33.0" />
                                             </font>
                                         </Text>
                                     </children>
@@ -91,7 +98,7 @@
                                                         <Insets left="30.0" />
                                                     </HBox.margin>
                                                 </Text>
-                                                <Text fx:id="max_uren" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
+                                                <Text fx:id="max_uren" strokeType="OUTSIDE" strokeWidth="0.0" text="geen data beschikbaar">
                                                     <font>
                                                         <Font size="24.0" />
                                                     </font>
@@ -111,7 +118,7 @@
                                                         <Insets left="30.0" />
                                                     </HBox.margin>
                                                 </Text>
-                                                <Text fx:id="min_uren" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
+                                                <Text fx:id="min_uren" strokeType="OUTSIDE" strokeWidth="0.0" text="geen data beschikbaar">
                                                     <font>
                                                         <Font size="24.0" />
                                                     </font>
@@ -131,7 +138,7 @@
                                                         <Insets left="30.0" />
                                                     </HBox.margin>
                                                 </Text>
-                                                <Text fx:id="start_datum" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
+                                                <Text fx:id="start_datum" strokeType="OUTSIDE" strokeWidth="0.0" text="geen data beschikbaar">
                                                     <font>
                                                         <Font size="24.0" />
                                                     </font>
@@ -151,7 +158,7 @@
                                                         <Insets left="30.0" />
                                                     </HBox.margin>
                                                 </Text>
-                                                <Text fx:id="eind_datum" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
+                                                <Text fx:id="eind_datum" strokeType="OUTSIDE" strokeWidth="0.0" text="geen data beschikbaar">
                                                     <font>
                                                         <Font size="24.0" />
                                                     </font>

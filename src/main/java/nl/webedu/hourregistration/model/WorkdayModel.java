@@ -11,6 +11,10 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Model van een workday
+ * met alle getters en setters
+ */
 public class WorkdayModel extends DatabaseRowMapper<WorkdayModel> {
 
     private String id;
@@ -33,24 +37,6 @@ public class WorkdayModel extends DatabaseRowMapper<WorkdayModel> {
         this.dayName = workday;
         this.activities = new ArrayList<>();
     }
-
-//    public WorkdayModel(String id, Date date, Date startTime, Date endTime, int weekNumber, List<String> activities, List<String> employee_ids) {
-//        this.id = id;
-//        this.date = date;
-//        this.startTime = startTime;
-//        this.endTime = endTime;
-//        this.weekNumber = weekNumber;
-//        this.activities = activities;
-//        this.employee_ids = employee_ids;
-//    }
-//    public WorkdayModel(Date date, Date startTime, Date endTime, int weekNumber, List<String> activities, List<String> employee_ids) {
-//        this.date = date;
-//        this.startTime = startTime;
-//        this.endTime = endTime;
-//        this.weekNumber = weekNumber;
-//        this.activities = activities;
-//        this.employee_ids = employee_ids;
-//    }
 
     public String getId() {
         return id;

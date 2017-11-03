@@ -10,6 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Model van een employee
+ * met alle getters en setters
+ */
 public class EmployeeModel extends DatabaseRowMapper<EmployeeModel> {
 
     private String id;

@@ -6,6 +6,10 @@ import org.bson.Document;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Model van een customer
+ * met alle getters en setters
+ */
 public class CustomerModel extends DatabaseRowMapper<CustomerModel> {
 
     private String _id;
