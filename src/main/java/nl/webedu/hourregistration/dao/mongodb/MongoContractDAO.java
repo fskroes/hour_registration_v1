@@ -10,7 +10,6 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -31,8 +30,8 @@ public class MongoContractDAO implements IContractDAO {
     }
 
     @Override
-    public boolean insertContract(ContractModel contract) {
-        CompletableFuture<Boolean> queryTimer = new CompletableFuture<>();
+    public int insertContract(ContractModel contract) {
+        CompletableFuture<Integer> queryTimer = new CompletableFuture<>();
         Document doc = new Document("max_hours", contract.getMaxHours())
                 .append("min_hours", contract.getMinHours())
                 .append("start_time", contract.getStartTime())
@@ -41,7 +40,7 @@ public class MongoContractDAO implements IContractDAO {
                 doc,
                 (aVoid, throwable) -> {
                     System.out.println("[DEBUG] {DATABASE} -> {MONGO} Inserted document " + doc.get("_id"));
-                    queryTimer.complete(true);
+                    queryTimer.complete(1);
 
                 }
         );
@@ -50,7 +49,7 @@ public class MongoContractDAO implements IContractDAO {
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
-        return false;
+        return 0;
     }
 
     @Override

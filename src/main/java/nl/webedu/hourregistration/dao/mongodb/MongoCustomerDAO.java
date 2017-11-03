@@ -11,7 +11,6 @@ import org.bson.Document;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -44,17 +43,17 @@ public class MongoCustomerDAO implements ICustomerDAO {
 
 
     @Override
-    public String insertCustomer(CustomerModel customer) {
-        CompletableFuture<String> completableFuture = new CompletableFuture<>();
+    public int insertCustomer(CustomerModel customer) {
+        CompletableFuture<Integer> completableFuture = new CompletableFuture<>();
         Document query = new Document("business_name", customer.getBusinessName());
 
         client.getDatabase(DATABASE_NAME).getCollection(CUSTOMER_COLLECTION)
-                .insertOne(query, (result, t) -> completableFuture.complete("1"));
+                .insertOne(query, (result, t) -> completableFuture.complete(1));
         try {
             return completableFuture.get();
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
-            return "0";
+            return 0;
         }
     }
 

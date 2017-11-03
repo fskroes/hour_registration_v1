@@ -25,6 +25,7 @@ import nl.webedu.hourregistration.model.WorkdayModel;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -64,7 +65,7 @@ public class TimeSheetsController {
             cmFromWeek.getItems().add(i);
             cmUntilWeek.getItems().add(i);
         }
-        cmFromWeek.getSelectionModel().selectFirst();
+        cmFromWeek.getSelectionModel().select(weeknr - 10);
         cmUntilWeek.getSelectionModel().select(weeknr);
 
         manageEmployeesButton.setOnAction(event -> {
@@ -91,12 +92,11 @@ public class TimeSheetsController {
 
     private void setupUserInterface(EmployeeModel employee) {
         for (int i = (int) cmFromWeek.getValue(); i <= (int) cmUntilWeek.getValue(); i++) {
-
             long elapsedHours = 0;
-
-            long secondsInMilli = 1000;
-            long minutesInMilli = secondsInMilli * 60;
-            long hoursInMilli = minutesInMilli * 60;
+            for (WorkdayModel workday : activeEmployee.getWorksdaysByWeekNumber(i)) {
+                long dayDifference = ChronoUnit.HOURS.between(workday.getStartTime(), workday.getEndTime());
+                elapsedHours =+ dayDifference;
+            }
 
             Calendar startDate = Calendar.getInstance();
             startDate.set(Calendar.WEEK_OF_YEAR, i);
@@ -106,16 +106,19 @@ public class TimeSheetsController {
             endDate.set(Calendar.WEEK_OF_YEAR, i);
             endDate.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
 
-            List<WorkdayModel> workdays = employee.getWorksdaysByWeekNumber(i);
-            for (WorkdayModel workday : workdays) {
-                Long different =+ workday.getStartTime().getTime() - workday.getEndTime().getTime();
-                elapsedHours = different / hoursInMilli;
-            }
             timesheetEntry(i, startDate.getTime(), endDate.getTime(), elapsedHours, 0);
         }
 
     }
 
+    /**
+     * Creating a timesheet or week, that opens a timesheet
+     * @param weekId
+     * @param startDate
+     * @param endDate
+     * @param TotalHours
+     * @param OverTime
+     */
     private void timesheetEntry(int weekId, Date startDate, Date endDate, double TotalHours, double OverTime) {
         HBox itemWrapper = new HBox(48);
         itemWrapper.setFillHeight(true);
@@ -127,7 +130,6 @@ public class TimeSheetsController {
         dateWrapper.setPadding(new Insets(12));
         dateWrapper.setSpacing(5D);
         dateWrapper.setAlignment(Pos.CENTER);
-//        dateWrapper.setStyle("-fx-border-color: crimson; -fx-border-width: 1px;");
 
         Label lblDateToDate = new Label(sdf.format(startDate) + " - " + sdf.format(endDate));
         lblDateToDate.setFont(Font.font("System", 16));
@@ -140,7 +142,6 @@ public class TimeSheetsController {
         timeWorked.setPadding(new Insets(12));
         timeWorked.setSpacing(5D);
         timeWorked.setAlignment(Pos.CENTER);
-//        timeWorked.setStyle("-fx-border-color: deepskyblue; -fx-border-width: 1px;");
 
         Label lblTotalTime = new Label("Total time");
         lblTotalTime.setFont(Font.font("System", 16));
@@ -153,7 +154,6 @@ public class TimeSheetsController {
         overtimeWorked.setPadding(new Insets(12));
         overtimeWorked.setSpacing(5D);
         overtimeWorked.setAlignment(Pos.CENTER);
-//        overtimeWorked.setStyle("-fx-border-color: lawngreen; -fx-border-width: 1px;");
 
         Label lblOvertime = new Label("Overtime");
         lblOvertime.setFont(Font.font("System", 16));
@@ -180,9 +180,7 @@ public class TimeSheetsController {
             assert parent != null;
 
             TimesheetController controller = loader.getController();
-            controller.postConstructor(sessionEmployee, weekId);
-
-            //MainController controller = loader.getController();
+            controller.postConstructor(sessionEmployee, activeEmployee, weekId);
 
             Scene scene = new Scene(parent, 1200, 800);
             timesheet.setScene(scene);
@@ -203,13 +201,19 @@ public class TimeSheetsController {
 
     }
 
+    /**
+     * Manually called after FXML is loaded, because FXML used empty contructor
+     * @param sessionEmployee
+     */
     public void postConstructor(EmployeeModel sessionEmployee) {
         this.sessionEmployee = sessionEmployee;
         roleProperties();
-        this.activeEmployee = this.sessionEmployee;
         setupUserInterface(this.activeEmployee);
     }
 
+    /**
+     * Determine what role the loggedin user has and fill the combobox
+     */
     private void roleProperties() {
         if (!sessionEmployee.getRole().equals(Role.ADMIN)) {
             cmEmployees.setVisible(false);
@@ -218,6 +222,7 @@ public class TimeSheetsController {
             for (EmployeeModel employeeModel : employeeModels) {
                 if (employeeModel.getId().equals(sessionEmployee.getId())) {
                     sessionEmployee = employeeModel;
+                    activeEmployee = employeeModel;
                 }
             }
             ObservableList<EmployeeModel> employeeObLst = FXCollections.observableArrayList(employeeModels);
@@ -282,6 +287,8 @@ public class TimeSheetsController {
     }
 
     public void onItemChange(ActionEvent actionEvent) {
-
+        activeEmployee = (EmployeeModel) cmEmployees.getSelectionModel().getSelectedItem();
+        lvTimeSheets.getItems().clear();
+        setupUserInterface(activeEmployee);
     }
 }

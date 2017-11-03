@@ -94,7 +94,7 @@
                                     <children>
                                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="230.0">
                                             <children>
-                                                <Text fx:id="customerProperties" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Klant gegevens" wrappingWidth="212.13671875">
+                                                <Text fx:id="customerProperties" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Project gegevens" wrappingWidth="239.13671875" HBox.hgrow="NEVER">
                                                     <font>
                                                         <Font name="Bell MT" size="33.0" />
                                                     </font>

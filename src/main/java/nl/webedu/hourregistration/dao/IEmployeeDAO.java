@@ -1,6 +1,5 @@
 package nl.webedu.hourregistration.dao;
 
-import nl.webedu.hourregistration.model.ContractModel;
 import nl.webedu.hourregistration.model.EmployeeModel;
 import nl.webedu.hourregistration.model.ProjectModel;
 
@@ -10,9 +9,9 @@ public interface IEmployeeDAO {
     /**
      * Insert an employee in the database
      * @param employee
-     * @return boolean - done or faulted
+     * @return int - generated key in database
      */
-    public boolean insertEmployee(EmployeeModel employee);
+    public int insertEmployee(EmployeeModel employee);
 
     /**
      * Delete a specific employee by giving the employee id
@@ -47,11 +46,4 @@ public interface IEmployeeDAO {
      * @return List<EmployeeModel>
      */
     public List<EmployeeModel> selectEmployeesByProject(ProjectModel project);
-
-    /**
-     * Find a contract for giving a employee
-     * @param employee
-     * @return ContractModel
-     */
-    public ContractModel findContractByEmployee(EmployeeModel employee);
 }

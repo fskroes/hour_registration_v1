@@ -12,6 +12,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.model.EmployeeModel;
@@ -22,12 +24,14 @@ import java.util.List;
 public class RollenController {
 
     public JFXListView employeeListView;
-    public JFXTextField employeeTextfield;
+    public Text employeeTextfield;
     public JFXCheckBox employeeCheckboxADMIN;
     public JFXCheckBox employeeCheckboxEMPLOYEE;
     public JFXCheckBox employeeCheckboxADMINISTRATION;
-    public SplitPane root;
+    public AnchorPane root;
     private List<EmployeeModel> allEmployees;
+
+    private int index;
 
     /**
      * Wordt aangeroepen wanneer de view wordt opgestart, de DAO's worden geïnitialiseerd.
@@ -59,7 +63,7 @@ public class RollenController {
         employeeCheckboxADMINISTRATION.setSelected(false);
         employeeCheckboxADMINISTRATION.setSelected(false);
 
-        int index = employeeListView.getSelectionModel().getSelectedIndex();
+        index = employeeListView.getSelectionModel().getSelectedIndex();
         EmployeeModel model = allEmployees.get(index);
 
         employeeTextfield.setText(model.getLastname() + ", " + model.getFirstname());
@@ -87,7 +91,7 @@ public class RollenController {
      * @param actionEvent het event wat zorgt voor het aanroepen van de methode.
      */
     public void setAdminProperties(ActionEvent actionEvent) {
-        int index = employeeListView.getSelectionModel().getSelectedIndex();
+        index = employeeListView.getSelectionModel().getSelectedIndex();
         EmployeeModel model = allEmployees.get(index);
         model.setRole(1);
 
@@ -99,7 +103,7 @@ public class RollenController {
      * @param actionEvent het event wat zorgt voor het aanroepen van de methode.
      */
     public void setAdministationProperties(ActionEvent actionEvent) {
-        int index = employeeListView.getSelectionModel().getSelectedIndex();
+        index = employeeListView.getSelectionModel().getSelectedIndex();
         EmployeeModel model = allEmployees.get(index);
         model.setRole(2);
 
@@ -111,7 +115,7 @@ public class RollenController {
      * @param actionEvent het event wat zorgt voor het aanroepen van de methode.
      */
     public void setEmployeeProperties(ActionEvent actionEvent) {
-        int index = employeeListView.getSelectionModel().getSelectedIndex();
+        index = employeeListView.getSelectionModel().getSelectedIndex();
         EmployeeModel model = allEmployees.get(index);
         model.setRole(3);
 

@@ -7,8 +7,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.util.Date;
-import java.util.Optional;
 
+/**
+ * Model van een contract
+ * met alle getters en setters
+ */
 public class ContractModel extends DatabaseRowMapper<ContractModel> {
 
     private String id;
@@ -75,12 +78,11 @@ public class ContractModel extends DatabaseRowMapper<ContractModel> {
     }
 
     @Override
-    public ContractModel convertMongo(Document set) {
-        this.id = set.getString("_id");
-        this.minHours = set.getInteger("min_hours");
-        this.maxHours = set.getInteger("max_hours");
-        this.startTime = set.getDate("start_time");
-        this.endTime =set.getDate("end_time");
+    public ContractModel convertMongo(Document document) {
+        this.minHours = document.getInteger("min_hours");
+        this.maxHours = document.getInteger("max_hours");
+        this.startTime = document.getDate("start_time");
+        this.endTime = document.getDate("end_time");
         return this;
     }
 }

@@ -8,6 +8,10 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.Optional;
 
+/**
+ * Model van een log
+ * met alle getters en setters
+ */
 public class LogModel extends DatabaseRowMapper<LogModel> {
 
     private String id;
