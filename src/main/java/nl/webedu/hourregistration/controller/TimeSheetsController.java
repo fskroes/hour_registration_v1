@@ -271,6 +271,8 @@ public class TimeSheetsController {
     }
 
     public void onItemChange(ActionEvent actionEvent) {
-
+        activeEmployee = (EmployeeModel) cmEmployees.getSelectionModel().getSelectedItem();
+        lvTimeSheets.getItems().clear();
+        setupUserInterface(activeEmployee);
     }
 }
