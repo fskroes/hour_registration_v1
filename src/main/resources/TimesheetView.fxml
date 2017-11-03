@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <AnchorPane fx:id="root" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.webedu.hourregistration.controller.TimesheetController">
    <children>
-      <HBox fx:id="header" alignment="CENTER_LEFT" spacing="24.0" style="-fx-background-color: #4285F4;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <HBox fx:id="header" alignment="CENTER_LEFT" spacing="24.0" style="-fx-background-color: radial-gradient(radius 300%, #4059a9, derive(blueviolet, -30%), derive(chartreuse, 30%));" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
             <ImageView fx:id="imgTitle" fitHeight="50.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
                <image>

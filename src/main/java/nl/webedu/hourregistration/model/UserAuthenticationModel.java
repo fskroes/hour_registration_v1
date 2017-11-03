@@ -10,6 +10,10 @@ import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Model van een user authentication
+ * met alle getters en setters
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserAuthenticationModel extends DatabaseRowMapper<UserAuthenticationModel> implements Serializable {
 
