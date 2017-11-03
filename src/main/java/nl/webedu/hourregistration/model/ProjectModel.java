@@ -95,11 +95,11 @@ public class ProjectModel extends DatabaseRowMapper<ProjectModel> {
     }
 
     @Override
-    public ProjectModel convertMongo(Document set) {
-        this.id = set.getString("_id");
-        this.name = set.getString("project_name");
-        this.startDate = set.getDate("start_date");
-        this.endDate = set.getDate("end_date");
+    public ProjectModel convertMongo(Document document) {
+        this.id = document.getObjectId("_id").toString();
+        this.name = document.getString("project_name");
+        this.startDate = document.getDate("start_date");
+        this.endDate = document.getDate("end_date");
         return this;
     }
 }

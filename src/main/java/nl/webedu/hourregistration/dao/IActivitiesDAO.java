@@ -12,7 +12,7 @@ public interface IActivitiesDAO {
      * @param activitie
      * @return
      */
-    public boolean insertActivitie(ActivitiesModel activitie);
+    public int insertActivitie(ActivitiesModel activitie);
 
     /**
      * Method for finding an activity in the database
@@ -24,14 +24,14 @@ public interface IActivitiesDAO {
     /**
      * Method for searching and deleting an activity
      * @param activitie
-     * @return int
+     * @return int - amount of deleted rows
      */
     public int deleteActivitie(ActivitiesModel activitie);
 
     /**
      * Method for updating an existing activity
      * @param activitie
-     * @return int
+     * @return int - amount of edited rows
      */
     public int updateActivitie(ActivitiesModel activitie);
 

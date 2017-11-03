@@ -12,7 +12,7 @@ public interface IProjectDAO {
      * @param project
      * @return boolean - done or faulted
      */
-    public boolean insertProject(ProjectModel project);
+    public int insertProject(ProjectModel project);
 
     /**
      * delete a existing project

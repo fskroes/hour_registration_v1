@@ -27,18 +27,19 @@ public class MariadbProjectDAO implements IProjectDAO {
     }
 
     @Override
-    public boolean insertProject(ProjectModel project) {
+    public int insertProject(ProjectModel project) {
         String querySQL = "INSERT INTO project"
                 + "(project_name, start_date, end_date, customerID) VALUES"
                 + "(?,?,?,?)";
+        int id = 0;
+
         try {
-            database.insertQuery(querySQL, project.getName(), project.getStartDate(), project.getEndDate(),
+            id = database.insertQuery(querySQL, project.getName(), project.getStartDate(), project.getEndDate(),
                      project.getCustomer().getId());
-            return true;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
+        return id;
     }
 
     @Override

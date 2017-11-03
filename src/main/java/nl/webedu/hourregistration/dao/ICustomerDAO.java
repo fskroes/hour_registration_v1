@@ -11,7 +11,7 @@ public interface ICustomerDAO {
      * @param customer
      * @return
      */
-    public String insertCustomer(CustomerModel customer);
+    public int insertCustomer(CustomerModel customer);
 
     /**
      *

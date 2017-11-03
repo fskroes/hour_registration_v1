@@ -36,19 +36,19 @@ public class MongoActivitiesDAO implements IActivitiesDAO {
     }
 
     @Override
-    public boolean insertActivitie(ActivitiesModel activitie) {
-        CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();
-        Document query = new Document("start_time",activitie.getStartTime())
-                .append("end_time",activitie.getEndTime())
-                .append("workday_id", activitie.getWorkday());
+    public int insertActivitie(ActivitiesModel activitie) {
+        CompletableFuture<Integer> completableFuture = new CompletableFuture<>();
+        Document query = new Document("start_time",activitie.getStartTime().toString())
+                .append("end_time",activitie.getEndTime().toString())
+                .append("workday_id", activitie.getWorkday().getId());
 
         client.getDatabase(DATABASE_NAME).getCollection(ACTIVITY_COLLECTION)
-                .insertOne(query, (result, t) -> completableFuture.complete(true));
+                .insertOne(query, (result, t) -> completableFuture.complete(1));
         try {
             return completableFuture.get();
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
-            return false;
+            return 0;
         }
     }
 
@@ -94,10 +94,10 @@ public class MongoActivitiesDAO implements IActivitiesDAO {
         Document query = new Document();
         query.put("workday_id", activity.getId());
         client.getDatabase(DATABASE_NAME).getCollection(ACTIVITY_COLLECTION).updateOne(
-                eq("workday_id", activity.getWorkday()),
-                combine(set("start_time", activity.getStartTime()),
-                        set("end_time", activity.getEndTime()),
-                        set("workday_id", activity.getWorkday())),
+                eq("workday_id", activity.getWorkday().getId()),
+                combine(set("start_time", activity.getStartTime().toString()),
+                        set("end_time", activity.getEndTime().toString()),
+                        set("workday_id", activity.getWorkday().getId())),
                 (updateResult, throwable) -> {
                     completableFuture.complete((int) updateResult.getModifiedCount());
                 });
