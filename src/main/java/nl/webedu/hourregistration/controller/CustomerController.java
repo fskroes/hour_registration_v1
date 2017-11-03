@@ -37,7 +37,11 @@ public class CustomerController {
     EditProjectController editProjectController;
     AddCustomerController addCustomerController;
 
-
+    /**
+     * Wordt aangeroepen wanneer de view wordt opgestart, de views die moeten worden getoond na het drukken van een knop
+     * worden alvast geladen en opgeslagen, de controllers van de views worden ook opgeslagen zodat deze kunnen worden
+     * meegegeven aan elkaar.
+     */
     public void initialize() throws IOException {
         loader = new FXMLLoader(getClass().getResource("/ProjectInfoView.fxml"));
         projectInfoView = loader.load();
@@ -62,6 +66,13 @@ public class CustomerController {
 
     }
 
+    /**
+     * Als de knop + wordt ingedrukt moet de view worden geladen waarin een nieuwe klant kan worden gemaakt
+     * als dezelfde knop dan nog eens wordt gedrukt wordt de tekst uit het tekstveld gebruikt om een klant object
+     * aan te maken en te inserten in de database
+     * @param mouseEvent
+     * @throws IOException
+     */
     @FXML
     public void AddCustomer(MouseEvent mouseEvent) throws IOException {
 
@@ -86,6 +97,14 @@ public class CustomerController {
 
 
     }
+
+    /**
+     * Als de knop Pas aan wordt ingedrukt wordt de view voor editen project geladen, hierin kunnen data over het project
+     * van de desbetreffende klant worden ingevuld. Wanneer alle velden zijn ingevuld en er nog eens op de knop wordt gedrukt,
+     * komt de eerste view terug en wordt het project opgeslagen in een model en in de database.
+     * @param mouseEvent
+     * @throws IOException
+     */
     @FXML
     public void EditProject (MouseEvent mouseEvent) throws IOException {
         if (editing){
@@ -105,6 +124,12 @@ public class CustomerController {
             editing = true;
         }
     }
+
+    /**
+     * Als op de knop terug wordt gedrukt sluit de huidige view.
+     * @param mouseEvent
+     * @throws IOException
+     */
     @FXML
     public void BackToHome(MouseEvent mouseEvent) throws IOException {
         Stage primaryStage = (Stage) root.getScene().getWindow();
