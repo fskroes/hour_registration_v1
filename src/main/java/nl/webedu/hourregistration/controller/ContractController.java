@@ -19,6 +19,7 @@ import nl.webedu.hourregistration.model.ContractModel;
 import nl.webedu.hourregistration.model.EmployeeModel;
 
 import java.io.IOException;
+import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -77,6 +78,15 @@ public class ContractController {
             if(employee.getContract() != null)
                 contracts.add(employee.getContract());
             System.out.println("No contract found for " + employee.getLastname());
+            System.out.println("Generating standard one for " + employee.getLastname());
+
+            ContractModel cm = new ContractModel();
+            cm.setStartTime(new Time(8));
+            cm.setEndTime(new Time(5));
+            cm.setMinHours(40);
+            cm.setMaxHours(40);
+            employee.setContract(cm);
+            contracts.add(employee.getContract());
         }
         employeeList.getItems().addAll(list);
     }
