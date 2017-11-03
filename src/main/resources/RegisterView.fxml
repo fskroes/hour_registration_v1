@@ -1,18 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -20,12 +12,12 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="696.0" prefWidth="600.0" style="-fx-background-color: radial-gradient(radius 180%, #4059a9, derive(blueviolet, -30%), derive(chartreuse, 30%));" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.webedu.hourregistration.controller.UserAuthenticationController">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: radial-gradient(radius 180%, #4059a9, derive(blueviolet, -30%), derive(chartreuse, 30%));" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.webedu.hourregistration.controller.UserAuthenticationController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
    <children>
-       <VBox alignment="TOP_CENTER" layoutX="250.0" layoutY="100.0" style="-fx-border-radius: 4%; -fx-padding: 10; -fx-background-color: white; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+       <VBox alignment="TOP_CENTER" layoutX="250.0" layoutY="100.0" style="-fx-border-radius: 4%; -fx-padding: 10 100 10 100; -fx-background-color: white; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
           <children>
               <Label alignment="CENTER" text="Register to">
                   <font>
@@ -77,21 +69,40 @@
                   <Font name="System Bold Italic" size="22.0" />
                </font>
                <VBox.margin>
-                  <Insets bottom="15.0" />
+                  <Insets bottom="35.0" />
                </VBox.margin>
             </JFXTextField>
-              <VBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
-                  <children>
-                      <JFXButton buttonType="RAISED" maxHeight="-Infinity" maxWidth="-Infinity" onAction="#onRegister" ripplerFill="#5752d3" style="-fx-background-color: #180175; -fx-border-color: #322fe2; -fx-border-width: 2;" text="Register" textAlignment="CENTER" textFill="WHITE">
-                          <font>
-                              <Font size="18.0" />
-                          </font>
-                      </JFXButton>
-                  </children>
+              <JFXTextField fx:id="txtMaxUren" labelFloat="true" maxWidth="-Infinity" prefWidth="300.0" promptText="Maximale werkuren per week" unFocusColor="#4059a9">
+                  <font>
+                      <Font name="System Bold Italic" size="22.0" />
+                  </font>
                   <VBox.margin>
-                      <Insets />
+                      <Insets bottom="35.0" />
                   </VBox.margin>
-              </VBox>
+              </JFXTextField>
+              <JFXTextField fx:id="txtMinUren" labelFloat="true" maxWidth="-Infinity" prefWidth="300.0" promptText="Minimale werkuren per week" unFocusColor="#4059a9">
+                  <font>
+                      <Font name="System Bold Italic" size="22.0" />
+                  </font>
+                  <VBox.margin>
+                      <Insets bottom="35.0" />
+                  </VBox.margin>
+              </JFXTextField>
+              <DatePicker fx:id="startdatum" prefHeight="45.0" prefWidth="195.0" promptText="Startdatum">
+                  <VBox.margin>
+                      <Insets bottom="35.0" />
+                  </VBox.margin>
+              </DatePicker>
+              <DatePicker fx:id="einddatum" prefHeight="45.0" prefWidth="195.0" promptText="Einddatum">
+                  <VBox.margin>
+                      <Insets bottom="35.0" />
+                  </VBox.margin>
+              </DatePicker>
+                <JFXButton buttonType="RAISED" maxHeight="-Infinity" maxWidth="-Infinity" onAction="#onRegister" ripplerFill="#5752d3" style="-fx-background-color: #180175; -fx-border-color: #322fe2; -fx-border-width: 2;" text="Register" textAlignment="CENTER" textFill="WHITE">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </JFXButton>
           </children>
        </VBox>
    </children>
