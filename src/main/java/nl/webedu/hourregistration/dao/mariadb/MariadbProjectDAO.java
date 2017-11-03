@@ -90,7 +90,7 @@ public class MariadbProjectDAO implements IProjectDAO {
     public List<ProjectModel> selectAllProjects() {
         List<ProjectModel> project = null;
         try {
-            project = database.selectObjectList(new ProjectModel(), "SELECT * FROM project");
+            project = database.selectObjectList(new ProjectModel(), "SELECT * FROM project ORDER BY projectID DESC");
         } catch (SQLException e) {
             e.printStackTrace();
         }

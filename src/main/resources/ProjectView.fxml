@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXListView?>
 <?import javafx.geometry.Insets?>
@@ -11,17 +18,19 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-
 <?import com.jfoenix.controls.JFXComboBox?>
-<AnchorPane fx:id="pAnchor" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.webedu.hourregistration.controller.ProjectController">
+
+<AnchorPane fx:id="pAnchor" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.webedu.hourregistration.controller.ProjectController">
     <children>
         <HBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="1200.0" spacing="24.0" style="-fx-background-color: #4285F4;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <padding>
                 <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
             </padding>
             <children>
-
-            <ImageView fx:id="imgTitle" fitHeight="50.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" />
+                <ImageView fx:id="imgTitle" fitHeight="50.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="img/Logo.png" />
+                    </image></ImageView>
                 <Label fx:id="lblTitle" style="-fx-text-fill: white;" text="Projecten overzicht">
 
                     <font>
@@ -82,11 +91,7 @@
                                         <JFXButton onAction="#deleteEmployeeFromProject" text="Delete" textFill="#fcfcfc" />
                                     </children>
                                 </HBox>
-                                <VBox prefHeight="502.0" prefWidth="657.0" style="-fx-background-color: #FFFFFF;">
-                                    <children>
-                                        <JFXListView fx:id="wListView" onMouseClicked="#selectEmployeeOnList" prefHeight="503.0" prefWidth="633.0" />
-                                    </children>
-                                </VBox>
+                                  <JFXListView fx:id="wListView" onMouseClicked="#selectEmployeeOnList" prefHeight="600.0" prefWidth="633.0" />
                             </children>
                         </VBox>
                     </children>
