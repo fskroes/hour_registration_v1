@@ -26,6 +26,14 @@
          <padding>
             <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
          </padding>
+         <JFXButton buttonType="RAISED" maxHeight="-Infinity" maxWidth="-Infinity" onAction="#returnToTimesheets" ripplerFill="#5752d3" style="-fx-background-color: #180175; -fx-border-color: #322fe2; -fx-border-width: 2;" text="Terug" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="NEVER">
+            <font>
+               <Font size="18.0" />
+            </font>
+            <HBox.margin>
+               <Insets />
+            </HBox.margin>
+         </JFXButton>
       </HBox>
       <VBox fx:id="content" spacing="24.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
          <children>

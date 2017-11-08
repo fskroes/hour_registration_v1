@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import nl.webedu.hourregistration.database.DatabaseManager;
 import nl.webedu.hourregistration.model.ActivitiesModel;
 import nl.webedu.hourregistration.model.EmployeeModel;
@@ -195,6 +196,15 @@ public class TimesheetController {
             DatabaseManager.getInstance().getDaoFactory().getEmployeeDAO().updateEmployee(activeEmployee);
             sprSaving.setVisible(false);
         }).start();
+    }
+
+    /**
+     * Gaat terug naar de vorige view.
+     * @param actionEvent het event wat zorgt voor het aanroepen van de methode.
+     */
+    public void returnToTimesheets(ActionEvent actionEvent) {
+        Stage primaryStage = (Stage) root.getScene().getWindow();
+        primaryStage.hide();
     }
 }
 
